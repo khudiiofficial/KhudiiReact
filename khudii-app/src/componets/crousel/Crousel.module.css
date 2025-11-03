@@ -1,0 +1,317 @@
+/* Home Page CSS Protection against Vapi Widget
+.carouselSection {
+  width: 100%;
+}
+
+.carouselContainer {
+  height: 18rem; 
+  position: relative;
+  overflow: hidden;
+}
+
+
+
+.slide {
+  position: absolute;
+  top: 0;
+  height: 18rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: opacity 0.7s ease-in-out;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+
+
+}
+
+@media (max-width:800px){
+  .slide{
+height: 12rem;
+  }
+
+  .carouselContainer{
+height: 12rem;
+  }
+}
+
+
+@media (max-width:600px){
+  .slide{
+height: 12rem;
+object-fit: cover;
+right: 50%;
+object-position: 0px 0px;
+  }
+
+  .carouselContainer{
+height: 12rem;
+  }
+}
+
+
+.slideActive {
+  opacity: 1;
+  z-index: 10;
+}
+
+.slideInactive {
+  opacity: 0;
+  z-index: 0;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4); 
+  z-index: 0;
+}
+
+.controls {
+  max-width: 72rem; 
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.75rem; 
+  padding-bottom: 0.75rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem; 
+}
+
+.indicator {
+  width: 2.5rem; 
+  height: 0.5rem; 
+  border-radius: 0.25rem; 
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+
+
+
+.indicatorActive {
+  background-color: #e11d48; 
+}
+
+.indicatorInactive {
+  background-color: #d1d5db; 
+}
+ */
+
+
+
+
+ /*      seperation */
+
+
+/* 
+
+ .carouselSection {
+  width: 100%;
+}
+
+.carouselContainer {
+  height: 18rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  height: 18rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: opacity 0.7s ease-in-out;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media (max-width:800px){
+  .slide{
+    height: 12rem;
+  }
+
+  .carouselContainer{
+    height: 12rem;
+  }
+}
+
+@media (max-width:600px){
+  .slide{
+    height: 12rem;
+    object-fit: cover;
+    right: 50%;
+    object-position: 0px 0px;
+  }
+
+  .carouselContainer{
+    height: 12rem;
+  }
+}
+
+.slideActive {
+  opacity: 1;
+  z-index: 10;
+}
+
+.slideInactive {
+  opacity: 0;
+  z-index: 0;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+
+.controls {
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.indicator {
+  width: 2.5rem;
+  height: 0.5rem;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.indicatorActive {
+  background-color: #e11d48;
+}
+
+.indicatorInactive {
+  background-color: #d1d5db;
+} */
+
+
+
+.carouselSection {
+  width: 100%;
+}
+
+.carouselContainer {
+  height: 18rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  height: 18rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: opacity 0.7s ease-in-out;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* Ensure images are properly sized */
+  width: 100%;
+  object-fit: cover;
+}
+
+.slideActive {
+  opacity: 1;
+  z-index: 10;
+}
+
+.slideInactive {
+  opacity: 0;
+  z-index: 0;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+
+.controls {
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.indicator {
+  width: 2.5rem;
+  height: 0.5rem;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.indicatorActive {
+  background-color: #e11d48;
+}
+
+.indicatorInactive {
+  background-color: #d1d5db;
+}
+
+@media (max-width:800px){
+  .slide{
+    height: 12rem;
+  }
+
+  .carouselContainer{
+    height: 12rem;
+  }
+}
+
+@media (max-width:600px){
+  .slide{
+    height: 12rem;
+    object-fit: cover;
+    right: 50%;
+    object-position: 0px 0px;
+  }
+
+  .carouselContainer{
+    height: 12rem;
+  }
+}

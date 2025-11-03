@@ -1,0 +1,44 @@
+.class1{
+        background-color: #F0F0F0;
+}
+.class2{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.class3{
+       color: #022279;
+}
+.ellipsis {
+ display: -webkit-box;
+  -webkit-line-clamp: 3; /* adjust lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.text strong{
+  font-weight: normal;
+}
+
+
+
+.class11{
+    display: flex;
+    align-items:center;
+    justify-content: center; 
+}
+
+.class12{
+color: #022279;
+font-size: 35px;
+font-weight: 700;
+}
+
+
+@media (max-width:550px){
+  .class12{
+    font-size: 25px;
+  }
+}

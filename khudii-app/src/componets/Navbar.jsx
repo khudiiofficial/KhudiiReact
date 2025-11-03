@@ -1,0 +1,385 @@
+import React, { useState,useEffect } from "react";
+import styles from "./Navbar.module.css";
+import "./Navbar.css";
+import { Link } from "react-router-dom";
+const APIPath = import.meta.env.VITE_BACKEND_PATH;
+import { useNavigate } from "react-router-dom";
+const Navbar = () => {
+  const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const [results, setResults] = useState([]);
+  const [counter,setcounter]=useState(true)
+  const [isMobile, setIsMobile] = useState(false)
+  const nav=useNavigate()
+ const[err,seterr]=useState('')
+
+   useEffect(() => {
+     const checkScreenSize = () => {
+       setIsMobile(window.innerWidth < 600)
+     }
+     
+     // Check initially
+     checkScreenSize()
+     
+     // Add event listener
+     window.addEventListener('resize', checkScreenSize)
+     
+     // Cleanup
+     return () => window.removeEventListener('resize', checkScreenSize)
+   }, [])
+
+  // Fetch organizations from backend
+  const handleSearch = async (value,add=false) => {
+    if(!add){
+     setcounter(false)
+    }
+    setSearch(value);
+    if (value.length > 1) {
+      try {
+        const res = await fetch(
+          `${APIPath}/getSimilarItem?search=${value}`
+        );
+        const data = await res.json();
+        setResults(data);
+        // console.log(data)
+        seterr('')
+      } catch (err) {
+        console.error("Search error:", err.message);
+        seterr(err.message)
+      }
+    } else {
+      setResults([]);
+    }
+  };
+// console.log("hey abu",err)
+  return (
+    <div>
+      {/* 🔎 Top Search */}
+      <div className={`${styles.newclass} relative`}>
+        <div className={styles.pos1}>
+          <i className={`fas fa-search ${styles.ss1}`}></i>
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => handleSearch(e.target.value)}
+            placeholder="Search Organization"
+            className={styles.bgcolor}
+          />
+           {search && <i onClick={()=>{setSearch('')}} className={`fa-solid fa-x ${styles.cross}`}></i>} 
+        </div>
+
+        {/* Results Dropdown for top search */}
+        {err ?<>{search && <div className={`${styles.searchResults} ${styles.helper_class}`}>Netwrok Error</div>}</>:<>
+        {results.length===0 &&  search && <div className={`${styles.searchResults} ${styles.helper_class}`}>No Results</div> }
+
+        {results.length > 0 && search && (
+          <div className={styles.searchResults}>
+            {results.map((org) => (
+              <div key={org.id} className={styles.resultCard}>
+                <img
+                  src={org.introductory_image_path}
+                  alt={org.name}
+                  className={styles.resultImage}
+                />
+                <div>
+                  <b>{org.name}</b>
+           
+                 <p dangerouslySetInnerHTML={{ __html: org.description.slice(0, 80) + "..." }} />
+
+                  {/* <Link
+                    to={`/organization/${org.id}`}
+                    className={styles.resultLink}
+                    onClick={()=>setSearch('')}
+                  >
+                    View More
+                  </Link> */}
+                      <button onClick={()=>{setSearch(''),nav(`/organization/${org.slug}`,{state:{id:org.id}})}} className="org-btn">
+                    View More
+                </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+        </>
+        }
+      </div>
+
+      <hr style={{ color: "grey" }} />
+
+      {/* Main Navbar */}
+      <header className="bg-white relative">
+        <div
+          className={`px-4 py-4 flex items-center justify-between ${styles.width}`}
+        >
+          {/* Logo */}
+          <div className="w-36">
+           <Link to={'/'}> <img src="/Khudii.webp" width="223" height="79" alt="khudii logo" loading="lazy" /></Link>
+          </div>
+
+          {/* Links */}
+          <div className={`${styles.query} text-gray-700`}>
+            <Link to="/" className="hover:text-gray-900">
+              Home
+            </Link>
+            <Link to="/About" className="hover:text-gray-900">
+              About
+            </Link>
+            <Link to="/organiztionsSectors" className="hover:text-gray-900">
+              Organizations
+            </Link>
+            <Link to="/specialPeople" className="hover:text-gray-900">
+              Golden People
+            </Link>
+
+            {/* Media Dropdown */}
+            <span className={styles.gpos}>
+              <Link to="#" className="hover:text-gray-900">
+                Media <i className={`${styles.fw} fas fa-chevron-down`}></i>
+              </Link>
+              <div className={`${styles.gpa}`}>
+                <li>
+                  <Link to={"/SuccessStories"}>Success Stories</Link>
+                </li>
+                <hr />
+                <li>
+                  <Link to={'/Socials'}>Social Media</Link>
+                </li>
+                <hr />
+                <li>
+                  <Link to={'/vediosPage'}>Videos</Link>
+                </li>
+                <hr />
+                <li>
+                  <Link to={'/testimonialPage'}>Testimonials</Link>
+                </li>
+                <hr />
+                <li>
+                  <Link to={'/Tribute'}>Tribute</Link>
+                </li>
+                <hr />
+                <li className={`${styles.gp2}`}>
+                  <Link to={"#"}>Registration</Link>
+                  <i className={`${styles.fw} fas fa-chevron-down`}></i>
+                  <div className={`${styles.gp1}`}>
+                    <Link to={'/Certifications'}>Certifications</Link>
+                  </div>
+                </li>
+              </div>
+            </span>
+
+            {/* Join Us Dropdown */}
+            <span className={`${styles.gpos}`}>
+              <Link to="/join" className="hover:text-gray-900">
+                Join Us
+              </Link>
+              <i className={`${styles.fw} fas fa-chevron-down`}></i>
+              <div className={`${styles.gpa}`}>
+                <li>
+                  <Link to={'/VolunteerForm'}>Volunteer</Link>
+                </li>
+                <hr />
+                <li>
+                  <Link to={'/JobApplication'}>Jobs</Link>
+                </li>
+              </div>
+            </span>
+
+            <Link to="/Contact" className="hover:text-gray-900">
+              Contact
+            </Link>
+          </div>
+
+          {/* Right side (search + donate + mobile menu) */}
+          <div className="flex items-center gap-3 relative">
+            <div className={styles.pos}>
+              <i className={`fas fa-search ${styles.ss}`}></i>
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => handleSearch(e.target.value,true)}
+                placeholder="Search Organization"
+                className={styles.bgcolor}
+              />
+           {search && <i onClick={()=>{setSearch('')}} className={`fa-solid fa-x ${styles.cross}`}></i>}   
+            </div>
+
+            {/* Results for desktop search */}
+          {err ?<>{search&& counter &&<div className={`${styles.searchResults} ${styles.helper_class}`}>Netwrok Error</div> }</>:<>
+           {results.length===0 && counter && search  &&<div className={`${styles.searchResults} ${styles.helper_class}`}>No Results</div> }
+        {results.length > 0 && counter && search && (
+          <div className={styles.searchResults}>
+            {results.map((org) => (
+              <div key={org.id} className={styles.resultCard}>
+                <img
+                  src={org.introductory_image_path}
+                  alt={org.name}
+                  className={styles.resultImage}
+                />
+                <div>
+                  <b>{org.name}</b>
+                    <p dangerouslySetInnerHTML={{ __html: org.description.slice(0, 80) + "..." }} />
+                  {/* <Link
+                    to={`/organization/${org.id}`}
+                    className={styles.resultLink}
+                        onClick={()=>setSearch('')}
+                  >
+                    View More
+                  </Link> */}
+                      <button onClick={()=>{setSearch(''),nav(`/organization/${org.slug}`,{state:{id:org.id}})}} className="org-btn">
+                  View More
+                </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+        </>
+        }
+
+          { !isMobile && <Link
+              to="/DonateUS"
+              className="bg-rose-600 text-white px-4 py-2 rounded-md shadow hover:opacity-95"
+            >
+              Donate Now
+            </Link>}
+
+
+            
+            <button
+              className={`${styles.buttonclass} p-2 rounded-md border`}
+              onClick={() => setOpen(!open)}
+              aria-label="Toggle menu"
+            >
+              <svg
+                className="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {open && (
+          <div className="mobile-menu">
+            <div className="mobile-menu-content">
+              <Link  onClick={()=>{setOpen(!open)}} to="/" className="mobile-menu-link">
+                Home
+              </Link>
+              <Link onClick={()=>{setOpen(!open)}} to="/About" className="mobile-menu-link">
+                About
+              </Link>
+              <Link onClick={()=>{setOpen(!open)}} to="/organiztionsSectors" className="mobile-menu-link">
+                Organizations
+              </Link>
+              <Link onClick={()=>{setOpen(!open)}} to="/specialPeople" className="mobile-menu-link">
+                Golden People
+              </Link>
+
+              {/* Media */}
+              <div className="mobile-menu-dropdown">
+                <span className="mobile-menu-dropdown-title">Media</span>
+                <ul className="mobile-menu-dropdown-list">
+                  <li>
+                    <Link onClick={()=>{setOpen(!open)}}
+                      to="/SuccessStories"
+                      className="mobile-menu-dropdown-link"
+                    >
+                      Success Stories
+                    </Link>
+                  </li>
+                  <li>
+                    <Link onClick={()=>{setOpen(!open)}}
+                      to="/Socials"
+                      className="mobile-menu-dropdown-link"
+                    >
+                      Social Media
+                    </Link>
+                  </li>
+                  <li>
+                    <Link onClick={()=>{setOpen(!open)}}
+                      to="/vediosPage"
+                      className="mobile-menu-dropdown-link"
+                    >
+                      Videos
+                    </Link>
+                  </li>
+                  <li>
+                    <Link onClick={()=>{setOpen(!open)}}
+                      to="/testimonialPage"
+                      className="mobile-menu-dropdown-link"
+                    >
+                      Testimonials
+                    </Link>
+                  </li>
+                  <li>
+                    <Link onClick={()=>{setOpen(!open)}}
+                      to="/Tribute"
+                      className="mobile-menu-dropdown-link"
+                    >
+                      Tribute
+                    </Link>
+                  </li>
+                  <li className="mobile-menu-nested">
+                    <span className="mobile-menu-nested-title">
+                      Registration
+                    </span>
+                    <ul className="mobile-menu-nested-list">
+                      <li>
+                        <Link onClick={()=>{setOpen(!open)}}
+                          to="/Certifications"
+                          className="mobile-menu-nested-link"
+                        >
+                          Certifications
+                        </Link>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Join Us */}
+              <div className="mobile-menu-dropdown">
+                <span className="mobile-menu-dropdown-title">Join Us</span>
+                <ul className="mobile-menu-dropdown-list">
+                  <li>
+                    <Link onClick={()=>{setOpen(!open)}}
+                      to="/VolunteerForm"
+                      className="mobile-menu-dropdown-link"
+                    >
+                      Volunteer
+                    </Link>
+                  </li>
+                  <li>
+                    <Link onClick={()=>{setOpen(!open)}}
+                      to="/JobApplication"
+                      className="mobile-menu-dropdown-link"
+                    >
+                   Jobs
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Contact */}
+              <Link onClick={()=>{setOpen(!open)}} to="/contact" className="mobile-menu-link">
+                Contact
+              </Link>
+            </div>
+          </div>
+        )}
+      </header>
+    </div>
+  );
+};
+
+export default Navbar;

@@ -1,0 +1,316 @@
+/* 
+.pad {
+  padding: 0 8%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+
+.size {
+  font-size: 3rem;
+  font-weight: 600;
+  color: #021677;
+  margin-bottom: 1rem;
+}
+
+
+.newclass {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  text-align: justify;
+  line-height: 1.6;
+  font-size: 1.1rem;
+  color: #222;
+}
+
+
+.gborder {
+  border-radius: 20px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 16 / 9; 
+  border: none;
+}
+
+.gborder iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+
+.class2 {
+  border-radius: 30px;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+
+@media (max-width: 992px) {
+  .pad {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 0 6%;
+  }
+
+  .size {
+    font-size: 2.5rem;
+  }
+
+  .newclass {
+    text-align: justify;
+    font-size: 1rem;
+  }
+
+  .gborder {
+    max-width: 100%;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .pad {
+    padding: 0 5%;
+  }
+
+  .size {
+    font-size: 2rem;
+  }
+
+  .newclass {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .gborder {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .pad {
+    padding: 0 4%;
+  }
+
+  .size {
+    font-size: 1.6rem;
+  }
+
+  .newclass {
+    font-size: 0.9rem;
+  }
+
+  .gborder {
+    aspect-ratio: 16 / 9;
+    border-radius: 15px;
+  }
+}
+
+
+@media (max-width: 360px) {
+  .size {
+    font-size: 1.4rem;
+  }
+  .newclass {
+    font-size: 0.85rem;
+  }
+} */
+
+/* .newclass{
+  word-wrap: break-word;
+  text-align: justify;     
+  overflow-wrap: break-word;
+  hyphens: auto;
+} */
+
+
+.pad {
+  padding: 0 8%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.size {
+  font-size: 3rem;
+  font-weight: 600;
+  color: #021677;
+  margin-bottom: 1rem;
+}
+
+.newclass {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  text-align: justify;
+  line-height: 1.6;
+  font-size: 1.1rem;
+  color: #222;
+}
+
+.gborder {
+  border-radius: 20px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 16 / 9; 
+  border: none;
+}
+
+.gborder iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Video Placeholder Styles */
+.videoPlaceholder {
+  background-image: url('https://img.youtube.com/vi/hZyp2wOkqBs/hqdefault.jpg');
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.videoPlaceholder:hover {
+  transform: scale(1.02);
+}
+
+/* .videoPlaceholder::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  transition: background 0.3s ease;
+} */
+
+.videoPlaceholder:hover::before {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.playButtonContainer {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.playButton {
+  transition: transform 0.3s ease;
+ 
+}
+
+.videoPlaceholder:hover .playButton {
+  transform: scale(1.1);
+}
+
+.playText {
+  
+  margin-top: 10px;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* KEEP YOUR EXISTING RESPONSIVE CSS */
+@media (max-width: 992px) {
+  .pad {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 0 6%;
+  }
+
+  .size {
+    font-size: 2.5rem;
+  }
+
+  .newclass {
+    text-align: justify;
+    font-size: 1rem;
+  }
+
+  .gborder {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .pad {
+    padding: 0 5%;
+  }
+
+  .size {
+    font-size: 2rem;
+  }
+
+  .newclass {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .gborder {
+    aspect-ratio: 16 / 9;
+  }
+
+  .playButton svg {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .playText {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pad {
+    padding: 0 4%;
+  }
+
+  .size {
+    font-size: 1.6rem;
+  }
+
+  .newclass {
+    font-size: 0.9rem;
+  }
+
+  .gborder {
+    aspect-ratio: 16 / 9;
+    border-radius: 15px;
+  }
+
+  .playButton svg {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .playText {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .size {
+    font-size: 1.4rem;
+  }
+  .newclass {
+    font-size: 0.85rem;
+  }
+}

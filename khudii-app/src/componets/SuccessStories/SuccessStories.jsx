@@ -1,0 +1,151 @@
+// import React from 'react'
+// import styles from './Success.module.css'
+// import { useState,useEffect } from 'react'
+// import { Link } from 'react-router-dom'
+// const SuccessStories = () => {
+// const [arr,setarr]=useState([
+// '/success1.webp',
+// '/success2.webp',
+// '/success3.webp',
+// '/success4.webp',
+// '/success5.webp',
+// '/success6.webp',
+
+// ])
+// const [width,setWidth]=useState(null)
+
+// useEffect(()=>{
+// const adjustwidth=()=>{
+// const getwidth=window.innerWidth;
+// setWidth(getwidth)
+// }
+// adjustwidth();
+// window.addEventListener('resize',adjustwidth)
+// return ()=> window.removeEventListener('resize',adjustwidth)
+// },[])
+//   return (
+//    <>
+//    <div className={`${styles.class3}`}>
+//    <div className={`grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3`}>
+//     <div></div>
+//     <div  className={`${styles.class1} ${styles.class2}`}>Success Stories</div>
+//     <div  className={`${styles.class1}`}><Link to={'/SuccessStories'}>Explore more stories&nbsp; <span> {`>`}</span></Link></div>
+//     </div>
+
+//     <div className={`${styles.class4}`}>
+//      {/* <img  src="https://www.khudii.com/wp-content/uploads/2025/09/ioh-school-ss.webp" title='khudii 13' alt="" />
+//       <img src="https://www.khudii.com/wp-content/uploads/2025/09/ioh-school-ss.webp" alt="" />
+//  <img src="https://www.khudii.com/wp-content/uploads/2025/09/ioh-school-ss.webp" alt="" />
+//  <img src="https://www.khudii.com/wp-content/uploads/2025/09/ioh-school-ss.webp" alt="" /> */}
+// {arr.map((ele,index,arr)=>{
+
+//     return (
+//         <img key={index} src={ele} title='khudii 13' alt="" />
+//     )
+// })}
+
+
+//     </div>
+
+//     <div className={`${styles.class5}`}>
+
+// <div className={`${styles.class6} grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2`}>
+//     <div className={`${styles.class7}`}>
+//         <p>Floods in Pakistan</p>
+//         <p>At KHUDII, we are working tirelessly to support communities devastated by the recent floods in Pakistan. Thousands of families have lost their homes, livelihoods, and access to basic necessities. Your donation can help rebuild lives — by providing shelter, food, clean water, and long-term rehabilitation support. Together, we can restore hope and bring relief to those who need it most.</p>
+//        {width>1024 ?   
+//         <button className={styles.buttonClass}><Link to={'/DonateUS'}> Donate Now <i className="fa-solid fa-hands-praying"></i></Link></button>
+//     :<center> <button className={styles.buttonClass}><Link to={'/DonateUS'}> Donate Now <i className="fa-solid fa-hands-praying"></i></Link></button></center>
+//     }
+ 
+//         </div>
+
+
+//     <div></div>
+
+//    </div>
+//     </div>
+   
+//     </div>
+// </>
+
+//   )
+// }
+
+// export default SuccessStories
+
+
+import React from 'react'
+import styles from './Success.module.css'
+import { useState,useEffect } from 'react'
+import { Link } from 'react-router-dom'
+
+const SuccessStories = () => {
+const [arr,setarr]=useState([
+'/success1.webp',
+'/success2.webp',
+'/success3.webp',
+'/success4.webp',
+'/success5.webp',
+'/success6.webp',
+
+])
+const [width,setWidth]=useState(null)
+
+useEffect(()=>{
+const adjustwidth=()=>{
+const getwidth=window.innerWidth;
+setWidth(getwidth)
+}
+adjustwidth();
+window.addEventListener('resize',adjustwidth)
+return ()=> window.removeEventListener('resize',adjustwidth)
+},[])
+
+  return (
+   <>
+   <div className={`${styles.class3}`}>
+   <div className={`grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3`}>
+    <div></div>
+    <div  className={`${styles.class1} ${styles.class2}`}>Success Stories</div>
+    <div  className={`${styles.class1}`}><Link to={'/SuccessStories'}>Explore more stories&nbsp; <span> {`>`}</span></Link></div>
+    </div>
+
+    <div className={`${styles.class4}`}>
+     {arr.map((ele,index)=>{
+
+    return (
+        <img 
+          key={index} 
+          src={ele} 
+          title='khudii 13' 
+          alt={`Success story ${index + 1}`}
+          loading="lazy"
+          width="380"
+          height="200"
+        />
+    )
+})}
+    </div>
+
+    <div className={`${styles.class5}`}>
+      <div className={`${styles.class6} grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2`}>
+        <div className={`${styles.class7}`}>
+            <p>Floods in Pakistan</p>
+            <p>At KHUDII, we are working tirelessly to support communities devastated by the recent floods in Pakistan. Thousands of families have lost their homes, livelihoods, and access to basic necessities. Your donation can help rebuild lives — by providing shelter, food, clean water, and long-term rehabilitation support. Together, we can restore hope and bring relief to those who need it most.</p>
+           {width>1024 ?   
+            <button className={styles.buttonClass}><Link to={'/DonateUS'}> Donate Now <i className="fa-solid fa-hands-praying"></i></Link></button>
+        :<center> <button className={styles.buttonClass}><Link to={'/DonateUS'}> Donate Now <i className="fa-solid fa-hands-praying"></i></Link></button></center>
+        }
+     
+            </div>
+        <div></div>
+       </div>
+    </div>
+   
+    </div>
+</>
+  )
+}
+
+export default SuccessStories

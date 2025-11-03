@@ -1,0 +1,83 @@
+/* Base styles */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+  padding: 0 20px;
+  background-color: #022279;
+  color: white;
+  flex-wrap: wrap; /* allows wrapping on small screens */
+  text-align: center;
+}
+
+.color {
+  background-color: #022279;
+  color: white;
+}
+
+.mid {
+  font-size: 17px;
+  font-weight: 600;
+  color: #FFFFFF;
+  flex: 1;
+  text-align: center;
+}
+
+.last {
+  background-color: #E3001C;
+  border-radius: 7px;
+  cursor: pointer;
+  padding: 10px 15px;
+  color: white;
+  border: none;
+}
+
+.height {
+  height: 70px;
+}
+
+.contact {
+  white-space: nowrap;
+}
+
+.buttonWrapper {
+  white-space: nowrap;
+  display: flex;
+  gap: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 824px) {
+  .topbar {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .mid {
+    font-size: 15px;
+    margin: 5px 0;
+  }
+
+  .last {
+    width: 100%;
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mid {
+    font-size: 14px;
+  }
+
+  .contact {
+    font-size: 14px;
+  }
+
+  .last {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}

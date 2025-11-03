@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+/* Add this to your global CSS file */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap');
+
+.font-urdu {
+  font-family: 'Noto Nastaliq Urdu', serif;
+}
+
+
+
+/* #star>button{
+
+  
+  padding: 0 !important;
+  margin: 0 !important; 
+} */
+
+
+
+@media (max-width:640px){
+/* #root > div.vapi-widget-wrapper > div > div > div:nth-child(3) > div > button{
+  padding: 5px;
+} */
+
+/* #root > div.vapi-widget-wrapper > div > div > div:nth-child(3) > div > input{
+ width: 60%;
+} */
+
+  #root > div.vapi-widget-wrapper input {
+    width: 200px !important;
+    flex: 0 0 50px !important;
+    max-width: 200px !important;
+  }
+#main-content > div.vapi-widget-wrapper > div > div > div:nth-child(3) > div > input{
+    width: 200px !important;
+    flex: 0 0 50px !important;
+    max-width: 200px !important;
+}
+}

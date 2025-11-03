@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://new.khudii.com/sitemap.xml
+
+# Allow all crawlers to access everything
+Disallow:
+
+# If you have admin areas later, add:
+# Disallow: /admin/
+# Disallow: /private/
