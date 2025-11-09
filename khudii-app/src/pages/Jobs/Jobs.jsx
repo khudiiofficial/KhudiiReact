@@ -25,7 +25,7 @@ export default function JobApplicationForm() {
     }
   });
 
-
+const [val,setval]=useState('')
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [serverMessage, setServerMessage] = useState(null);
@@ -98,6 +98,10 @@ export default function JobApplicationForm() {
   };
 
   const onSubmit = async (data) => {
+       if(val){
+    console.warn('bot detected')
+    return
+   }
     setServerMessage(null);
     setServerError(null);
     
@@ -395,6 +399,7 @@ export default function JobApplicationForm() {
                   "Submit Application"
                 )}
               </button>
+               <input style={{border:' solid 1px red'}} value={val} onChange={(e)=>{setval(e.target.value)}} type="hidden" />
             </div>
           </form>
         </div>

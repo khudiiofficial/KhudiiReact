@@ -600,6 +600,7 @@ const APIPath = import.meta.env.VITE_BACKEND_PATH;
 export default function EditBlogPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [cap,setcap]=useState('')
   const [form, setForm] = useState({
     // Document table fields
     Name: "",
@@ -891,7 +892,12 @@ export default function EditBlogPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+   
+    if(cap){
+      console.log('bot detected')
+      setcap('')
+      return
+    }
     if (!validateForm()) {
       alert("Please fix the validation errors before submitting.");
       return;
@@ -970,6 +976,7 @@ export default function EditBlogPage() {
 
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Main Document Section */}
+            <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
             <div className="space-y-6 p-6 bg-blue-50 rounded-xl">
               <h2 className="text-2xl font-semibold text-gray-800">Main Blog Content</h2>
               

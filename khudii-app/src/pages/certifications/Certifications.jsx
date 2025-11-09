@@ -1,7 +1,24 @@
 import { CheckCircle } from "lucide-react";
 import PageHeader from "../../componets/PageHeader/PageHeader";
 import SEO from "../../componets/Helmet/Helmet";
+import axios from "axios";
+import { useState,useEffect } from "react";
+const APIPath = import.meta.env.VITE_BACKEND_PATH;
 export default function Certification() {
+const [cert,setcert]=useState([])
+useEffect(()=>{
+const get=async()=>{
+  try {
+    const res=await axios.get(`${APIPath}/certifications`)
+    if(res.status===200){
+      setcert(res.data)
+    }
+  } catch (error) {
+    
+  }
+}
+get()
+},[])
   return (
 <>
 <SEO 
@@ -39,12 +56,26 @@ export default function Certification() {
         </ul>
 
         {/* Certificate Image */}
-        <div className="rounded-2xl shadow-md overflow-hidden">
-          <img
+        <div className=" flex flex-wrap gap-20 items-center justify-center rounded-2xl overflow-hidden">
+          
+          {cert.map((ele,idx)=>{
+return(
+   <img
+   width={212}
+   height={300}
+            
+            src={ele.image_url}
+            alt="Khudii Certificate"
+            className="object-contain"
+          />
+)
+// w-52 md:w-64 lg:w-72 
+          })}
+          {/* <img
             src="https://www.khudii.com/wp-content/uploads/2024/12/khudii-certificate300.png.webp"
             alt="Khudii Certificate"
             className="w-52 md:w-64 lg:w-72 object-contain"
-          />
+          /> */}
         </div>
       </div>
     </section>

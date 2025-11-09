@@ -5,6 +5,7 @@ import countries from './countries_list.json'
 import axios from 'axios'
 const API_URL = import.meta.env.VITE_BACKEND_PATH;
 const DonationForm = () => {
+  const [loader,setloader]=useState(false)
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -20,7 +21,7 @@ const DonationForm = () => {
     message: '',
     CountryName:'Pakistan'
   });
-
+const [val,setval]=useState('')
   const [copied, setCopied] = useState({
     iban: false,
     account: false
@@ -113,6 +114,10 @@ const myDivRef = useRef(null);
   };
 
   const handleSubmit = async(e) => {
+     if(val){
+    console.warn('bot detected')
+    return
+   }
     e.preventDefault();
     
     // Validate form before submission
@@ -120,9 +125,9 @@ const myDivRef = useRef(null);
       return;
     }
     
-    console.log('Donation submitted:', formData);
+    // console.log('Donation submitted:', formData);
 
-   
+   setloader(true)
     try {
       const res = await axios.post(`${API_URL}/api/donations`, formData, {
        withCredentials:true
@@ -158,7 +163,7 @@ const myDivRef = useRef(null);
       setServerError(err?.response?.data?.error || "Failed to submit application. Please try again.");
     }
 
-   
+   setloader(false)
   
   };
 
@@ -560,9 +565,11 @@ const myDivRef = useRef(null);
               <button
                 type="submit"
                 className="w-full bg-red-600 text-white py-4 px-6 rounded-2xl font-semibold text-lg hover:bg-red-700 focus:ring-4 focus:ring-red-300 transition-all duration-200"
+               disabled={loader}
               >
-                Donate Now
+                {loader ? "Donating..." : "Donate Now"}
               </button>
+              <input style={{border:' solid 1px red'}} value={val} onChange={(e)=>{setval(e.target.value)}} type="hidden" />
             </form>
           </div>
         </div>

@@ -24,7 +24,7 @@ export default function ContributeStory() {
       country:"PK"
     }
   });
-
+const [val,setval]=useState('')
 const myDivRef = useRef(null);
  const handleClickOutside = (event) => {
     if (myDivRef.current && !myDivRef.current.contains(event.target)) {
@@ -99,6 +99,10 @@ const myDivRef = useRef(null);
   };
 
   const onSubmit = async (data) => {
+    if(val){
+    console.warn('bot detected')
+    return
+   }
     // Final validation before submission
     const phoneValidation = validatePhoneNumber(data.phone);
     if (phoneValidation !== true) {
@@ -354,6 +358,7 @@ if(res.status===200){
             >
               {isSubmitting ? "Submitting..." : "Submit Story"}
             </button>
+            <input style={{border:' solid 1px red'}} value={val} onChange={(e)=>{setval(e.target.value)}} type="hidden" />
           </form>
         </div>
 

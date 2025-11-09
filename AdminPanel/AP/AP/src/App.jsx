@@ -2,7 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { BrowserRouter,Routes,Route } from 'react-router-dom'
+import { Routes,Route } from 'react-router-dom'
 import Protected from './components/Protetcted/Protected'
 import Login from './Pages/Login/Login'
 import Dashboard from './Pages/Dashboard/Dashboard'
@@ -18,11 +18,50 @@ import SuccessStories from './Pages/SuccessStories/SuccessStories'
 import VideoForm from './Pages/Vedios/Vedios'
 // import ChangePassword from './Pages/PasswordChange/PasswordChange'
 import Profile from './Pages/Profile/Profile'
+import AdminInquiries from './Pages/AdminInquiries/AdminInquiries'
+import AdminDonations from './Pages/Donation/Donation'
+import AdminStories from './Pages/Stories/Stories'
+import AdminJobs from './Pages/Job/Job'
+import AdminVolunteers from './Pages/Voulenteer/Voulenteer'
+import AdminContacts from './Pages/Contacts/Contacts'
+import TopbarAdmin from './Pages/Topbar/Topbar'
+import CertificationAdmin from './Pages/Certifications/Certifications'
+import TestimonialAdmin from './Pages/Testimonials/Testimonials'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { resetUser } from './redux/userslice'
+const APIPath = import.meta.env.VITE_BACKEND_PATH;
+import axios from 'axios'
+import { useLocation } from 'react-router-dom'
 function App() {
+const location=useLocation()  
+const dispatch=useDispatch()
+
+ useEffect(() => {
+    const interval = setInterval(async () => {
+      try {
+        const res = await axios.post(`${APIPath}/authlogin`, {}, { withCredentials: true });
+        if (res.status === 200) {
+          console.log("logged in");
+        }
+      } catch (err) {
+          // console.log(location.pathname)
+        if (err.response && err.response.status === 401 && location.pathname!=='/Login') {
+          alert("Your session has timed out. Please login again.");
+          dispatch(resetUser());
+        } else {
+        
+          console.error("Auth check error:", err);
+        }
+      }
+    }, 20000); // every 20 seconds
+
+    return () => clearInterval(interval); // cleanup on unmount
+  }, [dispatch,location.pathname]);
 
   return (
     <>
-<BrowserRouter>
+
 <Navbar/>
 <Routes>
 <Route path='/' element={<Protected><></></Protected>}/>
@@ -37,14 +76,23 @@ function App() {
           <Route path='successstories' element={<SuccessStories/>}/>
           <Route path='Vedios' element={<VideoForm/>}/>
           <Route path='Profile' element={<Profile/>}/>
+          <Route path='Inquiries' element={<AdminInquiries/>}/>
+          <Route path='Donation' element={<AdminDonations/>}/>
+          <Route path='Stories' element={<AdminStories/>}/>
+          <Route path='JobApplication' element={<AdminJobs/>}/>
+          <Route path='Voulenteer' element={<AdminVolunteers/>}/>
+          <Route path='Contacts' element={<AdminContacts/>}/>
+          <Route path='Topbar' element={<TopbarAdmin/>}/>
+          <Route path='Certifications' element={<CertificationAdmin/>}/>
+          <Route path="Testimonials" element={<TestimonialAdmin/>}/>
           {/* <Route path="change-password" element={<ChangePassword />} /> */}
           <Route index element={<DashboardIndex/>} />
-        
+          
           </Route>
 
 <Route path='/Login' element={<Protected><Login/></Protected>}/>
 </Routes>
-</BrowserRouter>
+
     </>
   )
 }

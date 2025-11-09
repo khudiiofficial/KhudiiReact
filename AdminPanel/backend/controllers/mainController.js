@@ -1338,7 +1338,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import db1 from '../Database/oldDB.js'
-import { uploadToFTP, deleteFromFTP } from "../utils/ftpUpload.js";
+import { uploadToFTP, deleteFromFTP,uploadVideoToFTP,deleteVideoFromFTP } from "../utils/ftpUpload.js";
 import { DtoArr } from "../Dto/objectDto.js";
 
 // Utility Functions
@@ -3172,14 +3172,18 @@ export const updateProfile = async (req, res) => {
 
       // Get updated user data
       const [updatedUsers] = await db1.promise().query(
-        'SELECT id, email created_at FROM users WHERE id = ?',
+        'SELECT id, email  FROM users WHERE id = ?',
         [userId]
       );
-
-      res.json({
+console.log(updatedUsers[0])
+      res.status(200).json({
         success: true,
         message: 'Profile updated successfully',
-        user: updatedUsers[0]
+        user: {
+          id:updatedUsers[0].id,
+          email:updatedUsers[0].email,
+          auth:true
+        }
       });
     } else {
       res.json({
@@ -3208,9 +3212,1402 @@ export const updateProfile = async (req, res) => {
 
 
 
+// Get all contact inquiries
+export const getInquiries = (req, res) => {
+  const { page = 1, limit = 10, search = "" } = req.query;
+  const offset = (page - 1) * limit;
+
+  let query = `
+    SELECT * FROM contact_inquiries 
+    WHERE name LIKE ? OR email LIKE ? OR phone LIKE ? OR org_id LIKE ?
+    ORDER BY created_at DESC 
+    LIMIT ? OFFSET ?
+  `;
+  
+  let countQuery = `
+    SELECT COUNT(*) as total FROM contact_inquiries 
+    WHERE name LIKE ? OR email LIKE ? OR phone LIKE ? OR org_id LIKE ?
+  `;
+
+  const searchTerm = `%${search}%`;
+  const queryParams = [searchTerm, searchTerm, searchTerm, searchTerm, parseInt(limit), parseInt(offset)];
+  const countParams = [searchTerm, searchTerm, searchTerm, searchTerm];
+
+  db1.query(countQuery, countParams, (countError, countResults) => {
+    if (countError) {
+      console.error("Count query error:", countError);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    const total = countResults[0]?.total || 0;
+
+    db1.query(query, queryParams, (error, results) => {
+      if (error) {
+        console.error("Query error:", error);
+        return res.status(500).json({ error: "Database error" });
+      }
+
+      res.json({
+        inquiries: results,
+        pagination: {
+          page: parseInt(page),
+          limit: parseInt(limit),
+          total,
+          pages: Math.ceil(total / limit)
+        }
+      });
+    });
+  });
+};
+
+
+// Get inquiry by ID
+export const getInquiryById = (req, res) => {
+  const { id } = req.params;
+
+  const query = `SELECT * FROM contact_inquiries WHERE id = ?`;
+  
+  db1.query(query, [id], (error, results) => {
+    if (error) {
+      console.error("Inquiry query error:", error);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Inquiry not found" });
+    }
+
+    res.json(results[0]);
+  });
+};
+
+
+// Get owner information
+export const getOwner = (req, res) => {
+  const query = `SELECT id, name, email, sender_email, sender_app_password FROM owners LIMIT 1`;
+  
+  db1.query(query, (error, results) => {
+    if (error) {
+      console.error("Owner query error:", error);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Owner not found" });
+    }
+
+    res.json(results[0]);
+  });
+};
+
+// Update owner information
+export const updateOwner = (req, res) => {
+  const { name, email, sender_email, sender_app_password } = req.body;
+
+  if (!name || !email || !sender_email || !sender_app_password) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email) || !emailRegex.test(sender_email)) {
+    return res.status(400).json({ error: "Invalid email address" });
+  }
+
+  const query = `
+    UPDATE owners 
+    SET name = ?, email = ?, sender_email = ?, sender_app_password = ?
+    WHERE id = 1
+  `;
+
+  db1.query(query, [name.trim(), email.trim().toLowerCase(), sender_email.trim().toLowerCase(), sender_app_password], (error, results) => {
+    if (error) {
+      console.error("Update owner error:", error);
+      return res.status(500).json({ error: "Failed to update owner" });
+    }
+
+    res.json({
+      message: "Owner information updated successfully",
+      success: true
+    });
+  });
+};
+
+// Delete an inquiry
+export const deleteInquiry = (req, res) => {
+  const { id } = req.params;
+
+  const query = `DELETE FROM contact_inquiries WHERE id = ?`;
+  
+  db1.query(query, [id], (error, results) => {
+    if (error) {
+      console.error("Delete inquiry error:", error);
+      return res.status(500).json({ error: "Failed to delete inquiry" });
+    }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ error: "Inquiry not found" });
+    }
+
+    res.json({
+      message: "Inquiry deleted successfully",
+      success: true
+    });
+  });
+};
+
+
+
+
+// Get all donations
+export const getDonations = (req, res) => {
+  const { page = 1, limit = 10, search = "" } = req.query;
+  const offset = (page - 1) * limit;
+
+  let query = `
+    SELECT * FROM donations 
+    WHERE firstName LIKE ? OR lastName LIKE ? OR email LIKE ? OR phone LIKE ? OR donationType LIKE ?
+    ORDER BY created_at DESC 
+    LIMIT ? OFFSET ?
+  `;
+  
+  let countQuery = `
+    SELECT COUNT(*) as total FROM donations 
+    WHERE firstName LIKE ? OR lastName LIKE ? OR email LIKE ? OR phone LIKE ? OR donationType LIKE ?
+  `;
+
+  const searchTerm = `%${search}%`;
+  const queryParams = [searchTerm, searchTerm, searchTerm, searchTerm, searchTerm, parseInt(limit), parseInt(offset)];
+  const countParams = [searchTerm, searchTerm, searchTerm, searchTerm, searchTerm];
+
+  db1.query(countQuery, countParams, (countError, countResults) => {
+    if (countError) {
+      console.error("Count query error:", countError);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    const total = countResults[0]?.total || 0;
+
+    db1.query(query, queryParams, (error, results) => {
+      if (error) {
+        console.error("Query error:", error);
+        return res.status(500).json({ error: "Database error" });
+      }
+
+      res.status(200).json({
+        donations: results,
+        pagination: {
+          page: parseInt(page),
+          limit: parseInt(limit),
+          total,
+          pages: Math.ceil(total / limit)
+        }
+      });
+    });
+  });
+};
+
+// Get donation by ID
+export const getDonationById = (req, res) => {
+  const { id } = req.params;
+
+  const query = `SELECT * FROM donations WHERE id = ?`;
+  
+  db1.query(query, [id], (error, results) => {
+    if (error) {
+      console.error("Donation query error:", error);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Donation not found" });
+    }
+
+    res.json(results[0]);
+  });
+};
+
+// Delete a donation
+export const deleteDonation = (req, res) => {
+  const { id } = req.params;
+
+  const query = `DELETE FROM donations WHERE id = ?`;
+  
+  db1.query(query, [id], (error, results) => {
+    if (error) {
+      console.error("Delete donation error:", error);
+      return res.status(500).json({ error: "Failed to delete donation" });
+    }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ error: "Donation not found" });
+    }
+
+    res.json({
+      message: "Donation deleted successfully",
+      success: true
+    });
+  });
+};
+
+// Update donation status
+export const updateDonationStatus = (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  const validStatuses = ['pending', 'processed', 'completed', 'cancelled'];
+  if (!validStatuses.includes(status)) {
+    return res.status(400).json({ error: "Invalid status" });
+  }
+
+  const query = `UPDATE donations SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`;
+  
+  db1.query(query, [status, id], (error, results) => {
+    if (error) {
+      console.error("Update donation status error:", error);
+      return res.status(500).json({ error: "Failed to update donation status" });
+    }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ error: "Donation not found" });
+    }
+
+    res.json({
+      message: "Donation status updated successfully",
+      success: true
+    });
+  });
+};
+
+
+
+
+// Get all stories
+export const getStories = (req, res) => {
+  const { page = 1, limit = 10, search = "" } = req.query;
+  const offset = (page - 1) * limit;
+
+  let query = `
+    SELECT * FROM contribute_stories 
+    WHERE name LIKE ? OR email LIKE ? OR phone LIKE ? OR entityType LIKE ? OR company LIKE ?
+    ORDER BY created_at DESC 
+    LIMIT ? OFFSET ?
+  `;
+  
+  let countQuery = `
+    SELECT COUNT(*) as total FROM contribute_stories 
+    WHERE name LIKE ? OR email LIKE ? OR phone LIKE ? OR entityType LIKE ? OR company LIKE ?
+  `;
+
+  const searchTerm = `%${search}%`;
+  const queryParams = [searchTerm, searchTerm, searchTerm, searchTerm, searchTerm, parseInt(limit), parseInt(offset)];
+  const countParams = [searchTerm, searchTerm, searchTerm, searchTerm, searchTerm];
+
+  db1.query(countQuery, countParams, (countError, countResults) => {
+    if (countError) {
+      console.error("Count query error:", countError);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    const total = countResults[0]?.total || 0;
+
+    db1.query(query, queryParams, (error, results) => {
+      if (error) {
+        console.error("Query error:", error);
+        return res.status(500).json({ error: "Database error" });
+      }
+
+      res.json({
+        stories: results,
+        pagination: {
+          page: parseInt(page),
+          limit: parseInt(limit),
+          total,
+          pages: Math.ceil(total / limit)
+        }
+      });
+    });
+  });
+};
+
+// Get story by ID
+export const getStoryById = (req, res) => {
+  const { id } = req.params;
+
+  const query = `SELECT * FROM contribute_stories WHERE id = ?`;
+  
+  db1.query(query, [id], (error, results) => {
+    if (error) {
+      console.error("Story query error:", error);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Story not found" });
+    }
+
+    res.json(results[0]);
+  });
+};
+
+// Delete a story
+export const deleteStory = (req, res) => {
+  const { id } = req.params;
+
+  const query = `DELETE FROM contribute_stories WHERE id = ?`;
+  
+  db1.query(query, [id], (error, results) => {
+    if (error) {
+      console.error("Delete story error:", error);
+      return res.status(500).json({ error: "Failed to delete story" });
+    }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ error: "Story not found" });
+    }
+
+    res.json({
+      message: "Story deleted successfully",
+      success: true
+    });
+  });
+};
+
+
+
+
+// Get all job applications
+export const getJobApplications = (req, res) => {
+  const { page = 1, limit = 10, search = "" } = req.query;
+  const offset = (page - 1) * limit;
+
+  let query = `
+    SELECT * FROM job_applications 
+    WHERE name LIKE ? OR email LIKE ? OR phone LIKE ? OR interestedPost LIKE ? OR qualification LIKE ?
+    ORDER BY created_at DESC 
+    LIMIT ? OFFSET ?
+  `;
+  
+  let countQuery = `
+    SELECT COUNT(*) as total FROM job_applications 
+    WHERE name LIKE ? OR email LIKE ? OR phone LIKE ? OR interestedPost LIKE ? OR qualification LIKE ?
+  `;
+
+  const searchTerm = `%${search}%`;
+  const queryParams = [searchTerm, searchTerm, searchTerm, searchTerm, searchTerm, parseInt(limit), parseInt(offset)];
+  const countParams = [searchTerm, searchTerm, searchTerm, searchTerm, searchTerm];
+
+  db1.query(countQuery, countParams, (countError, countResults) => {
+    if (countError) {
+      console.error("Count query error:", countError);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    const total = countResults[0]?.total || 0;
+
+    db1.query(query, queryParams, (error, results) => {
+      if (error) {
+        console.error("Query error:", error);
+        return res.status(500).json({ error: "Database error" });
+      }
+
+      res.json({
+        applications: results,
+        pagination: {
+          page: parseInt(page),
+          limit: parseInt(limit),
+          total,
+          pages: Math.ceil(total / limit)
+        }
+      });
+    });
+  });
+};
+
+// Get job application by ID
+export const getJobApplicationById = (req, res) => {
+  const { id } = req.params;
+
+  const query = `SELECT * FROM job_applications WHERE id = ?`;
+  
+  db1.query(query, [id], (error, results) => {
+    if (error) {
+      console.error("Job application query error:", error);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Job application not found" });
+    }
+
+    res.json(results[0]);
+  });
+};
+
+// Delete a job application
+export const deleteJobApplication = (req, res) => {
+  const { id } = req.params;
+
+  const query = `DELETE FROM job_applications WHERE id = ?`;
+  
+  db1.query(query, [id], (error, results) => {
+    if (error) {
+      console.error("Delete job application error:", error);
+      return res.status(500).json({ error: "Failed to delete job application" });
+    }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ error: "Job application not found" });
+    }
+
+    res.json({
+      message: "Job application deleted successfully",
+      success: true
+    });
+  });
+};
 
 
 
 
 
+// Get all volunteers
+export const getVolunteers = (req, res) => {
+  const { page = 1, limit = 10, search = "" } = req.query;
+  const offset = (page - 1) * limit;
 
+  let query = `
+    SELECT * FROM volunteers 
+    WHERE name LIKE ? OR email LIKE ? OR phone LIKE ? OR country LIKE ?
+    ORDER BY created_at DESC 
+    LIMIT ? OFFSET ?
+  `;
+  
+  let countQuery = `
+    SELECT COUNT(*) as total FROM volunteers 
+    WHERE name LIKE ? OR email LIKE ? OR phone LIKE ? OR country LIKE ?
+  `;
+
+  const searchTerm = `%${search}%`;
+  const queryParams = [searchTerm, searchTerm, searchTerm, searchTerm, parseInt(limit), parseInt(offset)];
+  const countParams = [searchTerm, searchTerm, searchTerm, searchTerm];
+
+  db1.query(countQuery, countParams, (countError, countResults) => {
+    if (countError) {
+      console.error("Count query error:", countError);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    const total = countResults[0]?.total || 0;
+
+    db1.query(query, queryParams, (error, results) => {
+      if (error) {
+        console.error("Query error:", error);
+        return res.status(500).json({ error: "Database error" });
+      }
+
+      res.json({
+        volunteers: results,
+        pagination: {
+          page: parseInt(page),
+          limit: parseInt(limit),
+          total,
+          pages: Math.ceil(total / limit)
+        }
+      });
+    });
+  });
+};
+
+// Get volunteer by ID
+export const getVolunteerById = (req, res) => {
+  const { id } = req.params;
+
+  const query = `SELECT * FROM volunteers WHERE id = ?`;
+  
+  db1.query(query, [id], (error, results) => {
+    if (error) {
+      console.error("Volunteer query error:", error);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Volunteer not found" });
+    }
+
+    res.json(results[0]);
+  });
+};
+
+// Delete a volunteer
+export const deleteVolunteer = (req, res) => {
+  const { id } = req.params;
+
+  const query = `DELETE FROM volunteers WHERE id = ?`;
+  
+  db1.query(query, [id], (error, results) => {
+    if (error) {
+      console.error("Delete volunteer error:", error);
+      return res.status(500).json({ error: "Failed to delete volunteer" });
+    }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ error: "Volunteer not found" });
+    }
+
+    res.json({
+      message: "Volunteer deleted successfully",
+      success: true
+    });
+  });
+};
+
+
+
+
+
+// Get all contact messages
+export const getContactMessages = (req, res) => {
+  const { page = 1, limit = 10, search = "" } = req.query;
+  const offset = (page - 1) * limit;
+
+  let query = `
+    SELECT * FROM contact_messages 
+    WHERE name LIKE ? OR email LIKE ? OR phone LIKE ? OR subject LIKE ?
+    ORDER BY created_at DESC 
+    LIMIT ? OFFSET ?
+  `;
+  
+  let countQuery = `
+    SELECT COUNT(*) as total FROM contact_messages 
+    WHERE name LIKE ? OR email LIKE ? OR phone LIKE ? OR subject LIKE ?
+  `;
+
+  const searchTerm = `%${search}%`;
+  const queryParams = [searchTerm, searchTerm, searchTerm, searchTerm, parseInt(limit), parseInt(offset)];
+  const countParams = [searchTerm, searchTerm, searchTerm, searchTerm];
+
+  db1.query(countQuery, countParams, (countError, countResults) => {
+    if (countError) {
+      console.error("Count query error:", countError);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    const total = countResults[0]?.total || 0;
+
+    db1.query(query, queryParams, (error, results) => {
+      if (error) {
+        console.error("Query error:", error);
+        return res.status(500).json({ error: "Database error" });
+      }
+
+      res.json({
+        messages: results,
+        pagination: {
+          page: parseInt(page),
+          limit: parseInt(limit),
+          total,
+          pages: Math.ceil(total / limit)
+        }
+      });
+    });
+  });
+};
+
+// Get contact message by ID
+export const getContactMessageById = (req, res) => {
+  const { id } = req.params;
+
+  const query = `SELECT * FROM contact_messages WHERE id = ?`;
+  
+  db1.query(query, [id], (error, results) => {
+    if (error) {
+      console.error("Contact message query error:", error);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Contact message not found" });
+    }
+
+    res.json(results[0]);
+  });
+};
+
+// Delete a contact message
+export const deleteContactMessage = (req, res) => {
+  const { id } = req.params;
+
+  const query = `DELETE FROM contact_messages WHERE id = ?`;
+  
+  db1.query(query, [id], (error, results) => {
+    if (error) {
+      console.error("Delete contact message error:", error);
+      return res.status(500).json({ error: "Failed to delete contact message" });
+    }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ error: "Contact message not found" });
+    }
+
+    res.json({
+      message: "Contact message deleted successfully",
+      success: true
+    });
+  });
+};
+
+const JWT_SECRET=process.env.JWT_SECRET
+export const authlogin=async (req,res)=>{
+ const token = req.cookies.token;
+// console.log(JWT_SECRET)
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.user=decoded
+//    console.log(decoded)
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+
+  res.status(200).json({message:"success"})
+  
+  
+  
+}
+
+
+
+
+// Get all topbar contents
+export const getAllTopbarContents = (req, res) => {
+  const query = 'SELECT * FROM topbarcontent ORDER BY created_at DESC';
+  
+  db1.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching topbar contents:', err);
+      return res.status(500).json({
+        success: false,
+        message: 'Error fetching topbar contents',
+        error: err.message
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      data: results
+    });
+  });
+};
+
+// Get single topbar content by ID
+export const getTopbarContentById = (req, res) => {
+  const { id } = req.params;
+  const query = 'SELECT * FROM topbarcontent WHERE id = ?';
+  
+  db1.query(query, [id], (err, results) => {
+    if (err) {
+      console.error('Error fetching topbar content:', err);
+      return res.status(500).json({
+        success: false,
+        message: 'Error fetching topbar content',
+        error: err.message
+      });
+    }
+    
+    if (results.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Topbar content not found'
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      data: results[0]
+    });
+  });
+};
+
+// Create new topbar content
+export const createTopbarContent = (req, res) => {
+  const { text } = req.body;
+  
+  if (!text) {
+    return res.status(400).json({
+      success: false,
+      message: 'Text content is required'
+    });
+  }
+  
+  const query = 'INSERT INTO topbarcontent (text) VALUES (?)';
+  
+  db1.query(query, [text], (err, results) => {
+    if (err) {
+      console.error('Error creating topbar content:', err);
+      return res.status(500).json({
+        success: false,
+        message: 'Error creating topbar content',
+        error: err.message
+      });
+    }
+    
+    res.status(201).json({
+      success: true,
+      message: 'Topbar content created successfully',
+      data: {
+        id: results.insertId,
+        text
+      }
+    });
+  });
+};
+
+// Update topbar content
+export const updateTopbarContent = (req, res) => {
+  const { id } = req.params;
+  const { text } = req.body;
+  
+  if (!text) {
+    return res.status(400).json({
+      success: false,
+      message: 'Text content is required'
+    });
+  }
+  
+  const query = 'UPDATE topbarcontent SET text = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?';
+  
+  db1.query(query, [text, id], (err, results) => {
+    if (err) {
+      console.error('Error updating topbar content:', err);
+      return res.status(500).json({
+        success: false,
+        message: 'Error updating topbar content',
+        error: err.message
+      });
+    }
+    
+    if (results.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Topbar content not found'
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      message: 'Topbar content updated successfully',
+      data: {
+        id,
+        text
+      }
+    });
+  });
+};
+
+// Delete topbar content
+export const deleteTopbarContent = (req, res) => {
+  const { id } = req.params;
+  const query = 'DELETE FROM topbarcontent WHERE id = ?';
+  
+  db1.query(query, [id], (err, results) => {
+    if (err) {
+      console.error('Error deleting topbar content:', err);
+      return res.status(500).json({
+        success: false,
+        message: 'Error deleting topbar content',
+        error: err.message
+      });
+    }
+    
+    if (results.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Topbar content not found'
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      message: 'Topbar content deleted successfully'
+    });
+  });
+};
+
+
+
+
+// Get all certifications
+export const getAllCertifications = async (req, res) => {
+  try {
+    const query = 'SELECT * FROM certifications ORDER BY display_order ASC, created_at DESC';
+    
+    db1.query(query, (err, results) => {
+      if (err) {
+        console.error('Error fetching certifications:', err);
+        return res.status(500).json({
+          success: false,
+          message: 'Error fetching certifications',
+          error: err.message
+        });
+      }
+      
+      res.status(200).json({
+        success: true,
+        data: results
+      });
+    });
+  } catch (error) {
+    console.error('Error in getAllCertifications:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message
+    });
+  }
+};
+
+// Get single certification by ID
+export const getCertificationById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const query = 'SELECT * FROM certifications WHERE id = ?';
+    
+    db1.query(query, [id], (err, results) => {
+      if (err) {
+        console.error('Error fetching certification:', err);
+        return res.status(500).json({
+          success: false,
+          message: 'Error fetching certification',
+          error: err.message
+        });
+      }
+      
+      if (results.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: 'Certification not found'
+        });
+      }
+      
+      res.status(200).json({
+        success: true,
+        data: results[0]
+      });
+    });
+  } catch (error) {
+    console.error('Error in getCertificationById:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message
+    });
+  }
+};
+
+// Create new certification with base64
+export const createCertification = async (req, res) => {
+  try {
+    const { title, description, display_order, image_base64 } = req.body;
+
+    if (!title || !image_base64) {
+      return res.status(400).json({
+        success: false,
+        message: 'Title and image are required'
+      });
+    }
+
+    // Validate base64 image
+    const matches = image_base64.match(/^data:(.+);base64,(.+)$/);
+    if (!matches) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid base64 image format'
+      });
+    }
+
+    // Generate unique filename and upload to FTP
+    const ext = matches[1].split("/")[1] || "png";
+    const fileName = `cert_${Date.now()}_${Math.floor(Math.random() * 1e6)}.${ext}`;
+    const fileBuffer = Buffer.from(matches[2], "base64");
+    
+    const imageUrl = await uploadToFTP(fileName, fileBuffer);
+
+    const query = `
+      INSERT INTO certifications (title, description, image_url, display_order) 
+      VALUES (?, ?, ?, ?)
+    `;
+    
+    db1.query(query, [title, description, imageUrl, display_order || 0], (err, results) => {
+      if (err) {
+        console.error('Error creating certification:', err);
+        // Delete uploaded file if DB operation fails
+        deleteFromFTP(imageUrl);
+        return res.status(500).json({
+          success: false,
+          message: 'Error creating certification',
+          error: err.message
+        });
+      }
+      
+      res.status(201).json({
+        success: true,
+        message: 'Certification created successfully',
+        data: {
+          id: results.insertId,
+          title,
+          description,
+          image_url: imageUrl,
+          display_order: display_order || 0
+        }
+      });
+    });
+  } catch (error) {
+    console.error('Error in createCertification:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message
+    });
+  }
+};
+
+// Update certification with base64
+export const updateCertification = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description, display_order, image_base64 } = req.body;
+
+    // First get the current certification
+    const getQuery = 'SELECT * FROM certifications WHERE id = ?';
+    
+    db1.query(getQuery, [id], async (err, results) => {
+      if (err) {
+        console.error('Error fetching certification for update:', err);
+        return res.status(500).json({
+          success: false,
+          message: 'Error updating certification',
+          error: err.message
+        });
+      }
+      
+      if (results.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: 'Certification not found'
+        });
+      }
+      
+      const currentCert = results[0];
+      let imageUrl = currentCert.image_url;
+
+      // If new base64 image provided
+      if (image_base64) {
+        const matches = image_base64.match(/^data:(.+);base64,(.+)$/);
+        if (!matches) {
+          return res.status(400).json({
+            success: false,
+            message: 'Invalid base64 image format'
+          });
+        }
+
+        // Generate unique filename and upload to FTP
+        const ext = matches[1].split("/")[1] || "png";
+        const fileName = `cert_${Date.now()}_${Math.floor(Math.random() * 1e6)}.${ext}`;
+        const fileBuffer = Buffer.from(matches[2], "base64");
+        
+        imageUrl = await uploadToFTP(fileName, fileBuffer);
+        
+        // Delete old file from FTP
+        await deleteFromFTP(currentCert.image_url);
+      }
+
+      const updateQuery = `
+        UPDATE certifications 
+        SET title = ?, description = ?, image_url = ?, display_order = ?, updated_at = CURRENT_TIMESTAMP 
+        WHERE id = ?
+      `;
+      
+      db1.query(updateQuery, [
+        title || currentCert.title,
+        description || currentCert.description,
+        imageUrl,
+        display_order !== undefined ? display_order : currentCert.display_order,
+        id
+      ], (err, results) => {
+        if (err) {
+          console.error('Error updating certification:', err);
+          return res.status(500).json({
+            success: false,
+            message: 'Error updating certification',
+            error: err.message
+          });
+        }
+        
+        if (results.affectedRows === 0) {
+          return res.status(404).json({
+            success: false,
+            message: 'Certification not found'
+          });
+        }
+        
+        res.status(200).json({
+          success: true,
+          message: 'Certification updated successfully',
+          data: {
+            id: parseInt(id),
+            title: title || currentCert.title,
+            description: description || currentCert.description,
+            image_url: imageUrl,
+            display_order: display_order !== undefined ? display_order : currentCert.display_order
+          }
+        });
+      });
+    });
+  } catch (error) {
+    console.error('Error in updateCertification:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message
+    });
+  }
+};
+
+// Delete certification
+export const deleteCertification = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // First get the certification to get image URL
+    const getQuery = 'SELECT * FROM certifications WHERE id = ?';
+    
+    db1.query(getQuery, [id], async (err, results) => {
+      if (err) {
+        console.error('Error fetching certification for deletion:', err);
+        return res.status(500).json({
+          success: false,
+          message: 'Error deleting certification',
+          error: err.message
+        });
+      }
+      
+      if (results.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: 'Certification not found'
+        });
+      }
+      
+      const certification = results[0];
+      
+      // Delete from FTP
+      await deleteFromFTP(certification.image_url);
+      
+      // Delete from database
+      const deleteQuery = 'DELETE FROM certifications WHERE id = ?';
+      
+      db1.query(deleteQuery, [id], (err, results) => {
+        if (err) {
+          console.error('Error deleting certification:', err);
+          return res.status(500).json({
+            success: false,
+            message: 'Error deleting certification',
+            error: err.message
+          });
+        }
+        
+        if (results.affectedRows === 0) {
+          return res.status(404).json({
+            success: false,
+            message: 'Certification not found'
+          });
+        }
+        
+        res.status(200).json({
+          success: true,
+          message: 'Certification deleted successfully'
+        });
+      });
+    });
+  } catch (error) {
+    console.error('Error in deleteCertification:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message
+    });
+  }
+};
+
+
+
+
+// Get all testimonials
+export const getAllTestimonials = (req, res) => {
+  const query = 'SELECT * FROM testimonials ORDER BY created_at DESC';
+  
+  db1.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching testimonials:', err);
+      return res.status(500).json({
+        success: false,
+        message: 'Error fetching testimonials',
+        error: err.message
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      data: results
+    });
+  });
+};
+
+// Get testimonial by ID
+export const getTestimonialById = (req, res) => {
+  const { id } = req.params;
+  const query = 'SELECT * FROM testimonials WHERE id = ?';
+  
+  db1.query(query, [id], (err, results) => {
+    if (err) {
+      console.error('Error fetching testimonial:', err);
+      return res.status(500).json({
+        success: false,
+        message: 'Error fetching testimonial',
+        error: err.message
+      });
+    }
+    
+    if (results.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Testimonial not found'
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      data: results[0]
+    });
+  });
+};
+
+// Create new testimonial with base64 video
+export const createTestimonial = async (req, res) => {
+  try {
+    const { video_base64 } = req.body;
+
+    if (!video_base64) {
+      return res.status(400).json({
+        success: false,
+        message: 'Video is required'
+      });
+    }
+
+    // Validate base64 video
+    const matches = video_base64.match(/^data:(.+);base64,(.+)$/);
+    if (!matches) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid base64 video format'
+      });
+    }
+
+    // Generate unique filename and upload to FTP
+    const ext = matches[1].split("/")[1] || "mp4";
+    const fileName = `testimonial_${Date.now()}_${Math.floor(Math.random() * 1e6)}.${ext}`;
+    const fileBuffer = Buffer.from(matches[2], "base64");
+    
+    const videoUrl = await uploadVideoToFTP(fileName, fileBuffer);
+
+    const query = 'INSERT INTO testimonials (video_url) VALUES (?)';
+    
+    db1.query(query, [videoUrl], (err, results) => {
+      if (err) {
+        console.error('Error creating testimonial:', err);
+        // Delete uploaded file if DB operation fails
+        deleteVideoFromFTP(videoUrl);
+        return res.status(500).json({
+          success: false,
+          message: 'Error creating testimonial',
+          error: err.message
+        });
+      }
+      
+      res.status(201).json({
+        success: true,
+        message: 'Testimonial created successfully',
+        data: {
+          id: results.insertId,
+          video_url: videoUrl
+        }
+      });
+    });
+  } catch (error) {
+    console.error('Error in createTestimonial:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message
+    });
+  }
+};
+
+// Update testimonial with base64 video
+export const updateTestimonial = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { video_base64 } = req.body;
+
+    // First get the current testimonial
+    const getQuery = 'SELECT * FROM testimonials WHERE id = ?';
+    
+    db1.query(getQuery, [id], async (err, results) => {
+      if (err) {
+        console.error('Error fetching testimonial for update:', err);
+        return res.status(500).json({
+          success: false,
+          message: 'Error updating testimonial',
+          error: err.message
+        });
+      }
+      
+      if (results.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: 'Testimonial not found'
+        });
+      }
+      
+      const currentTestimonial = results[0];
+      let videoUrl = currentTestimonial.video_url;
+
+      // If new base64 video provided
+      if (video_base64) {
+        const matches = video_base64.match(/^data:(.+);base64,(.+)$/);
+        if (!matches) {
+          return res.status(400).json({
+            success: false,
+            message: 'Invalid base64 video format'
+          });
+        }
+
+        // Generate unique filename and upload to FTP
+        const ext = matches[1].split("/")[1] || "mp4";
+        const fileName = `testimonial_${Date.now()}_${Math.floor(Math.random() * 1e6)}.${ext}`;
+        const fileBuffer = Buffer.from(matches[2], "base64");
+        
+        videoUrl = await uploadVideoToFTP(fileName, fileBuffer);
+        
+        // Delete old file from FTP
+        await deleteVideoFromFTP(currentTestimonial.video_url);
+      }
+
+      const updateQuery = 'UPDATE testimonials SET video_url = ? WHERE id = ?';
+      
+      db1.query(updateQuery, [videoUrl, id], (err, results) => {
+        if (err) {
+          console.error('Error updating testimonial:', err);
+          return res.status(500).json({
+            success: false,
+            message: 'Error updating testimonial',
+            error: err.message
+          });
+        }
+        
+        if (results.affectedRows === 0) {
+          return res.status(404).json({
+            success: false,
+            message: 'Testimonial not found'
+          });
+        }
+        
+        res.status(200).json({
+          success: true,
+          message: 'Testimonial updated successfully',
+          data: {
+            id: parseInt(id),
+            video_url: videoUrl
+          }
+        });
+      });
+    });
+  } catch (error) {
+    console.error('Error in updateTestimonial:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message
+    });
+  }
+};
+
+// Delete testimonial
+export const deleteTestimonial = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // First get the testimonial to get video URL
+    const getQuery = 'SELECT * FROM testimonials WHERE id = ?';
+    
+    db1.query(getQuery, [id], async (err, results) => {
+      if (err) {
+        console.error('Error fetching testimonial for deletion:', err);
+        return res.status(500).json({
+          success: false,
+          message: 'Error deleting testimonial',
+          error: err.message
+        });
+      }
+      
+      if (results.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: 'Testimonial not found'
+        });
+      }
+      
+      const testimonial = results[0];
+      
+      // Delete from FTP
+      await deleteVideoFromFTP(testimonial.video_url);
+      
+      // Delete from database
+      const deleteQuery = 'DELETE FROM testimonials WHERE id = ?';
+      
+      db1.query(deleteQuery, [id], (err, results) => {
+        if (err) {
+          console.error('Error deleting testimonial:', err);
+          return res.status(500).json({
+            success: false,
+            message: 'Error deleting testimonial',
+            error: err.message
+          });
+        }
+        
+        if (results.affectedRows === 0) {
+          return res.status(404).json({
+            success: false,
+            message: 'Testimonial not found'
+          });
+        }
+        
+        res.status(200).json({
+          success: true,
+          message: 'Testimonial deleted successfully'
+        });
+      });
+    });
+  } catch (error) {
+    console.error('Error in deleteTestimonial:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message
+    });
+  }
+};

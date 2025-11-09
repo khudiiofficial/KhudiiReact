@@ -97,7 +97,7 @@ const Crousel = () => {
           <div className={`${styles.arrange}`}  lang="en"  dangerouslySetInnerHTML={{ __html: org.description }} />
         </div>
 
-        <Socials itemId={id}  />
+        <Socials name={org.name} itemId={id}  />
       </div>
        <Services id={id} />
      

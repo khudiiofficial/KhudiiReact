@@ -1,11 +1,11 @@
 // import mysql from "mysql2";
 
-// // Create the connection
+// Create the connection
 // const db1 = mysql.createConnection({
 //   host: "localhost",   // WAMP default
 //   user: "root",        // default MySQL user
 //   password: "",        // set if you gave root a password
-//   database: "db_ka_ap",   // your database name,
+//   database: "db_ka",   // your database name,
 //   port:3308
 // });
 
@@ -47,6 +47,45 @@ db1.getConnection((err, connection) => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+// const createCertificationsTable = () => {
+//   const createTableQuery = `
+//     CREATE TABLE IF NOT EXISTS certifications (
+//       id INT AUTO_INCREMENT PRIMARY KEY,
+//       title VARCHAR(255) NOT NULL,
+//       description TEXT,
+//       image_url VARCHAR(500) NOT NULL,
+//       display_order INT DEFAULT 0,
+//       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+//       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+//     )
+//   `;
+
+//   db1.query(createTableQuery, (err, results) => {
+//     if (err) {
+//       console.error('❌ Error creating certifications table:', err);
+//       return;
+//     }
+//     console.log('✅ Certifications table created or already exists!');
+    
+//     // Insert sample data (optional)
+//     // insertSampleData();
+//   });
+// };
+
+// createCertificationsTable()
+
+
+  
 
 
 export default db1;

@@ -170,7 +170,7 @@ const Navbar = () => {
 
             {/* Join Us Dropdown */}
             <span className={`${styles.gpos}`}>
-              <Link to="/join" className="hover:text-gray-900">
+              <Link to="#" className="hover:text-gray-900">
                 Join Us
               </Link>
               <i className={`${styles.fw} fas fa-chevron-down`}></i>

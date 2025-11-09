@@ -11,7 +11,8 @@ const VideoForm = ({ video, onSubmit, onCancel }) => {
   const [errors, setErrors] = useState({});
   const [imagePreview, setImagePreview] = useState('');
   const [imageFile, setImageFile] = useState(null);
-
+  const [cap,setcap]=useState('')
+  
   useEffect(() => {
     if (video) {
       setFormData({
@@ -105,6 +106,13 @@ const VideoForm = ({ video, onSubmit, onCancel }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+ if(cap){
+      console.log('bot detected')
+      setcap('')
+      return
+    }
+
+
     if (!validateForm()) {
       return;
     }
@@ -149,6 +157,7 @@ const VideoForm = ({ video, onSubmit, onCancel }) => {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Title */}
+            <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
         <div>
           <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
             Title *

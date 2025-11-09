@@ -2,11 +2,15 @@
 import ftp from "basic-ftp";
 
 const FTP_CONFIG = {
-  host: "ftp.khudii.com",
-  user: "u738598637.media",
-  password: "M9QjdZy#9NKfDY$",
-  secure: false
+  host: process.env.FTP_HOST,
+  user:process.env.FTP_USER,
+  password: process.env.FTP_PASS,
+  secure: false,
+   timeout: 300000, // 30 seconds timeout
+  keepAlive: 10000, // Send keepalive every 30 seconds
+  passive: true,
 };
+
 
 // const FTP_UPLOAD_DIR = "/home/u738598637/domains/khudii.com/public_html/media";
 const FTP_UPLOAD_DIR = "/media";
@@ -67,7 +71,120 @@ export async function deleteFromFTP(fileUrl) {
 
 
 
+/**
+ * Uploads a video file to FTP
+ */
+export async function uploadVideoToFTP(fileName, fileBuffer) {
+  const client = new ftp.Client();
+  client.ftp.timeout = 0;
 
+  client.ftp.verbose = true;
+  try {
+    await client.access(FTP_CONFIG);
+    await client.ensureDir(FTP_UPLOAD_DIR);
+    await client.cd(FTP_UPLOAD_DIR);
+    
+    const {Readable} = await import("stream");
+    const stream = new Readable();
+    stream.push(fileBuffer);
+    stream.push(null);
+    
+    await client.uploadFrom(stream, fileName);
+    return `${BASE_URL}/${fileName}`;
+  } catch (err) {
+    console.error("FTP video upload error:", err);
+    throw err;
+  } finally {
+    client.close();
+  }
+}
+
+// import { Readable } from "stream";
+
+// export async function uploadVideoToFTP(fileName, fileBuffer) {
+//   const client = new ftp.Client();
+  
+//   // Disable timeouts for large files
+//   client.ftp.timeout = 0;
+//   client.ftp.verbose = true;
+
+//   try {
+//     console.log(`Uploading: ${fileName} (${(fileBuffer.length / 1024 / 1024).toFixed(2)} MB)`);
+    
+//     await client.access(FTP_CONFIG);
+//     await client.ensureDir(FTP_UPLOAD_DIR);
+//     await client.cd(FTP_UPLOAD_DIR);
+
+//     const { Readable } = await import("stream");
+//     const stream = Readable.from(fileBuffer);
+    
+//     // Simple upload - no progress tracking to reduce overhead
+//     await client.uploadFrom(stream, fileName);
+    
+//     console.log(`Upload successful: ${fileName}`);
+//     return `${BASE_URL}/${fileName}`;
+
+//   } catch (err) {
+//     console.error("Upload failed:", err.message);
+    
+//     // For large files, try without CD command
+//     if (err.message.includes('Timeout')) {
+//       return await uploadWithoutCD(fileName, fileBuffer);
+//     }
+    
+//     throw err;
+//   } finally {
+//     client.close();
+//   }
+// }
+
+// Alternative method without CD commands
+// async function uploadWithoutCD(fileName, fileBuffer) {
+//   const client = new ftp.Client();
+//   client.ftp.timeout = 0;
+  
+//   try {
+//     console.log("Trying alternative upload method...");
+    
+//     await client.access(FTP_CONFIG);
+    
+//     // Upload directly to media directory without CD
+//     const { Readable } = await import("stream");
+//     const stream = Readable.from(fileBuffer);
+    
+//     await client.uploadFrom(stream, `/media/${fileName}`);
+    
+//     console.log("Alternative upload successful");
+//     return `${BASE_URL}/${fileName}`;
+    
+//   } finally {
+//     client.close();
+//   }
+// }
+
+
+/**
+ * Deletes video file from FTP
+ */
+export async function deleteVideoFromFTP(videoUrl) {
+  if (!videoUrl) return;
+  const client = new ftp.Client();
+  client.ftp.verbose = false;
+  try {
+    await client.access(FTP_CONFIG);
+    await client.ensureDir(FTP_UPLOAD_DIR);
+    await client.cd(FTP_UPLOAD_DIR);
+    
+    const fileName = videoUrl.split("/").pop();
+    if (!fileName) return;
+    
+    await client.remove(fileName);
+  } catch (err) {
+    console.error("FTP video delete error:", err);
+  } finally {
+    client.close();
+  }
+}
 
 
 /**

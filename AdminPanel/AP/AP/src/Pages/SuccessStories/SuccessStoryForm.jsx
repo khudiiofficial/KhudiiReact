@@ -10,6 +10,7 @@ const SuccessStoryForm = ({ story, onSubmit, onCancel }) => {
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [cap,setcap]=useState('')
 
   useEffect(() => {
     if (story) {
@@ -56,7 +57,14 @@ const SuccessStoryForm = ({ story, onSubmit, onCancel }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+     if(cap){
+      console.log('bot detected')
+      setcap('')
+      return
+    }
+
+
+
     if (!validateForm()) {
       return;
     }
@@ -101,6 +109,10 @@ const SuccessStoryForm = ({ story, onSubmit, onCancel }) => {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Title */}
+        
+    <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
+
+
         <div>
           <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
             Title *

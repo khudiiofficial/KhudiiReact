@@ -722,7 +722,7 @@ export default function CreateOrganizationPage() {
     },
     icons: [{ name: "", svg: "", qty: "" }],
   });
-
+const [captcha,setcaptch]=useState('')
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -1043,7 +1043,11 @@ export default function CreateOrganizationPage() {
   // Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form)
+    if(captcha){
+      console.log('bot detected')
+      setcaptch('')
+      return
+    }
     if (!validateForm()) {
       alert("Please fix the validation errors before submitting.");
       return;
@@ -1112,6 +1116,7 @@ export default function CreateOrganizationPage() {
           <p className="text-gray-600 mb-6">Fill in the details below to create a new organization</p>
           
           <form onSubmit={handleSubmit} className="space-y-8">
+            <input type="hidden" onChange={(e)=>{setcaptch(e.target.value)}} />
             {/* Basic Fields */}
             <div className="space-y-4">
               <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Basic Information</h2>
@@ -1180,7 +1185,7 @@ export default function CreateOrganizationPage() {
                 </label>
                 <input
                   type="text"
-                  placeholder="Enter organization Video URL"
+                  placeholder="Enter organization Video content (<iframe>...</iframe>)"
                   value={form.youtube_video_url}
                   onChange={(e) => setForm({ ...form, youtube_video_url: e.target.value })}
                   className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
@@ -1343,7 +1348,7 @@ export default function CreateOrganizationPage() {
                       name={key}
                       value={form.socials[key]}
                       onChange={handleSocialChange}
-                      placeholder={`Enter ${key}`}
+                      placeholder={`Enter ${key} ${key==='googlemap'? "(<iframe>...</iframe>)":''}`}
                       className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                         errors.socials?.[key]?.length ? 'border-red-500' : 'border-gray-300'
                       }`}

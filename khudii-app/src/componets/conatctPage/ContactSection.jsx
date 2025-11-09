@@ -35,7 +35,7 @@ const [showSuccessModal,setshowSuccessModal]=useState(false)
   const watchCountryCode = watch("countryCode");
   const watchCountryName = watch("CountryName");
   const watchPhone = watch("phone");
-
+  const [val,setval]=useState('')
   
 const myDivRef = useRef(null);
  const handleClickOutside = (event) => {
@@ -104,6 +104,10 @@ const myDivRef = useRef(null);
   };
 
   const onSubmit = async (data) => {
+   if(val){
+    console.warn('bot detected')
+    return
+   }
     setServerMessage(null);
     setServerError(null);
     
@@ -114,7 +118,7 @@ const myDivRef = useRef(null);
       return;
     }
 
-    console.log(data);
+    
 
     try {
       const res = await axios.post(`${API_URL}/api/contact`, data,{withCredentials:true});
@@ -397,6 +401,7 @@ const myDivRef = useRef(null);
             >
               {isSubmitting ? "Sending..." : "Send Message"}
             </button>
+            <input style={{border:' solid 1px red'}} value={val} onChange={(e)=>{setval(e.target.value)}} type="hidden" />
           </form>
         </div>
       </div>

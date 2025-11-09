@@ -605,7 +605,7 @@ export default function CreateBlogPage() {
       categories: []
     }
   });
-  
+   const [cap,setcap]=useState('')
   const [saving, setSaving] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -862,6 +862,12 @@ export default function CreateBlogPage() {
       return;
     }
 
+ if(cap){
+      console.log('bot detected')
+      setcap('')
+      return
+    }
+
     setSaving(true);
     
     try {
@@ -898,6 +904,8 @@ export default function CreateBlogPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-8">
+               <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
+               
             {/* Main Document Section */}
             <div className="space-y-6 p-6 bg-blue-50 rounded-xl">
               <h2 className="text-2xl font-semibold text-gray-800">Main Blog Content</h2>

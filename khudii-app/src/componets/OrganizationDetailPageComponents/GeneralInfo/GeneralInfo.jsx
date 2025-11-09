@@ -112,13 +112,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./GeneralInfo.module.css";
-
+import ContactModal from "../../Modale/Modale";
+import { Pointer } from "lucide-react";
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
-
-const Socials = ({ itemId, setgooglemap }) => {
+const Socials = ({ name,itemId, setgooglemap }) => {
   const [socials, setSocials] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
+ const [isModalOpen, setIsModalOpen] = useState(false);
+ 
   useEffect(() => {
     (async () => {
       try {
@@ -156,6 +157,7 @@ const Socials = ({ itemId, setgooglemap }) => {
   };
 
   return (
+    <>
     <div className={styles.wrapper}>
       <ul className={styles.list}>
         {socials.phone && (
@@ -246,10 +248,21 @@ const Socials = ({ itemId, setgooglemap }) => {
               <span className="text-blue-800">(+92) 3198 - KHUDII (548344)</span>
             </a>
           </li>
-   
+   <li  onClick={() => setIsModalOpen(true)} className={`${styles.item}`}>
+            <a target="_blank" rel="noopener noreferrer">
+              {/* <p className="text-red-700"></p> */}
+              <span className="text-blue-800"><button >Know More About Organization?</button></span>
+            </a>
+          </li>
 
       </ul>
     </div>
+    <ContactModal 
+  isOpen={isModalOpen} 
+  onClose={() => setIsModalOpen(false)} 
+  OrgId={name}
+/>
+    </>
   );
 };
 

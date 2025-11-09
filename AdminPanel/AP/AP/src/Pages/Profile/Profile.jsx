@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
+import { setUser } from '../../redux/userslice';
+import { useDispatch } from 'react-redux';
 const Profile = () => {
-  const [user, setUser] = useState({
+  const dispatch=useDispatch()
+  const [user, setuser] = useState({
 
     email: ''
   });
@@ -15,6 +18,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState(''); // 'success' or 'error'
+  const [cap,setcap]=useState('')
 
   useEffect(() => {
     fetchProfile();
@@ -26,11 +30,11 @@ const Profile = () => {
       const response = await axios.get(`${APIPath}/api/profile`, {
        withCredentials:true
       });
-
+      //  console.log(response)
       if (response.data.success) {
       
         const userData = response.data.user;
-        setUser(userData);
+        setuser(userData);
         setFormData(prev => ({
           ...prev,
           email: userData.email || ''
@@ -53,6 +57,13 @@ const Profile = () => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
+
+ if(cap){
+      console.log('bot detected')
+      setcap('')
+      return
+    }
+
 
     // Validation
     if (formData.newPassword && formData.newPassword !== formData.confirmPassword) {
@@ -82,9 +93,10 @@ const Profile = () => {
       const response = await axios.put(`${APIPath}/api/profile`, updateData, {
      withCredentials:true
       });
-
-      if (response.data.success) {
-        setUser(response.data.user);
+      // console.log(response)
+      if (response.status===200) {
+       
+        dispatch(setUser(response.data.user))
         // Clear password fields
         setFormData(prev => ({
           ...prev,
@@ -128,6 +140,10 @@ const Profile = () => {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Personal Information */}
+            
+    <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
+
+
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-gray-700 border-b pb-2">
                 Personal Information

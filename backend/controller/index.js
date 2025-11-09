@@ -562,7 +562,7 @@ export const getSmilarItems=(req,res)=>{
   });
 }
 
-
+import { sendContactEmail } from "../utils/emailService.js";
 export const saveContacts=(req,res)=>{
 
   const {
@@ -575,6 +575,16 @@ export const saveContacts=(req,res)=>{
     email,
     message,
   } = req.body;
+const obj={
+   name,
+    subject,
+    phone,
+    countryCode,
+    CountryName,
+    country,
+    email,
+    message,
+}
 
   if (!name || !subject || !phone || !email || !message) {
     return res.status(400).json({ error: "Required fields missing" });
@@ -602,6 +612,8 @@ export const saveContacts=(req,res)=>{
       console.error("❌ Error inserting contact message:", err);
       return res.status(500).json({ error: "Database error" });
     }
+    sendContactEmail(obj)
+
     return res.status(200).json({ message: "Contact saved successfully" });
   });
 
@@ -609,12 +621,14 @@ export const saveContacts=(req,res)=>{
 }
 
 
-
+import { sendVolunteerEmail } from "../utils/emailService.js";
 export const AddVolunteer=(req,res)=>{
 
 
   const { name, email, phone, countryCode, CountryName, country, contactTime, message } = req.body;
-
+const obj={
+  name, email, phone, countryCode, CountryName, country, contactTime, message
+}
   if (!name || !email || !phone || !contactTime) {
     return res.status(400).json({ error: "All required fields must be filled." });
   }
@@ -629,6 +643,7 @@ export const AddVolunteer=(req,res)=>{
       console.error("❌ Error inserting volunteer:", err);
       return res.status(500).json({ error: "Database error" });
     }
+    sendVolunteerEmail(obj)
     res.status(200).json({ message: "Volunteer application saved successfully!" });
   });
 
@@ -636,7 +651,7 @@ export const AddVolunteer=(req,res)=>{
 
 }
 
-
+import { sendJobApplicationEmail } from "../utils/emailService.js";
 export const ApplyForJob=(req,res)=>{
 
   const {
@@ -651,7 +666,18 @@ export const ApplyForJob=(req,res)=>{
     interestedPost,
     message,
   } = req.body;
-
+const obj={
+   name,
+    phone,
+    email,
+    countryCode,
+    CountryName,
+    country,
+    experience,
+    qualification,
+    interestedPost,
+    message
+}
   if (!name || !email || !experience) {
     return res.status(400).json({ error: "Name, email, and experience are required." });
   }
@@ -670,6 +696,7 @@ export const ApplyForJob=(req,res)=>{
         console.error("❌ Error inserting job application:", err);
         return res.status(500).json({ error: "Database error" });
       }
+sendJobApplicationEmail(obj)
       res.status(200).json({ message: "Job application submitted successfully!" });
     }
   );
@@ -677,7 +704,7 @@ export const ApplyForJob=(req,res)=>{
 
 }
 
-
+import { sendStoryEmail } from "../utils/emailService.js";
 export const ContributeStory=(req,res)=>{
 
 
@@ -692,7 +719,17 @@ export const ContributeStory=(req,res)=>{
     company,
     story,
   } = req.body;
-
+const obj={
+    entityType,
+    name,
+    email,
+    phone,
+    countryCode,
+    CountryName,
+    country,
+    company,
+    story
+}
   if (!entityType || !name || !email || !phone || !story) {
     return res.status(400).json({ error: "Required fields are missing" });
   }
@@ -711,6 +748,7 @@ export const ContributeStory=(req,res)=>{
         console.error("❌ Error inserting story:", err);
         return res.status(500).json({ error: "Database error" });
       }
+      sendStoryEmail(obj)
       res.status(200).json({ message: "Story submitted successfully!" });
     }
   );
@@ -719,7 +757,7 @@ export const ContributeStory=(req,res)=>{
 
 }
 
-
+import { sendDonationEmail } from "../utils/emailService.js";
 export const Donation=(req,res)=>{
 
   const {
@@ -737,7 +775,21 @@ export const Donation=(req,res)=>{
     state,
     message,
   } = req.body;
-
+const obj={
+      firstName,
+    lastName,
+    email,
+    phone,
+    countryCode,
+    CountryName,
+    country,
+    donationAmount,
+    donationType,
+    address1,
+    city,
+    state,
+    message
+}
   if (!firstName || !lastName || !phone || !donationAmount || !donationType || !address1 || !city || !state) {
     return res.status(400).json({ error: "Required fields are missing" });
   }
@@ -756,6 +808,7 @@ export const Donation=(req,res)=>{
         console.error("❌ Error inserting donation:", err);
         return res.status(500).json({ error: "Database error" });
       }
+sendDonationEmail(obj)
       res.status(200).json({ message: "Donation submitted successfully!" });
     }
   );
@@ -802,176 +855,187 @@ db.query('SELECT * FROM videos',(err,results)=>{
   }
   res.status(200).json(DtoArr(results))
 })
-
-
 }
 
+import { sendContactInquiryEmail } from "../utils/emailService.js";
 
 
+export const createContactInquiry = async (req, res) => {
+  const {
+    name,
+    email,
+    phone,
+    message,
+    OrgId,
+    countryCode = "92",
+    CountryName = "Pakistan",
+    country = "PK"
+  } = req.body;
 
-// export const update = (req, res) => {
-//   // Step 1: Select all rows
-//   const selectQuery = "SELECT id, image_path FROM item_images";
+  // Validation
+  if (!name || !email || !phone) {
+    return res.status(400).json({
+      error: "Name, email, and phone are required"
+    });
+  }
 
-//   db.query(selectQuery, (err, rows) => {
-//     if (err) return res.status(500).json({ error: err.message });
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({
+      error: "Invalid email address"
+    });
+  }
 
-//     if (!rows.length) return res.status(404).json({ message: "No images found" });
+  // Get owner email
+  const getOwnerQuery = `SELECT * FROM owners`;
+  
+  db.query(getOwnerQuery, async (ownerError, ownerResults) => {
+    if (ownerError || ownerResults.length === 0) {
+      console.error("Error fetching owner:", ownerError);
+      // Still save the inquiry even if owner not found
+      return saveInquiryWithoutEmail();
+    }
+    const senderemail=ownerResults[0].sender_email
+    const appPassword=ownerResults[0].sender_app_password
+    const ownerEmail = ownerResults[0].email;
+    saveInquiryWithEmail(ownerEmail);
 
-//     // Step 2: Transform paths
-//     const updatedRows = rows.map((row) => {
-//       const oldPath = row.image_path;
-//       let newPath = oldPath;
+    function saveInquiryWithEmail(ownerEmail) {
+      const insertQuery = `
+        INSERT INTO contact_inquiries 
+        (name, email, phone, message, org_id, country_code, country_name, country) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `;
 
-//       if (oldPath.startsWith("http://localhost:5000/storage/")) {
-//         newPath = oldPath.replace("http://localhost:5000/storage", "");
-//       }
+      const values = [
+        name.trim(),
+        email.trim().toLowerCase(),
+        phone.trim(),
+        message ? message.trim() : null,
+        OrgId || null,
+        countryCode,
+        CountryName,
+        country
+      ];
 
-//       return {
-//         id: row.id,
-//         oldPath,
-//         newPath,
-//       };
-//     });
+      db.query(insertQuery, values, async (error, results) => {
+        if (error) {
+          console.error("Database error:", error);
+          return res.status(500).json({
+            error: "Failed to save inquiry"
+          });
+        }
 
-//     // Step 3: (Optional) Preview first few before updating
-//     // const sample = updatedRows.slice(0, 5);
-//     // console.log("Sample changes:");
-//     // console.table(sample);
-
-//     // Step 4: Run updates in DB
-//     const updatePromises = updatedRows.map(({ id, newPath }) => {
-//       return new Promise((resolve, reject) => {
-//         const updateQuery = "UPDATE item_images SET image_path = ? WHERE id = ?";
-//         db.query(updateQuery, [newPath, id], (err, result) => {
-//           if (err) reject(err);
-//           else resolve(result);
-//         });
-//       });
-//     });
-
-//     Promise.all(updatePromises)
-//       .then(() => {
-//         res.status(200).json({
-//           message: "✅ All image paths updated successfully!",
-//           totalUpdated: updatedRows.length,
-          
-//         });
-//       })
-//       .catch((error) => {
-//         res.status(500).json({ error: error.message });
-//       });
-//   });
-// };
-
-
-// export const update1 = (req, res) => {
-//   // Step 1: Select all rows
-//   const selectQuery = "SELECT id, image_path FROM document";
-
-//   db.query(selectQuery, (err, rows) => {
-//     if (err) return res.status(500).json({ error: err.message });
-
-//     if (!rows.length) return res.status(404).json({ message: "No images found" });
-
-//     // Step 2: Transform paths
-//     const updatedRows = rows.map((row) => {
-//       const oldPath = row.image_path;
-//       let newPath = oldPath;
-
-//       if (oldPath.startsWith("http://localhost:5000/storage/")) {
-//         newPath = oldPath.replace("http://localhost:5000/storage", "");
-//       }
-
-//       return {
-//         id: row.id,
-//         oldPath,
-//         newPath,
-//       };
-//     });
-
-//     // Step 3: (Optional) Preview first few before updating
-//     // const sample = updatedRows.slice(0, 5);
-//     // console.log("Sample changes:");
-//     // console.table(sample);
-
-//     // Step 4: Run updates in DB
-//     const updatePromises = updatedRows.map(({ id, newPath }) => {
-//       return new Promise((resolve, reject) => {
-//         const updateQuery = "UPDATE document SET image_path = ? WHERE id = ?";
-//         db.query(updateQuery, [newPath, id], (err, result) => {
-//           if (err) reject(err);
-//           else resolve(result);
-//         });
-//       });
-//     });
-
-//     Promise.all(updatePromises)
-//       .then(() => {
-//         res.status(200).json({
-//           message: "✅ All image paths updated successfully!",
-//           totalUpdated: updatedRows.length,
-      
-//         });
-//       })
-//       .catch((error) => {
-//         res.status(500).json({ error: error.message });
-//       });
-//   });
-// };
-
-
-// export const update2 = (req, res) => {
-//   // Step 1: Select all rows
-//   const selectQuery = "SELECT id, introductory_image_path	 FROM items";
-
-//   db.query(selectQuery, (err, rows) => {
-//     if (err) return res.status(500).json({ error: err.message });
-
-//     if (!rows.length) return res.status(404).json({ message: "No images found" });
-
-//     // Step 2: Transform paths
-//     const updatedRows = rows.map((row) => {
-//       const oldPath = row.introductory_image_path;
-//       let newPath = oldPath;
-
-//       if (oldPath.startsWith("http://localhost:5000/storage/")) {
-//         newPath = oldPath.replace("http://localhost:5000/storage", "");
-//       }
-
-//       return {
-//         id: row.id,
-//         oldPath,
-//         newPath,
-//       };
-//     });
-
-//     // Step 3: (Optional) Preview first few before updating
-//     // const sample = updatedRows.slice(0, 5);
-//     // console.log("Sample changes:");
-//     // console.table(sample);
-
-//     // Step 4: Run updates in DB
-//     const updatePromises = updatedRows.map(({ id, newPath }) => {
-//       return new Promise((resolve, reject) => {
-//         const updateQuery = "UPDATE items SET introductory_image_path = ? WHERE id = ?";
-//         db.query(updateQuery, [newPath, id], (err, result) => {
-//           if (err) reject(err);
-//           else resolve(result);
-//         });
-//       });
-//     });
-
-//     Promise.all(updatePromises)
-//       .then(() => {
-//         res.status(200).json({
-//           message: "✅ All image paths updated successfully!",
-//           totalUpdated: updatedRows.length,
+        const inquiryId = results.insertId;
         
-//         });
-//       })
-//       .catch((error) => {
-//         res.status(500).json({ error: error.message });
-//       });
-//   });
-// };
+        // Prepare data for email
+        const inquiryData = {
+          name: name.trim(),
+          email: email.trim().toLowerCase(),
+          phone: phone.trim(),
+          message: message ? message.trim() : null,
+          org_id: OrgId || null,
+          country_code: countryCode,
+          country_name: CountryName,
+          country: country
+        };
+
+        try {
+          // Send email to owner
+          await sendContactInquiryEmail(senderemail,appPassword,inquiryData, ownerEmail);
+          console.log(`✅ New contact inquiry submitted - ID: ${inquiryId}`);
+        } catch (emailError) {
+          console.error("Email sending failed but inquiry saved:", emailError);
+        }
+
+        res.status(201).json({
+          message: "Thank you for your inquiry! We'll get back to you soon.",
+          inquiryId: inquiryId,
+          success: true
+        });
+      });
+    }
+
+    function saveInquiryWithoutEmail() {
+      const insertQuery = `
+        INSERT INTO contact_inquiries 
+        (name, email, phone, message, org_id, country_code, country_name, country) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+
+      const values = [
+        name.trim(),
+        email.trim().toLowerCase(),
+        phone.trim(),
+        message ? message.trim() : null,
+        OrgId || null,
+        countryCode,
+        CountryName,
+        country
+      ];
+
+      db.query(insertQuery, values, (error, results) => {
+        if (error) {
+          console.error("Database error:", error);
+          return res.status(500).json({
+            error: "Failed to save inquiry"
+          });
+        }
+
+        console.log(`✅ New contact inquiry submitted (no email) - ID: ${results.insertId}`);
+        
+        res.status(201).json({
+          message: "Thank you for your inquiry! We'll get back to you soon.",
+          inquiryId: results.insertId,
+          success: true
+        });
+      });
+    }
+  });
+};
+
+
+export const getAllTopbarContents = (req, res) => {
+  const query = 'SELECT * FROM topbarcontent ORDER BY created_at DESC';
+  
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching topbar contents:', err);
+      return res.status(500).json({
+        success: false,
+        message: 'Error fetching topbar contents',
+        error: err.message
+      });
+    }
+    
+    res.status(200).json(results);
+  });
+};
+
+
+
+export const getAllCertifications = async (req, res) => {
+  try {
+    const query = 'SELECT * FROM certifications ORDER BY display_order ASC, created_at DESC';
+    
+    db.query(query, (err, results) => {
+      if (err) {
+        console.error('Error fetching certifications:', err);
+        return res.status(500).json({
+          success: false,
+          message: 'Error fetching certifications',
+          error: err.message
+        });
+      }
+      
+      res.status(200).json(results);
+    });
+  } catch (error) {
+    console.error('Error in getAllCertifications:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message
+    });
+  }
+};
