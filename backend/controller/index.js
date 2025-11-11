@@ -1039,3 +1039,24 @@ export const getAllCertifications = async (req, res) => {
     });
   }
 };
+
+// Get all testimonials
+export const getAllTestimonials = (req, res) => {
+  const query = 'SELECT * FROM testimonials ORDER BY created_at DESC';
+  
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching testimonials:', err);
+      return res.status(500).json({
+        success: false,
+        message: 'Error fetching testimonials',
+        error: err.message
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      data: results
+    });
+  });
+};

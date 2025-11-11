@@ -50,34 +50,6 @@ db.getConnection((err, connection) => {
 
 
 
-// const createTestimonialsTable = () => {
-//   const createTableQuery = `
-//     CREATE TABLE IF NOT EXISTS testimonials (
-//       id INT AUTO_INCREMENT PRIMARY KEY,
-//       video_url VARCHAR(500) NOT NULL,
-//       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-//       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-//     )
-//   `;
-
-//   db.query(createTableQuery, (err, results) => {
-//     if (err) {
-//       console.error('❌ Error creating testimonials table:', err);
-//       return;
-//     }
-//     console.log('✅ Testimonials table created or already exists!');
-    
-//     // Insert sample data (optional)
- 
-//   });
-// };
-
-
-
-// // Run the table creation
-// createTestimonialsTable();
-
-
 
 
 export default db;

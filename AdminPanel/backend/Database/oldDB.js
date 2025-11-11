@@ -49,7 +49,35 @@ db1.getConnection((err, connection) => {
 
 
 
+// export const alterTestimonialsTable = () => {
+//   const alterQueries = [
+//     // Add new columns if they don't exist
+//     `ALTER TABLE testimonials 
+//      ADD COLUMN IF NOT EXISTS name VARCHAR(255) NOT NULL DEFAULT 'Unknown' AFTER id`,
 
+//     `ALTER TABLE testimonials 
+//      ADD COLUMN IF NOT EXISTS position VARCHAR(255) NOT NULL DEFAULT '' AFTER name`,
+
+//     `ALTER TABLE testimonials 
+//      ADD COLUMN IF NOT EXISTS thumbnail VARCHAR(500) NOT NULL DEFAULT '' AFTER position`,
+
+//     `ALTER TABLE testimonials 
+//      ADD COLUMN IF NOT EXISTS role VARCHAR(255) NOT NULL DEFAULT '' AFTER video_url`
+//   ];
+
+//   alterQueries.forEach((query, index) => {
+//     db1.query(query, (err, results) => {
+//       if (err) {
+//         console.error(`❌ Error executing alter query ${index + 1}:`, err);
+//       } else {
+//         console.log(`✅ Alter query ${index + 1} executed successfully`);
+//       }
+//     });
+//   });
+// };
+
+// // Run table alteration
+// alterTestimonialsTable();
 
 
 

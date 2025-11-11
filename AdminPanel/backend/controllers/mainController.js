@@ -4345,7 +4345,6 @@ export const deleteCertification = async (req, res) => {
 
 
 
-
 // Get all testimonials
 export const getAllTestimonials = (req, res) => {
   const query = 'SELECT * FROM testimonials ORDER BY created_at DESC';
@@ -4396,41 +4395,56 @@ export const getTestimonialById = (req, res) => {
   });
 };
 
-// Create new testimonial with base64 video
+// Create new testimonial
 export const createTestimonial = async (req, res) => {
   try {
-    const { video_base64 } = req.body;
+    const { name, position, role, video_base64, thumbnail_base64 } = req.body;
 
-    if (!video_base64) {
+    if (!name || !position || !role || !video_base64) {
       return res.status(400).json({
         success: false,
-        message: 'Video is required'
+        message: 'Name, position, role, and video are required'
       });
     }
 
-    // Validate base64 video
-    const matches = video_base64.match(/^data:(.+);base64,(.+)$/);
-    if (!matches) {
+    let videoUrl = '';
+    let thumbnailUrl = '';
+
+    // Upload video
+    const videoMatches = video_base64.match(/^data:(.+);base64,(.+)$/);
+    if (!videoMatches) {
       return res.status(400).json({
         success: false,
         message: 'Invalid base64 video format'
       });
     }
 
-    // Generate unique filename and upload to FTP
-    const ext = matches[1].split("/")[1] || "mp4";
-    const fileName = `testimonial_${Date.now()}_${Math.floor(Math.random() * 1e6)}.${ext}`;
-    const fileBuffer = Buffer.from(matches[2], "base64");
+    const videoExt = videoMatches[1].split("/")[1] || "mp4";
+    const videoFileName = `testimonial_video_${Date.now()}_${Math.floor(Math.random() * 1e6)}.${videoExt}`;
+    const videoBuffer = Buffer.from(videoMatches[2], "base64");
     
-    const videoUrl = await uploadVideoToFTP(fileName, fileBuffer);
+    videoUrl = await uploadVideoToFTP(videoFileName, videoBuffer);
 
-    const query = 'INSERT INTO testimonials (video_url) VALUES (?)';
+    // Upload thumbnail if provided
+    if (thumbnail_base64) {
+      const thumbnailMatches = thumbnail_base64.match(/^data:(.+);base64,(.+)$/);
+      if (thumbnailMatches) {
+        const thumbnailExt = thumbnailMatches[1].split("/")[1] || "png";
+        const thumbnailFileName = `testimonial_thumb_${Date.now()}_${Math.floor(Math.random() * 1e6)}.${thumbnailExt}`;
+        const thumbnailBuffer = Buffer.from(thumbnailMatches[2], "base64");
+        
+        thumbnailUrl = await uploadToFTP(thumbnailFileName, thumbnailBuffer);
+      }
+    }
+
+    const query = 'INSERT INTO testimonials (name, position, thumbnail, video_url, role) VALUES (?, ?, ?, ?, ?)';
     
-    db1.query(query, [videoUrl], (err, results) => {
+    db1.query(query, [name, position, thumbnailUrl, videoUrl, role], (err, results) => {
       if (err) {
         console.error('Error creating testimonial:', err);
-        // Delete uploaded file if DB operation fails
+        // Delete uploaded files if DB operation fails
         deleteVideoFromFTP(videoUrl);
+        if (thumbnailUrl) deleteFromFTP(thumbnailUrl);
         return res.status(500).json({
           success: false,
           message: 'Error creating testimonial',
@@ -4443,7 +4457,11 @@ export const createTestimonial = async (req, res) => {
         message: 'Testimonial created successfully',
         data: {
           id: results.insertId,
-          video_url: videoUrl
+          name,
+          position,
+          thumbnail: thumbnailUrl,
+          video_url: videoUrl,
+          role
         }
       });
     });
@@ -4457,11 +4475,11 @@ export const createTestimonial = async (req, res) => {
   }
 };
 
-// Update testimonial with base64 video
+// Update testimonial
 export const updateTestimonial = async (req, res) => {
   try {
     const { id } = req.params;
-    const { video_base64 } = req.body;
+    const { name, position, role, video_base64, thumbnail_base64 } = req.body;
 
     // First get the current testimonial
     const getQuery = 'SELECT * FROM testimonials WHERE id = ?';
@@ -4485,6 +4503,10 @@ export const updateTestimonial = async (req, res) => {
       
       const currentTestimonial = results[0];
       let videoUrl = currentTestimonial.video_url;
+      let thumbnailUrl = currentTestimonial.thumbnail;
+      let updateName = name !== undefined ? name : currentTestimonial.name;
+      let updatePosition = position !== undefined ? position : currentTestimonial.position;
+      let updateRole = role !== undefined ? role : currentTestimonial.role;
 
       // If new base64 video provided
       if (video_base64) {
@@ -4496,20 +4518,36 @@ export const updateTestimonial = async (req, res) => {
           });
         }
 
-        // Generate unique filename and upload to FTP
         const ext = matches[1].split("/")[1] || "mp4";
-        const fileName = `testimonial_${Date.now()}_${Math.floor(Math.random() * 1e6)}.${ext}`;
+        const fileName = `testimonial_video_${Date.now()}_${Math.floor(Math.random() * 1e6)}.${ext}`;
         const fileBuffer = Buffer.from(matches[2], "base64");
         
         videoUrl = await uploadVideoToFTP(fileName, fileBuffer);
         
-        // Delete old file from FTP
+        // Delete old video from FTP
         await deleteVideoFromFTP(currentTestimonial.video_url);
       }
 
-      const updateQuery = 'UPDATE testimonials SET video_url = ? WHERE id = ?';
+      // If new base64 thumbnail provided
+      if (thumbnail_base64) {
+        const matches = thumbnail_base64.match(/^data:(.+);base64,(.+)$/);
+        if (matches) {
+          const ext = matches[1].split("/")[1] || "png";
+          const fileName = `testimonial_thumb_${Date.now()}_${Math.floor(Math.random() * 1e6)}.${ext}`;
+          const fileBuffer = Buffer.from(matches[2], "base64");
+          
+          thumbnailUrl = await uploadToFTP(fileName, fileBuffer);
+          
+          // Delete old thumbnail from FTP if it exists
+          if (currentTestimonial.thumbnail) {
+            await deleteFromFTP(currentTestimonial.thumbnail);
+          }
+        }
+      }
+
+      const updateQuery = 'UPDATE testimonials SET name = ?, position = ?, thumbnail = ?, video_url = ?, role = ? WHERE id = ?';
       
-      db1.query(updateQuery, [videoUrl, id], (err, results) => {
+      db1.query(updateQuery, [updateName, updatePosition, thumbnailUrl, videoUrl, updateRole, id], (err, results) => {
         if (err) {
           console.error('Error updating testimonial:', err);
           return res.status(500).json({
@@ -4531,7 +4569,11 @@ export const updateTestimonial = async (req, res) => {
           message: 'Testimonial updated successfully',
           data: {
             id: parseInt(id),
-            video_url: videoUrl
+            name: updateName,
+            position: updatePosition,
+            thumbnail: thumbnailUrl,
+            video_url: videoUrl,
+            role: updateRole
           }
         });
       });
@@ -4575,6 +4617,9 @@ export const deleteTestimonial = async (req, res) => {
       
       // Delete from FTP
       await deleteVideoFromFTP(testimonial.video_url);
+      if (testimonial.thumbnail) {
+        await deleteFromFTP(testimonial.thumbnail);
+      }
       
       // Delete from database
       const deleteQuery = 'DELETE FROM testimonials WHERE id = ?';

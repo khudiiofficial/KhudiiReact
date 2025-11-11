@@ -1,14 +1,27 @@
+// components/TestimonialAdmin.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './TestimonialAdmin.css'; // Create this CSS file
+import './TestimonialAdmin.css';
 
 const API_URL = import.meta.env.VITE_BACKEND_PATH;
 
 const TestimonialAdmin = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(false);
+  
+ const [cap,setcap]=useState('')
+
+
   const [editingTestimonial, setEditingTestimonial] = useState(null);
-  const [videoBase64, setVideoBase64] = useState(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    position: '',
+    role: '',
+    video_base64: null,
+    thumbnail_base64: null,
+    existing_video_url: '', // Track existing video URL
+    existing_thumbnail_url: '' // Track existing thumbnail URL
+  });
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -46,6 +59,14 @@ const TestimonialAdmin = () => {
     fetchTestimonials();
   }, []);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   const handleVideoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -61,23 +82,78 @@ const TestimonialAdmin = () => {
       
       const reader = new FileReader();
       reader.onload = (event) => {
-        setVideoBase64(event.target.result);
+        setFormData(prev => ({
+          ...prev,
+          video_base64: event.target.result
+        }));
       };
       reader.readAsDataURL(file);
     }
   };
 
+  const handleThumbnailChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        showMessage('Please select an image file', 'error');
+        return;
+      }
+      
+      if (file.size > 5 * 1024 * 1024) {
+        showMessage('Image size must be less than 5MB', 'error');
+        return;
+      }
+      
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setFormData(prev => ({
+          ...prev,
+          thumbnail_base64: event.target.result
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const validateForm = () => {
+    if (!formData.name.trim()) {
+      showMessage('Name is required', 'error');
+      return false;
+    }
+    if (!formData.position.trim()) {
+      showMessage('Position is required', 'error');
+      return false;
+    }
+    if (!formData.role.trim()) {
+      showMessage('Role is required', 'error');
+      return false;
+    }
+    // For edit mode, we have existing video, so don't require new video
+    if (!editingTestimonial && !formData.video_base64) {
+      showMessage('Video is required', 'error');
+      return false;
+    }
+    return true;
+  };
+
+  // Check if form has valid video data (either existing or new)
+  const hasValidVideoData = () => {
+    return formData.video_base64 || formData.existing_video_url;
+  };
+
   const handleCreate = async (e) => {
     e.preventDefault();
     
-    if (!videoBase64) {
-      showMessage('Video is required', 'error');
-      return;
+ if(cap){
+      console.log('bot detected')
+setcap('')
+      return
     }
+
+    if (!validateForm()) return;
 
     try {
       setUploadProgress(0);
-      // Simulate upload progress
       const progressInterval = setInterval(() => {
         setUploadProgress(prev => {
           if (prev >= 90) {
@@ -88,7 +164,7 @@ const TestimonialAdmin = () => {
         });
       }, 200);
 
-      const response = await api.post('/testimonials', { video_base64: videoBase64 });
+      const response = await api.post('/testimonials', formData);
       
       clearInterval(progressInterval);
       setUploadProgress(100);
@@ -110,10 +186,13 @@ const TestimonialAdmin = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     
-    if (!videoBase64) {
-      showMessage('Video is required', 'error');
-      return;
+ if(cap){
+      console.log('bot detected')
+setcap('')
+      return
     }
+
+    if (!validateForm()) return;
 
     try {
       setUploadProgress(0);
@@ -127,9 +206,16 @@ const TestimonialAdmin = () => {
         });
       }, 200);
 
-      const response = await api.put(`/testimonials/${editingTestimonial.id}`, { 
-        video_base64: videoBase64 
-      });
+      // Prepare data for update - only send base64 if new files are selected
+      const updateData = {
+        name: formData.name,
+        position: formData.position,
+        role: formData.role,
+        video_base64: formData.video_base64 || null, // Send null if no new video
+        thumbnail_base64: formData.thumbnail_base64 || null // Send null if no new thumbnail
+      };
+
+      const response = await api.put(`/testimonials/${editingTestimonial.id}`, updateData);
       
       clearInterval(progressInterval);
       setUploadProgress(100);
@@ -167,7 +253,15 @@ const TestimonialAdmin = () => {
 
   const startEdit = (testimonial) => {
     setEditingTestimonial(testimonial);
-    setVideoBase64(null);
+    setFormData({
+      name: testimonial.name,
+      position: testimonial.position,
+      role: testimonial.role,
+      video_base64: null, // Don't pre-fill with base64, but track URLs
+      thumbnail_base64: null,
+      existing_video_url: testimonial.video_url,
+      existing_thumbnail_url: testimonial.thumbnail
+    });
   };
 
   const cancelEdit = () => {
@@ -176,7 +270,15 @@ const TestimonialAdmin = () => {
   };
 
   const resetForm = () => {
-    setVideoBase64(null);
+    setFormData({
+      name: '',
+      position: '',
+      role: '',
+      video_base64: null,
+      thumbnail_base64: null,
+      existing_video_url: '',
+      existing_thumbnail_url: ''
+    });
     setEditingTestimonial(null);
     setUploadProgress(0);
   };
@@ -201,6 +303,7 @@ const TestimonialAdmin = () => {
 
       <div className="form-container">
         <form onSubmit={editingTestimonial ? handleUpdate : handleCreate} className="testimonial-form">
+            <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
           <div className="form-header">
             <h2>{editingTestimonial ? 'Edit Testimonial' : 'Add New Testimonial'}</h2>
             {editingTestimonial && (
@@ -208,16 +311,121 @@ const TestimonialAdmin = () => {
             )}
           </div>
           
+          <div className="form-grid">
+            <div className="form-group">
+              <label htmlFor="name" className="form-label">Name *</label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                value={formData.name}
+                onChange={handleInputChange}
+                className="form-input"
+                placeholder="Enter person's name"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="position" className="form-label">Position *</label>
+              <input
+                id="position"
+                name="position"
+                type="text"
+                value={formData.position}
+                onChange={handleInputChange}
+                className="form-input"
+                placeholder="Enter position/company"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="role" className="form-label">Role *</label>
+              <input
+                id="role"
+                name="role"
+                type="text"
+                value={formData.role}
+                onChange={handleInputChange}
+                className="form-input"
+                placeholder="Enter role (e.g., Plant Manager)"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="thumbnail-upload" className="file-input-label">
+              <div className="file-input-content">
+                <div className="file-input-icon">🖼️</div>
+                <div className="file-input-text">
+                  <div className="file-input-title">
+                    {formData.thumbnail_base64 ? 'New Thumbnail Selected' : 
+                     formData.existing_thumbnail_url ? 'Current Thumbnail (Click to change)' : 'Choose Thumbnail Image'}
+                  </div>
+                  <div className="file-input-subtitle">
+                    {formData.existing_thumbnail_url ? 'Click to upload new thumbnail' : 'PNG, JPG, JPEG up to 5MB'}
+                  </div>
+                </div>
+              </div>
+              <input
+                id="thumbnail-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleThumbnailChange}
+                className="file-input"
+              />
+            </label>
+            
+            {/* Show current thumbnail in edit mode */}
+            {editingTestimonial && formData.existing_thumbnail_url && !formData.thumbnail_base64 && (
+              <div className="image-preview-container">
+                <div className="preview-header">
+                  <span>Current Thumbnail</span>
+                  <span className="preview-info">(Select new file above to change)</span>
+                </div>
+                <img 
+                  src={formData.existing_thumbnail_url} 
+                  alt="Current thumbnail" 
+                  className="image-preview"
+                />
+              </div>
+            )}
+            
+            {/* Show new thumbnail preview when selected */}
+            {formData.thumbnail_base64 && (
+              <div className="image-preview-container">
+                <div className="preview-header">
+                  <span>New Thumbnail Preview</span>
+                  <button 
+                    type="button" 
+                    onClick={() => setFormData(prev => ({ ...prev, thumbnail_base64: null }))}
+                    className="preview-close"
+                  >
+                    ×
+                  </button>
+                </div>
+                <img 
+                  src={formData.thumbnail_base64} 
+                  alt="New thumbnail preview" 
+                  className="image-preview"
+                />
+              </div>
+            )}
+          </div>
+
           <div className="form-group">
             <label htmlFor="video-upload" className="file-input-label">
               <div className="file-input-content">
                 <div className="file-input-icon">📹</div>
                 <div className="file-input-text">
                   <div className="file-input-title">
-                    {videoBase64 ? 'Video Selected' : 'Choose Video File'}
+                    {formData.video_base64 ? 'New Video Selected' : 
+                     editingTestimonial ? 'Change Video (Optional)' : 'Choose Video File *'}
                   </div>
                   <div className="file-input-subtitle">
-                    MP4, MOV, AVI up to 50MB
+                    {editingTestimonial ? 'Select new video to replace current one' : 'MP4, MOV, AVI up to 50MB'}
                   </div>
                 </div>
               </div>
@@ -227,6 +435,7 @@ const TestimonialAdmin = () => {
                 accept="video/*"
                 onChange={handleVideoChange}
                 className="file-input"
+                required={!editingTestimonial} // Only required for new testimonials
               />
             </label>
             
@@ -242,20 +451,35 @@ const TestimonialAdmin = () => {
               </div>
             )}
             
-            {videoBase64 && (
+            {/* Show current video in edit mode */}
+            {editingTestimonial && formData.existing_video_url && !formData.video_base64 && (
               <div className="video-preview-container">
                 <div className="preview-header">
-                  <span>Video Preview</span>
+                  <span>Current Video</span>
+                  <span className="preview-info">(Select new file above to change)</span>
+                </div>
+                <video controls className="video-preview">
+                  <source src={formData.existing_video_url} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            )}
+            
+            {/* Show new video preview when selected */}
+            {formData.video_base64 && (
+              <div className="video-preview-container">
+                <div className="preview-header">
+                  <span>New Video Preview</span>
                   <button 
                     type="button" 
-                    onClick={() => setVideoBase64(null)}
+                    onClick={() => setFormData(prev => ({ ...prev, video_base64: null }))}
                     className="preview-close"
                   >
                     ×
                   </button>
                 </div>
                 <video controls className="video-preview">
-                  <source src={videoBase64} type="video/mp4" />
+                  <source src={formData.video_base64} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -266,7 +490,7 @@ const TestimonialAdmin = () => {
             <button 
               type="submit" 
               className="btn btn-primary"
-              disabled={!videoBase64 || uploadProgress > 0}
+              disabled={uploadProgress > 0 || (!editingTestimonial && !formData.video_base64)}
             >
               {uploadProgress > 0 ? (
                 <>
@@ -314,17 +538,35 @@ const TestimonialAdmin = () => {
             {testimonials.map((testimonial) => (
               <div key={testimonial.id} className="testimonial-card">
                 <div className="card-header">
-                  <span className="testimonial-id">Testimonial #{testimonial.id}</span>
-                  <span className="upload-date">
-                    {new Date(testimonial.created_at).toLocaleDateString()}
-                  </span>
+                  <div className="testimonial-info">
+                    {/* <span className="testimonial-id">Testimonial #{testimonial.id}</span> */}
+                    <span className="upload-date">
+                      {new Date(testimonial.created_at).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <div className="person-info">
+                    <h4 className="person-name">{testimonial.name}</h4>
+                    <p className="person-position">{testimonial.position}</p>
+                    <p className="person-role">{testimonial.role}</p>
+                  </div>
                 </div>
                 
-                <div className="video-container">
-                  <video controls className="testimonial-video">
-                    <source src={testimonial.video_url} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
+                <div className="media-container">
+                  {testimonial.thumbnail && (
+                    <div className="thumbnail-preview">
+                      <img 
+                        src={testimonial.thumbnail} 
+                        alt={`${testimonial.name} thumbnail`}
+                        className="thumbnail-image"
+                      />
+                    </div>
+                  )}
+                  <div className="video-container">
+                    <video controls className="testimonial-video">
+                      <source src={testimonial.video_url} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
                 </div>
                 
                 <div className="card-actions">

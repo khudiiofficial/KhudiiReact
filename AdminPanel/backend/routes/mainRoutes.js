@@ -183,7 +183,7 @@ router.put('/certifications/:id', updateCertification); // No multer needed for 
 router.delete('/certifications/:id', deleteCertification);
 
 
-// Testimonial Routes
+//testimonails
 router.get('/testimonials', getAllTestimonials);
 router.get('/testimonials/:id', getTestimonialById);
 router.post('/testimonials', createTestimonial);
