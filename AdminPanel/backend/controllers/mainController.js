@@ -1438,109 +1438,12 @@ export const getAllOrganizations = (req, res) => {
   });
 };
 
-// export const createOrganization = async (req, res) => {
-//   const {
-//     name,
-//     description,
-//     category,
-//     introductory_image_base64,
-//     youtube_video_url,
-//     images_base64,
-//     urls,
-//     socials,
-//     icons,
-//   } = req.body;
-
-//   const conn = await db1.promise().getConnection();
-
-//   try {
-//     await conn.beginTransaction();
-
-//     let introImagePath = null;
-//     if (introductory_image_base64) {
-//       const matches = introductory_image_base64.match(/^data:(.+);base64,(.+)$/);
-//       if (matches) {
-//         const ext = matches[1].split("/")[1] || "png";
-//         const fileName = uniqueImageName(ext);
-//         const fileBuffer = Buffer.from(matches[2], "base64");
-//         const uploadedUrl = await uploadToFTP(fileName, fileBuffer);
-//         introImagePath = uploadedUrl;
-//       }
-//     }
-
-//     const [result] = await conn.query(
-//       `INSERT INTO items (name, description, category, introductory_image_path, youtube_video_url) VALUES (?, ?, ?, ?, ?)`,
-//       [name, description, category, introImagePath, youtube_video_url]
-//     );
-
-//     const itemId = result.insertId;
-
-//     if (images_base64 && images_base64.length > 0) {
-//       for (const imgBase64 of images_base64) {
-//         const matches = imgBase64.match(/^data:(.+);base64,(.+)$/);
-//         if (matches) {
-//           const ext = matches[1].split("/")[1] || "png";
-//           const fileName = uniqueImageName(ext);
-//           const fileBuffer = Buffer.from(matches[2], "base64");
-//           const fileUrl = await uploadToFTP(fileName, fileBuffer);
-//           await conn.query("INSERT INTO item_images (item_id, image_path) VALUES (?, ?)", [
-//             itemId,
-//             fileUrl,
-//           ]);
-//         }
-//       }
-//     }
-
-//     if (urls && urls.length > 0) {
-//       for (const u of urls) {
-//         await conn.query("INSERT INTO item_urls (item_id, urls) VALUES (?, ?)", [
-//           itemId,
-//           JSON.stringify([u]),
-//         ]);
-//       }
-//     }
-
-//     if (socials) {
-//       await conn.query(
-//         "INSERT INTO socials (item_id, phone, facebook, twitter, instagram, location, googlemap, Mobile_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-//         [
-//           itemId,
-//           socials.phone || null,
-//           socials.facebook || null,
-//           socials.twitter || null,
-//           socials.instagram || null,
-//           socials.location || null,
-//           socials.googlemap || "",
-//           socials.mobile || null,
-//         ]
-//       );
-//     }
-
-//     if (icons && icons.length > 0) {
-//       for (const icon of icons) {
-//         await conn.query(
-//           "INSERT INTO icons (item_id, name, svg, qty) VALUES (?, ?, ?, ?)",
-//           [itemId, icon.name, icon.svg, icon.qty]
-//         );
-//       }
-//     }
-
-//     await conn.commit();
-//     conn.release();
-//     res.status(201).json({ message: "✅ Organization created successfully", id: itemId });
-//   } catch (error) {
-//     await conn.rollback();
-//     conn.release();
-//     res.status(500).json({ message: "Failed to create organization", error: error.message });
-//   }
-// };
-
 
 export const createOrganization = async (req, res) => {
   const {
     name,
     description,
-    category,
+    category, // This is now an array
     introductory_image_base64,
     youtube_video_url,
     slug,
@@ -1548,7 +1451,6 @@ export const createOrganization = async (req, res) => {
     meta_description,
     meta_keywords,
     images_base64,
-   
     socials,
     icons,
   } = req.body;
@@ -1558,12 +1460,12 @@ export const createOrganization = async (req, res) => {
   try {
     await conn.beginTransaction();
 
-    // Validate required fields
-    if (!name || !description || !category || !introductory_image_base64 || !slug) {
+    // Validate required fields - category is now an array
+    if (!name || !description || !category || category.length === 0 || !introductory_image_base64 || !slug) {
       await conn.rollback();
       conn.release();
       return res.status(400).json({
-        message: "Missing required fields: name, description, category, introductory_image_base64, and Slug are required"
+        message: "Missing required fields: name, description, at least one category, introductory_image_base64, and Slug are required"
       });
     }
 
@@ -1584,7 +1486,10 @@ export const createOrganization = async (req, res) => {
     // 1. Process introductory image first (if exists)
     const introImagePath = await createProcessIntroImage(introductory_image_base64);
 
-    // 2. Insert main organization record with SEO fields
+    // 2. Convert category array to JSON string for database storage
+    const categoryJson = JSON.stringify(category);
+
+    // 3. Insert main organization record with SEO fields
     const [result] = await conn.query(
       `INSERT INTO items 
        (name, description, category, introductory_image_path, youtube_video_url, slug, meta_title, meta_description, meta_keywords) 
@@ -1592,7 +1497,7 @@ export const createOrganization = async (req, res) => {
       [
         name, 
         description, 
-        category, 
+        categoryJson, // Store as JSON string
         introImagePath, 
         youtube_video_url,
         slug,
@@ -1604,7 +1509,7 @@ export const createOrganization = async (req, res) => {
 
     const itemId = result.insertId;
 
-    // 3. Process all related data in parallel
+    // 4. Process all related data in parallel
     await Promise.all([
       createProcessAdditionalImages(conn, itemId, images_base64),
       createProcessSocials(conn, itemId, socials),
@@ -1638,6 +1543,112 @@ export const createOrganization = async (req, res) => {
     });
   }
 };
+
+// export const createOrganization = async (req, res) => {
+//   const {
+//     name,
+//     description,
+//     category,
+//     introductory_image_base64,
+//     youtube_video_url,
+//     slug,
+//     meta_title,
+//     meta_description,
+//     meta_keywords,
+//     images_base64,
+   
+//     socials,
+//     icons,
+//   } = req.body;
+
+//   const conn = await db1.promise().getConnection();
+
+//   try {
+//     await conn.beginTransaction();
+
+//     // Validate required fields
+//     if (!name || !description || !category || !introductory_image_base64 || !slug) {
+//       await conn.rollback();
+//       conn.release();
+//       return res.status(400).json({
+//         message: "Missing required fields: name, description, category, introductory_image_base64, and Slug are required"
+//       });
+//     }
+
+//     // Check if slug already exists
+//     const [existingSlug] = await conn.query(
+//       `SELECT id FROM items WHERE slug = ?`,
+//       [slug]
+//     );
+
+//     if (existingSlug.length > 0) {
+//       await conn.rollback();
+//       conn.release();
+//       return res.status(400).json({
+//         message: "Slug already exists. Please choose a different one."
+//       });
+//     }
+
+//     // 1. Process introductory image first (if exists)
+//     const introImagePath = await createProcessIntroImage(introductory_image_base64);
+
+//     // 2. Insert main organization record with SEO fields
+//     const [result] = await conn.query(
+//       `INSERT INTO items 
+//        (name, description, category, introductory_image_path, youtube_video_url, slug, meta_title, meta_description, meta_keywords) 
+//        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+//       [
+//         name, 
+//         description, 
+//         category, 
+//         introImagePath, 
+//         youtube_video_url,
+//         slug,
+//         meta_title || null,
+//         meta_description || null,
+//         meta_keywords || null
+//       ]
+//     );
+
+//     const itemId = result.insertId;
+
+//     // 3. Process all related data in parallel
+//     await Promise.all([
+//       createProcessAdditionalImages(conn, itemId, images_base64),
+//       createProcessSocials(conn, itemId, socials),
+//       createProcessIcons(conn, itemId, icons)
+//     ]);
+
+//     await conn.commit();
+//     conn.release();
+    
+//     res.status(201).json({ 
+//       message: "✅ Organization created successfully", 
+//       id: itemId,
+//       slug: slug
+//     });
+//   } catch (error) {
+//     console.error("❌ Organization creation error:", error);
+//     await conn.rollback();
+//     conn.release();
+    
+//     // Handle duplicate slug error (if unique constraint exists in database)
+//     if (error.code === 'ER_DUP_ENTRY' || error.message.includes('Duplicate entry')) {
+//       return res.status(400).json({ 
+//         message: "Slug already exists. Please choose a different one.",
+//         error: "DUPLICATE_SLUG"
+//       });
+//     }
+    
+//     res.status(500).json({ 
+//       message: "Failed to create organization", 
+//       error: error.message 
+//     });
+//   }
+// };
+
+
+
 // Helper Functions for Create Organization (Unique names)
 async function createProcessIntroImage(introductory_image_base64) {
   if (!introductory_image_base64) return null;
@@ -1868,6 +1879,8 @@ export const getOrganizationById = (req, res) => {
 
 
 
+
+
 // export const updateOrganization = async (req, res) => {
 //   const { id } = req.params;
 //   const {
@@ -1876,6 +1889,10 @@ export const getOrganizationById = (req, res) => {
 //     category,
 //     introductory_image_base64,
 //     youtube_video_url,
+//     slug,
+//     meta_title,
+//     meta_description,
+//     meta_keywords,
 //     images_base64,
 //     urls,
 //     socials,
@@ -1887,112 +1904,106 @@ export const getOrganizationById = (req, res) => {
 //   try {
 //     await conn.beginTransaction();
 
-//     const [rows] = await conn.query("SELECT * FROM items WHERE id = ?", [id]);
-
+//     // 1. Check if organization exists first and get current slug
+//     const [rows] = await conn.query("SELECT id, introductory_image_path, slug FROM items WHERE id = ?", [id]);
 //     if (rows.length === 0) {
-//       await conn.rollback();
 //       conn.release();
 //       return res.status(404).json({ message: "Organization not found" });
 //     }
 
+//     // 2. Check if slug is being changed and if new slug already exists (excluding current organization)
+//     if (slug && slug !== rows[0].slug) {
+//       const [existingSlug] = await conn.query(
+//         "SELECT id FROM items WHERE slug = ? AND id != ?",
+//         [slug, id]
+//       );
+
+//       if (existingSlug.length > 0) {
+//         await conn.rollback();
+//         conn.release();
+//         return res.status(400).json({
+//           message: "slug already exists. Please choose a different one.",
+//           error: "DUPLICATE_SLUG"
+//         });
+//       }
+//     }
+
 //     let introImagePath = rows[0].introductory_image_path;
 
+//     // 3. Process introductory image only if provided and valid
 //     if (introductory_image_base64) {
-//       const matches = introductory_image_base64.match(/^data:(.+);base64,(.+)$/);
-//       if (matches) {
-//         const ext = matches[1].split("/")[1] || "png";
-//         const fileName = uniqueImageName(ext);
-//         const fileBuffer = Buffer.from(matches[2], "base64");
-//         const uploadedUrl = await uploadToFTP(fileName, fileBuffer);
-
-//         if (introImagePath) {
-//           await deleteImageFile(introImagePath);
-//         }
-
-//         introImagePath = uploadedUrl;
-//       }
+//       introImagePath = await processSingleImage(introductory_image_base64, introImagePath);
 //     }
 
+//     // 4. Update main item with SEO fields in single query
 //     await conn.query(
-//       `UPDATE items SET name = ?, description = ?, category = ?, introductory_image_path = ?, youtube_video_url = ? WHERE id = ?`,
-//       [name, description, category, introImagePath, youtube_video_url, id]
+//       `UPDATE items SET 
+//         name = ?, 
+//         description = ?, 
+//         category = ?, 
+//         introductory_image_path = ?, 
+//         youtube_video_url = ?,
+//         slug = ?,
+//         meta_title = ?,
+//         meta_description = ?,
+//         meta_keywords = ?
+//        WHERE id = ?`,
+//       [
+//         name, 
+//         description, 
+//         category, 
+//         introImagePath, 
+//         youtube_video_url,
+//         slug || null,
+//         meta_title || null,
+//         meta_description || null,
+//         meta_keywords || null,
+//         id
+//       ]
 //     );
 
-//     if (images_base64 && images_base64.length > 0) {
-//       for (const imgBase64 of images_base64) {
-//         const matches = imgBase64.match(/^data:(.+);base64,(.+)$/);
-//         if (matches) {
-//           const ext = matches[1].split("/")[1] || "png";
-//           const fileName = uniqueImageName(ext);
-//           const fileBuffer = Buffer.from(matches[2], "base64");
-//           const fileUrl = await uploadToFTP(fileName, fileBuffer);
-
-//           await conn.query("INSERT INTO item_images (item_id, image_path) VALUES (?, ?)", [id, fileUrl]);
-//         }
-//       }
-//     }
-
-//     await conn.query("DELETE FROM item_urls WHERE item_id = ?", [id]);
-//     if (urls && urls.length > 0) {
-//       for (const u of urls) {
-//         if (u.trim()) {
-//           await conn.query("INSERT INTO item_urls (item_id, urls) VALUES (?, ?)", [
-//             id,
-//             JSON.stringify([u]),
-//           ]);
-//         }
-//       }
-//     }
-
-//     await conn.query("DELETE FROM socials WHERE item_id = ?", [id]);
-//     if (socials) {
-//       await conn.query(
-//         "INSERT INTO socials (item_id, phone, facebook, twitter, instagram, location, googlemap, Mobile_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-//         [
-//           id,
-//           socials.phone || null,
-//           socials.facebook || null,
-//           socials.twitter || null,
-//           socials.instagram || null,
-//           socials.location || null,
-//           socials.googlemap || "",
-//           socials.mobile || null,
-//         ]
-//       );
-//     }
-
-//     await conn.query("DELETE FROM icons WHERE item_id = ?", [id]);
-//     if (icons && icons.length > 0) {
-//       for (const icon of icons) {
-//         if (icon.name.trim() && icon.svg.trim()) {
-//           await conn.query("INSERT INTO icons (item_id, name, svg, qty) VALUES (?, ?, ?, ?)", [
-//             id,
-//             icon.name,
-//             icon.svg,
-//             icon.qty,
-//           ]);
-//         }
-//       }
-//     }
+//     // 5. Process all operations in parallel where possible
+//     await Promise.all([
+//       processAdditionalImages(conn, id, images_base64),
+//       processUrls(conn, id, urls),
+//       processSocials(conn, id, socials),
+//       processIcons(conn, id, icons)
+//     ]);
 
 //     await conn.commit();
 //     conn.release();
-//     res.json({ message: "✅ Organization updated successfully", id });
+    
+//     res.json({ 
+//       message: "✅ Organization updated successfully", 
+//       id,
+//       slug: slug 
+//     });
 //   } catch (error) {
 //     console.error("❌ Transaction error:", error);
 //     await conn.rollback();
 //     conn.release();
-//     res.status(500).json({ message: "Failed to update organization", error: error.message });
+    
+//     // Handle duplicate slug error (if unique constraint exists in database)
+//     if (error.code === 'ER_DUP_ENTRY' || error.message.includes('Duplicate entry')) {
+//       return res.status(400).json({ 
+//         message: "Slug already exists. Please choose a different one.",
+//         error: "DUPLICATE_SLUG"
+//       });
+//     }
+    
+//     res.status(500).json({ 
+//       message: "Failed to update organization", 
+//       error: error.message 
+//     });
 //   }
 // };
-
 
 export const updateOrganization = async (req, res) => {
   const { id } = req.params;
   const {
     name,
     description,
-    category,
+    category, // This is now an array
     introductory_image_base64,
     youtube_video_url,
     slug,
@@ -2041,7 +2052,10 @@ export const updateOrganization = async (req, res) => {
       introImagePath = await processSingleImage(introductory_image_base64, introImagePath);
     }
 
-    // 4. Update main item with SEO fields in single query
+    // 4. Convert category array to JSON string for database storage
+    const categoryJson = JSON.stringify(category);
+
+    // 5. Update main item with SEO fields in single query
     await conn.query(
       `UPDATE items SET 
         name = ?, 
@@ -2057,7 +2071,7 @@ export const updateOrganization = async (req, res) => {
       [
         name, 
         description, 
-        category, 
+        categoryJson, // Store as JSON string
         introImagePath, 
         youtube_video_url,
         slug || null,
@@ -2068,7 +2082,7 @@ export const updateOrganization = async (req, res) => {
       ]
     );
 
-    // 5. Process all operations in parallel where possible
+    // 6. Process all operations in parallel where possible
     await Promise.all([
       processAdditionalImages(conn, id, images_base64),
       processUrls(conn, id, urls),

@@ -184,9 +184,9 @@ router.delete('/certifications/:id', deleteCertification);
 
 
 //testimonails
-router.get('/testimonials', getAllTestimonials);
-router.get('/testimonials/:id', getTestimonialById);
-router.post('/testimonials', createTestimonial);
-router.put('/testimonials/:id', updateTestimonial);
-router.delete('/testimonials/:id', deleteTestimonial);
+router.get('/testimonials',auth, getAllTestimonials);
+router.get('/testimonials/:id',auth, getTestimonialById);
+router.post('/testimonials',auth, createTestimonial);
+router.put('/testimonials/:id',auth, updateTestimonial);
+router.delete('/testimonials/:id',auth, deleteTestimonial);
 export default router;

@@ -816,16 +816,19 @@ sendDonationEmail(obj)
 }
 
 
-export const itemByCategory=(req,res)=>{
-const {name}=req.params
-// console.log(name)
-db.query('SELECT * FROM items WHERE category=?',[name],(err,result)=>{
-  if (err){
-    res.status(500).json({error:"Database Error"})
-  }
-  res.status(200).json(DtoArr(result))
-})
-}
+export const itemByCategory = (req, res) => {
+  const { name } = req.params;
+  
+  // Use JSON_CONTAINS to search within the JSON array
+  db.query('SELECT * FROM items WHERE JSON_CONTAINS(category, ?)', [JSON.stringify(name)], (err, result) => {
+    if (err) {
+      console.error("Database Error:", err);
+      res.status(500).json({ error: "Database Error" });
+      return;
+    }
+    res.status(200).json(DtoArr(result));
+  });
+};
 
 
 
