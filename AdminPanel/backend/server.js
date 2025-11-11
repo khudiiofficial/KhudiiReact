@@ -24,7 +24,7 @@ app.use(cookieParser())
 
 app.use(cors(
   {
-  origin: 'http://localhost:5173', // Vite's default dev server port
+  origin: 'https://secure.khudii.com', // Vite's default dev server port
   credentials: true
   }
 ))
@@ -32,12 +32,12 @@ app.use(router)
 // static route left as-is (if you still serve local files); you can remove if not needed
 // app.use("/storage", express.static(path.join(process.cwd(), "storage")));
 app.get('/',(req,res)=>{
-  res.json('backend is running')
+  res.json('Admin Panel backend is running')
 })
 
-// export default app
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
+export default app
+// app.listen(PORT, () => {
+//   console.log(`🚀 Server running on http://localhost:${PORT}`);
+// });
 
 
