@@ -108,6 +108,26 @@
   text-decoration: none;
   padding: 0.75rem 1rem;
   border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+
+}
+
+.item div {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #374151;
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
   /* background: #ffffff; */
   border: 1px solid #e5e7eb;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -129,10 +149,29 @@
   transform: scaleY(0);
   transition: transform 0.3s ease;
 }
+.item div::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
 
 .item a:hover {
   color: #1f2937;
-  /* background: #f8fafc; */
+  background: #f8fafc;
+  border-color: #d1d5db;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.item div:hover {
+  color: #1f2937;
+  background: #f8fafc;
   border-color: #d1d5db;
   transform: translateX(4px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -152,7 +191,9 @@
 .item a:hover i {
   transform: scale(1.1);
 }
-
+.item div:hover i {
+  transform: scale(1.1);
+}
 /* Platform-specific colors on hover */
 .item a[href*="facebook"]:hover i { color: #1877f2; }
 .item a[href*="instagram"]:hover i { color: #e4405f; }
@@ -213,11 +254,24 @@
     text-align: center;
     gap: 0.5rem;
   }
+
+   .item div {
+    padding: 0.875rem;
+    font-size: 0.9rem;
+    height: 100%;
+    min-height: 60px; /* Ensure consistent height */
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
   
   .item a:hover {
     transform: translateY(-2px);
   }
   
+    .item div:hover {
+    transform: translateY(-2px);
+  }
   .item span {
     text-align: center;
     font-size: 0.8rem;
@@ -238,6 +292,10 @@
   }
   
   .item a {
+    padding: 0.75rem 0.5rem;
+    min-height: 55px;
+  }
+   .item div {
     padding: 0.75rem 0.5rem;
     min-height: 55px;
   }
@@ -272,6 +330,10 @@
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
 }
+.item div:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
 
 /* Subtle pulse animation for interactive elements */
 @keyframes subtlePulse {
@@ -280,6 +342,10 @@
 }
 
 .item a:active {
+  animation: subtlePulse 0.2s ease;
+}
+
+.item div:active {
   animation: subtlePulse 0.2s ease;
 }
 
