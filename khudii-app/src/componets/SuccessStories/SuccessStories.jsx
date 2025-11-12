@@ -33,7 +33,7 @@ return ()=> window.removeEventListener('resize',adjustwidth)
    <div className={`grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3`}>
     <div></div>
     <div  className={`${styles.class1} ${styles.class2}`}>Success Stories</div>
-    <div  className={`${styles.class1}`}><Link to={'/SuccessStories'}>Explore more stories&nbsp; <span> {`>`}</span></Link></div>
+    <div  className={`${styles.class1}`}><Link to={'/success-stories'}>Explore more stories&nbsp; <span> {`>`}</span></Link></div>
     </div>
 
     <div className={`${styles.class4}`}>
