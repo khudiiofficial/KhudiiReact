@@ -32,10 +32,10 @@ app.get('/',(req,res)=>{
   res.json("backend is running")
 })
 
-app.listen(PORT,()=>{
-    console.log(`App is running on the port ${PORT} `)
-})
-// export default app
+// app.listen(PORT,()=>{
+//     console.log(`App is running on the port ${PORT} `)
+// })
+export default app
 
 
 
