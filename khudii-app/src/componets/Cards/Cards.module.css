@@ -308,7 +308,7 @@
   .parent {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-    padding: 1.5rem 4%;
+    padding: 2rem 5%;
   }
   
   .class1 {
@@ -325,7 +325,7 @@
   .parent {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 18px;
-    padding: 1rem 3%;
+    padding: 2rem 5%;
   }
   
   .class1 {
@@ -346,7 +346,7 @@
   .parent {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
-    padding: 1rem 2%;
+    padding: 2rem 5%;
   }
   
   .class1 {
@@ -368,7 +368,7 @@
   .parent {
     grid-template-columns: 1fr;
     gap: 15px;
-    padding: 1rem;
+    padding: 2rem 5%;
   }
   
   .class1 {
@@ -399,7 +399,7 @@
 /* Extra small devices */
 @media (max-width: 360px) {
   .parent {
-    padding: 0.5rem;
+    padding: 2rem 5%;
     gap: 12px;
   }
   

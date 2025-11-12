@@ -10,7 +10,7 @@ const ContactUs = () => {
         title="Contact Us - Khudii Pakistan | Get in Touch"
         description="Reach out to Khudii - Pakistan's digital welfare platform. Contact our team for donations, volunteering, partnerships, or any inquiries. We're here to help."
         keywords="contact khudii, pakistan welfare contact, charity support, donor inquiry, volunteer opportunities, partnership, khudii helpline, welfare organization contact"
-        url="https://new.khudii.com/Contact"
+        url="https://new.khudii.com/contact"
         type="website"
       />
      <PageHeader 

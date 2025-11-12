@@ -27,7 +27,7 @@ function OrganizationsSection() {
 
   return (
     <section className={`${styles.class1} bg-brand-light py-16`}>
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto ">
         {/* <div className={`${styles.class2}`}>
         <h2 className={`text-3xl font-semibold text-brand-dark mb-2 ${styles.class3}`}>
           Our Organizations

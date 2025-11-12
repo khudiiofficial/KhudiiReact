@@ -122,13 +122,13 @@ const Navbar = () => {
             <Link to="/" className="hover:text-gray-900">
               Home
             </Link>
-            <Link to="/About" className="hover:text-gray-900">
+            <Link to="/about-khudii/" className="hover:text-gray-900">
               About
             </Link>
-            <Link to="/organiztionsSectors" className="hover:text-gray-900">
+            <Link to="/organizations/" className="hover:text-gray-900">
               Organizations
             </Link>
-            <Link to="/specialPeople" className="hover:text-gray-900">
+            <Link to="/golden-people/" className="hover:text-gray-900">
               Golden People
             </Link>
 
@@ -139,30 +139,30 @@ const Navbar = () => {
               </Link>
               <div className={`${styles.gpa}`}>
                 <li>
-                  <Link to={"/SuccessStories"}>Success Stories</Link>
+                  <Link to={"/success-stories/"}>Success Stories</Link>
                 </li>
                 <hr />
                 <li>
-                  <Link to={'/Socials'}>Social Media</Link>
+                  <Link to={'/social-media/'}>Social Media</Link>
                 </li>
                 <hr />
                 <li>
-                  <Link to={'/vediosPage'}>Videos</Link>
+                  <Link to={'/videos/'}>Videos</Link>
                 </li>
                 <hr />
                 <li>
-                  <Link to={'/testimonialPage'}>Testimonials</Link>
+                  <Link to={'/testimonials/'}>Testimonials</Link>
                 </li>
                 <hr />
                 <li>
-                  <Link to={'/Tribute'}>Tribute</Link>
+                  <Link to={'/tribute/'}>Tribute</Link>
                 </li>
                 <hr />
                 <li className={`${styles.gp2}`}>
                   <Link to={"#"}>Registration</Link>
                   <i className={`${styles.fw} fas fa-chevron-down`}></i>
                   <div className={`${styles.gp1}`}>
-                    <Link to={'/Certifications'}>Certifications</Link>
+                    <Link to={'/certifications/'}>Certifications</Link>
                   </div>
                 </li>
               </div>
@@ -176,16 +176,16 @@ const Navbar = () => {
               <i className={`${styles.fw} fas fa-chevron-down`}></i>
               <div className={`${styles.gpa}`}>
                 <li>
-                  <Link to={'/VolunteerForm'}>Volunteer</Link>
+                  <Link to={'/volunteer/'}>Volunteer</Link>
                 </li>
                 <hr />
                 <li>
-                  <Link to={'/JobApplication'}>Jobs</Link>
+                  <Link to={'/jobs/'}>Jobs</Link>
                 </li>
               </div>
             </span>
 
-            <Link to="/Contact" className="hover:text-gray-900">
+            <Link to="/contact/" className="hover:text-gray-900">
               Contact
             </Link>
           </div>
@@ -238,7 +238,7 @@ const Navbar = () => {
         }
 
           { !isMobile && <Link
-              to="/DonateUS"
+              to="/donate-now/"
               className="bg-rose-600 text-white px-4 py-2 rounded-md shadow hover:opacity-95"
             >
               Donate Now
@@ -275,13 +275,13 @@ const Navbar = () => {
               <Link  onClick={()=>{setOpen(!open)}} to="/" className="mobile-menu-link">
                 Home
               </Link>
-              <Link onClick={()=>{setOpen(!open)}} to="/About" className="mobile-menu-link">
+              <Link onClick={()=>{setOpen(!open)}} to="/about-khudii/" className="mobile-menu-link">
                 About
               </Link>
-              <Link onClick={()=>{setOpen(!open)}} to="/organiztionsSectors" className="mobile-menu-link">
+              <Link onClick={()=>{setOpen(!open)}} to="/organizations/" className="mobile-menu-link">
                 Organizations
               </Link>
-              <Link onClick={()=>{setOpen(!open)}} to="/specialPeople" className="mobile-menu-link">
+              <Link onClick={()=>{setOpen(!open)}} to="/golden-people/" className="mobile-menu-link">
                 Golden People
               </Link>
 
@@ -291,7 +291,7 @@ const Navbar = () => {
                 <ul className="mobile-menu-dropdown-list">
                   <li>
                     <Link onClick={()=>{setOpen(!open)}}
-                      to="/SuccessStories"
+                      to="/success-stories/"
                       className="mobile-menu-dropdown-link"
                     >
                       Success Stories
@@ -299,7 +299,7 @@ const Navbar = () => {
                   </li>
                   <li>
                     <Link onClick={()=>{setOpen(!open)}}
-                      to="/Socials"
+                      to="/social-media/"
                       className="mobile-menu-dropdown-link"
                     >
                       Social Media
@@ -307,7 +307,7 @@ const Navbar = () => {
                   </li>
                   <li>
                     <Link onClick={()=>{setOpen(!open)}}
-                      to="/vediosPage"
+                      to="/videos/"
                       className="mobile-menu-dropdown-link"
                     >
                       Videos
@@ -315,7 +315,7 @@ const Navbar = () => {
                   </li>
                   <li>
                     <Link onClick={()=>{setOpen(!open)}}
-                      to="/testimonialPage"
+                      to="/testimonials/"
                       className="mobile-menu-dropdown-link"
                     >
                       Testimonials
@@ -323,7 +323,7 @@ const Navbar = () => {
                   </li>
                   <li>
                     <Link onClick={()=>{setOpen(!open)}}
-                      to="/Tribute"
+                      to="/tribute/"
                       className="mobile-menu-dropdown-link"
                     >
                       Tribute
@@ -336,7 +336,7 @@ const Navbar = () => {
                     <ul className="mobile-menu-nested-list">
                       <li>
                         <Link onClick={()=>{setOpen(!open)}}
-                          to="/Certifications"
+                          to="/certifications/"
                           className="mobile-menu-nested-link"
                         >
                           Certifications
@@ -353,7 +353,7 @@ const Navbar = () => {
                 <ul className="mobile-menu-dropdown-list">
                   <li>
                     <Link onClick={()=>{setOpen(!open)}}
-                      to="/VolunteerForm"
+                      to="/volunteer/"
                       className="mobile-menu-dropdown-link"
                     >
                       Volunteer
@@ -361,7 +361,7 @@ const Navbar = () => {
                   </li>
                   <li>
                     <Link onClick={()=>{setOpen(!open)}}
-                      to="/JobApplication"
+                      to="/jobs/"
                       className="mobile-menu-dropdown-link"
                     >
                    Jobs
@@ -371,7 +371,7 @@ const Navbar = () => {
               </div>
 
               {/* Contact */}
-              <Link onClick={()=>{setOpen(!open)}} to="/contact" className="mobile-menu-link">
+              <Link onClick={()=>{setOpen(!open)}} to="/contact/" className="mobile-menu-link">
                 Contact
               </Link>
             </div>

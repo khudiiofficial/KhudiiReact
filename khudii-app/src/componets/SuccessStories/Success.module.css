@@ -173,8 +173,10 @@ font-weight: 700;
 }
 
 .class4>img{
-    width: 380px;
-    height: 200px;
+    /* width: 380px; */
+    /* height: 200px; */
+    width: 435px;
+    height: 228.94px;
     border-radius: 20px;
     cursor: pointer;
 }
@@ -186,7 +188,8 @@ font-weight: 700;
     background-repeat: no-repeat;
     background-attachment: fixed; /* Changed from fixed */
     background-position: center; /* Changed from 0px -252px */
- min-height: 500px;   
+ min-height: 500px;  
+ padding: 0% 5%; 
 }
 
 .class6{
@@ -198,7 +201,7 @@ color: white;
 }
 
 .class7{
-   padding: 5% 10%;
+   padding: 5% 0%;
 }
 .class7>p{
     font-size: 25px;
@@ -225,6 +228,11 @@ border-radius: 20px;
 }
 
 /* Your existing responsive CSS remains the same */
+@media (min-width:1000px){
+    .class4>{
+       justify-content: space-between;
+    }
+}
 @media (max-width:430px){
     .class4>img{
         height: 200px;

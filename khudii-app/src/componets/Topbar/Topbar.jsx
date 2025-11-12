@@ -93,11 +93,11 @@ key={idx}
  
 }
       <p className={styles.buttonWrapper}>
-        <Link to="/Story">
+        <Link to="/contribute-your-story/">
           <button className={styles.last}>Contribute Your Story</button>
         </Link>
         {isMobile && (
-          <Link to="/DonateUS">
+          <Link to="/donate-now/">
             <button className={styles.last}>Donate Now</button>
           </Link>
         )}

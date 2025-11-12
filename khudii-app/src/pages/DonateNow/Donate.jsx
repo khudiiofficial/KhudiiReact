@@ -10,7 +10,7 @@ const Donate = () => {
         title="Donate to Khudii Pakistan | Support Welfare Causes Online"
         description="Make a difference with your donation to Khudii - Pakistan's leading digital welfare platform. Support Zakat, Sadqa, and general donations to help communities in need."
         keywords="donate to khudii, pakistan donation, zakat online, sadqa donation, welfare charity, khudii donate, online donation pakistan, islamic charity, community support"
-        url="https://new.khudii.com/DonateUS"
+        url="https://new.khudii.com/donate-now"
         type="website"
       />
       <PageHeader 

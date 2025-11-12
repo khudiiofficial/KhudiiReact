@@ -25,7 +25,7 @@ get()
         title="Certifications - Khudii Pakistan | SECP Registered Welfare Organization"
         description="Khudii is officially certified and licensed by the Securities and Exchange Commission of Pakistan (SECP) under Section 42 of the Companies Act, 2017. View our official certification."
         keywords="khudii certification, SECP registered, pakistan welfare license, section 42 company, khudii legal status, verified charity pakistan, SECP license 2020, registered welfare organization"
-        url="https://new.khudii.com/Certifications"
+        url="https://new.khudii.com/certifications"
         type="website"
       />
 

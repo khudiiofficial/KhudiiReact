@@ -50,7 +50,8 @@ const WelcomeSection = () => {
 
   return (
     <>
-      <br />
+      
+      <div className={styles.parent}>
       <div className={`${styles.pad} grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6`}>
         <div className={`${styles.newclass} min-h-[270px] max-h-[1000px]`}> 
           <h1 className={`${styles.size}`}>Welcome To Khudii</h1> 
@@ -93,7 +94,8 @@ const WelcomeSection = () => {
           )}
         </div>
       </div>
-      <br /><br />
+      </div>
+      
     </>
   )
 }

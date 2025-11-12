@@ -47,24 +47,24 @@ useEffect(()=>{
    <Navbar/>
 <Routes>
 <Route path='/' element={<HomePage/>}/>
-<Route path='/organiztionsSectors' element={<Organizations/>}/>
+<Route path='/organizations' element={<Organizations/>}/>
 <Route path='/organization/:slug' element={<Organization_Detail/>} />
-<Route path='/About' element={<About/>}/>
+<Route path='/about-khudii' element={<About/>}/>
 <Route path='/Blog/:slug' element={<SpecificBlog/>}/>
-<Route path='/specialPeople' element={<Golden_people/>}/>
-<Route path='/Contact' element={<ContactUs/>}/>
-<Route path='/Story' element={<ContributeStory/>}/>
-<Route path='/DonateUS' element={<Donate/>}/>
-<Route path='/SuccessStories' element={<VideoGallery/>}/>
-<Route path='/Socials' element={<SocialMedai/>}/>
-<Route path='/vediosPage' element={<Vedios/>}/>
-<Route path='/testimonialPage' element={<Testimonial/>}/>
-<Route path='/Tribute' element={<Tribute/>}/>
-<Route path='/Certifications' element={<Certification/>}/>
+<Route path='/golden-people' element={<Golden_people/>}/>
+<Route path='/contact' element={<ContactUs/>}/>
+<Route path='/contribute-your-story' element={<ContributeStory/>}/>
+<Route path='/donate-now' element={<Donate/>}/>
+<Route path='/success-stories' element={<VideoGallery/>}/>
+<Route path='/social-media' element={<SocialMedai/>}/>
+<Route path='/videos' element={<Vedios/>}/>
+<Route path='/testimonials' element={<Testimonial/>}/>
+<Route path='/tribute' element={<Tribute/>}/>
+<Route path='/certifications' element={<Certification/>}/>
 <Route path='/faqs' element={<FAQSection/>}/>
 <Route path='/blogs' element={<Blogss/>}/>
-<Route path='/JobApplication' element={<JobApplicationForm/>}/>
-<Route path='/VolunteerForm' element={<VolunteerForm/>}/>
+<Route path='/jobs' element={<JobApplicationForm/>}/>
+<Route path='/volunteer' element={<VolunteerForm/>}/>
 <Route path='Categories/:name' element={<Categories/>}/>
 </Routes>
 <Footer/>

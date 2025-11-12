@@ -139,7 +139,7 @@ const [val,setval]=useState('')
         title="Careers at Khudii Pakistan | Join Our Welfare Team"
         description="Apply for meaningful career opportunities at Khudii Welfare Organization. Join our team dedicated to serving communities across Pakistan through healthcare, education, and social welfare initiatives."
         keywords="khudii careers, welfare jobs pakistan, NGO jobs, charity careers, social work employment, khudii vacancies, humanitarian jobs, community development careers"
-        url="https://new.khudii.com/JobApplication"
+        url="https://new.khudii.com/jobs"
         type="website"
       />
 

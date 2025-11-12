@@ -9,7 +9,7 @@ const Golden_people = () => {
         title="Golden People - Inspiring Stories | Khudii Community Heroes"
         description="Discover the inspiring stories of Golden People - community heroes and changemakers making a difference across Pakistan. Coming soon on Khudii's platform."
         keywords="golden people, community heroes, inspiring stories, changemakers pakistan, social impact stories, khudii heroes, community leaders"
-        url="https://new.khudii.com/specialPeople"
+        url="https://new.khudii.com/golden-people"
         image="/golden-people.png.webp"
       />
        <PageHeader 
