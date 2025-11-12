@@ -16,7 +16,7 @@ function OrganizationsSection() {
       setLoading(true);
       try {
         const res = await axios.get(`${APIPath}/items`,{withCredentials:true});
-        res.data=res.data.slice(0,6)
+        if(res.data.length>6){ res.data=res.data.slice(0,6)}
         setOrganizations(res.data); // replace with res.data later
       } catch (error) {
         console.log(error);

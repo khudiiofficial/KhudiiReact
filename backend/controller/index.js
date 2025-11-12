@@ -1,13 +1,13 @@
 import db from "../Database/db.js"
 import { DtoArr } from "../Dto/Dto.js";
-const getAllorganization = (req, res) => {
+const getAllorganization = (req,res) => {
   const sql = `
     SELECT i.id, i.name, i.deletestatus, i.description, i.youtube_video_url, i.introductory_image_path,
            i.slug, i.meta_title, i.meta_description, i.meta_keywords,
            GROUP_CONCAT(DISTINCT img.image_path) AS images
     FROM items i
-    LEFT JOIN item_images img ON i.id = img.item_id
-    GROUP BY i.id;
+    LEFT JOIN item_images img ON i.id = img.item_id WHERE i.deletestatus = 0
+    GROUP BY i.id ORDER BY i.id DESC
   `;
 
   db.query(sql, (err, rows) => {
@@ -25,7 +25,7 @@ const getAllorganization = (req, res) => {
       meta_keywords: row.meta_keywords || "",
     }));
 
-  res.status(200).json(DtoArr(items))
+  res.status(200).json(items)
   });
 };
 
@@ -833,7 +833,7 @@ export const itemByCategory = (req, res) => {
 
 
 export const getsuccessstories=(req,res)=>{
-db.query('SELECT * FROM successstories',(err,results)=>{
+db.query('SELECT * FROM successstories WHERE deletestatus = 0 ORDER BY id DESC',(err,results)=>{
 if(err){
   return res.status(500).json({message:"could not get"})
 }
@@ -841,7 +841,7 @@ if(results.length===0){
   return res.status(400).json({message:"Not found"})
 }
 
-res.status(200).json(DtoArr(results))
+res.status(200).json(results)
 
 })
 }
