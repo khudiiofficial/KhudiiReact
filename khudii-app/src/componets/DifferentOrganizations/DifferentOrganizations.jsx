@@ -52,7 +52,7 @@ if(error){
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {organizations.map((org) => (
-            <div key={org.id} className="org-card">
+            <div key={org.id} className="org-card cursor-pointer" onClick={()=>{nav(`/organization/${org.slug}`,{state:{id:org.id}})}}>
               <div className="org-img-wrapper">
                 <img src={org.introductory_image_path} alt={org.title} className="org-img" />
                 <button onClick={()=>{nav(`/organization/${org.slug}`,{state:{id:org.id}})}} className="org-overlay">

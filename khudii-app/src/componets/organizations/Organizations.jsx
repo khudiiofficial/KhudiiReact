@@ -38,7 +38,7 @@ function OrganizationsSection() {
           <div className={`grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3`}>
             <div></div>
             <div  className={`${styles.class11} ${styles.class12}`}>  Our Organizations</div>
-            <div  className={`${styles.class11}`}><Link to={'/organizations'}>Explore organizations&nbsp; <span> {`>`}</span></Link></div>
+            <div  className={`${styles.class11}`}><Link to={'/organizations/'}>Explore organizations&nbsp; <span> {`>`}</span></Link></div>
             </div>
             <br />
         {/* <p className="text-base text-gray-600 mb-8">

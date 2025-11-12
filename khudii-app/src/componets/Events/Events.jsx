@@ -409,7 +409,7 @@ const Events = () => {
                 We empower communities by providing essential services in health, education, disability support, water access, thalassemia care, and food security.
               </p>
               <div className="flex items-center justify-center xs:flex-row gap-3 sm:gap-4">
-                <Link to='/Story'>
+                <Link to='/contribute-your-story/'>
                   <button className="bg-gradient-to-r from-[#E3001C] to-[#FF6B6B] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:from-[#FF6B6B] hover:to-[#E3001C] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center">
                     <span className="text-sm sm:text-base">Contribute your story</span>
                     <svg className="w-4 h-4 sm:w-5 sm:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -417,7 +417,7 @@ const Events = () => {
                     </svg>
                   </button>
                 </Link>
-                <Link to={'/DonateUs'}>
+                <Link to={'/donate-now/'}>
                   <button className="bg-gradient-to-r from-[#022279] to-[#3B82F6] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:from-[#3B82F6] hover:to-[#022279] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center">
                     <span className="text-sm sm:text-base">Donate Now</span>
                     <svg className="w-4 h-4 sm:w-5 sm:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

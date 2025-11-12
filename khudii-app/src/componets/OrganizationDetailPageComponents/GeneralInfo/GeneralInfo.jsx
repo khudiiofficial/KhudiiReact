@@ -242,13 +242,13 @@ const Socials = ({ name,itemId, setgooglemap }) => {
         )}
 
  
-          <li className={`${styles.item}`}>
+          <li className={`${styles.item} bg-gradient-to-r from-[#E3001C] to-[#FF6B6B] hover:from-[#FF6B6B] hover:to-[#E3001C]`}>
             <a target="_blank" rel="noopener noreferrer">
-              <p className="text-red-700">Call Khudii</p>
-              <span className="text-blue-800">(+92) 3198 - KHUDII (548344)</span>
+              <p className="text-white">Call Khudii</p>
+              <span className="text-blue-500">(+92) 3198 - KHUDII (548344)</span>
             </a>
           </li>
-   <li  onClick={() => setIsModalOpen(true)} className={`${styles.item}`}>
+   <li  onClick={() => setIsModalOpen(true)} className={`${styles.item} bg-gradient-to-r from-[#022279] to-[#3B82F6] hover:from-[#3B82F6] hover:to-[#022279]`}>
             <a target="_blank" rel="noopener noreferrer">
               {/* <p className="text-red-700"></p> */}
               <span className="text-blue-800"><button >Know More About Organization?</button></span>

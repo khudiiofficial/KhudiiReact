@@ -321,6 +321,7 @@
 // };
 
 // export default AboutUs;
+
 import React, { useEffect, useRef } from 'react';
 import styles from './AboutUs.module.css';
 
