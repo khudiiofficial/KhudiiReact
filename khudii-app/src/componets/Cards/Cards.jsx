@@ -136,7 +136,7 @@ const Cards = () => {
                     <p className={styles.class3}>{ele.Description}</p>
                     <Link to={`/Categories/${ele.Name.replace(/\s+/g, '-')}`}>
                         <button className={styles.class5}>
-                            More about {ele.Name}
+                            More About {ele.Name}
                         </button>
                     </Link>
                 </div>

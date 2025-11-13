@@ -213,11 +213,11 @@
 .parent {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 25px;
-  justify-content: center;
-  padding: 2rem 5%;
-  margin-top: 30px;
-  width: 100%;
+  gap: 15px;
+  justify-self: center;
+  /* padding: 2rem 5%; */
+  padding: 30px 0;
+  width: 1240px;
   box-sizing: border-box;
 }
 
@@ -231,7 +231,7 @@
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
-  padding: 20px;
+  padding: 10px;
   width: 100%;
   min-height: 380px;
   height: auto;
@@ -262,7 +262,7 @@
   font-weight: 600;
   font-size: clamp(1.2rem, 2vw, 1.5rem);
   text-align: center;
-  color: #022279;
+  color: #02236e;
   line-height: 1.3;
 }
 
@@ -273,7 +273,7 @@
   text-align: center;
   font-size: clamp(0.85rem, 1.5vw, 1rem);
   line-height: 1.5;
-  color: #333;
+  color: #111;
   flex-grow: 1;
   display: -webkit-box;
   -webkit-line-clamp: 4;
@@ -285,7 +285,7 @@
 .class5 {
   margin-top: 15px;
   padding: 10px 20px;
-  background-color: #e63946;
+  background-color: #e7001e;
   color: white;
   border-radius: 25px;
   cursor: pointer;
@@ -299,7 +299,7 @@
 }
 
 .class5:hover {
-  background-color: #d62828;
+  background-color: #e7001e;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 

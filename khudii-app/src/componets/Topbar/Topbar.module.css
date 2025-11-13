@@ -3,16 +3,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 70px;
+  height: 50px;
   padding: 0 20px;
-  background-color: #022279;
+  background-color: #02236e;
   color: white;
   flex-wrap: wrap; /* allows wrapping on small screens */
   text-align: center;
 }
 
 .color {
-  background-color: #022279;
+  background-color: #02236e;
   color: white;
 }
 
@@ -25,16 +25,16 @@
 }
 
 .last {
-  background-color: #E3001C;
+  background-color: #e7001e;
   border-radius: 7px;
   cursor: pointer;
-  padding: 10px 15px;
+  padding: 5px 10px;
   color: white;
   border: none;
 }
 
 .height {
-  height: 70px;
+  height: 60px;
 }
 
 .contact {

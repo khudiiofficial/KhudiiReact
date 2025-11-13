@@ -1,11 +1,10 @@
 .class0{
     background-color: #F0F0F0;
-    padding-top: 20px;
+    padding: 20px;
 }
 .class1{
-       color: #022279;
+       color: #02236e;
        text-align: center;
-    
        margin-bottom: 20px;
        font-size: 34px;
        font-weight: 600;
@@ -16,7 +15,6 @@
     border-radius: 20px;
     width: 225px;
     height: 225px;
-    margin-bottom: 10px;
 }
 .class4{
     position: relative;

@@ -1,8 +1,9 @@
 /* Event.module.css */
 .class1 {
-    color: #022279;
+    color: #02236e;
     position: relative;
     display: inline-block;
+    width: 1240px;
 }
 
 .class1::after {
@@ -12,7 +13,7 @@
     left: 0;
     width: 60px;
     height: 4px;
-    background: linear-gradient(90deg, #E3001C, #022279);
+    background: linear-gradient(90deg, #e7001e, #02236e);
     border-radius: 2px;
     transition: width 0.3s ease;
 }

@@ -131,13 +131,16 @@
 } */
 
 .parent{
-  padding: 0 5%;
+  /* padding: 0 5%; */
+  width: 1240px;
+  justify-self: center;
+  padding-bottom: 30px;
 
 }
 .pad {
-  background-color: #e6edff;
-  padding: 2%;
-  border-radius: 10px;
+  /* background-color: #cedcff; */
+  padding: 20px;
+  border-radius: 20px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
@@ -147,7 +150,7 @@
 .size {
   font-size: 3rem;
   font-weight: 600;
-  color: #021677;
+  color: #02236e;
   margin-bottom: 1rem;
 }
 
@@ -217,7 +220,6 @@
 
 .playButton {
   transition: transform 0.3s ease;
- 
 }
 
 .videoPlaceholder:hover .playButton {
