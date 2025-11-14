@@ -1,6 +1,6 @@
 .class0{
     background-color: #F0F0F0;
-    padding: 20px;
+    /* padding: 20px; */
 }
 .class1{
        color: #02236e;
@@ -13,8 +13,8 @@
 
 .class2{
     border-radius: 20px;
-    width: 225px;
-    height: 225px;
+    width: 240px;
+    height: 240px;
 }
 .class4{
     position: relative;
@@ -24,9 +24,8 @@
     position: absolute;
     top: 0px;
     border-radius: 20px;
-    width: 225px;
-    height: 225px;
- 
+    width: 240px;
+    height: 240px;
 }
 .class3:hover{
        background-color: rgb(55, 55, 183,.5);

@@ -29,7 +29,7 @@ try {
     setarr(res.data)
   }
 } catch (error) {
-  
+  console.log(error)
 }
 }
 func()
@@ -37,31 +37,37 @@ func()
   return (
    <>
    <div className={`${styles.class3}`}>
-   <div className={`grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3`}>
-    <div></div>
-    <div  className={`${styles.class1} ${styles.class2}`}>Success Stories</div>
-    <div  className={`${styles.class1}`}><Link to={'/success-stories/'}>Explore more stories&nbsp; <span> {`>`}</span></Link></div>
+   <div className={`${styles.main} flex justify-between `}>
+      <div className={`${styles.gw}`}></div>
+    <div  className={`${styles.gw} ${styles.class1} ${styles.class2}`}>Success Stories</div>
+    <div  className={`${styles.gw} ${styles.btn_story} ${styles.class1}`}><Link to={'/success-stories/'}>Explore More Stories&nbsp; <span> {`>`}</span></Link></div>
     </div>
 
     <div className={`${styles.class4}`}>
      {arr.map((ele,index)=>{
 
     return (
-        <img 
+
+       <Link to={"/success-stories"}>
+      <img 
+      className={styles.img}
           key={index} 
-          src={`https://img.youtube.com/vi/${ele.youtube_id}/hqdefault.jpg`} 
+          src={`https://img.youtube.com/vi/${ele.youtube_id}/maxresdefault.jpg`} 
           title='khudii 13' 
           alt={`Success story ${index + 1}`}
           loading="lazy"
           width="380"
           height="200"
         />
+        </Link> 
     )
 })}
     </div>
 
     <div className={`${styles.class5}`}>
-      <div className={`${styles.class6} grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2`}>
+      <div className={`${styles.class6} `}>
+      <div className={styles.sample}>
+        <div className={`${styles.newparent} grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2`}>
         <div className={`${styles.class7}`}>
             <p>Floods in Pakistan</p>
             <p>At KHUDII, we are working tirelessly to support communities devastated by the recent floods in Pakistan. Thousands of families have lost their homes, livelihoods, and access to basic necessities. Your donation can help rebuild lives — by providing shelter, food, clean water, and long-term rehabilitation support. Together, we can restore hope and bring relief to those who need it most.</p>
@@ -69,9 +75,11 @@ func()
             <button className={styles.buttonClass}><Link to={'/donate-now/'}> Donate Now <i className="fa-solid fa-hands-praying"></i></Link></button>
         :<center> <button className={styles.buttonClass}><Link to={'/donate-now/'}> Donate Now <i className="fa-solid fa-hands-praying"></i></Link></button></center>
         }
-     
-            </div>
-        <div></div>
+        </div>
+        <div className={styles.class8}></div>
+        </div>
+
+</div>
        </div>
     </div>
    

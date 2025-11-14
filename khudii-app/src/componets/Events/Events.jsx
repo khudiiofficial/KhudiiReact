@@ -271,8 +271,8 @@ const Events = () => {
   const events = [
     {
       title: "AL-MAKKI AL-MADNI DIALYSIS CENTRE AND SURGICAL HOSPITAL || LAHORE",
-      url: "https://www.youtube.com/embed/au2wk2zVAbE",
-      videoId: "au2wk2zVAbE"
+      url: "https://www.youtube.com/embed/JjIpbo_t1JQ",
+      videoId: "JjIpbo_t1JQ"
     },
     {
       title: "INAUGURATION OF TRANSGENDER VOCATIONAL CENTER - FOUNTAIN HOUSE",
@@ -337,10 +337,10 @@ const Events = () => {
     <section ref={sectionRef} className="bg-white py-10">
       <div className="max-w-7xl mx-auto px-6">
         <div className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'} transition-all duration-700`}>
-          <h2 className={`text-4xl font-bold text-[#022279] mb-4 ${styles.class1} animate-slide-in-left`}>
+          <h2 className={`text-4xl font-bold text-[#022279] mb-4 ${styles.class1}`}>
             News & Events
           </h2>
-          <p className="text-gray-600 mb-8 text-lg animate-slide-in-right">
+          <p className="text-gray-600 mb-8 text-lg animate-slide-in-right text-center">
             Watch highlights from our partner organizations and community events.
           </p>
         </div>
@@ -360,9 +360,9 @@ const Events = () => {
                     onClick={() => handleVideoLoad(idx)}
                   >
                     <img 
-                      src={`https://img.youtube.com/vi/${evt.videoId}/hqdefault.jpg`}
+                      src={`https://img.youtube.com/vi/${evt.videoId}/maxresdefault.jpg`}
                       alt={`${evt.title} thumbnail`}
-                      className="w-full h-full object-cover"
+                      className={`${styles.events_thumbnail} w-full h-full object-cover`}
                       loading="lazy"
                     />
                     <div className="absolute inset-0  flex items-center justify-center transition-opacity hover:bg-opacity-20">
@@ -372,9 +372,9 @@ const Events = () => {
                         </svg>
                       </div>
                     </div>
-                    <div className="absolute bottom-3 left-3 text-white text-sm bg-black bg-opacity-70 px-2 py-1 rounded">
+                    {/* <div className="absolute bottom-3 left-3 text-white text-sm bg-black bg-opacity-70 px-2 py-1 rounded">
                       Click to play
-                    </div>
+                    </div> */}
                   </div>
                 ) : (
                   // VIDEO VIEW - YouTube iframe
@@ -391,7 +391,7 @@ const Events = () => {
               </div>
 
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-800 group-hover:text-[#E3001C] transition-colors duration-300 line-clamp-2 leading-tight">
+                <h3 className="text-xl font-semibold text-gray-800 group-hover:text-[#02236e] transition-colors duration-300 line-clamp-2 leading-tight">
                   {evt.title}
                 </h3>
               </div>
@@ -403,7 +403,7 @@ const Events = () => {
       {/* Rest of your component remains the same */}
       <div className={`max-w-7xl mx-auto px-3 sm:px-4 md:px-6 mt-16 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
         <div className="grid grid-cols-12 gap-4 sm:gap-6 md:gap-8 items-center">
-          <div className="col-span-12 lg:col-span-7">
+          <div className="col-span-12 lg:col-span-8">
             <div className="bg-gradient-to-r from-gray-50 to-white p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl shadow-lg border-l-4 border-[#E3001C] transform hover:-translate-y-1 transition-transform duration-300">
               <p className={`${styles.newclass} text-lg sm:text-xl md:text-2xl lg:text-3xl font-light text-gray-800 leading-relaxed mb-6 break-words`}>
                 We empower communities by providing essential services in health, education, disability support, water access, thalassemia care, and food security.
@@ -429,20 +429,19 @@ const Events = () => {
             </div>
           </div>
           
-          <div className="col-span-12 lg:col-span-5">
+          <div className="col-span-12 lg:col-span-4">
             <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-[#022279] to-[#E3001C] opacity-0 group-hover:opacity-10 rounded-xl sm:rounded-2xl transition-opacity duration-500"></div>
+              {/* <div className="absolute inset-0 bg-gradient-to-r from-[#022279] to-[#E3001C] opacity-0 group-hover:opacity-10 rounded-xl sm:rounded-2xl transition-opacity duration-500"></div> */}
               <img 
                 src="/ehdi-foundation-4-768x576.jpg.webp" 
                 alt="Community support" 
-                className="w-full h-auto rounded-xl sm:rounded-2xl shadow-lg transform group-hover:scale-105 transition-transform duration-700"
+                className={` ${styles.community_img} w-full h-auto rounded-xl sm:rounded-2xl shadow-lg transform group-hover:scale-105 transition-transform duration-700`}
                 loading="lazy"
-                width="400"
-                height="300"
+            
               />
-              <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 bg-white/90 backdrop-blur-sm px-3 sm:px-4 py-1 sm:py-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              {/* <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 bg-white/90 backdrop-blur-sm px-3 sm:px-4 py-1 sm:py-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 <span className="text-xs sm:text-sm font-semibold text-[#022279]">Making a Difference</span>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

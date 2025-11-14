@@ -138,6 +138,7 @@
 
 }
 
+
 .item a::before {
   content: '';
   position: absolute;
@@ -209,6 +210,12 @@
   letter-spacing: -0.01em;
 }
 
+.item span a {
+  flex: 1;
+  text-align: left;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
 /* Loading state */
 .loading {
   text-align: center;
@@ -355,4 +362,10 @@
  height: 80px;
     box-sizing: border-box;
   }
+}
+
+.item div span a{
+   /* text-align: center; */
+    font-size: 0.8rem;
+    line-height: 1.2;
 }

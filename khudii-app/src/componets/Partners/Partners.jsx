@@ -97,9 +97,9 @@ const Partners = () => {
   }, [animatedIndices]);
 
   return (
-    <div className={styles.class0}>
+    <div className={`${styles.class0}`}>
       <div className={styles.class1}>Our Partners</div>
-      <div className={`${styles.wrapper} flex items-center justify-center flex-wrap gap-4 sm:gap-6 px-4 sm:px-20`}>
+      <div className={`main_width flex items-center gap-2 justify-center flex-wrap px-4 sm:px-10`}>
         {arr.map((ele, index) => (
           <div key={index} className={styles.class4}>
             <img

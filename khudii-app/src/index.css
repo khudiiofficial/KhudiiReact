@@ -38,3 +38,18 @@
     max-width: 200px !important;
 }
 }
+
+.main_width {
+  width: 1240px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+
+.main{
+  width: 1240px;
+  
+}
+.gw{
+  width: 33.333%;
+}

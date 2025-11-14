@@ -252,10 +252,6 @@
   transition: box-shadow 0.3s ease;
 }
 
-.class1:hover > .class2 {
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
-}
-
 /* Title */
 .class4 {
   margin-top: 15px;

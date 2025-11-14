@@ -10,6 +10,47 @@
 .class3{
        color: #022279;
 }
+
+.card_container {
+  width: 1240px;
+}
+
+.title_h {
+  height: 50px;
+}
+
+.org_card_main {
+  border-radius: 20px;
+}
+
+.img_org {
+  width: 285px;
+    height: auto;
+    object-fit: cover;
+    justify-self: center;
+}
+.main{
+  width: 1240px;
+  margin: auto;
+  
+}
+.btn_org1{
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  /* place-content: end; */
+  /* float: right; */
+}
+.gw{
+  width: 33.333%;
+}
+
+.org_btn {
+  border-radius: 25px;
+  color: #ffffff;
+  background-color: #e7001e;
+}
+
 .ellipsis {
  display: -webkit-box;
   -webkit-line-clamp: 3; /* adjust lines */

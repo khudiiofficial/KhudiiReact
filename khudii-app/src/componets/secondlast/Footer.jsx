@@ -25,7 +25,7 @@ const Footer = () => {
                     <span className="contact-icon">
                       <i className="fas fa-phone"></i>
                     </span>
-                    <span className="contact-text">(+92) 3198 - KHUDII (548344)</span>
+                    <span className="contact-text"> <a href="tel:+923198548344" target="_blank">(+92) 3198 - KHUDII (548344)</a></span>
                   </a>
                 </li>
                 <li className="contact-item">

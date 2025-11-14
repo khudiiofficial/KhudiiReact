@@ -139,11 +139,11 @@
 }
 .pad {
   /* background-color: #cedcff; */
-  padding: 20px;
+  /* padding: 20px; */
   border-radius: 20px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: 3rem;
   align-items: center;
 }
 
@@ -162,6 +162,7 @@
   line-height: 1.6;
   font-size: 1.1rem;
   color: #222;
+  width: 632px;
 }
 
 .gborder {

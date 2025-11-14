@@ -110,7 +110,7 @@ const Navbar = () => {
       {/* Main Navbar */}
       <header className="bg-white relative">
         <div
-          className={`px-4 py-4 flex items-center justify-between ${styles.width}`}
+          className={`px-4 py-4 flex items-center justify-between ${styles.correctedwidth}`}
         >
           {/* Logo */}
           <div className="w-36">
@@ -172,8 +172,7 @@ const Navbar = () => {
             <span className={`${styles.gpos}`}>
               <Link to="#" className="hover:text-gray-900">
                 Join Us
-              </Link>
-              <i className={`${styles.fw} fas fa-chevron-down`}></i>
+              </Link> <i className={`${styles.fw} fas fa-chevron-down`}></i>
               <div className={`${styles.gpa}`}>
                 <li>
                   <Link to={'/volunteer/'}>Volunteer</Link>
