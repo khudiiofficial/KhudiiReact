@@ -110,7 +110,7 @@ const Navbar = () => {
       {/* Main Navbar */}
       <header className="bg-white relative">
         <div
-          className={`px-4 py-4 flex items-center justify-between ${styles.correctedwidth}`}
+          className={`px-4 py-4 flex items-center justify-around ${styles.correctedwidth}`}
         >
           {/* Logo */}
           <div className="w-36">

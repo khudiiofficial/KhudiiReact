@@ -97,21 +97,36 @@ const Partners = () => {
   }, [animatedIndices]);
 
   return (
-    <div className={`${styles.class0}`}>
-      <div className={styles.class1}>Our Partners</div>
-      <div className={`main_width flex items-center gap-2 justify-center flex-wrap px-4 sm:px-10`}>
-        {arr.map((ele, index) => (
-          <div key={index} className={styles.class4}>
+    <div className="w-full flex flex-col bg-[#f0f0f0] items-center py-5 sm:py-3 md:py-8">
+      {/* Heading */}
+      <h2 className="text-3xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-[#02236e] text-center mb-8 sm:mb-6">
+        Our Partners
+      </h2>
+
+      {/* Grid of Partners */}
+      <div className="max-w-[1240px] px-4 sm:px-10 md:px-10 lg:px-0 flex flex-wrap justify-center items-center gap-2 sm:gap-2 md:gap-2">
+        {arr.map((_, index) => (
+          <div
+            key={index}
+            ref={(el) => (imageRefs.current[index] = el)}
+            className="group relative flex items-center justify-center transition-transform duration-300 hover:scale-105"
+          >
+            {/* Image with fade-in animation on view */}
             <img
-              ref={el => imageRefs.current[index] = el}
-              src={`/partner${index+1}.webp`} // Use ele instead of index+1 to avoid duplicates
-              className={`${styles.class2} ${animatedIndices.has(index) ? styles.animateHighlight : ''}`}
-              alt={`Partner ${index+1} logo`}
+              src={`/partner${index + 1}.webp`}
+              alt={`Partner ${index + 1} logo`}
+              className={`w-50 h-50 rounded-[25px] sm:w-25 sm:w-20 md:w-40 md:h-40 lg:w-57 lg:h-57 object-contain transition-all duration-300 ${
+                animatedIndices.has(index)
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-5'
+              }`}
+              style={{
+                transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
+              }}
               loading="lazy"
-              width="225"
-              height="225"
             />
-            <div className={styles.class3}></div>
+            {/* Animated underline on hover
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#02236e] to-[#0066cc] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div> */}
           </div>
         ))}
       </div>

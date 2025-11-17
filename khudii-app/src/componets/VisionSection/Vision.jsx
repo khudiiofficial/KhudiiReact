@@ -1,35 +1,89 @@
-import React from 'react'
-import styles from './vision.module.css'
-const Vision = () => {
-  return (<>
-       <div className={`${styles.parent} `}>
-    <div className={`${styles.class1}`}>
-        {/* <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1400&q=60" className={`${styles.class2}`} alt="" /> */}
-        <i className={`fa-solid fa-crosshairs ${styles.class2}`} aria-hidden="true"></i>
-        <h2 className={`${styles.class4}`}>Vision</h2>
-        <p className={`${styles.class3}`}>To build Pakistan’s largest digital home for welfare — a hub where organizations, donors, volunteers, and communities come together seamlessly to create lasting change and uplift every vulnerable life with dignity and hope.</p>
-       
-    </div>
-    <div className={`${styles.class1}`}>
-        {/* <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1400&q=60" className={`${styles.class2}`} alt="" /> */}
-        <i className={`fa-solid fa-chart-area ${styles.class2}` } aria-hidden="true"></i>
-        <h2 className={`${styles.class4}`}>Goal</h2>
-        <p className={`${styles.class3}`}>To actively identify, support, and amplify credible welfare organizations across Pakistan—building bridges between changemakers and supporters, and laying the digital foundation to empower 25,000 model initiatives through strategic connection, visibility, and collaboration.</p>
-       
-    </div>
+// import React from 'react'
+// import styles from './vision.module.css'
+// const Vision = () => {
+// return (<>
+//     <div className={`${styles.parent} `}>
+//     <div className={`${styles.class1}`}>
+//         {/* <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1400&q=60" className={`${styles.class2}`} alt="" /> */}
+//         <i className={`fa-solid fa-crosshairs ${styles.class2}`} aria-hidden="true"></i>
+//         <h2 className={`${styles.class4}`}>Vision</h2>
+//         <p className={`${styles.class3}`}>To build Pakistan’s largest digital home for welfare — a hub where organizations, donors, volunteers, and communities come together seamlessly to create lasting change and uplift every vulnerable life with dignity and hope.</p>
+//     </div>
+//     <div className={`${styles.class1}`}>
+//         {/* <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1400&q=60" className={`${styles.class2}`} alt="" /> */}
+//         <i className={`fa-solid fa-chart-area ${styles.class2}` } aria-hidden="true"></i>
+//         <h2 className={`${styles.class4}`}>Goal</h2>
+//         <p className={`${styles.class3}`}>To actively identify, support, and amplify credible welfare organizations across Pakistan—building bridges between changemakers and supporters, and laying the digital foundation to empower 25,000 model initiatives through strategic connection, visibility, and collaboration.</p>
+//     </div>
     
-    <div className={`${styles.class1} `}>
-        {/* <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1400&q=60" className={`${styles.class2}`} alt="" /> */}
-        <i className={`fa-solid fa-magnifying-glass ${styles.class2}`} aria-hidden="true"></i>
-        <h2 className={`${styles.class4}`}>Mission</h2>
-        <p className={`${styles.class3}`}>To breathe life into Pakistan’s welfare ecosystem by shining a light on credible organizations, giving them the visibility they deserve, and connecting them with donors, volunteers, and professionals so their impact can reach further and touch more lives.</p>
-       
-    </div>
+//     <div className={`${styles.class1} `}>
+//         {/* <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1400&q=60" className={`${styles.class2}`} alt="" /> */}
+//         <i className={`fa-solid fa-magnifying-glass ${styles.class2}`} aria-hidden="true"></i>
+//         <h2 className={`${styles.class4}`}>Mission</h2>
+//         <p className={`${styles.class3}`}>To breathe life into Pakistan’s welfare ecosystem by shining a light on credible organizations, giving them the visibility they deserve, and connecting them with donors, volunteers, and professionals so their impact can reach further and touch more lives.</p>
+//     </div>
     
-        </div>
-        <br />
-</>
-  )
-}
+//         </div>
+//         <br />
+// </>
+// )
+// }
 
-export default Vision
+// export default Vision
+
+// 2nd Code
+import React from 'react';
+import styles from './vision.module.css'
+
+const Vision = () => {
+  const items = [
+    {
+      icon: 'fa-solid fa-crosshairs',
+      title: 'Vision',
+      description:
+        'To build Pakistan’s largest digital home for welfare — a hub where organizations, donors, volunteers, and communities come together seamlessly to create lasting change and uplift every vulnerable life with dignity and hope.',
+    },
+    {
+      icon: 'fa-solid fa-chart-area',
+      title: 'Goal',
+      description:
+        'To actively identify, support, and amplify credible welfare organizations across Pakistan—building bridges between changemakers and supporters, and laying the digital foundation to empower 25,000 model initiatives through strategic connection, visibility, and collaboration.',
+    },
+    {
+      icon: 'fa-solid fa-magnifying-glass',
+      title: 'Mission',
+      description:
+        'To breathe life into Pakistan’s welfare ecosystem by shining a light on credible organizations, giving them the visibility they deserve, and connecting them with donors, volunteers, and professionals so their impact can reach further and touch more lives.',
+    },
+  ];
+
+  return (
+    <section className="py-8 sm:py-10 md:py-12">
+      <div className="max-w-[1240px] mx-auto px-2 sm:px-3">
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-8 md:gap-6 pb-6 md:pb-8">
+          {items.map((item, idx) => (
+            <div
+              key={idx}
+              className="flex-1 min-w-[300px] sm:min-w-[320px] md:min-w-[360px] max-w-[380px] 
+                         bg-[#E6EDFF] rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300
+                         p-5 sm:p-4 flex flex-col items-center justify-center ext-center"
+            >
+              <i
+                className={`${item.icon} text-[#022279] text-4xl sm:text-5xl mb-3`}
+                aria-hidden="true"
+              ></i>
+              <h2 className="font-semibold text-[#022279] text-xl sm:text-2xl md:text-[1.8rem] mb-3">
+                {item.title}
+              </h2>
+              <p className="text-gray-800 leading-relaxed text-sm sm:text-base">
+                {item.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Vision;

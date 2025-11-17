@@ -48,9 +48,9 @@ if(error){
         )
 }
   return (
-    <div className="org-container py-14 px-6 ">
+    <div className="org-container py-14 px-6">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {organizations.map((org) => (
             <div key={org.id} className="org-card cursor-pointer" onClick={()=>{nav(`/organization/${org.slug}`,{state:{id:org.id}})}}>
               <div className="org-img-wrapper">
@@ -70,6 +70,64 @@ if(error){
               </div>
             </div>
           ))}
+        </div> */}
+         <div className="max-w-[1240px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+          {organizations.length > 0 ? (
+            organizations.map((org, idx) => (
+              <article
+                key={org.id || idx}
+                className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
+                role="article"
+                aria-labelledby={`org-title-${org.id || idx}`}
+              >
+                {/* Image */}
+                <div className="p-2 w-full overflow-hidden bg-white rounded-t-xl">
+  <img
+    src={org.introductory_image_path || '/placeholder-org.webp'}
+    alt={org.name || 'Organization logo'}
+    className="w-full h-full object-cover duration-500"
+    loading="lazy"
+    onError={(e) => {
+      e.target.onerror = null;
+      e.target.src = '/fallback-org.png';
+    }}
+  />
+</div>
+
+                {/* Content */}
+                <div className="p-5 sm:p-6">
+                  <h3
+                    id={`org-title-${org.id || idx}`}
+                    className="h-[50px] text-lg sm:text-xl font-semibold text-[#022279] mb-2 group-hover:text-[#02236e] transition-colors"
+                  >
+                    {org.name}
+                  </h3>
+
+                  <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3">
+                    {org.description
+                      ? org.description
+                          .replace(/<[^>]*>/g, '') // strip HTML for safety (or use DOMPurify if rich text needed)
+                          .substring(0, 120) + (org.description.length > 120 ? '...' : '')
+                      : 'Empowering communities through sustainable initiatives.'}
+                  </p>
+
+                  <div className="text-center">
+                    <button
+                      onClick={() => nav(`/organization/${org.slug}`, { state: { id: org.id } })}
+                      className="inline-flex items-center justify-center rounded-[25px] w-50 sm:w-auto px-5 py-2.5 text-sm font-medium bg-[#E3001C] text-white transition-all duration-300 focus:outline-none"
+                      aria-label={`Explore ${org.name}`}
+                    >
+                      Explore {org.name.split(' ').slice(0, 2).join(' ')}
+                    </button>
+                  </div>
+                </div>
+              </article>
+            ))
+          ) : (
+            <div className="col-span-full text-center py-10">
+              <p className="text-gray-500">No organizations found.</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

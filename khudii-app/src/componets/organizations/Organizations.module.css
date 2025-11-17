@@ -1,5 +1,5 @@
 .class1{
-        background-color: #F0F0F0;
+  background-color: #F0F0F0;
 }
 .class2{
     display: flex;
@@ -8,7 +8,7 @@
 }
 
 .class3{
-       color: #022279;
+  color: #022279;
 }
 
 .card_container {
@@ -30,9 +30,9 @@
     justify-self: center;
 }
 .main{
+  padding: 0px 0 0 0;
   width: 1240px;
   margin: auto;
-  
 }
 .btn_org1{
   display: flex;
@@ -82,4 +82,7 @@ font-weight: 700;
   .class12{
     font-size: 25px;
   }
+  .exp_org_btn {
+  display: none;
+}
 }

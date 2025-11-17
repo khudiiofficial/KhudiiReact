@@ -159,6 +159,14 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+    .class1 {
+        width: 100%;
+        max-width: 100%;
+        display: block;
+        padding: 0 30px;
+        font-size: 1.75rem;
+    }
+    
     .class3 {
         font-size: 24px;
     }
@@ -182,7 +190,25 @@ width: 10px;
 button>span{
     font-size: 10px;
 }
-    
+}
+
+/* Mobile Screens */
+@media (max-width: 480px) {
+    .class1 {
+        width: 100%;
+        max-width: 100%;
+        display: block;
+        padding: 0 20px;
+        font-size: 1.5rem;
+    }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 360px) {
+    .class1 {
+        padding: 0 15px;
+        font-size: 1.3rem;
+    }
 }
 
 .newclass{

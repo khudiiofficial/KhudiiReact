@@ -43,7 +43,7 @@ func()
     <div  className={`${styles.gw} ${styles.btn_story} ${styles.class1}`}><Link to={'/success-stories/'}>Explore More Stories&nbsp; <span> {`>`}</span></Link></div>
     </div>
 
-    <div className={`${styles.class4}`}>
+    {/* <div className={`${styles.class4}`}>
      {arr.map((ele,index)=>{
 
     return (
@@ -62,7 +62,30 @@ func()
         </Link> 
     )
 })}
-    </div>
+    </div> */}
+    <div className="max-w-[1240px] w-full mx-auto pt-6 pb-6 px-4 sm:px-6">
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    {arr.map((ele, index) => (
+      <Link 
+        key={index} 
+        to="/success-stories" 
+        className="block group"
+      >
+        <div className="relative pb-[52.63%]"> {/* 380:200 = 19:10 ≈ 52.63% padding-bottom */}
+          <img
+            src={`https://img.youtube.com/vi/${ele.youtube_id}/maxresdefault.jpg`}
+            alt={`Success story ${index + 1}`}
+            title="Success Story"
+            loading="lazy"
+            className="absolute top-0 left-0 w-full h-full object-cover rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+            width="380"
+            height="200"
+          />
+        </div>
+      </Link>
+    ))}
+  </div>
+</div>
 
     <div className={`${styles.class5}`}>
       <div className={`${styles.class6} `}>

@@ -220,7 +220,7 @@ height: 12rem;
 }
 
 .carouselContainer {
-  height: 15rem;
+  height: 17rem;
   position: relative;
   overflow: hidden;
 }
@@ -228,7 +228,7 @@ height: 12rem;
 .slide {
   position: absolute;
   top: 0;
-  height: 15rem;
+  height: 17rem;
   left: 0;
   right: 0;
   bottom: 0;
