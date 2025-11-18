@@ -1,17 +1,11 @@
 .org-container {
-  /* max-width: 1200px; */
   width: 100%;
   margin: auto;
   padding: 2rem 1rem;
   font-family: "Segoe UI", sans-serif;
   background-color:#e6edff;
   border-radius: 20px;
-  
-
-
-}
-
-
+  }
 
 
 /* Slider */

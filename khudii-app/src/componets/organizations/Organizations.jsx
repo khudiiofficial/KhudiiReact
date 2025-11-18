@@ -142,7 +142,7 @@ return (
 </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-4">
           {organizations.length > 0 ? (
             organizations.map((org, idx) => (
               <article
@@ -169,7 +169,7 @@ return (
                 <div className="p-5 sm:p-6">
                   <h3
                     id={`org-title-${org.id || idx}`}
-                    className="text-lg sm:text-xl font-semibold text-[#022279] mb-2 group-hover:text-[#02236e] transition-colors"
+                    className="h-[50px] text-lg sm:text-xl font-semibold text-[#02236e] mb-2 transition-colors"
                   >
                     {org.name}
                   </h3>

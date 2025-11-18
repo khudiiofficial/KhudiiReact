@@ -275,10 +275,9 @@ border-radius: 20px;
   }
 }
 
-@media (max-width:715px){
+@media (max-width:768px){
   .img{
-    width: 315px;
-    height: 150px;
+    max-height: 300px;
   }
   .class7>p{
     font-size: 15px;
@@ -287,6 +286,6 @@ border-radius: 20px;
 min-height: 400px;
   }
   .class5{
-min-height: 380px;
+height: 300px;
   }
 }

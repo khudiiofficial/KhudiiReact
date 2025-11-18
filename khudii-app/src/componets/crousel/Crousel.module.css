@@ -293,6 +293,16 @@ height: 12rem;
   background-color: #d1d5db;
 }
 
+@media (min-width:1540px){
+  .slide{
+    height: 21rem;
+  }
+
+  .carouselContainer{
+    height: 21rem;
+  }
+}
+
 @media (max-width:800px){
   .slide{
     height: 12rem;
