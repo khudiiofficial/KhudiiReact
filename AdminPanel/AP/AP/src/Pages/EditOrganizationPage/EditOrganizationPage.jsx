@@ -1709,18 +1709,32 @@ export default function EditOrganizationPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [cap,setcap]=useState('');
-
+  const [availableCategories ,setcat]=useState([])
   // Available categories
-  const availableCategories = [
-    "Health",
-    "Education",
-    "Autism",
-    "Orphanage",
-    "Thalassemia",
-    "Visually impaired",
-    "Differently Abled",
-    "Water And Food"
-  ];
+  // const availableCategories = [
+  //   "Health",
+  //   "Education",
+  //   "Autism",
+  //   "Orphanage",
+  //   "Thalassemia",
+  //   "Visually impaired",
+  //   "Differently Abled",
+  //   "Water And Food"
+  // ];
+  useEffect(()=>{
+const func=async()=>{
+  try {
+    const res=await axios.get(`${APIPath}/sectors/admin`,{withCredentials:true})
+    if(res.status===200){
+      setcat(res.data.data)
+    }
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
+func()
+},[])
 
   // Validation rules
   const validationRules = {
@@ -2296,14 +2310,14 @@ export default function EditOrganizationPage() {
                 }`}>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {availableCategories.map((cat) => (
-                      <label key={cat} className="flex items-center space-x-3 cursor-pointer">
+                      <label key={cat.name} className="flex items-center space-x-3 cursor-pointer">
                         <input
                           type="checkbox"
-                          checked={form.category.includes(cat)}
-                          onChange={() => handleCategoryChange(cat)}
+                          checked={form.category.includes(cat.name)}
+                          onChange={() => handleCategoryChange(cat.name)}
                           className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                         />
-                        <span className="text-sm text-gray-700">{cat}</span>
+                        <span className="text-sm text-gray-700">{cat.name}</span>
                       </label>
                     ))}
                   </div>

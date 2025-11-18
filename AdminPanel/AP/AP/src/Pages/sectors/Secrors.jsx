@@ -12,7 +12,10 @@ const SectorsList = () => {
   const [formData, setFormData] = useState({
     name: '',
     slug: '',
-    description: ''
+    description: '',
+    meta_title: '',
+    meta_description: '',
+    meta_keywords: ''
   });
   const [slugError, setSlugError] = useState('');
   const [imageFile, setImageFile] = useState(null);
@@ -103,19 +106,28 @@ const SectorsList = () => {
       };
 
       if (editingSector) {
-        await axios.put(`${API_URL}/sectors/admin/${editingSector.id}`, submitData, { withCredentials: true });
+        const response = await axios.put(`${API_URL}/sectors/admin/${editingSector.id}`, submitData, { withCredentials: true });
+        if (response.data.itemsUpdated > 0) {
+          setError(`Sector updated successfully! Also updated ${response.data.itemsUpdated} items with the new category name.`);
+        }
       } else {
         await axios.post(`${API_URL}/sectors/admin`, submitData, { withCredentials: true });
       }
       
       setShowForm(false);
       setEditingSector(null);
-      setFormData({ name: '', slug: '', description: '' });
+      setFormData({ 
+        name: '', 
+        slug: '', 
+        description: '',
+        meta_title: '',
+        meta_description: '',
+        meta_keywords: ''
+      });
       setImageFile(null);
       setImagePreview('');
       setFileName('');
       setSlugError('');
-      setError('');
       fetchSectors();
     } catch (err) {
       setError(err.response?.data?.error || 'Operation failed');
@@ -139,7 +151,10 @@ const SectorsList = () => {
     setFormData({
       name: sector.name,
       slug: sector.slug,
-      description: sector.description
+      description: sector.description,
+      meta_title: sector.meta_title || '',
+      meta_description: sector.meta_description || '',
+      meta_keywords: sector.meta_keywords || ''
     });
     setImagePreview(sector.src);
     setImageFile(null);
@@ -170,7 +185,7 @@ const SectorsList = () => {
   };
 
   const handlePermanentDelete = async (id) => {
-    if (window.confirm('This will permanently delete the sector. Are you sure?')) {
+    if (window.confirm('This will permanently delete the sector and remove it from all items. Are you sure?')) {
       try {
         await axios.delete(`${API_URL}/sectors/admin/permanent/${id}`, { withCredentials: true });
         fetchSectors();
@@ -192,7 +207,14 @@ const SectorsList = () => {
   };
 
   const clearForm = () => {
-    setFormData({ name: '', slug: '', description: '' });
+    setFormData({ 
+      name: '', 
+      slug: '', 
+      description: '',
+      meta_title: '',
+      meta_description: '',
+      meta_keywords: ''
+    });
     setImageFile(null);
     setImagePreview('');
     setFileName('');
@@ -284,14 +306,14 @@ const SectorsList = () => {
                     className={slugError ? 'error' : ''}
                     disabled={uploading}
                   />
-                  {/* <button 
+                  <button 
                     type="button" 
                     className="btn btn-secondary generate-slug-btn"
                     onClick={generateNewSlug}
                     disabled={!formData.name || uploading}
                   >
                     Generate
-                  </button> */}
+                  </button>
                 </div>
                 {slugError && <div className="field-error">{slugError}</div>}
                 <div className="slug-help">
@@ -309,6 +331,42 @@ const SectorsList = () => {
                   rows="4"
                   disabled={uploading}
                 />
+              </div>
+
+              {/* Meta Fields */}
+              <div className="form-group">
+                <label>Meta Title:</label>
+                <input
+                  type="text"
+                  value={formData.meta_title}
+                  onChange={(e) => setFormData({...formData, meta_title: e.target.value})}
+                  placeholder="Meta title for SEO"
+                  disabled={uploading}
+                  maxLength="255"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Meta Description:</label>
+                <textarea
+                  value={formData.meta_description}
+                  onChange={(e) => setFormData({...formData, meta_description: e.target.value})}
+                  placeholder="Meta description for SEO"
+                  rows="3"
+                  disabled={uploading}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Meta Keywords:</label>
+                <input
+                  type="text"
+                  value={formData.meta_keywords}
+                  onChange={(e) => setFormData({...formData, meta_keywords: e.target.value})}
+                  placeholder="Keyword1, Keyword2, Keyword3"
+                  disabled={uploading}
+                />
+                <div className="slug-help">Separate keywords with commas</div>
               </div>
               
               {uploading && <div className="upload-status">Uploading image to server...</div>}
@@ -339,12 +397,23 @@ const SectorsList = () => {
         {sectors.map(sector => (
           <div key={sector.id} className={`sector-card ${sector.deletestatus ? 'deleted' : ''}`}>
             <div className="sector-image">
-              <img  src={sector.src} alt={sector.name} />
+              <img src={sector.src} alt={sector.name} />
               {sector.deletestatus && <div className="deleted-badge">Deleted</div>}
             </div>
             <div className="sector-info">
               <h3>{sector.name}</h3>
               <p>{sector.description}</p>
+              
+              {/* Display Meta Information */}
+              {(sector.meta_title || sector.meta_description || sector.meta_keywords) && (
+                <div className="sector-meta-seo">
+                  <h4>SEO Information:</h4>
+                  {sector.meta_title && <p><strong>Meta Title:</strong> {sector.meta_title}</p>}
+                  {sector.meta_description && <p><strong>Meta Description:</strong> {sector.meta_description}</p>}
+                  {sector.meta_keywords && <p><strong>Meta Keywords:</strong> {sector.meta_keywords}</p>}
+                </div>
+              )}
+              
               <div className="sector-meta">
                 <span><strong>Slug:</strong> {sector.slug}</span>
                 <span><strong>ID:</strong> {sector.id}</span>

@@ -1088,7 +1088,6 @@ export const getAllEvents = (req, res) => {
 //sector
 export const getAllSectors = (req, res) => {
   const query = 'SELECT * FROM sectors ORDER BY id DESC';
-  
   db.query(query, (err, results) => {
     if (err) {
       console.error('❌ Error fetching sectors:', err);
@@ -1097,3 +1096,21 @@ export const getAllSectors = (req, res) => {
     res.status(200).json({ success: true, data: results });
   });
 };
+
+//find category by name
+
+export const getCBN=async(req,res)=>{
+  const {name}=req.params
+  console.log(name)
+  const query='SELECT * FROM sectors WHERE name=?'
+    db.query(query,[name], (err, results) => {
+    if (err) {
+      console.error('❌ Error fetching sectors:', err);
+      return res.status(500).json({ success: false, error: 'Database error' });
+    }
+    if(results.length===0){
+      return res.status(400).json({ success: false, error: 'Not Found' });
+    }
+    res.status(200).json({ success: true, data: results[0] });
+  });
+}

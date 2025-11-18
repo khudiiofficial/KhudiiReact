@@ -4822,7 +4822,6 @@ export const deleteEvent = (req, res) => {
 
 //sectors
 
-
 // controllers/sectorsController.js
 
 // Helper function to upload image from base64
@@ -4843,6 +4842,67 @@ const uploadImageFromBase64 = async (base64String, fileName) => {
   }
 };
 
+// Helper function to update category in items table
+const updateItemsCategory = async (oldName, newName) => {
+  return new Promise((resolve, reject) => {
+    // Get all items that have the old category name in their category array
+    const selectQuery = 'SELECT id, category FROM items WHERE JSON_CONTAINS(category, ?)';
+    
+    db1.query(selectQuery, [JSON.stringify(oldName)], (err, results) => {
+      if (err) {
+        console.error('Error fetching items for category update:', err);
+        reject(err);
+        return;
+      }
+
+      if (results.length === 0) {
+        resolve({ updated: 0 }); // No items to update
+        return;
+      }
+
+      let updatedCount = 0;
+      let updatePromises = [];
+
+      // Update each item
+      results.forEach(item => {
+        const updatePromise = new Promise((itemResolve, itemReject) => {
+          try {
+            // Parse the category array
+            const categories = JSON.parse(item.category);
+            
+            // Replace the old category name with new one
+            const updatedCategories = categories.map(cat => 
+              cat === oldName ? newName : cat
+            );
+            
+            // Update the item
+            const updateQuery = 'UPDATE items SET category = ? WHERE id = ?';
+            db1.query(updateQuery, [JSON.stringify(updatedCategories), item.id], (updateErr) => {
+              if (updateErr) {
+                console.error(`Error updating item ${item.id}:`, updateErr);
+                itemReject(updateErr);
+              } else {
+                updatedCount++;
+                itemResolve();
+              }
+            });
+          } catch (parseError) {
+            console.error(`Error parsing categories for item ${item.id}:`, parseError);
+            itemResolve(); // Continue with other items even if one fails
+          }
+        });
+        
+        updatePromises.push(updatePromise);
+      });
+
+      // Wait for all updates to complete
+      Promise.all(updatePromises)
+        .then(() => resolve({ updated: updatedCount }))
+        .catch(reject);
+    });
+  });
+};
+
 // Get all sectors (including deleted for admin)
 export const getAllSectors = (req, res) => {
   const query = 'SELECT * FROM sectors ORDER BY id DESC';
@@ -4852,7 +4912,7 @@ export const getAllSectors = (req, res) => {
       console.error('❌ Error fetching sectors:', err);
       return res.status(500).json({ success: false, error: 'Database error' });
     }
-    res.json({ success: true, data: results });
+    res.status(200).json({ success: true, data: results });
   });
 };
 
@@ -4891,7 +4951,16 @@ export const getSectorById = (req, res) => {
 // Create new sector
 export const createSector = async (req, res) => {
   try {
-    const { name, slug, description, imageBase64, fileName } = req.body;
+    const { 
+      name, 
+      slug, 
+      description, 
+      meta_title, 
+      meta_description, 
+      meta_keywords,
+      imageBase64, 
+      fileName 
+    } = req.body;
     
     if (!name || !slug || !description) {
       return res.status(400).json({ 
@@ -4914,9 +4983,21 @@ export const createSector = async (req, res) => {
       }
     }
 
-    const query = 'INSERT INTO sectors (src, name, slug, description) VALUES (?, ?, ?, ?)';
+    const query = `
+      INSERT INTO sectors 
+      (src, name, slug, description, meta_title, meta_description, meta_keywords) 
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `;
     
-    db1.query(query, [imageUrl, name, slug, description], (err, result) => {
+    db1.query(query, [
+      imageUrl, 
+      name, 
+      slug, 
+      description, 
+      meta_title || null, 
+      meta_description || null, 
+      meta_keywords || null
+    ], (err, result) => {
       if (err) {
         console.error('❌ Error creating sector:', err);
         if (err.code === 'ER_DUP_ENTRY') {
@@ -4937,6 +5018,9 @@ export const createSector = async (req, res) => {
           name,
           slug,
           description,
+          meta_title,
+          meta_description,
+          meta_keywords,
           deletestatus: 0
         }
       });
@@ -4951,7 +5035,16 @@ export const createSector = async (req, res) => {
 export const updateSector = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, slug, description, imageBase64, fileName } = req.body;
+    const { 
+      name, 
+      slug, 
+      description, 
+      meta_title, 
+      meta_description, 
+      meta_keywords,
+      imageBase64, 
+      fileName 
+    } = req.body;
     
     if (!name || !slug || !description) {
       return res.status(400).json({ 
@@ -4960,8 +5053,8 @@ export const updateSector = async (req, res) => {
       });
     }
 
-    // First get the old sector data to check if image changed
-    const getOldDataQuery = 'SELECT src FROM sectors WHERE id = ?';
+    // First get the old sector data to check if name changed and for image handling
+    const getOldDataQuery = 'SELECT name, src FROM sectors WHERE id = ?';
     
     db1.query(getOldDataQuery, [id], async (err, results) => {
       if (err) {
@@ -4974,7 +5067,20 @@ export const updateSector = async (req, res) => {
       }
       
       const oldSector = results[0];
+      const oldName = oldSector.name;
       let newImageUrl = oldSector.src;
+
+      // If name changed, update all items that reference this category
+      let categoryUpdateResult = { updated: 0 };
+      if (oldName !== name) {
+        try {
+          categoryUpdateResult = await updateItemsCategory(oldName, name);
+          console.log(`✅ Updated ${categoryUpdateResult.updated} items with new category name`);
+        } catch (categoryError) {
+          console.error('❌ Error updating items categories:', categoryError);
+          // Continue with sector update even if category update fails
+        }
+      }
 
       // If new image is provided, upload it
       if (imageBase64 && fileName) {
@@ -5000,9 +5106,23 @@ export const updateSector = async (req, res) => {
       }
       
       // Update the sector
-      const updateQuery = 'UPDATE sectors SET src = ?, name = ?, slug = ?, description = ? WHERE id = ?';
+      const updateQuery = `
+        UPDATE sectors 
+        SET src = ?, name = ?, slug = ?, description = ?, 
+            meta_title = ?, meta_description = ?, meta_keywords = ? 
+        WHERE id = ?
+      `;
       
-      db1.query(updateQuery, [newImageUrl, name, slug, description, id], (err, result) => {
+      db1.query(updateQuery, [
+        newImageUrl, 
+        name, 
+        slug, 
+        description, 
+        meta_title || null, 
+        meta_description || null, 
+        meta_keywords || null, 
+        id
+      ], (err, result) => {
         if (err) {
           console.error('❌ Error updating sector:', err);
           if (err.code === 'ER_DUP_ENTRY') {
@@ -5020,14 +5140,18 @@ export const updateSector = async (req, res) => {
         
         res.json({ 
           success: true, 
-          message: 'Sector updated successfully',
+          message: `Sector updated successfully${categoryUpdateResult.updated > 0 ? ` and ${categoryUpdateResult.updated} items updated` : ''}`,
           data: { 
             id: parseInt(id), 
             src: newImageUrl, 
             name, 
             slug, 
-            description 
-          }
+            description,
+            meta_title,
+            meta_description,
+            meta_keywords
+          },
+          itemsUpdated: categoryUpdateResult.updated
         });
       });
     });
@@ -5079,8 +5203,8 @@ export const restoreSector = (req, res) => {
 export const permanentDeleteSector = (req, res) => {
   const { id } = req.params;
   
-  // First get the sector data to delete the image from FTP
-  const getSectorQuery = 'SELECT src FROM sectors WHERE id = ?';
+  // First get the sector data to delete the image from FTP and get the name for category cleanup
+  const getSectorQuery = 'SELECT name, src FROM sectors WHERE id = ?';
   
   db1.query(getSectorQuery, [id], async (err, results) => {
     if (err) {
@@ -5093,6 +5217,16 @@ export const permanentDeleteSector = (req, res) => {
     }
     
     const sector = results[0];
+    const sectorName = sector.name;
+    
+    // Remove this category from all items
+    try {
+      await removeCategoryFromItems(sectorName);
+      console.log(`✅ Removed category "${sectorName}" from all items`);
+    } catch (categoryError) {
+      console.error('❌ Error removing category from items:', categoryError);
+      // Continue with deletion even if category cleanup fails
+    }
     
     // Delete image from FTP if it's from our server
     if (sector.src && sector.src.includes('media.khudii.com')) {
@@ -5117,7 +5251,64 @@ export const permanentDeleteSector = (req, res) => {
         return res.status(404).json({ success: false, error: 'Sector not found' });
       }
       
-      res.json({ success: true, message: 'Sector permanently deleted' });
+      res.json({ success: true, message: 'Sector permanently deleted and removed from all items' });
+    });
+  });
+};
+
+// Helper function to remove category from all items when sector is deleted
+const removeCategoryFromItems = async (categoryName) => {
+  return new Promise((resolve, reject) => {
+    // Get all items that have this category
+    const selectQuery = 'SELECT id, category FROM items WHERE JSON_CONTAINS(category, ?)';
+    
+    db1.query(selectQuery, [JSON.stringify(categoryName)], (err, results) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      if (results.length === 0) {
+        resolve({ removed: 0 });
+        return;
+      }
+
+      let removedCount = 0;
+      let updatePromises = [];
+
+      // Update each item to remove the category
+      results.forEach(item => {
+        const updatePromise = new Promise((itemResolve, itemReject) => {
+          try {
+            // Parse the category array
+            const categories = JSON.parse(item.category);
+            
+            // Remove the category
+            const updatedCategories = categories.filter(cat => cat !== categoryName);
+            
+            // If no categories left, we might want to handle this differently
+            // For now, just update with remaining categories
+            const updateQuery = 'UPDATE items SET category = ? WHERE id = ?';
+            db1.query(updateQuery, [JSON.stringify(updatedCategories), item.id], (updateErr) => {
+              if (updateErr) {
+                itemReject(updateErr);
+              } else {
+                removedCount++;
+                itemResolve();
+              }
+            });
+          } catch (parseError) {
+            console.error(`Error parsing categories for item ${item.id}:`, parseError);
+            itemResolve(); // Continue with other items
+          }
+        });
+        
+        updatePromises.push(updatePromise);
+      });
+
+      Promise.all(updatePromises)
+        .then(() => resolve({ removed: removedCount }))
+        .catch(reject);
     });
   });
 };

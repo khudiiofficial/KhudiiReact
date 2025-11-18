@@ -19,7 +19,7 @@
 // });
 
 
- 
+
 
 
 // export default db1;
@@ -50,60 +50,73 @@ db1.getConnection((err, connection) => {
 });
 
 
-// // SQL query to create events table
-//   const createTableQuery = `
-//     CREATE TABLE IF NOT EXISTS events (
-//       id INT AUTO_INCREMENT PRIMARY KEY,
-//       title VARCHAR(500) NOT NULL,
-//       url VARCHAR(500) NOT NULL,
-//       videoId VARCHAR(100) NOT NULL,
-//       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-//       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-//     )
-//   `;
-
-//   // Execute the query
-//   db1.query(createTableQuery, (err, results) => {
-//     if (err) {
-//       console.error("❌ Error creating events table: ", err);
-//       return;
-//     }
-//     console.log("✅ Events table created successfully!");
-    
-//     // Close the connection
-//     db1.end();
-//   });
 
 
-// export const alterTestimonialsTable = () => {
-//   const alterQueries = [
-//     // Add new columns if they don't exist
-//     `ALTER TABLE testimonials 
-//      ADD COLUMN IF NOT EXISTS name VARCHAR(255) NOT NULL DEFAULT 'Unknown' AFTER id`,
 
-//     `ALTER TABLE testimonials 
-//      ADD COLUMN IF NOT EXISTS position VARCHAR(255) NOT NULL DEFAULT '' AFTER name`,
 
-//     `ALTER TABLE testimonials 
-//      ADD COLUMN IF NOT EXISTS thumbnail VARCHAR(500) NOT NULL DEFAULT '' AFTER position`,
 
-//     `ALTER TABLE testimonials 
-//      ADD COLUMN IF NOT EXISTS role VARCHAR(255) NOT NULL DEFAULT '' AFTER video_url`
-//   ];
 
-//   alterQueries.forEach((query, index) => {
-//     db1.query(query, (err, results) => {
+
+
+
+// export const alterSectorsTable = () => {
+//   return new Promise((resolve, reject) => {
+//     // First check if columns exist
+//     const checkQuery = `
+//       SELECT COLUMN_NAME 
+//       FROM INFORMATION_SCHEMA.COLUMNS 
+//       WHERE TABLE_SCHEMA = DATABASE() 
+//       AND TABLE_NAME = 'sectors' 
+//       AND COLUMN_NAME IN ('meta_title', 'meta_description', 'meta_keywords')
+//     `;
+
+//     db1.query(checkQuery, (err, results) => {
 //       if (err) {
-//         console.error(`❌ Error executing alter query ${index + 1}:`, err);
-//       } else {
-//         console.log(`✅ Alter query ${index + 1} executed successfully`);
+//         console.error('❌ Error checking columns:', err);
+//         reject(err);
+//         return;
 //       }
+
+//       // Get existing columns
+//       const existingColumns = results.map(row => row.COLUMN_NAME);
+//       const columnsToAdd = [];
+
+//       if (!existingColumns.includes('meta_title')) {
+//         columnsToAdd.push('ADD COLUMN meta_title TEXT DEFAULT NULL');
+//       }
+//       if (!existingColumns.includes('meta_description')) {
+//         columnsToAdd.push('ADD COLUMN meta_description TEXT DEFAULT NULL');
+//       }
+//       if (!existingColumns.includes('meta_keywords')) {
+//         columnsToAdd.push('ADD COLUMN meta_keywords TEXT DEFAULT NULL');
+//       }
+
+//       // If no columns to add, resolve immediately
+//       if (columnsToAdd.length === 0) {
+//         console.log('✅ All meta columns already exist in sectors table');
+//         resolve();
+//         return;
+//       }
+
+//       // Execute ALTER TABLE with only needed columns
+//       const alterQuery = `
+//         ALTER TABLE sectors 
+//         ${columnsToAdd.join(',\n')}
+//       `;
+
+//       db1.query(alterQuery, (alterErr, result) => {
+//         if (alterErr) {
+//           console.error('❌ Error altering sectors table:', alterErr);
+//           reject(alterErr);
+//         } else {
+//           console.log('✅ Sectors table altered successfully with meta fields');
+//           resolve(result);
+//         }
+//       });
 //     });
 //   });
 // };
-
-// // Run table alteration
-// alterTestimonialsTable();
+// alterSectorsTable()
 
 
 
@@ -111,32 +124,6 @@ db1.getConnection((err, connection) => {
 
 
 
-// const createCertificationsTable = () => {
-//   const createTableQuery = `
-//     CREATE TABLE IF NOT EXISTS certifications (
-//       id INT AUTO_INCREMENT PRIMARY KEY,
-//       title VARCHAR(255) NOT NULL,
-//       description TEXT,
-//       image_url VARCHAR(500) NOT NULL,
-//       display_order INT DEFAULT 0,
-//       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-//       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-//     )
-//   `;
-
-//   db1.query(createTableQuery, (err, results) => {
-//     if (err) {
-//       console.error('❌ Error creating certifications table:', err);
-//       return;
-//     }
-//     console.log('✅ Certifications table created or already exists!');
-    
-//     // Insert sample data (optional)
-//     // insertSampleData();
-//   });
-// };
-
-// createCertificationsTable()
 
 
   

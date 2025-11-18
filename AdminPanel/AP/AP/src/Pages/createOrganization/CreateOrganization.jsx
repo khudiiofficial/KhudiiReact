@@ -1473,7 +1473,7 @@
 
 
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 
@@ -1505,18 +1505,33 @@ export default function CreateOrganizationPage() {
   const [captcha, setcaptch] = useState('')
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const [availableCategories ,setcat]=useState([])
   // Available categories
-  const availableCategories = [
-    "Health",
-    "Education",
-    "Autism",
-    "Orphanage",
-    "Thalassemia",
-    "Visually impaired",
-    "Differently Abled",
-    "Water And Food"
-  ];
+  // const availableCategories = [
+  //   "Health",
+  //   "Education",
+  //   "Autism",
+  //   "Orphanage",
+  //   "Thalassemia",
+  //   "Visually impaired",
+  //   "Differently Abled",
+  //   "Water And Food"
+  // ];
+
+useEffect(()=>{
+const func=async()=>{
+  try {
+    const res=await axios.get(`${APIPath}/sectors/admin`,{withCredentials:true})
+    if(res.status===200){
+      setcat(res.data.data)
+    }
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
+func()
+},[])
 
   // Validation rules
   const validationRules = {
@@ -2033,14 +2048,14 @@ export default function CreateOrganizationPage() {
                 }`}>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {availableCategories.map((cat) => (
-                      <label key={cat} className="flex items-center space-x-3 cursor-pointer">
+                      <label key={cat.name} className="flex items-center space-x-3 cursor-pointer">
                         <input
                           type="checkbox"
-                          checked={form.category.includes(cat)}
-                          onChange={() => handleCategoryChange(cat)}
+                          checked={form.category.includes(cat.name)}
+                          onChange={() => handleCategoryChange(cat.name)}
                           className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                         />
-                        <span className="text-sm text-gray-700">{cat}</span>
+                        <span className="text-sm text-gray-700">{cat.name}</span>
                       </label>
                     ))}
                   </div>
@@ -2052,13 +2067,13 @@ export default function CreateOrganizationPage() {
                       <div className="flex flex-wrap gap-2">
                         {form.category.map((cat) => (
                           <span 
-                            key={cat} 
+                            key={cat.name} 
                             className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
                           >
-                            {cat}
+                            {cat.name}
                             <button
                               type="button"
-                              onClick={() => handleCategoryChange(cat)}
+                              onClick={() => handleCategoryChange(cat.name)}
                               className="ml-2 text-blue-600 hover:text-blue-800 focus:outline-none"
                             >
                               ×
