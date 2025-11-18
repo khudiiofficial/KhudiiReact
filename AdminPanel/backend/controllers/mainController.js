@@ -4815,3 +4815,309 @@ export const deleteEvent = (req, res) => {
     });
   });
 };
+
+
+
+
+
+//sectors
+
+
+// controllers/sectorsController.js
+
+// Helper function to upload image from base64
+const uploadImageFromBase64 = async (base64String, fileName) => {
+  if (!base64String || !fileName) return null;
+
+  try {
+    // Extract base64 data
+    const base64Data = base64String.replace(/^data:image\/\w+;base64,/, '');
+    const fileBuffer = Buffer.from(base64Data, 'base64');
+
+    // Upload to FTP
+    const fileUrl = await uploadToFTP(fileName, fileBuffer);
+    return fileUrl;
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    throw new Error('Failed to upload image');
+  }
+};
+
+// Get all sectors (including deleted for admin)
+export const getAllSectors = (req, res) => {
+  const query = 'SELECT * FROM sectors ORDER BY id DESC';
+  
+  db1.query(query, (err, results) => {
+    if (err) {
+      console.error('❌ Error fetching sectors:', err);
+      return res.status(500).json({ success: false, error: 'Database error' });
+    }
+    res.json({ success: true, data: results });
+  });
+};
+
+// Get active sectors only
+export const getActiveSectors = (req, res) => {
+  const query = 'SELECT * FROM sectors WHERE deletestatus = 0 ORDER BY name';
+  
+  db1.query(query, (err, results) => {
+    if (err) {
+      console.error('❌ Error fetching active sectors:', err);
+      return res.status(500).json({ success: false, error: 'Database error' });
+    }
+    res.json({ success: true, data: results });
+  });
+};
+
+// Get sector by ID
+export const getSectorById = (req, res) => {
+  const { id } = req.params;
+  const query = 'SELECT * FROM sectors WHERE id = ?';
+  
+  db1.query(query, [id], (err, results) => {
+    if (err) {
+      console.error('❌ Error fetching sector:', err);
+      return res.status(500).json({ success: false, error: 'Database error' });
+    }
+    
+    if (results.length === 0) {
+      return res.status(404).json({ success: false, error: 'Sector not found' });
+    }
+    
+    res.json({ success: true, data: results[0] });
+  });
+};
+
+// Create new sector
+export const createSector = async (req, res) => {
+  try {
+    const { name, slug, description, imageBase64, fileName } = req.body;
+    
+    if (!name || !slug || !description) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'All fields (name, slug, description) are required' 
+      });
+    }
+
+    let imageUrl = '';
+
+    // Upload image if provided
+    if (imageBase64 && fileName) {
+      try {
+        imageUrl = await uploadImageFromBase64(imageBase64, fileName);
+      } catch (uploadError) {
+        return res.status(400).json({
+          success: false,
+          error: 'Failed to upload image: ' + uploadError.message
+        });
+      }
+    }
+
+    const query = 'INSERT INTO sectors (src, name, slug, description) VALUES (?, ?, ?, ?)';
+    
+    db1.query(query, [imageUrl, name, slug, description], (err, result) => {
+      if (err) {
+        console.error('❌ Error creating sector:', err);
+        if (err.code === 'ER_DUP_ENTRY') {
+          return res.status(400).json({ 
+            success: false, 
+            error: 'Sector with this slug already exists' 
+          });
+        }
+        return res.status(500).json({ success: false, error: 'Database error' });
+      }
+      
+      res.status(201).json({ 
+        success: true, 
+        message: 'Sector created successfully', 
+        data: {
+          id: result.insertId,
+          src: imageUrl,
+          name,
+          slug,
+          description,
+          deletestatus: 0
+        }
+      });
+    });
+  } catch (error) {
+    console.error('❌ Error in create sector:', error);
+    res.status(500).json({ success: false, error: 'Internal server error' });
+  }
+};
+
+// Update sector
+export const updateSector = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, slug, description, imageBase64, fileName } = req.body;
+    
+    if (!name || !slug || !description) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'All fields (name, slug, description) are required' 
+      });
+    }
+
+    // First get the old sector data to check if image changed
+    const getOldDataQuery = 'SELECT src FROM sectors WHERE id = ?';
+    
+    db1.query(getOldDataQuery, [id], async (err, results) => {
+      if (err) {
+        console.error('❌ Error fetching old sector data:', err);
+        return res.status(500).json({ success: false, error: 'Database error' });
+      }
+      
+      if (results.length === 0) {
+        return res.status(404).json({ success: false, error: 'Sector not found' });
+      }
+      
+      const oldSector = results[0];
+      let newImageUrl = oldSector.src;
+
+      // If new image is provided, upload it
+      if (imageBase64 && fileName) {
+        try {
+          // Delete old image if it exists and is from our FTP
+          if (oldSector.src && oldSector.src.includes('media.khudii.com')) {
+            try {
+              await deleteFromFTP(oldSector.src);
+            } catch (deleteError) {
+              console.error('Error deleting old FTP image:', deleteError);
+              // Continue with upload even if delete fails
+            }
+          }
+          
+          // Upload new image
+          newImageUrl = await uploadImageFromBase64(imageBase64, fileName);
+        } catch (uploadError) {
+          return res.status(400).json({
+            success: false,
+            error: 'Failed to upload new image: ' + uploadError.message
+          });
+        }
+      }
+      
+      // Update the sector
+      const updateQuery = 'UPDATE sectors SET src = ?, name = ?, slug = ?, description = ? WHERE id = ?';
+      
+      db1.query(updateQuery, [newImageUrl, name, slug, description, id], (err, result) => {
+        if (err) {
+          console.error('❌ Error updating sector:', err);
+          if (err.code === 'ER_DUP_ENTRY') {
+            return res.status(400).json({ 
+              success: false, 
+              error: 'Sector with this slug already exists' 
+            });
+          }
+          return res.status(500).json({ success: false, error: 'Database error' });
+        }
+        
+        if (result.affectedRows === 0) {
+          return res.status(404).json({ success: false, error: 'Sector not found' });
+        }
+        
+        res.json({ 
+          success: true, 
+          message: 'Sector updated successfully',
+          data: { 
+            id: parseInt(id), 
+            src: newImageUrl, 
+            name, 
+            slug, 
+            description 
+          }
+        });
+      });
+    });
+  } catch (error) {
+    console.error('❌ Error in update sector:', error);
+    res.status(500).json({ success: false, error: 'Internal server error' });
+  }
+};
+
+// Delete sector (soft delete)
+export const deleteSector = (req, res) => {
+  const { id } = req.params;
+  const query = 'UPDATE sectors SET deletestatus = 1 WHERE id = ?';
+  
+  db1.query(query, [id], (err, result) => {
+    if (err) {
+      console.error('❌ Error deleting sector:', err);
+      return res.status(500).json({ success: false, error: 'Database error' });
+    }
+    
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ success: false, error: 'Sector not found' });
+    }
+    
+    res.json({ success: true, message: 'Sector deleted successfully' });
+  });
+};
+
+// Restore sector
+export const restoreSector = (req, res) => {
+  const { id } = req.params;
+  const query = 'UPDATE sectors SET deletestatus = 0 WHERE id = ?';
+  
+  db1.query(query, [id], (err, result) => {
+    if (err) {
+      console.error('❌ Error restoring sector:', err);
+      return res.status(500).json({ success: false, error: 'Database error' });
+    }
+    
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ success: false, error: 'Sector not found' });
+    }
+    
+    res.json({ success: true, message: 'Sector restored successfully' });
+  });
+};
+
+// Permanent delete sector
+export const permanentDeleteSector = (req, res) => {
+  const { id } = req.params;
+  
+  // First get the sector data to delete the image from FTP
+  const getSectorQuery = 'SELECT src FROM sectors WHERE id = ?';
+  
+  db1.query(getSectorQuery, [id], async (err, results) => {
+    if (err) {
+      console.error('❌ Error fetching sector for deletion:', err);
+      return res.status(500).json({ success: false, error: 'Database error' });
+    }
+    
+    if (results.length === 0) {
+      return res.status(404).json({ success: false, error: 'Sector not found' });
+    }
+    
+    const sector = results[0];
+    
+    // Delete image from FTP if it's from our server
+    if (sector.src && sector.src.includes('media.khudii.com')) {
+      try {
+        await deleteFromFTP(sector.src);
+      } catch (ftpError) {
+        console.error('Error deleting FTP image:', ftpError);
+        // Continue with database deletion even if FTP delete fails
+      }
+    }
+    
+    // Delete from database
+    const deleteQuery = 'DELETE FROM sectors WHERE id = ?';
+    
+    db1.query(deleteQuery, [id], (err, result) => {
+      if (err) {
+        console.error('❌ Error permanently deleting sector:', err);
+        return res.status(500).json({ success: false, error: 'Database error' });
+      }
+      
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ success: false, error: 'Sector not found' });
+      }
+      
+      res.json({ success: true, message: 'Sector permanently deleted' });
+    });
+  });
+};

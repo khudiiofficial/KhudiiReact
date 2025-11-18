@@ -80,7 +80,7 @@ const call=async()=>{
   try {
     const res=await axios.get(`${APIPath}/items`)
     if(res.status===200){
-      console.log(res.data)
+      // console.log(res.data)
   setarr(res.data)
     }
     

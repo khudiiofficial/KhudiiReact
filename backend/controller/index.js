@@ -1084,3 +1084,16 @@ export const getAllEvents = (req, res) => {
     });
   });
 };
+
+//sector
+export const getAllSectors = (req, res) => {
+  const query = 'SELECT * FROM sectors ORDER BY id DESC';
+  
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('❌ Error fetching sectors:', err);
+      return res.status(500).json({ success: false, error: 'Database error' });
+    }
+    res.status(200).json({ success: true, data: results });
+  });
+};

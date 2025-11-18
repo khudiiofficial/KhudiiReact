@@ -34,6 +34,7 @@ import { resetUser } from './redux/userslice'
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 import axios from 'axios'
 import { useLocation } from 'react-router-dom'
+import SectorsList from './Pages/sectors/Secrors'
 function App() {
 const location=useLocation()  
 const dispatch=useDispatch()
@@ -87,6 +88,7 @@ const dispatch=useDispatch()
           <Route path='Certifications' element={<CertificationAdmin/>}/>
           <Route path="Testimonials" element={<TestimonialAdmin/>}/>
           <Route path='NewsEvents' element={<EventsAdminPanel/>}/>
+          <Route path='sectors' element={<SectorsList/>}/>
           {/* <Route path="change-password" element={<ChangePassword />} /> */}
           <Route index element={<DashboardIndex/>} />
           

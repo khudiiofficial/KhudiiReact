@@ -24,7 +24,7 @@ app.use(cookieParser())
 
 app.use(cors(
   {
-  origin: 'http://localhost:5173', // Vite's default dev server port
+  origin: 'http://localhost:5174', // Vite's default dev server port
   credentials: true
   }
 ))

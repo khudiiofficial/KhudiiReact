@@ -193,6 +193,14 @@ export default function Navbar() {
                     >
                       Testimonials
                     </Link>
+
+                       <Link 
+                      to="/dashboard/sectors" 
+                      onClick={handleLinkClick}
+                      className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition rounded-md"
+                    >
+                      Sectors
+                    </Link>
                   </div>
                 </div>
               )}

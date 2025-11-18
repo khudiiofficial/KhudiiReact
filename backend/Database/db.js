@@ -49,78 +49,68 @@ db.getConnection((err, connection) => {
 
 
 
+// // createSectorsTable.js
 
+// const createSectorsTable = () => {
+//   const createTableQuery = `
+//     CREATE TABLE IF NOT EXISTS sectors (
+//       id INT PRIMARY KEY AUTO_INCREMENT,
+//       src VARCHAR(255) NOT NULL,
+//       name VARCHAR(100) NOT NULL,
+//       slug VARCHAR(100) NOT NULL UNIQUE,
+//       description TEXT NOT NULL,
+//       deletestatus TINYINT DEFAULT 0,
+//       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+//       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+//     )
+//   `;
 
-// async function convertCategoryToJSON() {
-//   try {
-//     console.log("🔄 Converting category column to JSON format...");
+//   db.query(createTableQuery, (err, result) => {
+//     if (err) {
+//       console.error('❌ Error creating sectors table:', err);
+//       return;
+//     }
+//     console.log('✅ Sectors table created/verified successfully!');
     
-//     // Step 1: First convert existing data to JSON array format
-//     const selectQuery = 'SELECT id, category FROM items';
-    
-//     db.query(selectQuery, async (err, results) => {
-//       if (err) {
-//         console.error("❌ Error fetching data: ", err);
-//         db.end();
-//         return;
-//       }
-      
-//       // Convert each category to JSON array format
-//       for (const row of results) {
-//         const newCategoryValue = JSON.stringify([row.category]);
-        
-//         const updateQuery = 'UPDATE items SET category = ? WHERE id = ?';
-//         await queryAsync(updateQuery, [newCategoryValue, row.id]);
-//         console.log(`✅ Updated ID ${row.id}: "${row.category}" -> ${newCategoryValue}`);
-//       }
-      
-//       // Step 2: Alter table to change data type to JSON
-//       console.log("🔄 Changing column data type to JSON...");
-//       try {
-//         await queryAsync('ALTER TABLE items MODIFY category JSON');
-//         console.log("✅ Successfully changed category column to JSON type");
-//       } catch (alterError) {
-//         console.log("⚠️  Could not change to JSON type, keeping as VARCHAR but with JSON arrays");
-//         console.log("💡 Your MySQL version might not support JSON type");
-//       }
-      
-//       // Step 3: Verify the changes
-//       console.log("🔍 Verifying final data...");
-//       const finalResults = await queryAsync('SELECT id, category FROM items');
-      
-//       console.log("📊 Final categories (as JSON arrays):");
-//       finalResults.forEach(row => {
-//         console.log(`  ID: ${row.id}, Category: ${row.category}`);
-        
-//         // Parse and show it's actually an array
-//         try {
-//           // const parsed = JSON.parse(row.category);
-//           console.log(`Parsed as array:`, row.category);
-//         } catch (e) {
-//           console.log(`Could not parse as JSON`);
-//         }
-//       });
-      
-//       console.log("🎉 Migration completed! You can now store multiple categories like: [\"Health\", \"Education\"]");
-//       db.end();
-//     });
-    
-//   } catch (error) {
-//     console.error("❌ Migration failed: ", error);
-//     db.end();
-//   }
-// }
-
-// // Helper function to use promises
-// function queryAsync(sql, params = []) {
-//   return new Promise((resolve, reject) => {
-//     db.query(sql, params, (err, results) => {
-//       if (err) reject(err);
-//       else resolve(results);
-//     });
+//     // Insert sample data after table creation
+//     insertSampleData();
 //   });
-// }
-// convertCategoryToJSON()
+// };
+
+// const insertSampleData = () => {
+//   const insertQuery = `
+//     INSERT IGNORE INTO sectors (src, name, slug, description) VALUES
+//     (?, ?, ?, ?),
+//     (?, ?, ?, ?),
+//     (?, ?, ?, ?),
+//     (?, ?, ?, ?),
+//     (?, ?, ?, ?),
+//     (?, ?, ?, ?),
+//     (?, ?, ?, ?),
+//     (?, ?, ?, ?)
+//   `;
+
+//   const values = [
+//     '/Sectors/health-khudii.png', 'Health', 'health', 'Healing lives with care and compassion — bringing affordable healthcare to those who need it most, so no one is left behind',
+//     '/Sectors/autism-khudii.gif', 'Autism', 'autism', 'Honoring each individual difference through empowering autistic individuals to develop, learn, and flourish within communities founded on love, acceptance, and inclusion.',
+//     '/Sectors/orphange-khudii1.gif', 'Orphanage', 'orphanage', 'Nurturing orphans with love and care, guiding each heart with hope to share. Empowering through education and light',
+//     '/Sectors/health-khudii.png', 'Thalassemia', 'thalassemia', 'Standing with every fighter of Thalassemia—spreading awareness, delivering treatment, and restoring smiles one life at a time.',
+//     '/Sectors/visually-impaired-khudii1.gif', 'Visually impaired', 'visually-impaired', 'Opening worlds beyond vision by enabling the visually impaired with technology, learning, and opportunities to view life in hope, independence, and dignity.',
+//     '/Sectors/education-khudii.gif', 'Education', 'education', 'Lighting the path to a brighter tomorrow by opening doors of knowledge, skills, and hope for every child and community.',
+//     '/Sectors/different-abled-khudii.gif', 'Differently Abled', 'differently-abled', 'Championing ability in every heart—empowering people with disabilities to live with dignity, confidence, and opportunity.',
+//     '/Sectors/Water-and-food.gif', 'Water And Food', 'water-and-food', 'Every drop and plate counts—delivering clean water and nourishing food now so families survive with health and dignity.'
+//   ];
+
+//   db.query(insertQuery, values, (err, result) => {
+//     if (err) {
+//       console.error('❌ Error inserting sample data:', err);
+//       return;
+//     }
+//     console.log('✅ Sample data inserted successfully!');
+//   });
+// };
+
+// createSectorsTable()
 
 export default db;
 

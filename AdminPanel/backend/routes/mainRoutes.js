@@ -93,7 +93,16 @@ getAllEvents,
 getEventById,
 createEvent,
 updateEvent,
-deleteEvent
+deleteEvent,
+
+//sectors
+getAllSectors,
+getSectorById,
+createSector,
+updateSector,
+deleteSector,
+restoreSector,
+permanentDeleteSector
 } from "../controllers/mainController.js";
 
 const router = express.Router();
@@ -204,5 +213,15 @@ router.get('/events/:id',auth, getEventById);
 router.post('/events',auth, createEvent);
 router.put('/events/:id',auth, updateEvent);
 router.delete('/events/:id',auth, deleteEvent);
+
+// sectors
+
+router.get('/sectors/admin',auth, getAllSectors);
+router.get('/sectors/admin/:id',auth, getSectorById);
+router.post('/sectors/admin',auth, createSector);
+router.put('/sectors/admin/:id',auth, updateSector);
+router.delete('/sectors/admin/:id',auth, deleteSector);
+router.patch('/sectors/admin/restore/:id',auth, restoreSector);
+router.delete('/sectors/admin/permanent/:id',auth, permanentDeleteSector);
 
 export default router;
