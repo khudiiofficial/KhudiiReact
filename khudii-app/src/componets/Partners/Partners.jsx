@@ -140,19 +140,20 @@ call()
       </h2>
 
       {/* Grid of Partners */}
-      <div className="max-w-[1240px] px-4 sm:px-10 md:px-10 lg:px-0 flex flex-wrap justify-center items-center gap-2 sm:gap-2 md:gap-2">
+      {/* 2nd code */}
+      <div>
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-5 md:px-5 lg:px-0 flex flex-wrap justify-center items-center gap-2 sm:gap-2 md:gap-4">
         {arr.map((ele, index) => (
           <div
             key={index}
             ref={(el) => (imageRefs.current[index] = el)}
-            className={`${styles.class2} group relative flex items-center justify-center transition-transform duration-300 hover:scale-105 overflow-hidden  lg:w-57 lg:h-57 bg-white rounded-[25px]`}
+            className={`${styles.partner_mob} flex flex-wrap items-center justify-center transition-transform duration-300 hover:scale-105 overflow-hidden sm:w-[calc(40%-4px)] lg:w-[225px] lg:h-[225px] bg-white rounded-[20px]`}
           >
             {/* Image with fade-in animation on view */}
             <img
-              // src={`/partner${index + 1}.webp`}
               src={ele.introductory_image_path}
               alt={`Partner ${index + 1} logo`}
-              className={` ${styles.class3} rounded-[20px]  lg:w-[390.5px] lg:h-[170px]  transition-all duration-300 ${
+              className={`w-full h-full object-contain transition-all duration-300 p-0 ${
                 animatedIndices.has(index)
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-5'
@@ -162,11 +163,10 @@ call()
               }}
               loading="lazy"
             />
-            {/* Animated underline on hover
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#02236e] to-[#0066cc] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div> */}
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 };

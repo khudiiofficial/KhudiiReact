@@ -32,12 +32,17 @@
 }
 
 @media (max-width:633px){
-  .class2{
+  .partner_mob {
+    gap:10px;
     height: 150px;
     width: 150px;
   }
+  .class2{
+    height: auto;
+    width: 150px;
+  }
   .class3{
-       height: 105px;
+       height: 150px;
     width: 150px;
   }
   .wrapper{
@@ -47,7 +52,7 @@
 
 
 
-@media (max-width:321px){
+/* @media (max-width:321px){
   .class2{
     height: 100px;
     width: 100px;
@@ -59,7 +64,7 @@
   .wrapper{
     padding: 0px 10px;
   }
-}
+} */
 
 
 

@@ -156,16 +156,16 @@ return (
         >
           <div className="relative">
             {/* Image */}
-            <div className="h-100 w-100 aspect-video">
+            <div className="aspect-video">
               <img
                 src={post.Image}
                 alt={post.Name}
-                className="w-full h-full object-cover transition-transform duration-500"
+                className="w-full transition-transform duration-500"
               />
             </div>
 
             {/* Overlay (on hover) */}
-            <div className="absolute inset-0 bg-black bg-opacity-0 flex items-center justify-center opacity-0 group-hover:bg-opacity-40 transition-all duration-300">
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:bg-opacity-40 transition-all duration-300">
               <button
                 aria-label="Read more about this blog post"
                 onClick={() => nav(`/Blog/${post.slug}`, { state: { id: post.id } })}

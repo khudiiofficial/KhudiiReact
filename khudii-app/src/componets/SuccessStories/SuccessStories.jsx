@@ -109,7 +109,7 @@ func()
         to="/success-stories" 
         className="block group"
       >
-        <div className="relative pb-[52.63%]"> {/* 380:200 = 19:10 ≈ 52.63% padding-bottom */}
+        <div className="relative pb-[55.63%]"> {/* 380:200 = 19:10 ≈ 52.63% padding-bottom */}
           <img
             src={`https://img.youtube.com/vi/${ele.youtube_id}/maxresdefault.jpg`}
             alt={`Success story ${index + 1}`}
@@ -126,7 +126,7 @@ func()
 </div>
 
     <div className={`${styles.class5}`}>
-      <div className={`${styles.class6} `}>
+      <div className={`${styles.class6} flex lg:items-center lg:justify-center`}>
       <div className={styles.sample}>
         <div className={`${styles.newparent} flex flex-cols-1 sm:flex-cols-1 md:flex-cols-1 lg:flex-cols-2`}>
         {/* <div className={`${styles.class7}`}>
@@ -138,16 +138,16 @@ func()
         }
         </div> */}
         {/* 2nd Code */}
-        <div className="w-full px-[5%] lg:px-0"> {/* Mobile: 90% width via 5% side padding */}
+        <div className="w-full px-[5%] items-center justify-center lg:px-0"> {/* Mobile: 90% width via 5% side padding */}
   <div className="max-w-[1240px] mx-auto">
     <div className="grid grid-cols-1 lg:grid-cols-[60%_40%]">
       {/* Content Column */}
-      <div className="py-6 lg:py-8">
-        <h3 className="text-white text-2xl md:text-2xl font-bold mb-4 text-left lg:text-left">
-          Floods in Pakistan
+      <div className="py-6 lg:py-8 flex-wrap">
+        <h3 className={`${styles.title_flood} text-white lg:text-[32px] md:text-2xl font-bold mb-4 text-left lg:text-left flex-wrap text-wrap`}>
+        Floods in Pakistan
         </h3>
-        <p className="text-white leading-relaxed mb-6 text-left lg:text-left">
-          At KHUDII, we are working tirelessly to support communities devastated by the recent floods in Pakistan. Thousands of families have lost their homes, livelihoods, and access to basic necessities. Your donation can help rebuild lives — by providing shelter, food, clean water, and long-term rehabilitation support. Together, we can restore hope and bring relief to those who need it most.
+        <p className={`${styles.desp_flood} text-white lg:text-[25px] leading-relaxed mb-6 text-left lg:text-left`}>
+        At KHUDII, we are working tirelessly to support communities devastated by the recent floods in Pakistan. Thousands of families have lost their homes, livelihoods, and access to basic necessities. Your donation can help rebuild lives — by providing shelter, food, clean water, and long-term rehabilitation support. Together, we can restore hope and bring relief to those who need it most.
         </p>
 
         {/* Button: right-aligned on mobile/tablet, left-aligned on desktop */}
