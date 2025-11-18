@@ -266,40 +266,55 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './Event.module.css';
 import { Link } from 'react-router-dom';
-
+import axios from 'axios'
+const APIPath = import.meta.env.VITE_BACKEND_PATH;
 const Events = () => {
-  const events = [
-    {
-      title: "AL-MAKKI AL-MADNI DIALYSIS CENTRE AND SURGICAL HOSPITAL || LAHORE",
-      url: "https://www.youtube.com/embed/JjIpbo_t1JQ",
-      videoId: "JjIpbo_t1JQ"
-    },
-    {
-      title: "INAUGURATION OF TRANSGENDER VOCATIONAL CENTER - FOUNTAIN HOUSE",
-      url: "https://www.youtube.com/embed/mArnWmwxCmo",
-      videoId: "mArnWmwxCmo"
-    },
-    {
-      title: "SIALKOT KIDNEY HOSPITAL - A STATE OF THE ART INSTITUTE",
-      url: "https://www.youtube.com/embed/bZFFi92z9jM",
-      videoId: "bZFFi92z9jM"
-    },
-    {
-      title: "FAMILY WELFARE SOCIETY - VISITED BY CEO OF CHARITY COMMISSION PUNJAB",
-      url: "https://www.youtube.com/embed/EsP8KHer7kQ",
-      videoId: "EsP8KHer7kQ"
-    },
-    {
-      title: "KHUDII MONTHLY REVIEW - JULY 2025",
-      url: "https://www.youtube.com/embed/gQPrOGWv4mc",
-      videoId: "gQPrOGWv4mc"
-    },
-    {
-      title: "JANNAT AZIZ EYE HOSPITAL - COMPLETE TOUR",
-      url: "https://www.youtube.com/embed/KQjzZzh4USY",
-      videoId: "KQjzZzh4USY"
+  const [events,setevents]=useState([])
+  useEffect(()=>{
+const callevents=async ()=>{
+  try {
+    const res=await axios.get(`${APIPath}/events`)
+    if(res.status===200){
+      setevents(res.data.data)
     }
-  ];
+  } catch (error) {
+    console.error(error)
+  }
+}
+callevents()
+  },[])
+  // const events = [
+  //   {
+  //     title: "AL-MAKKI AL-MADNI DIALYSIS CENTRE AND SURGICAL HOSPITAL || LAHORE",
+  //     url: "https://www.youtube.com/embed/JjIpbo_t1JQ",
+  //     videoId: "JjIpbo_t1JQ"
+  //   },
+  //   {
+  //     title: "INAUGURATION OF TRANSGENDER VOCATIONAL CENTER - FOUNTAIN HOUSE",
+  //     url: "https://www.youtube.com/embed/mArnWmwxCmo",
+  //     videoId: "mArnWmwxCmo"
+  //   },
+  //   {
+  //     title: "SIALKOT KIDNEY HOSPITAL - A STATE OF THE ART INSTITUTE",
+  //     url: "https://www.youtube.com/embed/bZFFi92z9jM",
+  //     videoId: "bZFFi92z9jM"
+  //   },
+  //   {
+  //     title: "FAMILY WELFARE SOCIETY - VISITED BY CEO OF CHARITY COMMISSION PUNJAB",
+  //     url: "https://www.youtube.com/embed/EsP8KHer7kQ",
+  //     videoId: "EsP8KHer7kQ"
+  //   },
+  //   {
+  //     title: "KHUDII MONTHLY REVIEW - JULY 2025",
+  //     url: "https://www.youtube.com/embed/gQPrOGWv4mc",
+  //     videoId: "gQPrOGWv4mc"
+  //   },
+  //   {
+  //     title: "JANNAT AZIZ EYE HOSPITAL - COMPLETE TOUR",
+  //     url: "https://www.youtube.com/embed/KQjzZzh4USY",
+  //     videoId: "KQjzZzh4USY"
+  //   }
+  // ];
 
   const [isVisible, setIsVisible] = useState(false);
   const [loadedVideos, setLoadedVideos] = useState({});

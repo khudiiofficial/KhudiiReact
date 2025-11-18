@@ -66,35 +66,71 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './partners.module.css';
-
+const APIPath = import.meta.env.VITE_BACKEND_PATH;
+import axios from 'axios'
 const Partners = () => {
   const [animatedIndices, setAnimatedIndices] = useState(new Set());
   const imageRefs = useRef([]);
   
   // Reduced array size - remove duplicates to avoid loading same images multiple times
-    const [arr] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,11, 12, 13, 14, 15,11, 12, 13]);
+    // const [arr,setarr] = useState([1,2,3,4,5,6,7]);
+    const [arr,setarr] = useState([]);
+    useEffect(()=>{
+const call=async()=>{
+  try {
+    const res=await axios.get(`${APIPath}/items`)
+    if(res.status===200){
+      console.log(res.data)
+  setarr(res.data)
+    }
+    
+  } catch (error) {
+    console.error(error)
+  }
+}
+call()
+    },[])
+
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       entries.forEach((entry) => {
+  //         if (entry.isIntersecting) {
+  //           const index = imageRefs.current.indexOf(entry.target);
+  //           if (index !== -1 && !animatedIndices.has(index)) {
+  //             setAnimatedIndices(prev => new Set(prev).add(index));
+  //           }
+  //         }
+  //       });
+  //     },
+  //     { threshold: 0.3 } // Reduced threshold for better performance
+  //   );
+
+  //   imageRefs.current.forEach((ref) => {
+  //     if (ref) observer.observe(ref);
+  //   });
+
+  //   return () => observer.disconnect();
+  // }, [animatedIndices]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = imageRefs.current.indexOf(entry.target);
-            if (index !== -1 && !animatedIndices.has(index)) {
-              setAnimatedIndices(prev => new Set(prev).add(index));
-            }
-          }
-        });
-      },
-      { threshold: 0.3 } // Reduced threshold for better performance
-    );
+  if (arr.length === 0) return;
 
-    imageRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const index = imageRefs.current.indexOf(entry.target);
+        if (index !== -1) {
+          setAnimatedIndices(prev => new Set(prev).add(index));
+        }
+      }
     });
+  });
 
-    return () => observer.disconnect();
-  }, [animatedIndices]);
+  imageRefs.current.forEach((ref) => ref && observer.observe(ref));
+
+  return () => observer.disconnect();
+}, [arr]);
 
   return (
     <div className="w-full flex flex-col bg-[#f0f0f0] items-center py-5 sm:py-3 md:py-8">
@@ -105,17 +141,18 @@ const Partners = () => {
 
       {/* Grid of Partners */}
       <div className="max-w-[1240px] px-4 sm:px-10 md:px-10 lg:px-0 flex flex-wrap justify-center items-center gap-2 sm:gap-2 md:gap-2">
-        {arr.map((_, index) => (
+        {arr.map((ele, index) => (
           <div
             key={index}
             ref={(el) => (imageRefs.current[index] = el)}
-            className="group relative flex items-center justify-center transition-transform duration-300 hover:scale-105"
+            className={`${styles.class2} group relative flex items-center justify-center transition-transform duration-300 hover:scale-105 overflow-hidden  lg:w-57 lg:h-57 bg-white rounded-[25px]`}
           >
             {/* Image with fade-in animation on view */}
             <img
-              src={`/partner${index + 1}.webp`}
+              // src={`/partner${index + 1}.webp`}
+              src={ele.introductory_image_path}
               alt={`Partner ${index + 1} logo`}
-              className={`w-50 h-50 rounded-[25px] sm:w-25 sm:w-20 md:w-40 md:h-40 lg:w-57 lg:h-57 object-contain transition-all duration-300 ${
+              className={` ${styles.class3} rounded-[20px]  lg:w-[390.5px] lg:h-[170px]  transition-all duration-300 ${
                 animatedIndices.has(index)
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-5'
@@ -135,3 +172,4 @@ const Partners = () => {
 };
 
 export default Partners;
+

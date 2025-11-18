@@ -199,10 +199,10 @@ router.delete('/testimonials/:id',auth, deleteTestimonial);
 
 //events
 
-router.get('/events', getAllEvents);
-router.get('/events/:id', getEventById);
-router.post('/events', createEvent);
-router.put('/events/:id', updateEvent);
-router.delete('/events/:id', deleteEvent);
+router.get('/events',auth, getAllEvents);
+router.get('/events/:id',auth, getEventById);
+router.post('/events',auth, createEvent);
+router.put('/events/:id',auth, updateEvent);
+router.delete('/events/:id',auth, deleteEvent);
 
 export default router;

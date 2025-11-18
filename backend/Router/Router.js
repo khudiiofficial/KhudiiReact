@@ -1,5 +1,5 @@
 import express from 'express'
-import { createContactInquiry,AddVolunteer, getAllBlogs, getAllorganization, getSmilarItems, getSocials, getSpecificItem,saveContacts, ApplyForJob, ContributeStory, Donation, getsuccessstories, getAllVideos,getAllTopbarContents,getAllCertifications,getAllTestimonials } from '../controller/index.js';
+import { createContactInquiry,AddVolunteer, getAllBlogs, getAllorganization, getSmilarItems, getSocials, getSpecificItem,saveContacts, ApplyForJob, ContributeStory, Donation, getsuccessstories, getAllVideos,getAllTopbarContents,getAllCertifications,getAllTestimonials,getAllEvents } from '../controller/index.js';
 import { getAllIcons } from '../controller/index.js';
 import { getSpecificBlog } from '../controller/index.js';
 import { itemByCategory } from '../controller/index.js';
@@ -25,4 +25,5 @@ Router.post('/contact-inquiry',createContactInquiry)
 Router.get('/api/topbar',getAllTopbarContents)
 Router.get('/certifications', getAllCertifications);
 Router.get('/testimonials', getAllTestimonials);
+Router.get('/events',getAllEvents);
 export default Router

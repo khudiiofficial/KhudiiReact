@@ -1063,3 +1063,24 @@ export const getAllTestimonials = (req, res) => {
     });
   });
 };
+
+
+// Get all events
+export const getAllEvents = (req, res) => {
+  const query = 'SELECT * FROM events ORDER BY created_at DESC';
+  
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching events:', err);
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Error fetching events' 
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      data: results
+    });
+  });
+};

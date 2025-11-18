@@ -14,17 +14,17 @@
     border-radius: 20px;
     width: 240px;
     height: 240px;
+
 }
 .class4{
     position: relative;
 }
 
 .class3{
-    position: absolute;
-    top: 0px;
+   
     border-radius: 20px;
-    width: 240px;
-    height: 240px;
+    width: 246.5px;
+    height: 170px;
 }
 .class3:hover{
        background-color: rgb(55, 55, 183,.5);
@@ -37,7 +37,7 @@
     width: 150px;
   }
   .class3{
-       height: 150px;
+       height: 105px;
     width: 150px;
   }
   .wrapper{
