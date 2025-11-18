@@ -27,6 +27,7 @@ import AdminContacts from './Pages/Contacts/Contacts'
 import TopbarAdmin from './Pages/Topbar/Topbar'
 import CertificationAdmin from './Pages/Certifications/Certifications'
 import TestimonialAdmin from './Pages/Testimonials/Testimonials'
+import EventsAdminPanel from './Pages/newsEvents/NewsEvents'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { resetUser } from './redux/userslice'
@@ -85,6 +86,7 @@ const dispatch=useDispatch()
           <Route path='Topbar' element={<TopbarAdmin/>}/>
           <Route path='Certifications' element={<CertificationAdmin/>}/>
           <Route path="Testimonials" element={<TestimonialAdmin/>}/>
+          <Route path='NewsEvents' element={<EventsAdminPanel/>}/>
           {/* <Route path="change-password" element={<ChangePassword />} /> */}
           <Route index element={<DashboardIndex/>} />
           

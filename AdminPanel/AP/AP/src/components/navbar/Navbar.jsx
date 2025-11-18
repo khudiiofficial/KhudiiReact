@@ -86,6 +86,12 @@ export default function Navbar() {
               Add Blog
             </Link>
 
+   <Link
+              to={"/dashboard/NewsEvents"}
+              className="px-3 py-2 rounded-lg hover:bg-blue-500 hover:shadow transition font-medium"
+            >
+              News & Events
+            </Link>
             <div className="relative">
               <div 
                 onClick={handleMoreClick} 

@@ -4670,3 +4670,148 @@ export const deleteTestimonial = async (req, res) => {
     });
   }
 };
+
+
+
+// Get all events
+export const getAllEvents = (req, res) => {
+  const query = 'SELECT * FROM events ORDER BY created_at DESC';
+  
+  db1.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching events:', err);
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Error fetching events' 
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      data: results
+    });
+  });
+};
+
+// Get single event by ID
+export const getEventById = (req, res) => {
+  const { id } = req.params;
+  const query = 'SELECT * FROM events WHERE id = ?';
+  
+  db1.query(query, [id], (err, results) => {
+    if (err) {
+      console.error('Error fetching event:', err);
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Error fetching event' 
+      });
+    }
+    
+    if (results.length === 0) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'Event not found' 
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      data: results[0]
+    });
+  });
+};
+
+// Create new event
+export const createEvent = (req, res) => {
+  const { title, url, videoId } = req.body;
+  
+  if (!title || !url || !videoId) {
+    return res.status(400).json({ 
+      success: false, 
+      message: 'Title, URL, and videoId are required' 
+    });
+  }
+  
+  const query = 'INSERT INTO events (title, url, videoId) VALUES (?, ?, ?)';
+  
+  db1.query(query, [title, url, videoId], (err, results) => {
+    if (err) {
+      console.error('Error creating event:', err);
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Error creating event' 
+      });
+    }
+    
+    res.status(201).json({
+      success: true,
+      message: 'Event created successfully',
+      data: { id: results.insertId, title, url, videoId }
+    });
+  });
+};
+
+// Update event
+export const updateEvent = (req, res) => {
+  const { id } = req.params;
+  const { title, url, videoId } = req.body;
+  
+  if (!title || !url || !videoId) {
+    return res.status(400).json({ 
+      success: false, 
+      message: 'Title, URL, and videoId are required' 
+    });
+  }
+  
+  const query = 'UPDATE events SET title = ?, url = ?, videoId = ? WHERE id = ?';
+  
+  db1.query(query, [title, url, videoId, id], (err, results) => {
+    if (err) {
+      console.error('Error updating event:', err);
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Error updating event' 
+      });
+    }
+    
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'Event not found' 
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      message: 'Event updated successfully'
+    });
+  });
+};
+
+// Delete event
+export const deleteEvent = (req, res) => {
+  const { id } = req.params;
+  const query = 'DELETE FROM events WHERE id = ?';
+  
+  db1.query(query, [id], (err, results) => {
+    if (err) {
+      console.error('Error deleting event:', err);
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Error deleting event' 
+      });
+    }
+    
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'Event not found' 
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      message: 'Event deleted successfully'
+    });
+  });
+};

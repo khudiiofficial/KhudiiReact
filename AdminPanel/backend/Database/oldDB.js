@@ -18,6 +18,10 @@
 //   console.log("✅ Connected to MySQL old Database!");
 // });
 
+
+ 
+
+
 // export default db1;
 
 
@@ -46,7 +50,29 @@ db1.getConnection((err, connection) => {
 });
 
 
+// // SQL query to create events table
+//   const createTableQuery = `
+//     CREATE TABLE IF NOT EXISTS events (
+//       id INT AUTO_INCREMENT PRIMARY KEY,
+//       title VARCHAR(500) NOT NULL,
+//       url VARCHAR(500) NOT NULL,
+//       videoId VARCHAR(100) NOT NULL,
+//       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+//       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+//     )
+//   `;
 
+//   // Execute the query
+//   db1.query(createTableQuery, (err, results) => {
+//     if (err) {
+//       console.error("❌ Error creating events table: ", err);
+//       return;
+//     }
+//     console.log("✅ Events table created successfully!");
+    
+//     // Close the connection
+//     db1.end();
+//   });
 
 
 // export const alterTestimonialsTable = () => {

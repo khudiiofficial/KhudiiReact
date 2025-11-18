@@ -86,7 +86,14 @@ getAllTestimonials,
 getTestimonialById,
 createTestimonial,
 updateTestimonial,
-deleteTestimonial
+deleteTestimonial,
+
+//evevnts
+getAllEvents,
+getEventById,
+createEvent,
+updateEvent,
+deleteEvent
 } from "../controllers/mainController.js";
 
 const router = express.Router();
@@ -189,4 +196,13 @@ router.get('/testimonials/:id',auth, getTestimonialById);
 router.post('/testimonials',auth, createTestimonial);
 router.put('/testimonials/:id',auth, updateTestimonial);
 router.delete('/testimonials/:id',auth, deleteTestimonial);
+
+//events
+
+router.get('/events', getAllEvents);
+router.get('/events/:id', getEventById);
+router.post('/events', createEvent);
+router.put('/events/:id', updateEvent);
+router.delete('/events/:id', deleteEvent);
+
 export default router;
