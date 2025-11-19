@@ -126,7 +126,9 @@ func()
   </div>
 </div>
 
-    <div className={`${styles.class5}`}>
+    <div style={{
+    backgroundImage: "url('https://www.khudii.com/wp-content/uploads/2025/09/8.jpg')",
+  }} className={`${styles.class5}`}>
       <div className={`${styles.class6} flex lg:items-center lg:justify-center`}>
       <div className={styles.sample}>
         <div className={`${styles.newparent} flex flex-cols-1 sm:flex-cols-1 md:flex-cols-1 lg:flex-cols-2`}>

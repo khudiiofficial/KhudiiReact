@@ -36,6 +36,8 @@ const APIPath = import.meta.env.VITE_BACKEND_PATH;
 import axios from 'axios'
 import { useLocation } from 'react-router-dom'
 import SectorsList from './Pages/sectors/Secrors'
+import WelcomeAdmin from './Pages/welcome/welcome'
+import VisionMissionAdmin from './Pages/vision/Vision'
 function App() {
 const location=useLocation()  
 const dispatch=useDispatch()
@@ -91,6 +93,9 @@ const dispatch=useDispatch()
           <Route path='NewsEvents' element={<EventsAdminPanel/>}/>
           <Route path='sectors' element={<SectorsList/>}/>
           <Route path='crousel-images' element={<CarouselAdmin/>}/>
+          <Route path='welcome-secton' element={<WelcomeAdmin/>}/>
+          <Route path='vision' element={<VisionMissionAdmin/>}/>
+          
           {/* <Route path="change-password" element={<ChangePassword />} /> */}
           <Route index element={<DashboardIndex/>} />
           

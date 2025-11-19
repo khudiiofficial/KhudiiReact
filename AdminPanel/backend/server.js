@@ -24,8 +24,8 @@ app.use(cookieParser())
 
 app.use(cors(
   {
-   origin: 'https://secure.khudii.com',  
-  // origin: 'http://localhost:5173', // Vite's default dev server port
+  //  origin: 'https://secure.khudii.com',  
+  origin: 'http://localhost:5173', // Vite's default dev server port
   credentials: true
   }
 ))
@@ -36,9 +36,9 @@ app.get('/',(req,res)=>{
   res.json('Admin Panel backend is running')
 })
 
-export default app
-// app.listen(PORT, () => {
-//   console.log(`🚀 Server running on http://localhost:${PORT}`);
-// });
+// export default app
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+});
 
 
