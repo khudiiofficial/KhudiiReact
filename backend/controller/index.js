@@ -1100,10 +1100,10 @@ export const getAllSectors = (req, res) => {
 //find category by name
 
 export const getCBN=async(req,res)=>{
-  const {name}=req.params
-  console.log(name)
-  const query='SELECT * FROM sectors WHERE name=?'
-    db.query(query,[name], (err, results) => {
+  const {slug}=req.params
+  // console.log(name)
+  const query='SELECT * FROM sectors WHERE slug=?'
+    db.query(query,[slug], (err, results) => {
     if (err) {
       console.error('❌ Error fetching sectors:', err);
       return res.status(500).json({ success: false, error: 'Database error' });
@@ -1111,6 +1111,30 @@ export const getCBN=async(req,res)=>{
     if(results.length===0){
       return res.status(400).json({ success: false, error: 'Not Found' });
     }
+    
     res.status(200).json({ success: true, data: results[0] });
   });
 }
+
+
+//get images
+export const getAllCarouselImages = (req, res) => {
+  const query = "SELECT * FROM crousel_images ORDER BY created_at DESC";
+  
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("❌ Error fetching carousel images:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch carousel images",
+        error: err.message
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      data: results,
+      count: results.length
+    });
+  });
+};

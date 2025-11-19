@@ -76,8 +76,11 @@ import React, { useState,useEffect } from 'react'
 import styles from './Cards.module.css'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { div } from 'framer-motion/client'
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 const Cards = () => {
+    const nav=useNavigate()
     const [arr, setArr] = useState([
         // {
         //     src: '/Sectors/health-khudii.png',
@@ -136,9 +139,11 @@ call()
     },[])
 
     return (
+    
         <div className={styles.parent}>
             {arr.map((ele, index) => (
-                <div key={index} className={styles.class1}>
+                  <div key={index} >
+                <div className={styles.class1} onClick={()=>{nav(`/Categories/${ele.slug}`)}} >
                     <img 
                         src={ele.src} 
                         className={styles.class2} 
@@ -149,15 +154,16 @@ call()
                     />
                     <h2 className={styles.class4}>{ele.name}</h2>
                     <p className={styles.class3}>{ele.description}</p>
-                    <Link to={`/Categories/${ele.name.replace(/\s+/g, '-')}`}>
+                    <Link>
                         <button className={styles.class5}>
-                            More About {ele.Name}
+                            More About {ele.name}
                         </button>
                     </Link>
                 </div>
+                  </div>
             ))}
         </div>
     )
 }
-
+//   <Link to={`/Categories/${ele.name.replace(/\s+/g, '-')}`}></Link>
 export default Cards

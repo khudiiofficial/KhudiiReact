@@ -65,7 +65,7 @@ useEffect(()=>{
 <Route path='/blogs' element={<Blogss/>}/>
 <Route path='/jobs' element={<JobApplicationForm/>}/>
 <Route path='/volunteer' element={<VolunteerForm/>}/>
-<Route path='Categories/:name' element={<Categories/>}/>
+<Route path='Categories/:slug' element={<Categories/>}/>
 </Routes>
 <Footer/>
 <VapiAssistant/>

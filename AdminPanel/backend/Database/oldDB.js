@@ -1,4 +1,4 @@
-// import mysql from "mysql2";
+import mysql from "mysql2";
 
 // Create the connection
 // const db1 = mysql.createConnection({
@@ -26,7 +26,7 @@
 
 
 
-import mysql from "mysql2";
+// import mysql from "mysql2";
 const db1 = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -54,73 +54,56 @@ db1.getConnection((err, connection) => {
 
 
 
+// function createTable() {
+//   const createTableQuery = `
+//     CREATE TABLE IF NOT EXISTS crousel_images (
+//       id INT AUTO_INCREMENT PRIMARY KEY,
+//       image_path VARCHAR(255) NOT NULL,
+//       description TEXT,
+//       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+//     )
+//   `;
 
-
-
-
-
-// export const alterSectorsTable = () => {
-//   return new Promise((resolve, reject) => {
-//     // First check if columns exist
-//     const checkQuery = `
-//       SELECT COLUMN_NAME 
-//       FROM INFORMATION_SCHEMA.COLUMNS 
-//       WHERE TABLE_SCHEMA = DATABASE() 
-//       AND TABLE_NAME = 'sectors' 
-//       AND COLUMN_NAME IN ('meta_title', 'meta_description', 'meta_keywords')
-//     `;
-
-//     db1.query(checkQuery, (err, results) => {
-//       if (err) {
-//         console.error('❌ Error checking columns:', err);
-//         reject(err);
-//         return;
-//       }
-
-//       // Get existing columns
-//       const existingColumns = results.map(row => row.COLUMN_NAME);
-//       const columnsToAdd = [];
-
-//       if (!existingColumns.includes('meta_title')) {
-//         columnsToAdd.push('ADD COLUMN meta_title TEXT DEFAULT NULL');
-//       }
-//       if (!existingColumns.includes('meta_description')) {
-//         columnsToAdd.push('ADD COLUMN meta_description TEXT DEFAULT NULL');
-//       }
-//       if (!existingColumns.includes('meta_keywords')) {
-//         columnsToAdd.push('ADD COLUMN meta_keywords TEXT DEFAULT NULL');
-//       }
-
-//       // If no columns to add, resolve immediately
-//       if (columnsToAdd.length === 0) {
-//         console.log('✅ All meta columns already exist in sectors table');
-//         resolve();
-//         return;
-//       }
-
-//       // Execute ALTER TABLE with only needed columns
-//       const alterQuery = `
-//         ALTER TABLE sectors 
-//         ${columnsToAdd.join(',\n')}
-//       `;
-
-//       db1.query(alterQuery, (alterErr, result) => {
-//         if (alterErr) {
-//           console.error('❌ Error altering sectors table:', alterErr);
-//           reject(alterErr);
-//         } else {
-//           console.log('✅ Sectors table altered successfully with meta fields');
-//           resolve(result);
-//         }
-//       });
-//     });
+//   db1.query(createTableQuery, (err, results) => {
+//     if (err) {
+//       console.error("❌ Error creating table: ", err);
+//       return;
+//     }
+//     console.log("✅ Table 'crousel_images' created or already exists");
+    
+//     // Insert images after table is created
+//     insertImages();
 //   });
-// };
-// alterSectorsTable()
+// }
 
+// function insertImages() {
+//   const images = [
+//     '/1-taryaq-flood-2025-monthly-theme-khudii.webp',
+//     '/2-taryaq-flood-2025-monthly-theme-khudii.webp',
+//     '/3-taryaq-flood-2025-monthly-theme-khudii.webp',
+//     '/6-taryaq-flood-2025-monthly-theme-khudii.webp',
+//     '/7-taryaq-flood-2025-monthly-theme-khudii.webp',
+//     '/8-taryaq-flood-2025-monthly-theme-khudii.webp',
+//   ];
 
+//   const insertQuery = "INSERT INTO crousel_images (image_path, description) VALUES ?";
+  
+//   // Map images to values array with empty descriptions
+//   const values = images.map(image_path => [image_path, null]);
 
+//   db1.query(insertQuery, [values], (err, results) => {
+//     if (err) {
+//       console.error("❌ Error inserting images: ", err);
+//       return;
+//     }
+//     console.log(`✅ Successfully inserted ${results.affectedRows} images into crousel_images table`);
+    
+//     // Close connection
+//     db1.end();
+//   });
+// }
 
+// createTable()
 
 
 

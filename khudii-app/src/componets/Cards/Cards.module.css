@@ -236,6 +236,7 @@
   min-height: auto;
   /* height: 350px; */
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .class1:hover {

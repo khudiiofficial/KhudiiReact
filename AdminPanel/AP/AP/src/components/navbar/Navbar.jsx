@@ -201,6 +201,13 @@ export default function Navbar() {
                     >
                       Sectors
                     </Link>
+                        <Link 
+                      to="/dashboard/crousel-images" 
+                      onClick={handleLinkClick}
+                      className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition rounded-md"
+                    >
+                     Crousel Images
+                    </Link>
                   </div>
                 </div>
               )}

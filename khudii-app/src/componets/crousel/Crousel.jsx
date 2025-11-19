@@ -1,37 +1,60 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import styles from './Crousel.module.css'
+import axios from 'axios'
+const APIPath = import.meta.env.VITE_BACKEND_PATH;
 // import img from '../../../public/'
 const Crousel = () => {
-    const IMAGES = {
-        hero: [
-            '/1-taryaq-flood-2025-monthly-theme-khudii.webp',
-            '/2-taryaq-flood-2025-monthly-theme-khudii.webp',
-            '/3-taryaq-flood-2025-monthly-theme-khudii.webp',
-            '/6-taryaq-flood-2025-monthly-theme-khudii.webp',
-            '/7-taryaq-flood-2025-monthly-theme-khudii.webp',
-            '/8-taryaq-flood-2025-monthly-theme-khudii.webp',
+   
+    // const hero= [
+    //         '/1-taryaq-flood-2025-monthly-theme-khudii.webp',
+    //         '/2-taryaq-flood-2025-monthly-theme-khudii.webp',
+    //         '/3-taryaq-flood-2025-monthly-theme-khudii.webp',
+    //         '/6-taryaq-flood-2025-monthly-theme-khudii.webp',
+    //         '/7-taryaq-flood-2025-monthly-theme-khudii.webp',
+    //         '/8-taryaq-flood-2025-monthly-theme-khudii.webp',
             
-        ],
-        sectorPlaceholder: 'https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=800&q=60',
-        orgPlaceholder: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=60'
-    };
+    //     ]
+        const [hero,sethero]=useState([
+             {image_path:'/1-taryaq-flood-2025-monthly-theme-khudii.webp'},
+            {image_path:'/2-taryaq-flood-2025-monthly-theme-khudii.webp'},
+           { image_path:'/3-taryaq-flood-2025-monthly-theme-khudii.webp'},
+             {image_path:'/6-taryaq-flood-2025-monthly-theme-khudii.webp'},
+            { image_path:'/7-taryaq-flood-2025-monthly-theme-khudii.webp'},
+            { image_path:'/8-taryaq-flood-2025-monthly-theme-khudii.webp'},
+            
+        ])
+      
     
+    useEffect(()=>{
+     const func=async()=>{
+        try {
+            const res=await axios.get(`${APIPath}/getCrouselimages`)
+            if(res.status===200){
+                sethero(res.data.data)
+            
+            }
+        } catch (error) {
+            console.log(error)
+        }
+     }
+func()
+    },[])
     const [index, setIndex] = useState(0);
     
     useEffect(() => {
-        const t = setInterval(() => setIndex(i => (i + 1) % IMAGES.hero.length), 6000);
+        const t = setInterval(() => setIndex(i => (i + 1) % hero.length), 6000);
         return () => clearInterval(t);
-    }, [IMAGES.hero.length]);
+    }, [hero.length]);
 
     return (
         <>
             <section className={`${styles.homePage} ${styles.carouselSection}`}>
                 <div className={styles.carouselContainer}>
-                    {IMAGES.hero.map((src, i) => (
+                    {hero.map((src, i) => (
                        <img
   key={i}
-  src={src}
+  src={src.image_path}
   alt={`Slide ${i}`}
   className={`${styles.slide} ${i === index ? styles.slideActive : styles.slideInactive}`}
   fetchPriority="high"
@@ -41,7 +64,7 @@ const Crousel = () => {
                     <div className={styles.overlay}></div>
                 </div>
                 <div id='star' className={styles.controls}>
-                    {IMAGES.hero.map((_, i) => (
+                    {hero.map((_, i) => (
                         <button  
                             key={i} 
                             onClick={() => setIndex(i)} 

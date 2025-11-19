@@ -102,7 +102,14 @@ createSector,
 updateSector,
 deleteSector,
 restoreSector,
-permanentDeleteSector
+permanentDeleteSector,
+
+//crousel images
+getAllCarouselImages,
+getCarouselImageById,
+createCarouselImage,
+updateCarouselImage,
+deleteCarouselImage
 } from "../controllers/mainController.js";
 
 const router = express.Router();
@@ -223,5 +230,23 @@ router.put('/sectors/admin/:id',auth, updateSector);
 router.delete('/sectors/admin/:id',auth, deleteSector);
 router.patch('/sectors/admin/restore/:id',auth, restoreSector);
 router.delete('/sectors/admin/permanent/:id',auth, permanentDeleteSector);
+
+
+// crousel-images
+
+
+router.get("/api/carousel",auth, getAllCarouselImages);
+
+
+router.get("/api/carousel/:id",auth, getCarouselImageById);
+
+
+router.post("/api/carousel",auth, createCarouselImage);
+
+
+router.put("/api/carousel/:id",auth, updateCarouselImage);
+
+
+router.delete("/api/carousel/:id",auth, deleteCarouselImage);
 
 export default router;

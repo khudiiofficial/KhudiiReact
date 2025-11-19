@@ -28,6 +28,7 @@ import TopbarAdmin from './Pages/Topbar/Topbar'
 import CertificationAdmin from './Pages/Certifications/Certifications'
 import TestimonialAdmin from './Pages/Testimonials/Testimonials'
 import EventsAdminPanel from './Pages/newsEvents/NewsEvents'
+import CarouselAdmin from './Pages/Crousel-images/CrouselImgaes'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { resetUser } from './redux/userslice'
@@ -67,7 +68,7 @@ const dispatch=useDispatch()
 <Navbar/>
 <Routes>
 <Route path='/' element={<Protected><></></Protected>}/>
-
+          
           <Route path="/dashboard" element={<Protected><Dashboard /></Protected>}>
           <Route path="OrganizationPage" element={<OrganizationsPage />} />
           <Route path="BlogPage" element={<DocumentCards />} />
@@ -89,6 +90,7 @@ const dispatch=useDispatch()
           <Route path="Testimonials" element={<TestimonialAdmin/>}/>
           <Route path='NewsEvents' element={<EventsAdminPanel/>}/>
           <Route path='sectors' element={<SectorsList/>}/>
+          <Route path='crousel-images' element={<CarouselAdmin/>}/>
           {/* <Route path="change-password" element={<ChangePassword />} /> */}
           <Route index element={<DashboardIndex/>} />
           

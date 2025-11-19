@@ -8,14 +8,17 @@ const APIPath = import.meta.env.VITE_BACKEND_PATH;
 import axios from 'axios'
 const Categories = () => {
     const [cat,setcat]=useState({})
-    let {name}=useParams()
-    name=name.replace(/-/g,' ')
+
+    let {slug}=useParams()
+    // name=name.replace(/-/g,' ')
     useEffect(()=>{
 const func=async()=>{
 try {
-    const res=await axios.get(`${APIPath}/CBN/${name}`)
+    const res=await axios.get(`${APIPath}/CBN/${slug}`)
    if(res.status===200){
 setcat(res.data.data)
+console.log(res.data)
+
 // console.log(res.data.data)
    }
     
@@ -25,7 +28,7 @@ setcat(res.data.data)
 
 }
 func()
-    },[name])   
+    },[slug])   
    
     //    const getCategorySEODetails = (categoryName) => {
     //     const categoryMap = {
@@ -85,25 +88,33 @@ func()
 
   return (
     <>
-         <SEO 
+      
+{
+  Object.keys(cat).length!==0 &&
+    <> 
+   <SEO 
             title={cat.meta_title}
             description={cat.meta_description}
             keywords={cat.meta_keywords}
-            url={`https://new.khudii.com/Categories/${name.replace(/ /g, '-').toLowerCase()}`}
+            url={`https://new.khudii.com/Categories/${cat.name}`}
             type="website"
         />
         
-     <PageHeader 
-                        title={`${name}`}
+
+    <PageHeader 
+                        title={`${cat.name}`}
                         breadcrumbs={[
                           { label: "Home", link: "/" },
-                          { label: name }
+                          { label: cat.name }
                         ]}
                       />
 
 
-<OrganizationBycategory name={name}/>
-    
+<OrganizationBycategory name={cat.name}/>
+   
+
+   </>
+  }
     </>
   )
 }
