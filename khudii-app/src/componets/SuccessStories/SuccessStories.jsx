@@ -143,7 +143,8 @@ func()
   <div className="max-w-[1240px] mx-auto">
     <div className="grid grid-cols-1 lg:grid-cols-[60%_40%]">
       {/* Content Column */}
-      <div className="py-6 lg:py-8 flex-wrap">
+      <div className="py-6 lg:py-8 flex flex-wrap gap-3
+      ">
         <h3 className={`${styles.title_flood} text-white lg:text-[32px] md:text-2xl font-bold mb-4 text-left lg:text-left flex-wrap text-wrap`}>
         Floods in Pakistan
         </h3>

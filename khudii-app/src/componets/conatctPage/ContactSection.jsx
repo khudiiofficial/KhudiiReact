@@ -145,7 +145,7 @@ const myDivRef = useRef(null);
       <div className="grid gap-10 md:grid-cols-2 items-start">
         {/* Left: heading + description */}
         <div>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-slate-800 mb-4">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-black-800 mb-4">
             We&rsquo;d Love to Hear From You
           </h1>
           <p className="text-slate-600 mb-6 max-w-xl">
@@ -160,10 +160,10 @@ const myDivRef = useRef(null);
             <div className="flex items-start gap-4 bg-white/80 p-4 rounded-2xl shadow-sm">
               <div className="p-3 rounded-full bg-indigo-50">
                 {/* phone icon */}
-                <svg className="w-6 h-6 text-indigo-700" viewBox="0 0 24 24" fill="none" aria-hidden>
-                  <path d="M2 3.5C2 4.328 2.672 5 3.5 5h2c.828 0 1.5-.672 1.5-1.5S6.328 2 5.5 2h-2C2.672 2 2 2.672 2 3.5z" fill="#4f46e5"/>
-                  <path d="M22 16.5v3.75a1 1 0 0 1-1.148.988C11.83 19.53 4.47 12.17 2.263 4.148A1 1 0 0 1 3.25 3H7a1 1 0 0 1 1 1v3.5a1 1 0 0 1-.742.97c-.804.25-1.6.6-2.345 1.05-.745.45-1.423 1.003-2.02 1.675a1 1 0 0 0-.044 1.33C7.47 17.53 13.47 23.53 19.9 21.98a1 1 0 0 0 .667-.98V17a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1z" fill="#4f46e5" opacity="0.15"/>
-                  <path d="M21 3l-2 2M17 7l4 4" stroke="#4f46e5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <svg className="w-6 h-6 text-[#02236e]" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M2 3.5C2 4.328 2.672 5 3.5 5h2c.828 0 1.5-.672 1.5-1.5S6.328 2 5.5 2h-2C2.672 2 2 2.672 2 3.5z" fill="#02236e"/>
+                  <path d="M22 16.5v3.75a1 1 0 0 1-1.148.988C11.83 19.53 4.47 12.17 2.263 4.148A1 1 0 0 1 3.25 3H7a1 1 0 0 1 1 1v3.5a1 1 0 0 1-.742.97c-.804.25-1.6.6-2.345 1.05-.745.45-1.423 1.003-2.02 1.675a1 1 0 0 0-.044 1.33C7.47 17.53 13.47 23.53 19.9 21.98a1 1 0 0 0 .667-.98V17a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1z" fill="#02236e" opacity="0.15"/>
+                  <path d="M21 3l-2 2M17 7l4 4" stroke="#02236e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
               <div>
@@ -173,7 +173,7 @@ const myDivRef = useRef(null);
                   href="tel:+923198548344"
                 >
                   <span className="text-sm text-slate-500 block">Hotline</span>
-                  <span className="text-indigo-700">(+92) 3198 - KHUDII (548344)</span>
+                  <span className="text-[#02236e]">(+92) 3198 - KHUDII (548344)</span>
                 </a>
                 <p className="text-xs text-slate-400 mt-1">Available 9:00am — 6:00pm</p>
               </div>
@@ -182,9 +182,9 @@ const myDivRef = useRef(null);
             <div className="flex items-start gap-4 bg-white/80 p-4 rounded-2xl shadow-sm">
               <div className="p-3 rounded-full bg-indigo-50">
                 {/* email icon */}
-                <svg className="w-6 h-6 text-indigo-700" viewBox="0 0 24 24" fill="none" aria-hidden>
-                  <path d="M2 6.5C2 5.672 2.672 5 3.5 5h17c.828 0 1.5.672 1.5 1.5v11c0 .828-.672 1.5-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5v-12z" fill="#4f46e5" opacity="0.08"/>
-                  <path d="M3 7.5l8.5 5L20 7.5" stroke="#4f46e5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <svg className="w-6 h-6 text-[#02236e]" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M2 6.5C2 5.672 2.672 5 3.5 5h17c.828 0 1.5.672 1.5 1.5v11c0 .828-.672 1.5-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5v-12z" fill="#02236e" opacity="0.08"/>
+                  <path d="M3 7.5l8.5 5L20 7.5" stroke="#02236e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
               <div>
@@ -193,7 +193,7 @@ const myDivRef = useRef(null);
                   className="text-slate-700 font-medium block"
                   href="mailto:info@khudii.com"
                 >
-                  <span className="text-indigo-700">info@khudii.com</span>
+                  <span className="text-[#02236e]">info@khudii.com</span>
                 </a>
                 <p className="text-xs text-slate-400 mt-1">We reply within 24–48 hours.</p>
               </div>
@@ -203,7 +203,7 @@ const myDivRef = useRef(null);
             <div className="bg-white/80 p-4 rounded-2xl shadow-sm">
               <h4 className="text-sm font-semibold text-slate-700 mb-3">Follow Us on Social Media:</h4>
 
-              <div className="flex gap-4 flex-wrap">
+              <div className="flex gap-4 flex-wrap justify-center">
                 {/* Facebook */}
                 <a
                   href="https://www.facebook.com/Khudiioficial/"
@@ -222,7 +222,8 @@ const myDivRef = useRef(null);
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-indigo-50 transition"
                 >
-                  <svg className="w-5 h-5" viewBox="0 0 448 512" aria-hidden><path fill="#E1306C" d="M224 202.66A53.34 53.34 0 1 0 277.34 256 53.38 53.38 0 0 0 224 202.66zM398.8 80a48.06 48.06 0 0 0-33.95-33.95C333.23 36 224 36 224 36s-109.23 0-140.82 10.05A48.06 48.06 0 0 0 49.23 80C36 111.59 36 220.82 36 220.82s0 109.23 10.05 140.82a48.06 48.06 0 0 0 33.95 33.95C114.77 476 224 476 224 476s109.23 0 140.82-10.05a48.06 48.06 0 0 0 33.95-33.95C412 330.05 412 220.82 412 220.82S412 111.59 398.8 80z"/></svg>
+                  {/* <svg className="w-5 h-5" viewBox="0 0 448 512" aria-hidden><path fill="#E1306C" d="M224 202.66A53.34 53.34 0 1 0 277.34 256 53.38 53.38 0 0 0 224 202.66zM398.8 80a48.06 48.06 0 0 0-33.95-33.95C333.23 36 224 36 224 36s-109.23 0-140.82 10.05A48.06 48.06 0 0 0 49.23 80C36 111.59 36 220.82 36 220.82s0 109.23 10.05 140.82a48.06 48.06 0 0 0 33.95 33.95C114.77 476 224 476 224 476s109.23 0 140.82-10.05a48.06 48.06 0 0 0 33.95-33.95C412 330.05 412 220.82 412 220.82S412 111.59 398.8 80z"/></svg> */}
+                  <i class="text-[#c13584] text-xl fa-brands fa-instagram"></i>
                   <span className="text-sm text-slate-700">Instagram</span>
                 </a>
 
@@ -233,7 +234,8 @@ const myDivRef = useRef(null);
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-indigo-50 transition"
                 >
-                  <svg className="w-5 h-5" viewBox="0 0 576 512" aria-hidden><path fill="#FF0000" d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64s-171 0-213.37 11.486c-23.497 6.321-42.003 24.947-48.284 48.597C15 166.347 15 255.785 15 255.785s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.37-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zM232 323V188l142.74 81.2L232 323z"/></svg>
+                  {/* <svg className="w-5 h-5" viewBox="0 0 576 512" aria-hidden><path fill="#FF0000" d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64s-171 0-213.37 11.486c-23.497 6.321-42.003 24.947-48.284 48.597C15 166.347 15 255.785 15 255.785s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.37-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zM232 323V188l142.74 81.2L232 323z"/></svg> */}
+                  <i class="text-[#e7001e] text-xl fa-brands fa-youtube"></i>
                   <span className="text-sm text-slate-700">YouTube</span>
                 </a>
 
@@ -244,7 +246,8 @@ const myDivRef = useRef(null);
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-indigo-50 transition"
                 >
-                  <svg className="w-5 h-5" viewBox="0 0 448 512" aria-hidden><path fill="#010101" d="M448 209.9c-6.28-23.65-24.78-42.28-48.28-48.6-26.45-7.12-70.58-11-141.73-11V349.4A162.55 162.55 0 1 1 185 188.31V278.2a74.62 74.62 0 0 0 52.23 71.18V0h88A121.18 121.18 0 0 0 326.7 56.3c11.41 42.87 11.41 132.3 11.41 132.3z"/></svg>
+                  {/* <svg className="w-5 h-5" viewBox="0 0 448 512" aria-hidden><path fill="#010101" d="M448 209.9c-6.28-23.65-24.78-42.28-48.28-48.6-26.45-7.12-70.58-11-141.73-11V349.4A162.55 162.55 0 1 1 185 188.31V278.2a74.62 74.62 0 0 0 52.23 71.18V0h88A121.18 121.18 0 0 0 326.7 56.3c11.41 42.87 11.41 132.3 11.41 132.3z"/></svg> */}
+                  <i class="text-xl fa-brands fa-tiktok"></i>
                   <span className="text-sm text-slate-700">TikTok</span>
                 </a>
               </div>
@@ -304,9 +307,9 @@ const myDivRef = useRef(null);
                     <button
                       type="button"
                       onClick={() => setShowCountryDropdown(!showCountryDropdown)}
-                      className="flex items-center w-28 justify-center px-3 py-3 bg-gray-100 border border-r-0 border-gray-300 rounded-l-lg hover:bg-gray-200 transition-colors"
+                      className="flex items-center w-28 justify-around px-3 py-3 bg-gray-100 border border-r-0 border-gray-300 rounded-l-lg hover:bg-gray-200 transition-colors"
                     >
-                      <span className="text-sm">{selectedCountry?.flag}</span>
+                      <span className="text-xl">{selectedCountry?.flag}</span>
                       <span className="text-gray-700 text-sm ml-1">+{watchCountryCode}</span>
                       <svg 
                         className={`w-4 h-4 transition-transform ${showCountryDropdown ? 'rotate-180' : ''}`}
@@ -397,7 +400,7 @@ const myDivRef = useRef(null);
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full inline-flex items-center justify-center gap-2 bg-indigo-700 hover:bg-indigo-800 text-white py-3 rounded-lg font-semibold disabled:opacity-60"
+              className="w-full inline-flex items-center justify-center gap-2 bg-[#e7001e] text-white py-3 rounded-lg font-semibold disabled:opacity-60"
             >
               {isSubmitting ? "Sending..." : "Send Message"}
             </button>

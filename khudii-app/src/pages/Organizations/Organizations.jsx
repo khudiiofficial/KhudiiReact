@@ -20,9 +20,6 @@ const Organizations = () => {
       />
 
       <DifferentOrganizations/>
-
-
-
       </>
   )
 }

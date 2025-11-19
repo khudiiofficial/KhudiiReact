@@ -81,21 +81,21 @@ if(error){
                 aria-labelledby={`org-title-${org.id || idx}`}
               >
                 {/* Image */}
-                <div className="p-2 w-full overflow-hidden bg-white rounded-t-xl">
-  <img
-    src={org.introductory_image_path || '/placeholder-org.webp'}
-    alt={org.name || 'Organization logo'}
-    className="w-full h-full object-cover duration-500"
-    loading="lazy"
-    onError={(e) => {
-      e.target.onerror = null;
-      e.target.src = '/fallback-org.png';
-    }}
-  />
+                <div className="w-full overflow-hidden bg-white rounded-t-xl">
+              <img
+                src={org.introductory_image_path || '/placeholder-org.webp'}
+                alt={org.name || 'Organization logo'}
+                className="w-100 object-cover duration-500"
+                loading="lazy"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = '/fallback-org.png';
+                }}
+              />
 </div>
 
                 {/* Content */}
-                <div className="p-5 sm:p-6">
+                <div className="p-4 sm:p-4">
                   <h3
                     id={`org-title-${org.id || idx}`}
                     className="h-[50px] text-lg sm:text-xl font-semibold text-[#022279] mb-2"
@@ -107,7 +107,7 @@ if(error){
                     {org.description
                       ? org.description
                           .replace(/<[^>]*>/g, '') // strip HTML for safety (or use DOMPurify if rich text needed)
-                          .substring(0, 120) + (org.description.length > 120 ? '...' : '')
+                          .substring(0, 140) + (org.description.length > 140 ? '...' : '')
                       : 'Empowering communities through sustainable initiatives.'}
                   </p>
 

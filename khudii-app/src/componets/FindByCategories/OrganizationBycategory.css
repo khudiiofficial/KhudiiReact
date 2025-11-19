@@ -40,7 +40,7 @@
 }
 
 /* Overlay on hover */
-.org-overlay {
+/* .org-overlay {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
@@ -57,7 +57,7 @@
 
 .org-card:hover .org-overlay {
   opacity: 1;
-}
+} */
 
 /* Content section */
 .org-content {
@@ -96,7 +96,7 @@
 }
 
 /* Button */
-.org-btn {
+/* .org-btn {
   align-self: flex-start;
   background: #2563eb;
   color: white;
@@ -106,7 +106,7 @@
   border-radius: 8px;
   text-decoration: none;
   transition: background 0.3s ease, transform 0.2s ease;
-}
+} */
 
 .org-btn:hover {
   background: #1d4ed8;

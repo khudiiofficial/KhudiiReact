@@ -65,7 +65,7 @@ return ()=>clearInterval(fun)
   return (
     <div className={`${styles.topbar} ${styles.color}`}>
       <p className={styles.contact}>
-        <a href="tel:+923198548344" target="_blank">📞 (+92) 3198 - KHUDII (548344)</a>
+        <a href="tel:+923198548344" target="_blank"><i class="text-[#e7001e]  fa-solid fa-phone-volume"></i> (+92) 3198 - KHUDII (548344)</a>
       </p>
 
       {/* <p className={styles.mid}>

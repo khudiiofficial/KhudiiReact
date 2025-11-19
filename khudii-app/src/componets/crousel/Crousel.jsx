@@ -5,26 +5,15 @@ import axios from 'axios'
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 // import img from '../../../public/'
 const Crousel = () => {
-   
-    // const hero= [
-    //         '/1-taryaq-flood-2025-monthly-theme-khudii.webp',
-    //         '/2-taryaq-flood-2025-monthly-theme-khudii.webp',
-    //         '/3-taryaq-flood-2025-monthly-theme-khudii.webp',
-    //         '/6-taryaq-flood-2025-monthly-theme-khudii.webp',
-    //         '/7-taryaq-flood-2025-monthly-theme-khudii.webp',
-    //         '/8-taryaq-flood-2025-monthly-theme-khudii.webp',
-            
-    //     ]
         const [hero,sethero]=useState([
-             {image_path:'/1-taryaq-flood-2025-monthly-theme-khudii.webp'},
+            {image_path:'/1-taryaq-flood-2025-monthly-theme-khudii.webp'},
             {image_path:'/2-taryaq-flood-2025-monthly-theme-khudii.webp'},
-           { image_path:'/3-taryaq-flood-2025-monthly-theme-khudii.webp'},
-             {image_path:'/6-taryaq-flood-2025-monthly-theme-khudii.webp'},
+            { image_path:'/3-taryaq-flood-2025-monthly-theme-khudii.webp'},
+            {image_path:'/6-taryaq-flood-2025-monthly-theme-khudii.webp'},
             { image_path:'/7-taryaq-flood-2025-monthly-theme-khudii.webp'},
             { image_path:'/8-taryaq-flood-2025-monthly-theme-khudii.webp'},
             
         ])
-      
     
     useEffect(()=>{
      const func=async()=>{
@@ -75,6 +64,46 @@ func()
             </section>
         </>
     )
+    // 2nd Code
+//     return (
+//   <>
+//     <section className={`${styles.homePage} ${styles.carouselSection}`}>
+//       <div className={styles.carouselContainer}>
+//         {hero.map((item, i) => (
+//           <div 
+//             key={i} 
+//             className={`${styles.slide} ${i === index ? styles.slideActive : styles.slideInactive}`}
+//             aria-hidden={i !== index}
+//           >
+//             <img
+//               src={item.image_path}
+//               alt={`Slide ${i + 1}`}
+//               className={styles.slideImage}
+//               loading="eager"
+//               fetchPriority="high"
+//               decoding="async"
+//             />
+//           </div>
+//         ))}
+//         <div className={styles.overlay}></div>
+//       </div>
+
+//       <div id="star" className={styles.controls} aria-label="Carousel navigation">
+//         {hero.map((_, i) => (
+//           <button
+//             key={i}
+//             onClick={() => setIndex(i)}
+//             className={`${styles.indicator} ${
+//               i === index ? styles.indicatorActive : styles.indicatorInactive
+//             }`}
+//             aria-label={`Go to slide ${i + 1}`}
+//             aria-current={i === index ? "true" : "false"}
+//           />
+//         ))}
+//       </div>
+//     </section>
+//   </>
+// );
 }
 
 export default Crousel;
