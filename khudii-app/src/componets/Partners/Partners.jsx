@@ -133,9 +133,9 @@ call()
 }, [arr]);
 
   return (
-    <div className="w-full flex flex-col bg-[#f0f0f0] items-center py-5 sm:py-3 md:py-8">
+    <div className="w-full flex flex-col bg-[#f0f0f0] items-center py-3 md:py-6">
       {/* Heading */}
-      <h2 className="text-3xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-[#02236e] text-center mb-8 sm:mb-6">
+      <h2 className="text-2xl sm:text-3xl font-bold text-[#02236e] p-6">
         Our Partners
       </h2>
 

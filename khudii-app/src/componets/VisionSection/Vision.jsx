@@ -58,9 +58,9 @@ const Vision = () => {
   ];
 
   return (
-    <section className="py-8 sm:py-10 md:py-12">
+    <section className="py-6 sm:py-6 md:py-6">
       <div className="max-w-[1240px] mx-auto px-2 sm:px-3">
-        <div className="flex flex-wrap justify-center gap-4 sm:gap-8 md:gap-6 pb-6 md:pb-8">
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-8 md:gap-6 pb-4 md:pb-8">
           {items.map((item, idx) => (
             <div
               key={idx}

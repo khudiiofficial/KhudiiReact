@@ -108,7 +108,7 @@ return (
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center mb-8 sm:mb-10">
   {/* Left spacer — same width as right link */}
-  <div className="flex-shrink-0 invisible">
+  <div className={`${styles.org_sec_left} flex-shrink-0 invisible`}>
     <span className="inline-block font-semibold text-[#E3001C]">
       Explore Organizations
     </span>

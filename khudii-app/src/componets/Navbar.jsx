@@ -110,7 +110,7 @@ const Navbar = () => {
       {/* Main Navbar */}
       <header className="bg-white relative">
         <div
-          className={`px-4 py-4 flex items-center justify-around ${styles.correctedwidth}`}
+          className={`px-4 py-4 flex ${styles.correctedwidth}`}
         >
           {/* Logo */}
           <div className="w-36">
@@ -238,7 +238,7 @@ const Navbar = () => {
 
           { !isMobile && <Link
               to="/donate-now/"
-              className="bg-rose-600 text-white px-4 py-2 rounded-md shadow hover:opacity-95"
+              className="bg-[#e7001e] text-white px-4 py-2 rounded-md shadow hover:opacity-95"
             >
               Donate Now
             </Link>}

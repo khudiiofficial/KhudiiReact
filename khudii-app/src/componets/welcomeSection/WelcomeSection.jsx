@@ -272,18 +272,33 @@ const WelcomeSection = () => {
             font-size: 0.9rem;
           }
         }
+        
+        @media (max-width: 576px) {
+        .parent {
+        padding: 0;
+        }
+        
+        .size {
+            font-size: 1.6rem;
+            text-align: center;
+          }
+        .newclass {
+            font-size: 1rem;
+          }
+        }
 
         @media (max-width: 480px) {
           .pad {
-            padding: 0 20px;
+            padding: 0 15px;
           }
 
           .size {
-            font-size: 1.6rem;
+          font-size: 1.5rem;
+          text-align: center;
           }
 
           .newclass {
-            font-size: 0.9rem;
+            font-size: 1rem;
           }
 
           .gborder {

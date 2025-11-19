@@ -46,10 +46,20 @@ func()
     <div className="max-w-[1240px] w-full mx-auto pt-6 sm:px-6 relative">
   <div className="flex items-center justify-between py-4">
     {/* Left: empty (or tiny spacer) */}
-    <div className="w-4"></div>
-
+    <div className={`${styles.ssh_left} flex-shrink-0 invisible`}>
+      <span className="inline-block font-semibold">
+      Explore Organizations
+    </span>
+    </div>
+    {/* Absolutely centered heading — always in visual center */}
+  <div className="flex-1 text-center">
+  <h2 
+    className={`${styles.ssh_center} w-full text-2xl sm:text-3xl font-bold text-[#02236e] text-center block`}>
+    Success Stories
+  </h2>
+  </div>
     {/* Right: link — visible from md (768px) */}
-    <div className="md:block hidden">
+    <div className={`${styles.ssh_right} hidden`}>
       <Link 
         to="/success-stories/" 
         className="inline-flex items-center font-medium transition-colors group"
@@ -67,15 +77,6 @@ func()
       </Link>
     </div>
   </div>
-
-  {/* Absolutely centered heading — always in visual center */}
-  <h2 
-    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 
-               text-xl sm:text-2xl md:text-3xl font-bold text-[#022279] 
-               whitespace-nowrap pointer-events-none"
-  >
-    Success Stories
-  </h2>
 </div>
 
 

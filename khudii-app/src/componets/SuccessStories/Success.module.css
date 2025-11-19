@@ -243,6 +243,19 @@ background-color: red;
 border-radius: 20px;
 }
 
+.ssh_center {
+  text-align: center;
+  width: inline-auto;
+  margin: auto;
+}
+
+.ssh_right {
+    display: block;
+    width: inline-auto !important;
+    text-align: right;
+    margin: auto;
+  }
+
 .buttonClass:hover{
     background-color: rgb(255, 119, 119);
 }
@@ -287,9 +300,18 @@ border-radius: 20px;
   .img{
     width: 300px;
   }
+  .ssh_right {
+    display: block;
+  }
 }
 
 @media (max-width:768px){
+  .ssh_left {
+    display: none;
+  }
+  .ssh_right {
+    display: none;
+  }
   .desp_flood {
     display: flex;
     flex-wrap: wrap !important;

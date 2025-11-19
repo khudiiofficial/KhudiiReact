@@ -528,7 +528,7 @@ return (
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'} transition-opacity duration-700`}>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#022279] mb-2 text-center mx-auto max-w-3xl">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#02236e] p-6 text-center">
             News & Events
           </h2>
           <p className="text-gray-600 mb-8 text-lg md:text-xl max-w-4xl mx-auto text-center animate-slide-in-right">
