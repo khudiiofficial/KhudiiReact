@@ -194,7 +194,7 @@ font-weight: 700;
 
 /* FIXED BACKGROUND - Better performance */
 .class5{
-    background-image: url('https://www.khudii.com/wp-content/uploads/2025/09/8.jpg');
+  
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed; /* Changed from fixed */

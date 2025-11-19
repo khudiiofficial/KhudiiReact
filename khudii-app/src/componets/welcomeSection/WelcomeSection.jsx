@@ -337,6 +337,9 @@ const WelcomeSection = () => {
           <div className="videoContainer">
             {!videoLoaded ? (
               <div 
+              style={{
+    backgroundImage: "url('https://img.youtube.com/vi/hZyp2wOkqBs/hqdefault.jpg')"
+  }}
                 className="gborder videoPlaceholder"
                 onClick={handlePlayVideo}
               >

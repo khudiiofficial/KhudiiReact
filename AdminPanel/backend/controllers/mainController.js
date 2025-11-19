@@ -5602,3 +5602,384 @@ export const deleteCarouselImage = async (req, res) => {
     });
   }
 };
+
+
+
+
+
+//welcome section
+
+
+
+
+// Get welcome section data
+export const getWelcomeSection = (req, res) => {
+  const query = "SELECT * FROM welcomesection LIMIT 1";
+  
+  db1.query(query, (err, results) => {
+    if (err) {
+      console.error("❌ Error fetching welcome section:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch welcome section",
+        error: err.message
+      });
+    }
+    
+    // If no data exists, return empty object
+    const data = results.length > 0 ? results[0] : {
+      id: null,
+      welcome_title: "",
+      welcome_description: "",
+      youtube_video_id: "",
+      created_at: null,
+      updated_at: null
+    };
+    
+    res.json({
+      success: true,
+      data: data
+    });
+  });
+};
+
+// Update welcome section data
+export const updateWelcomeSection = async (req, res) => {
+  try {
+    const { welcome_title, welcome_description, youtube_video_id } = req.body;
+
+    // Validate required fields
+    if (!welcome_title) {
+      return res.status(400).json({
+        success: false,
+        message: "Welcome title is required"
+      });
+    }
+
+    // First check if data exists
+    const checkQuery = "SELECT id FROM welcomesection LIMIT 1";
+    
+    db1.query(checkQuery, (err, results) => {
+      if (err) {
+        console.error("❌ Error checking welcome section:", err);
+        return res.status(500).json({
+          success: false,
+          message: "Failed to update welcome section",
+          error: err.message
+        });
+      }
+
+      if (results.length > 0) {
+        // Update existing record
+        const updateQuery = `
+          UPDATE welcomesection 
+          SET welcome_title = ?, welcome_description = ?, youtube_video_id = ? 
+          WHERE id = ?
+        `;
+        
+        db1.query(updateQuery, [
+          welcome_title,
+          welcome_description || null,
+          youtube_video_id || null,
+          results[0].id
+        ], (err, updateResults) => {
+          if (err) {
+            console.error("❌ Error updating welcome section:", err);
+            return res.status(500).json({
+              success: false,
+              message: "Failed to update welcome section",
+              error: err.message
+            });
+          }
+          
+          res.json({
+            success: true,
+            message: "Welcome section updated successfully",
+            data: {
+              id: results[0].id,
+              welcome_title,
+              welcome_description,
+              youtube_video_id
+            }
+          });
+        });
+      } else {
+        // Insert new record (first time setup)
+        const insertQuery = `
+          INSERT INTO welcomesection (welcome_title, welcome_description, youtube_video_id) 
+          VALUES (?, ?, ?)
+        `;
+        
+        db1.query(insertQuery, [
+          welcome_title,
+          welcome_description || null,
+          youtube_video_id || null
+        ], (err, insertResults) => {
+          if (err) {
+            console.error("❌ Error creating welcome section:", err);
+            return res.status(500).json({
+              success: false,
+              message: "Failed to create welcome section",
+              error: err.message
+            });
+          }
+          
+          res.status(201).json({
+            success: true,
+            message: "Welcome section created successfully",
+            data: {
+              id: insertResults.insertId,
+              welcome_title,
+              welcome_description,
+              youtube_video_id
+            }
+          });
+        });
+      }
+    });
+    
+  } catch (error) {
+    console.error("❌ Error in updateWelcomeSection:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to update welcome section",
+      error: error.message
+    });
+  }
+};
+
+
+
+//vision
+
+
+// Get all vision mission items
+export const getAllVisionMissionItems = (req, res) => {
+  const query = "SELECT * FROM vision_mission_items ORDER BY sort_order ASC, created_at ASC";
+  
+  db1.query(query, (err, results) => {
+    if (err) {
+      console.error("❌ Error fetching vision mission items:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch vision mission items",
+        error: err.message
+      });
+    }
+    
+    res.json({
+      success: true,
+      data: results,
+      count: results.length
+    });
+  });
+};
+
+// Get single vision mission item by ID
+export const getVisionMissionItemById = (req, res) => {
+  const { id } = req.params;
+  const query = "SELECT * FROM vision_mission_items WHERE id = ?";
+  
+  db1.query(query, [id], (err, results) => {
+    if (err) {
+      console.error("❌ Error fetching vision mission item:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch vision mission item",
+        error: err.message
+      });
+    }
+    
+    if (results.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Vision mission item not found"
+      });
+    }
+    
+    res.json({
+      success: true,
+      data: results[0]
+    });
+  });
+};
+
+// Create new vision mission item
+export const createVisionMissionItem = (req, res) => {
+  const { icon, title, description, sort_order, is_active } = req.body;
+
+  // Validate required fields
+  if (!icon || !title || !description) {
+    return res.status(400).json({
+      success: false,
+      message: "Icon, title, and description are required"
+    });
+  }
+
+  const query = "INSERT INTO vision_mission_items (icon, title, description, sort_order, is_active) VALUES (?, ?, ?, ?, ?)";
+  
+  db1.query(query, [
+    icon,
+    title,
+    description,
+    sort_order || 0,
+    is_active !== undefined ? is_active : true
+  ], (err, results) => {
+    if (err) {
+      console.error("❌ Error creating vision mission item:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to create vision mission item",
+        error: err.message
+      });
+    }
+    
+    res.status(201).json({
+      success: true,
+      message: "Vision mission item created successfully",
+      data: {
+        id: results.insertId,
+        icon,
+        title,
+        description,
+        sort_order: sort_order || 0,
+        is_active: is_active !== undefined ? is_active : true
+      }
+    });
+  });
+};
+
+// Update vision mission item
+export const updateVisionMissionItem = (req, res) => {
+  const { id } = req.params;
+  const { icon, title, description, sort_order, is_active } = req.body;
+
+  // First, check if item exists
+  const checkQuery = "SELECT * FROM vision_mission_items WHERE id = ?";
+  
+  db1.query(checkQuery, [id], (err, results) => {
+    if (err) {
+      console.error("❌ Error fetching vision mission item for update:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch vision mission item",
+        error: err.message
+      });
+    }
+    
+    if (results.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Vision mission item not found"
+      });
+    }
+
+    // Update query
+    const updateQuery = `
+      UPDATE vision_mission_items 
+      SET icon = ?, title = ?, description = ?, sort_order = ?, is_active = ?
+      WHERE id = ?
+    `;
+    
+    const currentItem = results[0];
+    
+    db1.query(updateQuery, [
+      icon !== undefined ? icon : currentItem.icon,
+      title !== undefined ? title : currentItem.title,
+      description !== undefined ? description : currentItem.description,
+      sort_order !== undefined ? sort_order : currentItem.sort_order,
+      is_active !== undefined ? is_active : currentItem.is_active,
+      id
+    ], (err, updateResults) => {
+      if (err) {
+        console.error("❌ Error updating vision mission item:", err);
+        return res.status(500).json({
+          success: false,
+          message: "Failed to update vision mission item",
+          error: err.message
+        });
+      }
+      
+      res.json({
+        success: true,
+        message: "Vision mission item updated successfully",
+        data: {
+          id: parseInt(id),
+          icon: icon !== undefined ? icon : currentItem.icon,
+          title: title !== undefined ? title : currentItem.title,
+          description: description !== undefined ? description : currentItem.description,
+          sort_order: sort_order !== undefined ? sort_order : currentItem.sort_order,
+          is_active: is_active !== undefined ? is_active : currentItem.is_active
+        }
+      });
+    });
+  });
+};
+
+// Delete vision mission item
+export const deleteVisionMissionItem = (req, res) => {
+  const { id } = req.params;
+
+  const query = "DELETE FROM vision_mission_items WHERE id = ?";
+  
+  db1.query(query, [id], (err, results) => {
+    if (err) {
+      console.error("❌ Error deleting vision mission item:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to delete vision mission item",
+        error: err.message
+      });
+    }
+    
+    if (results.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Vision mission item not found"
+      });
+    }
+    
+    res.json({
+      success: true,
+      message: "Vision mission item deleted successfully"
+    });
+  });
+};
+
+// Update sort order for multiple items
+export const updateSortOrder = (req, res) => {
+  const { items } = req.body; // Array of { id, sort_order }
+
+  if (!Array.isArray(items)) {
+    return res.status(400).json({
+      success: false,
+      message: "Items array is required"
+    });
+  }
+
+  const promises = items.map(item => {
+    return new Promise((resolve, reject) => {
+      const query = "UPDATE vision_mission_items SET sort_order = ? WHERE id = ?";
+      db1.query(query, [item.sort_order, item.id], (err, results) => {
+        if (err) reject(err);
+        else resolve(results);
+      });
+    });
+  });
+
+  Promise.all(promises)
+    .then(() => {
+      res.json({
+        success: true,
+        message: "Sort order updated successfully"
+      });
+    })
+    .catch(err => {
+      console.error("❌ Error updating sort order:", err);
+      res.status(500).json({
+        success: false,
+        message: "Failed to update sort order",
+        error: err.message
+      });
+    });
+};

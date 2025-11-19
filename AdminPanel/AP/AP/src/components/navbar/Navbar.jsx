@@ -92,6 +92,12 @@ export default function Navbar() {
             >
               News & Events
             </Link>
+               <Link
+              to={"/dashboard/welcome-secton"}
+              className="px-3 py-2 rounded-lg hover:bg-blue-500 hover:shadow transition font-medium"
+            >
+              welcome section
+            </Link>
             <div className="relative">
               <div 
                 onClick={handleMoreClick} 
@@ -208,6 +214,15 @@ export default function Navbar() {
                     >
                      Crousel Images
                     </Link>
+
+                        <Link 
+                      to="/dashboard/vision" 
+                      onClick={handleLinkClick}
+                      className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition rounded-md"
+                    >
+                    vision
+                    </Link>
+                    
                   </div>
                 </div>
               )}

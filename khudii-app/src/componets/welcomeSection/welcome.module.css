@@ -53,7 +53,7 @@
 
 /* Video Placeholder Styles */
 .videoPlaceholder {
-  background-image: url('https://img.youtube.com/vi/hZyp2wOkqBs/hqdefault.jpg');
+  /* background-image: url('https://img.youtube.com/vi/hZyp2wOkqBs/hqdefault.jpg'); */
   background-size: cover;
   background-position: center;
   cursor: pointer;

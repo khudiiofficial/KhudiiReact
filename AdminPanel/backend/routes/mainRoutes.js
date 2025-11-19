@@ -109,8 +109,21 @@ getAllCarouselImages,
 getCarouselImageById,
 createCarouselImage,
 updateCarouselImage,
-deleteCarouselImage
+deleteCarouselImage,
+
+//welcome
+getWelcomeSection,
+updateWelcomeSection,
+
+//vision
+getAllVisionMissionItems,
+getVisionMissionItemById,
+createVisionMissionItem,
+updateVisionMissionItem,
+deleteVisionMissionItem,
+updateSortOrder
 } from "../controllers/mainController.js";
+
 
 const router = express.Router();
 
@@ -233,20 +246,22 @@ router.delete('/sectors/admin/permanent/:id',auth, permanentDeleteSector);
 
 
 // crousel-images
-
-
 router.get("/api/carousel",auth, getAllCarouselImages);
-
-
 router.get("/api/carousel/:id",auth, getCarouselImageById);
-
-
 router.post("/api/carousel",auth, createCarouselImage);
-
-
 router.put("/api/carousel/:id",auth, updateCarouselImage);
-
-
 router.delete("/api/carousel/:id",auth, deleteCarouselImage);
 
+
+//welcome
+router.get("/api/welcome", getWelcomeSection);
+router.put("/api/welcome", updateWelcomeSection);
+
+//vision
+router.get("/api/vision-mission", getAllVisionMissionItems);
+router.get("/api/vision-mission/:id", getVisionMissionItemById);
+router.post("/api/vision-mission", createVisionMissionItem);
+router.put("/api/vision-mission/:id", updateVisionMissionItem);
+router.delete("/api/vision-mission/:id", deleteVisionMissionItem);
+router.patch("/api/vision-mission/sort", updateSortOrder);
 export default router;
