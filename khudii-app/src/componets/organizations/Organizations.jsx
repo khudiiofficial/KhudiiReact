@@ -104,9 +104,9 @@ function OrganizationsSection() {
 // 2nd Code
 
 return (
-    <section className="bg-[#f8fafc]">
-      <div className="max-w-[1240px] mx-auto px-4">
-        <div className="flex flex-wrap items-center py-8">
+    <section className="bg-[#f8fafc] py-6 sm:pt-3 sm:pb-3 md:pt-3 md:pb-3 lg:pt-5 lg:pb-5">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-wrap items-center mb-8 sm:mb-10">
   {/* Left spacer — same width as right link */}
   <div className={`${styles.org_sec_left} flex-shrink-0 invisible`}>
     <span className="inline-block font-semibold text-[#E3001C]">
@@ -146,7 +146,6 @@ return (
           {organizations.length > 0 ? (
             organizations.map((org, idx) => (
               <article
-               onClick={() => nav(`/organization/${org.slug}`, { state: { id: org.id } })}
                 key={org.id || idx}
                 className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
                 role="article"
@@ -183,9 +182,9 @@ return (
                       : 'Empowering communities through sustainable initiatives.'}
                   </p>
 
-                  <div className="text-left">
+                  <div className="text-center">
                     <button
-                     
+                      onClick={() => nav(`/organization/${org.slug}`, { state: { id: org.id } })}
                       className="inline-flex items-center justify-center rounded-[25px] w-50 sm:w-auto px-5 py-2.5 text-sm font-medium bg-[#E3001C] text-white transition-all duration-300 focus:outline-none"
                       aria-label={`Explore ${org.name}`}
                     >
