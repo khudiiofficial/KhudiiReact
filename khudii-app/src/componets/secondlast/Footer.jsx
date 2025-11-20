@@ -33,7 +33,7 @@ const Footer = () => {
                   <span className="contact-icon">
                     <i className="fas fa-map-marker-alt"></i>
                   </span>
-                  <a target='blank' href="https://maps.app.goo.gl/epgAPPSkHw5ai2hp9"><span className="contact-text">Lahore, Pakistan</span></a>
+                  <span className="contact-text"> </span><a target='blank' href="https://maps.app.goo.gl/epgAPPSkHw5ai2hp9"><span className="contact-text">Lahore, Pakistan</span></a>
                   </a>
                 </li>
                 <li className="contact-item">

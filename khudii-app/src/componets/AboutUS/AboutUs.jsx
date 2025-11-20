@@ -322,7 +322,7 @@
 
 // export default AboutUs;
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './AboutUs.module.css';
 
 const AboutUs = () => {
@@ -390,37 +390,28 @@ const AboutUs = () => {
     'If you are a welfare organization, Khudii gives you a voice, a stage, and a community that believes in you.',
   ];
 
-  // Scroll fade-in
-  const sectionRefs = useRef([]);
+  // Optional: Use state to trigger initial render animation (if needed for hydration)
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add(styles.visible);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-
-    sectionRefs.current.forEach((ref) => ref && observer.observe(ref));
-    return () => observer.disconnect();
+    setMounted(true);
   }, []);
+
+  // Apply fade-in class after mount (optional — pure CSS version below also works without this)
+  const sectionClass = `${styles.section} ${mounted ? styles.fadeIn : ''}`;
 
   return (
     <div className={styles.aboutUs}>
       {/* HERO */}
-      <section className={styles.hero} ref={(el) => sectionRefs.current.push(el)}>
+      <section className={`${styles.hero} ${styles.fadeIn}`}>
         <div className={styles.container}>
-          <h1 className={styles.heroTitle}>WHO WE ARE</h1>
           <div className={styles.heroGrid}>
             <div className={styles.heroText}>
-              <p>
+              <h2 className={styles.heroTitle}>WHO WE ARE</h2>
+              <p className={styles.paragraph_who}>
                 Khudii is not just an organization — <strong>it is a dream turned into reality.</strong> Born in Lahore in <strong>2024</strong>, Khudii is <strong>Pakistan&apos;s first digital hub for welfare organizations.</strong> It was created with one purpose: to ensure that every act of kindness finds a stage, and every welfare effort finds the support it deserves.
               </p>
-              <p>
+              <p className={styles.paragraph_who}>
                 Across Pakistan, thousands of welfare groups work tirelessly to bring hope — some provide food, others run schools, some build wells, and others bring healthcare to those who cannot afford it. Yet, many of these efforts remain invisible, hidden in the shadows. Donors do not always know where to give, and volunteers often do not know where to serve. Khudii steps in to <strong>connect the dots.</strong> We give these organizations a voice, a platform, and a chance to shine — so their impact can grow, and so no life in need is left behind.
               </p>
             </div>
@@ -440,7 +431,7 @@ const AboutUs = () => {
       <hr className={styles.divider} />
 
       {/* DREAM & PURPOSE */}
-      <section className={styles.dream} ref={(el) => sectionRefs.current.push(el)}>
+      <section className={`${styles.dream} ${styles.fadeIn}`}>
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>Our Dream & Purpose</h2>
           <p className={styles.paragraph}>
@@ -465,7 +456,7 @@ const AboutUs = () => {
       <hr className={styles.divider} />
 
       {/* IMPACT */}
-      <section className={styles.impact} ref={(el) => sectionRefs.current.push(el)}>
+      <section className={`${styles.impact} ${styles.fadeIn}`}>
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>Our Impact</h2>
           <p className={styles.paragraph}>
@@ -483,19 +474,19 @@ const AboutUs = () => {
       <hr className={styles.divider} />
 
       {/* CEO */}
-      <section className={styles.ceo} ref={(el) => sectionRefs.current.push(el)}>
+      <section className={`${styles.ceo} ${styles.fadeIn}`}>
         <div className={styles.container}>
           <div className={styles.ceoGrid}>
             <div className={styles.ceoText}>
               <h2 className={styles.ceoName}>Amir Saeed Bhatti</h2>
               <p className={styles.ceoTitle}>(C.E.O & Founder)</p>
-              <p>
+              <p className={styles.paragraph}>
                 <strong>Allah (Subhanahu Wa Ta'ala)</strong> opened my heart to his love by enabling me to love his creation and then blessed me even more by equipping me with tools to serve those who are around me. This is what I consider the purpose of my life and this is the very core of my identity. This empathy and self-realization were the very things that enabled me to become one of the core founders and members of <strong>Taryaq</strong> Welfare Organization founded in <strong>1992</strong>.
               </p>
-              <p>
+              <p className={styles.paragraph}>
                 This beautiful journey of service and gratitude has brought us to yet another milestone which we have titled as <strong>"KHUDII"</strong>. This project thus is not a novelty but is an offshoot of that very empathy and passion to serve mankind which my <strong>Allah (Subhanahu Wa Ta'ala)</strong> has blessed me with. The vision is the same, yet the only difference lies in the way the project has been structured.
               </p>
-              <p>
+              <p className={styles.paragraph}>
                 A new responsibility awaits me. A new vision has taken hold of me. And I ardently believe that this journey is going to be so beautiful and gratifying that the journey itself will end up being the destination.
               </p>
             </div>
@@ -509,7 +500,7 @@ const AboutUs = () => {
       <hr className={styles.divider} />
 
       {/* TEAM INTRO */}
-      <section className={styles.teamIntro} ref={(el) => sectionRefs.current.push(el)}>
+      <section className={`${styles.teamIntro} ${styles.fadeIn}`}>
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>The People Behind Khudii</h2>
           <p className={styles.paragraph}>
@@ -527,12 +518,11 @@ const AboutUs = () => {
       <hr className={styles.divider} />
 
       {/* EXPERT TEAM */}
-      <section className={styles.team} ref={(el) => sectionRefs.current.push(el)}>
+      <section className={`${styles.team} ${styles.fadeIn}`}>
         <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>EXPERT TEAM</h2>
+          <h2 className={styles.sectionTitle}>Expert Team</h2>
           <div className={styles.teamGrid}>
             {teamMembers.map((member) => (
-              
               <div key={member.id} className={styles.teamCard}>
                 <img src={member.image} alt={member.name} className={styles.teamImg} />
                 <div className={styles.teamInfo}>
@@ -555,10 +545,10 @@ const AboutUs = () => {
 
       <hr className={styles.divider} />
 
-      {/* JOIN US – NOW FULLY VISIBLE */}
-      <section className={styles.joinSection} ref={(el) => sectionRefs.current.push(el)}>
+      {/* JOIN US */}
+      <section className={`${styles.joinSection} ${styles.fadeIn}`}>
         <div className={styles.container}>
-          <h2 className={styles.joinTitle}>Join Us</h2>
+          <h2 className={styles.sectionTitle}>Join Us</h2>
           <div className={styles.joinGrid}>
             <div className={styles.joinText}>
               <p className={styles.joinIntro}>
@@ -578,15 +568,49 @@ const AboutUs = () => {
                 <strong>Khudii — where compassion meets connection, and connection creates change.</strong>
               </p>
             </div>
-            <div className={styles.joinVideoWrapper}>
-              <iframe
+            {/* <div className={styles.joinVideoWrapper}>
+             <div>   
+              <button
+                      className="inline-flex items-center justify-center rounded-[25px] w-50 sm:w-auto px-5 py-2.5 text-sm font-medium bg-[#E3001C] text-white transition-all duration-300 focus:outline-none"
+                      aria-label={`Explore Volunteer`}
+                    >
+                      Join Us as Volunteer 
+                    </button>
+                    </div>
+                    <br />
+                <div>
+    <iframe
                 src="https://www.youtube.com/embed/Ez4zVQfc7Nk"
                 title="Join Khudii"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 className={styles.video}
               ></iframe>
-            </div>
+                </div>
+          
+                 
+            </div> */}
+             <div className={styles.joinContentWrapper}>
+    {/* Video Wrapper (now safe from overlap) */}
+  <div className={styles.joinVideoWrapper}>
+    <iframe
+      src="https://www.youtube.com/embed/Ez4zVQfc7Nk"
+      title="Join Khudii"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+      className={styles.video}
+    ></iframe>
+  </div>
+{/* Centered Button */}
+  <div className={styles.joinButtonContainer}>
+    <button
+      className="inline-flex items-center justify-center rounded-[25px] w-full sm:w-auto px-6 py-3 text-sm font-medium bg-[#E3001C] text-white transition-all duration-300 hover:bg-[#c10017] focus:outline-none shadow-md hover:shadow-lg"
+      aria-label="Join Us as Volunteer"
+    >
+      Join Us as Volunteer
+    </button>
+  </div>
+</div>
           </div>
         </div>
       </section>

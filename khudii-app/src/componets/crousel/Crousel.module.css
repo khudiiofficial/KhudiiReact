@@ -214,21 +214,23 @@ height: 12rem;
 } */
 
 
-
+/* 2nd Code */
 .carouselSection {
   width: 100%;
 }
-
+ 
 .carouselContainer {
-  height: 17rem;
+  height: 18rem;
   position: relative;
   overflow: hidden;
 }
-
+ 
+ 
+ 
 .slide {
   position: absolute;
   top: 0;
-  height: 17rem;
+  height: 18rem;
   left: 0;
   right: 0;
   bottom: 0;
@@ -236,21 +238,47 @@ height: 12rem;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  /* Ensure images are properly sized */
-  width: 100%;
-  object-fit: cover;
+   width: 100%;
+ 
 }
-
+ 
+@media (max-width:800px){
+  .slide{
+height: 12rem;
+   width: 100%;
+  }
+ 
+  .carouselContainer{
+height: 12rem;
+  }
+}
+ 
+ 
+@media (max-width:600px){
+  .slide{
+    width: 100%;
+height: 12rem;
+object-fit: cover;
+right: 50%;
+object-position: 0px 0px;
+  }
+ 
+  .carouselContainer{
+height: 12rem;
+  }
+}
+ 
+ 
 .slideActive {
   opacity: 1;
   z-index: 10;
 }
-
+ 
 .slideInactive {
   opacity: 0;
   z-index: 0;
 }
-
+ 
 .overlay {
   position: absolute;
   top: 0;
@@ -260,7 +288,7 @@ height: 12rem;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 0;
 }
-
+ 
 .controls {
   max-width: 72rem;
   margin-left: auto;
@@ -273,7 +301,7 @@ height: 12rem;
   justify-content: center;
   gap: 0.75rem;
 }
-
+ 
 .indicator {
   width: 2.5rem;
   height: 0.5rem;
@@ -284,44 +312,11 @@ height: 12rem;
   padding: 0 !important;
   margin: 0 !important;
 }
-
+ 
 .indicatorActive {
   background-color: #e11d48;
 }
-
+ 
 .indicatorInactive {
   background-color: #d1d5db;
-}
-
-@media (min-width:1540px){
-  .slide{
-    height: 21rem;
-  }
-
-  .carouselContainer{
-    height: 21rem;
-  }
-}
-
-@media (max-width:800px){
-  .slide{
-    height: 12rem;
-  }
-
-  .carouselContainer{
-    height: 12rem;
-  }
-}
-
-@media (max-width:600px){
-  .slide{
-    height: 12rem;
-    object-fit: cover;
-    right: 50%;
-    object-position: 0px 0px;
-  }
-
-  .carouselContainer{
-    height: 12rem;
-  }
 }
