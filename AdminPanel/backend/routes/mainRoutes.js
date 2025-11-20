@@ -121,9 +121,20 @@ getVisionMissionItemById,
 createVisionMissionItem,
 updateVisionMissionItem,
 deleteVisionMissionItem,
-updateSortOrder
-} from "../controllers/mainController.js";
+updateSortOrder,
 
+//stories description
+getStoriesData,
+updateStoriesData,
+
+//event description
+getEventData,
+updateEventData,
+
+//telephone
+getTelephoneData,
+updateTelephoneData
+} from "../controllers/mainController.js";
 
 const router = express.Router();
 
@@ -254,14 +265,28 @@ router.delete("/api/carousel/:id",auth, deleteCarouselImage);
 
 
 //welcome
-router.get("/api/welcome", getWelcomeSection);
-router.put("/api/welcome", updateWelcomeSection);
+router.get("/api/welcome",auth, getWelcomeSection);
+router.put("/api/welcome",auth, updateWelcomeSection);
 
 //vision
-router.get("/api/vision-mission", getAllVisionMissionItems);
-router.get("/api/vision-mission/:id", getVisionMissionItemById);
-router.post("/api/vision-mission", createVisionMissionItem);
-router.put("/api/vision-mission/:id", updateVisionMissionItem);
-router.delete("/api/vision-mission/:id", deleteVisionMissionItem);
-router.patch("/api/vision-mission/sort", updateSortOrder);
+router.get("/api/vision-mission",auth, getAllVisionMissionItems);
+router.get("/api/vision-mission/:id",auth, getVisionMissionItemById);
+router.post("/api/vision-mission",auth, createVisionMissionItem);
+router.put("/api/vision-mission/:id",auth, updateVisionMissionItem);
+router.delete("/api/vision-mission/:id",auth, deleteVisionMissionItem);
+router.patch("/api/vision-mission/sort",auth, updateSortOrder);
+
+
+//stories descrition
+router.get("/api/stories",auth, getStoriesData);
+router.put("/api/stories",auth, updateStoriesData);
+
+
+//event description
+router.get("/api/events",auth, getEventData);
+router.put("/api/events",auth, updateEventData);
+
+
+router.get("/api/telephone", auth,getTelephoneData);
+router.put("/api/telephone",auth, updateTelephoneData);
 export default router;

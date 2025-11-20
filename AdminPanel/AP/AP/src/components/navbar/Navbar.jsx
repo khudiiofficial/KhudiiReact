@@ -1,36 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { resetUser } from "../../redux/userslice";
+
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 
-export default function Navbar() {
+export default function Sidebar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [show, setShow] = useState(false);
+  const location = useLocation();
+  const [showMore, setShowMore] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const auth = useSelector((state) => state.users.auth);
-  
-  useEffect(() => {
-    const handleClick = () => {
-      setShow(false);
-    };
-
-    document.addEventListener('click', handleClick);
-
-    return () => {
-      document.removeEventListener('click', handleClick);
-    };
-  }, []);
-
-  const handleMoreClick = (e) => {
-    e.stopPropagation(); // Prevent event from bubbling to document
-    setShow(!show);
-  };
-
-  const handleLinkClick = () => {
-    setShow(false);
-  };
 
   const handleLogout = async () => {
     try {
@@ -49,205 +31,125 @@ export default function Navbar() {
     }
   };
 
+  const isActiveLink = (path) => {
+    return location.pathname === path;
+  };
+
+  const mainLinks = [
+    { path: "/dashboard/OrganizationPage", label: "Organizations" },
+    { path: "/dashboard/BlogPage", label: "Blogs" },
+    { path: "/dashboard/createorg", label: "Add Organization" },
+    { path: "/dashboard/create-document", label: "Add Blog" },
+    { path: "/dashboard/NewsEvents", label: "News & Events" },
+    { path: "/dashboard/welcome-secton", label: "Welcome Section" },
+    { path: "/dashboard/eventDescription", label: "Event Description" },
+     { path: "/dashboard/SuccessStories", label: "Success Stories" },
+    { path: "/dashboard/Vedios", label: "Videos" },
+    { path: "/dashboard/Inquiries", label: "Organization Inquiries" },
+    { path: "/dashboard/Donation", label: "Donations" },
+    { path: "/dashboard/Stories", label: "Contributed Stories" },
+    { path: "/dashboard/JobApplication", label: "Job Applications" },
+    { path: "/dashboard/Voulenteer", label: "Volunteers" },
+    { path: "/dashboard/Contacts", label: "Contacts" },
+    { path: "/dashboard/Topbar", label: "Top Bar" },
+    { path: "/dashboard/Certifications", label: "Certifications" },
+    { path: "/dashboard/Testimonials", label: "Testimonials" },
+    { path: "/dashboard/sectors", label: "Sectors" },
+    { path: "/dashboard/crousel-images", label: "Carousel Images" },
+    { path: "/dashboard/vision", label: "Vision" },
+    { path: "/dashboard/storiesDescription", label: "Home Page Story Description" },
+  ];
+
+  // const moreLinks = [
+  //   { path: "/dashboard/SuccessStories", label: "Success Stories" },
+  //   { path: "/dashboard/Vedios", label: "Videos" },
+  //   { path: "/dashboard/Inquiries", label: "Organization Inquiries" },
+  //   { path: "/dashboard/Donation", label: "Donations" },
+  //   { path: "/dashboard/Stories", label: "Contributed Stories" },
+  //   { path: "/dashboard/JobApplication", label: "Job Applications" },
+  //   { path: "/dashboard/Voulenteer", label: "Volunteers" },
+  //   { path: "/dashboard/Contacts", label: "Contacts" },
+  //   { path: "/dashboard/Topbar", label: "Top Bar" },
+  //   { path: "/dashboard/Certifications", label: "Certifications" },
+  //   { path: "/dashboard/Testimonials", label: "Testimonials" },
+  //   { path: "/dashboard/sectors", label: "Sectors" },
+  //   { path: "/dashboard/crousel-images", label: "Carousel Images" },
+  //   { path: "/dashboard/vision", label: "Vision" },
+  //   { path: "/dashboard/storiesDescription", label: "Home Page Story Description" },
+  // ];
+
+  if (!auth) return null;
+
   return (
-    <>
-      {auth ? (
-        <nav className="bg-blue-600 text-white px-6 py-4 flex justify-between items-center shadow-md">
-          {/* Left: Brand */}
+    <div 
+      className={`bg-blue-600 text-white transition-all duration-300 ${
+        isCollapsed ? "w-20" : "w-64"
+      } flex flex-col shadow-lg`}
+    >
+      {/* Header */}
+      <div className="p-4 border-b border-blue-500 flex items-center justify-between">
+        {!isCollapsed && (
           <div className="text-lg font-bold tracking-wide">
             <Link to={'/dashboard'}>Admin Panel</Link>
           </div>
+        )}
+        <button
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="p-2 rounded-lg hover:bg-blue-500 transition"
+        >
+          {isCollapsed ? "→" : "←"}
+        </button>
+      </div>
 
-          {/* Middle: Navigation Links */}
-          <div className="flex gap-6">
+      {/* Navigation Links */}
+      <div className="flex-1 overflow-y-auto py-4">
+        <nav className="space-y-1 px-3">
+          {/* Main Links */}
+          {mainLinks.map((link) => (
             <Link
-              to={"/dashboard/OrganizationPage"}
-              className="px-3 py-2 rounded-lg hover:bg-blue-500 hover:shadow transition font-medium"
+              key={link.path}
+              to={link.path}
+              className={`flex items-center px-3 py-3 rounded-lg transition font-medium ${
+                isActiveLink(link.path)
+                  ? "bg-blue-700 text-white shadow-inner"
+                  : "hover:bg-blue-500 hover:shadow"
+              } ${isCollapsed ? "justify-center" : ""}`}
+              title={isCollapsed ? link.label : ""}
             >
-              Organizations
-            </Link>
-            <Link
-              to={"/dashboard/BlogPage"}
-              className="px-3 py-2 rounded-lg hover:bg-blue-500 hover:shadow transition font-medium"
-            >
-              Blogs
-            </Link>
-
-            <Link
-              to={"/dashboard/createorg"}
-              className="px-3 py-2 rounded-lg hover:bg-blue-500 hover:shadow transition font-medium"
-            >
-              Add organization
-            </Link>
-            <Link
-              to={"/dashboard/create-document"}
-              className="px-3 py-2 rounded-lg hover:bg-blue-500 hover:shadow transition font-medium"
-            >
-              Add Blog
-            </Link>
-
-   <Link
-              to={"/dashboard/NewsEvents"}
-              className="px-3 py-2 rounded-lg hover:bg-blue-500 hover:shadow transition font-medium"
-            >
-              News & Events
-            </Link>
-               <Link
-              to={"/dashboard/welcome-secton"}
-              className="px-3 py-2 rounded-lg hover:bg-blue-500 hover:shadow transition font-medium"
-            >
-              welcome section
-            </Link>
-            <div className="relative">
-              <div 
-                onClick={handleMoreClick} 
-                className="flex cursor-pointer items-center justify-center px-3 py-2 rounded-lg hover:bg-blue-500 hover:shadow transition font-medium"
-              >
-                More
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  className="ml-2 h-4 w-4" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
-                  stroke="currentColor" 
-                  strokeWidth={2}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-              
-              {show && (
-                <div 
-                  className="absolute top-full right-0 mt-2 w-48 origin-top-right rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-50"
-                  onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside dropdown
-                >
-                  <div className="py-2">
-                    <Link 
-                      to="dashboard/SuccessStories" 
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition rounded-md"
-                    >
-                      Success Stories
-                    </Link>
-                    <Link 
-                      to="/dashboard/Vedios" 
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition rounded-md"
-                    >
-                      Videos
-                    </Link>
-                    <Link 
-                      to="/dashboard/Inquiries" 
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition rounded-md"
-                    >
-                      Organization Inquiries
-                    </Link>
-                    <Link 
-                      to="/dashboard/Donation" 
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition rounded-md"
-                    >
-                      Donations
-                    </Link>
-                    <Link 
-                      to="/dashboard/Stories" 
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition rounded-md"
-                    >
-                      Contributed Stories
-                    </Link>
-                    <Link 
-                      to="/dashboard/JobApplication" 
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition rounded-md"
-                    >
-                      Job Applications
-                    </Link>
-                    <Link 
-                      to="/dashboard/Voulenteer" 
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition rounded-md"
-                    >
-                      Volunteers
-                    </Link>
-                    <Link 
-                      to="/dashboard/Contacts" 
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition rounded-md"
-                    >
-                      Contacts
-                    </Link>
-                       <Link 
-                      to="/dashboard/Topbar" 
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition rounded-md"
-                    >
-                      Top Bar
-                    </Link>
-                       <Link 
-                      to="/dashboard/Certifications" 
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition rounded-md"
-                    >
-                      Certifications
-                    </Link>
-                       <Link 
-                      to="/dashboard/Testimonials" 
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition rounded-md"
-                    >
-                      Testimonials
-                    </Link>
-
-                       <Link 
-                      to="/dashboard/sectors" 
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition rounded-md"
-                    >
-                      Sectors
-                    </Link>
-                        <Link 
-                      to="/dashboard/crousel-images" 
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition rounded-md"
-                    >
-                     Crousel Images
-                    </Link>
-
-                        <Link 
-                      to="/dashboard/vision" 
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition rounded-md"
-                    >
-                    vision
-                    </Link>
-                    
-                  </div>
-                </div>
+              {isCollapsed ? (
+                <span className="text-xs font-bold">{link.label.charAt(0)}</span>
+              ) : (
+                link.label
               )}
-            </div>
-          </div>
-         
-          {/* Right: Change Password & Logout Buttons */}
-          <div className="flex gap-3">
-            <button
-              onClick={() => navigate("/dashboard/Profile")}
-              className="bg-white text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition shadow"
-            >
-              Change Profile
-            </button>
-            <button
-              onClick={handleLogout}
-              className="bg-white text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition shadow"
-            >
-              Logout
-            </button>
-          </div>
+            </Link>
+          ))}
+
+      
+  
         </nav>
-      ) : (
-        ""
-      )}
-    </>
+      </div>
+
+      {/* Footer Actions */}
+      <div className="p-4 border-t border-blue-500 space-y-2">
+        <button
+          onClick={() => navigate("/dashboard/Profile")}
+          className={`w-full bg-white text-blue-600 px-3 py-2 rounded-lg font-medium hover:bg-gray-100 transition shadow ${
+            isCollapsed ? "text-xs" : ""
+          }`}
+          title={isCollapsed ? "Profile" : ""}
+        >
+          {isCollapsed ? "👤" : "Change Profile"}
+        </button>
+        <button
+          onClick={handleLogout}
+          className={`w-full bg-white text-blue-600 px-3 py-2 rounded-lg font-medium hover:bg-gray-100 transition shadow ${
+            isCollapsed ? "text-xs" : ""
+          }`}
+          title={isCollapsed ? "Logout" : ""}
+        >
+          {isCollapsed ? "🚪" : "Logout"}
+        </button>
+      </div>
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-/* Home Page CSS Protection against Vapi Widget
+ /* Home Page CSS Protection against Vapi Widget */
 .carouselSection {
   width: 100%;
 }
@@ -22,13 +22,14 @@
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-
+   width: 100%;
 
 }
 
 @media (max-width:800px){
   .slide{
 height: 12rem;
+   width: 100%;
   }
 
   .carouselContainer{
@@ -39,6 +40,7 @@ height: 12rem;
 
 @media (max-width:600px){
   .slide{
+    width: 100%;
 height: 12rem;
 object-fit: cover;
 right: 50%;
@@ -105,7 +107,7 @@ height: 12rem;
 .indicatorInactive {
   background-color: #d1d5db; 
 }
- */
+ 
 
 
 
@@ -211,7 +213,24 @@ height: 12rem;
 
 .indicatorInactive {
   background-color: #d1d5db;
-} */
+} 
+
+
+
+ */
+
+
+
+
+
+
+
+
+
+
+/* 
+
+
 
 
 /* 2nd Code */
@@ -238,8 +257,14 @@ height: 12rem;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+<<<<<<< HEAD
    width: 100%;
  
+=======
+ 
+  width: 100%;
+  object-fit: cover;
+>>>>>>> 592b394 (20/11/2025)
 }
  
 @media (max-width:800px){
@@ -319,4 +344,41 @@ height: 12rem;
  
 .indicatorInactive {
   background-color: #d1d5db;
+<<<<<<< HEAD
 }
+=======
+}
+
+@media (min-width:1540px){
+  .slide{
+    height: 21rem;
+  }
+
+  .carouselContainer{
+    height: 21rem;
+  }
+}
+
+@media (max-width:800px){
+  .slide{
+    height: 12rem;
+  }
+
+  .carouselContainer{
+    height: 12rem;
+  }
+}
+
+@media (max-width:600px){
+  .slide{
+    height: 12rem;
+    object-fit: cover;
+    right: 50%;
+    object-position: 0px 0px;
+  }
+
+  .carouselContainer{
+    height: 12rem;
+  }
+} */
+>>>>>>> 592b394 (20/11/2025)

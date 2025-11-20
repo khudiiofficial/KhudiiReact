@@ -136,7 +136,7 @@ if(res.status===200){
         title="Share Your Story - Khudii Pakistan | Contribute Your Experience"
         description="Share your inspiring story with Khudii - Pakistan's digital welfare platform. Contribute as an individual or organization and inspire others with your journey of making a difference."
         keywords="share story khudii, contribute story pakistan, welfare stories, inspirational stories, community experiences, khudii stories, personal journey, organization stories, social impact stories"
-        url="https://new.khudii.com/contribute-your-story"
+        url="https://khudii.com/contribute-your-story"
         type="website"
       />
 

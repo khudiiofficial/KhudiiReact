@@ -66,7 +66,7 @@ if (error) return (
       : "welfare organizations, verified charities, partner organizations, community support pakistan"
   }
   image={org?.introductory_image_path || "/Khudii.webp"}
-  url={`https://new.khudii.com/organization/${org?.slug || slug}`}
+  url={`https://khudii.com/organization/${org?.slug || slug}`}
 />
 <>
   <Crousel key={slug}/>

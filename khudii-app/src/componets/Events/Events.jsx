@@ -270,6 +270,8 @@ import axios from 'axios'
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 const Events = () => {
   const [events,setevents]=useState([])
+  const [items,setitems]=useState({})
+  
   useEffect(()=>{
 const callevents=async ()=>{
   try {
@@ -282,6 +284,21 @@ const callevents=async ()=>{
   }
 }
 callevents()
+  },[])
+
+  useEffect(()=>{
+const call=async()=>{
+  try {
+    const res=await axios.get(`${APIPath}/api/events`)
+    if(res.status===200){
+    setitems(res.data.data)
+    
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+call();
   },[])
   // const events = [
   //   {
@@ -598,7 +615,7 @@ return (
         {/* Nasf e Mutmainna Img */}
         <div className="max-w-[3/4] lg:col-span-1 order-1 lg:order-2 flex justify-center lg:pt-4">
               <img 
-                src="\نفس مطمئنہ.png" 
+                src={items.imagepath1}
                 alt="Community members receiving support from EHDI Foundation" 
                 className="w-full max-w-[500px] h-auto duration-500"
                 loading="lazy"
@@ -611,7 +628,8 @@ return (
             <div className="max-w-[100%] lg:col-span-1 order-2 lg:order-1">
               <div className="bg-gradient-to-r from-gray-50 to-white p-5 sm:p-6 md:p-4 rounded-xl border-l-4 border-[#E3001C] shadow-sm hover:shadow-md transition-shadow duration-300">
                 <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-light text-gray-800 leading-relaxed mb-5 break-words text-justify">
-                  We empower communities by providing essential services in health, education, disability support, water access, thalassemia care, and food security.
+                  {/* We empower communities by providing essential services in health, education, disability support, water access, thalassemia care, and food security. */}
+             {items.description}
                 </p>
                 <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 justify-center xs:justify-start">
                   <Link to="/contribute-your-story/">
@@ -643,7 +661,7 @@ return (
             {/* Image */}
             <div className="lg:col-span-1 order-1 lg:order-2 flex justify-center">
               <img 
-                src="/ehdi-foundation-4-768x576.jpg.webp" 
+                src={items.imagepath2}
                 alt="Community members receiving support from EHDI Foundation" 
                 className="w-full max-w-[450px] h-auto rounded-xl shadow-md transform hover:scale-105 transition-transform duration-500"
                 loading="lazy"

@@ -9,7 +9,7 @@ const Testimonial = () => {
         title="Client Testimonials - Khudii Pakistan | Real Stories & Reviews"
         description="Read and watch authentic client testimonials and feedback about Khudii's welfare services. Hear from schools, organizations, and communities we've helped across Pakistan."
         keywords="khudii testimonials, client feedback, welfare organization reviews, pakistan charity testimonials, khudii client stories, donor testimonials, community feedback, social work reviews"
-        url="https://new.khudii.com/testimonials"
+        url="https://khudii.com/testimonials"
         type="website"
       />
        <PageHeader 

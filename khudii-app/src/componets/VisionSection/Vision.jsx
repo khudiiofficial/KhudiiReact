@@ -34,29 +34,44 @@
 // 2nd Code
 import React from 'react';
 import styles from './vision.module.css'
-
+import { useState,useEffect } from 'react';
+import axios from 'axios'
+const APIPath = import.meta.env.VITE_BACKEND_PATH;
 const Vision = () => {
-  const items = [
-    {
-      icon: 'fa-solid fa-crosshairs',
-      title: 'Vision',
-      description:
-        'To build Pakistan’s largest digital home for welfare — a hub where organizations, donors, volunteers, and communities come together seamlessly to create lasting change and uplift every vulnerable life with dignity and hope.',
-    },
-    {
-      icon: 'fa-solid fa-chart-area',
-      title: 'Goal',
-      description:
-        'To actively identify, support, and amplify credible welfare organizations across Pakistan—building bridges between changemakers and supporters, and laying the digital foundation to empower 25,000 model initiatives through strategic connection, visibility, and collaboration.',
-    },
-    {
-      icon: 'fa-solid fa-magnifying-glass',
-      title: 'Mission',
-      description:
-        'To breathe life into Pakistan’s welfare ecosystem by shining a light on credible organizations, giving them the visibility they deserve, and connecting them with donors, volunteers, and professionals so their impact can reach further and touch more lives.',
-    },
-  ];
-
+  const [items,setitems] =useState([
+    // {
+    //   icon: 'fa-solid fa-crosshairs',
+    //   title: 'Vision',
+    //   description:
+    //     'To build Pakistan’s largest digital home for welfare — a hub where organizations, donors, volunteers, and communities come together seamlessly to create lasting change and uplift every vulnerable life with dignity and hope.',
+    // },
+    // {
+    //   icon: 'fa-solid fa-chart-area',
+    //   title: 'Goal',
+    //   description:
+    //     'To actively identify, support, and amplify credible welfare organizations across Pakistan—building bridges between changemakers and supporters, and laying the digital foundation to empower 25,000 model initiatives through strategic connection, visibility, and collaboration.',
+    // },
+    // {
+    //   icon: 'fa-solid fa-magnifying-glass',
+    //   title: 'Mission',
+    //   description:
+    //     'To breathe life into Pakistan’s welfare ecosystem by shining a light on credible organizations, giving them the visibility they deserve, and connecting them with donors, volunteers, and professionals so their impact can reach further and touch more lives.',
+    // }
+  ])
+  useEffect(()=>{
+const call=async()=>{
+  try {
+    const res=await axios.get(`${APIPath}/api/vision-mission`)
+    if(res.status===200){
+    setitems(res.data.data)
+    
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+call();
+  },[])
   return (
     <section className="py-6 sm:py-6 md:py-6">
       <div className="max-w-[1240px] mx-auto px-2 sm:px-3">

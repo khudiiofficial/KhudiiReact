@@ -72,7 +72,7 @@ export default function BlogDetails() {
             : "khudii blog, community insights, welfare articles, social impact"
         }
         image={blog?.Image || "/Khudii.webp"}
-        url={`https://new.khudii.com/Blog/${blog.slug || slug}`}
+        url={`https://khudii.com/Blog/${blog.slug || slug}`}
         type="article"
       />
     

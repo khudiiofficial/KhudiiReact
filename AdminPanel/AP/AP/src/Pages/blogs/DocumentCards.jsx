@@ -20,7 +20,7 @@ export default function DocumentCards() {
     axios
       .get(`${APIPath}/api/documents`,{withCredentials:true})
       .then((res) => {
-        setDocuments(res.data);
+        setDocuments(res.data.reverse());
         setError(null);
       })
       .catch((err) => {

@@ -1,5 +1,5 @@
 import express from 'express'
-import { createContactInquiry,AddVolunteer, getAllBlogs, getAllorganization, getSmilarItems, getSocials, getSpecificItem,saveContacts, ApplyForJob, ContributeStory, Donation, getsuccessstories, getAllVideos,getAllTopbarContents,getAllCertifications,getAllTestimonials,getAllEvents,getAllSectors,getCBN,getAllCarouselImages } from '../controller/index.js';
+import { createContactInquiry,AddVolunteer, getAllBlogs, getAllorganization, getSmilarItems, getSocials, getSpecificItem,saveContacts, ApplyForJob, ContributeStory, Donation, getsuccessstories, getAllVideos,getAllTopbarContents,getAllCertifications,getAllTestimonials,getAllEvents,getAllSectors,getCBN,getAllCarouselImages,getWelcomeSection,getAllVisionMissionItems,getStoriesData,getEventData,getTelephoneData } from '../controller/index.js';
 import { getAllIcons } from '../controller/index.js';
 import { getSpecificBlog } from '../controller/index.js';
 import { itemByCategory } from '../controller/index.js';
@@ -29,4 +29,9 @@ Router.get('/events',getAllEvents);
 Router.get('/getAllSectors',getAllSectors)
 Router.get('/CBN/:slug',getCBN)
 Router.get('/getCrouselimages',getAllCarouselImages)
+Router.get("/api/welcome", getWelcomeSection);
+Router.get("/api/vision-mission", getAllVisionMissionItems);
+Router.get("/api/stories", getStoriesData);
+Router.get("/api/events", getEventData);
+Router.get("/api/telephone",getTelephoneData);
 export default Router

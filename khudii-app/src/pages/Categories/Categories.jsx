@@ -96,7 +96,7 @@ func()
             title={cat.meta_title}
             description={cat.meta_description}
             keywords={cat.meta_keywords}
-            url={`https://new.khudii.com/Categories/${cat.name}`}
+            url={`https://khudii.com/Categories/${cat.name}`}
             type="website"
         />
         

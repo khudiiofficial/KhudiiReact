@@ -9,7 +9,7 @@ const About = () => {
         title="About Khudii - Our Mission, Team & Impact | Pakistan's Digital Welfare Platform"
         description="Learn about Khudii - Pakistan's first digital welfare hub founded in 2024. Meet our expert team led by Amir Saeed Bhatti, discover our mission, and see how we connect donors with 75+ verified organizations across health, education, and community support sectors."
         keywords="about khudii, khudii mission, khudii team, amir saeed bhatti, welfare organization pakistan, digital charity platform, khudii founders, our impact, volunteer opportunities, donor platform, khudii about us"
-        url="https://new.khudii.com/about-khudii"
+        url="https://khudii.com/about-khudii"
         image="/Khudii.webp"
       />
     <PageHeader  title="About"

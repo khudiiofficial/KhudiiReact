@@ -5983,3 +5983,509 @@ export const updateSortOrder = (req, res) => {
       });
     });
 };
+
+
+
+
+
+
+// Get stories data (single instance)
+export const getStoriesData = (req, res) => {
+  const query = "SELECT * FROM stories_description LIMIT 1";
+  
+  db1.query(query, (err, results) => {
+    if (err) {
+      console.error("❌ Error fetching stories data:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch stories data",
+        error: err.message
+      });
+    }
+    
+    // If no data exists, return empty object
+    const data = results.length > 0 ? results[0] : {
+      id: null,
+      title: "",
+      description: "",
+      image_path: "",
+      created_at: null,
+      updated_at: null
+    };
+    
+    res.json({
+      success: true,
+      data: data
+    });
+  });
+};
+
+// Update stories data (single instance)
+export const updateStoriesData = async (req, res) => {
+  try {
+    const { title, description, imageBase64 } = req.body;
+
+    // Validate required fields
+    if (!title || !description) {
+      return res.status(400).json({
+        success: false,
+        message: "Title and description are required"
+      });
+    }
+
+    // First check if data exists
+    const checkQuery = "SELECT id, image_path FROM stories_description LIMIT 1";
+    
+    db1.query(checkQuery, async (err, results) => {
+      if (err) {
+        console.error("❌ Error checking stories data:", err);
+        return res.status(500).json({
+          success: false,
+          message: "Failed to update stories data",
+          error: err.message
+        });
+      }
+
+      let imageUrl = null;
+
+      // Upload image if provided
+      if (imageBase64) {
+        try {
+          const fileName = generateUniqueFileName(imageBase64);
+          const fileBuffer = base64ToBuffer(imageBase64);
+          imageUrl = await uploadToFTP(fileName, fileBuffer);
+
+          // Delete old image from FTP if it exists and new image is uploaded
+          if (results.length > 0 && results[0].image_path) {
+            await deleteFromFTP(results[0].image_path);
+          }
+        } catch (ftpError) {
+          console.error("❌ FTP upload error:", ftpError);
+          return res.status(500).json({
+            success: false,
+            message: "Failed to upload image",
+            error: ftpError.message
+          });
+        }
+      } else if (results.length > 0) {
+        // Keep existing image if no new image provided
+        imageUrl = results[0].image_path;
+      }
+
+      if (results.length > 0) {
+        // Update existing record
+        const updateQuery = `
+          UPDATE stories_description 
+          SET title = ?, description = ?, image_path = ? 
+          WHERE id = ?
+        `;
+        
+        db1.query(updateQuery, [
+          title,
+          description,
+          imageUrl,
+          results[0].id
+        ], (err, updateResults) => {
+          if (err) {
+            console.error("❌ Error updating stories data:", err);
+            // Delete uploaded image if database update fails
+            if (imageBase64 && imageUrl) {
+              deleteFromFTP(imageUrl);
+            }
+            return res.status(500).json({
+              success: false,
+              message: "Failed to update stories data",
+              error: err.message
+            });
+          }
+          
+          res.json({
+            success: true,
+            message: "Stories data updated successfully",
+            data: {
+              id: results[0].id,
+              title,
+              description,
+              image_path: imageUrl
+            }
+          });
+        });
+      } else {
+        // Insert new record (first time setup)
+        const insertQuery = `
+          INSERT INTO stories_description (title, description, image_path) 
+          VALUES (?, ?, ?)
+        `;
+        
+        db1.query(insertQuery, [
+          title,
+          description,
+          imageUrl
+        ], (err, insertResults) => {
+          if (err) {
+            console.error("❌ Error creating stories data:", err);
+            // Delete uploaded image if database insert fails
+            if (imageBase64 && imageUrl) {
+              deleteFromFTP(imageUrl);
+            }
+            return res.status(500).json({
+              success: false,
+              message: "Failed to create stories data",
+              error: err.message
+            });
+          }
+          
+          res.status(201).json({
+            success: true,
+            message: "Stories data created successfully",
+            data: {
+              id: insertResults.insertId,
+              title,
+              description,
+              image_path: imageUrl
+            }
+          });
+        });
+      }
+    });
+    
+  } catch (error) {
+    console.error("❌ Error in updateStoriesData:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to update stories data",
+      error: error.message
+    });
+  }
+};
+
+
+// events description 
+
+// Get event data (single instance)
+export const getEventData = (req, res) => {
+  const query = "SELECT * FROM event_description LIMIT 1";
+  
+  db1.query(query, (err, results) => {
+    if (err) {
+      console.error("❌ Error fetching event data:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch event data",
+        error: err.message
+      });
+    }
+    
+    // If no data exists, return empty object
+    const data = results.length > 0 ? results[0] : {
+      id: null,
+      description: "",
+      imagepath1: "",
+      imagepath2: "",
+      created_at: null,
+      updated_at: null
+    };
+    
+    res.json({
+      success: true,
+      data: data
+    });
+  });
+};
+
+// Update event data (single instance)
+export const updateEventData = async (req, res) => {
+  try {
+    const { description, imageBase641, imageBase642 } = req.body;
+
+    // Validate required fields
+    if (!description) {
+      return res.status(400).json({
+        success: false,
+        message: "Description is required"
+      });
+    }
+
+    // First check if data exists
+    const checkQuery = "SELECT id, imagepath1, imagepath2 FROM event_description LIMIT 1";
+    
+    db1.query(checkQuery, async (err, results) => {
+      if (err) {
+        console.error("❌ Error checking event data:", err);
+        return res.status(500).json({
+          success: false,
+          message: "Failed to update event data",
+          error: err.message
+        });
+      }
+
+      let imageUrl1 = null;
+      let imageUrl2 = null;
+
+      // Upload image1 if provided
+      if (imageBase641) {
+        try {
+          const fileName = generateUniqueFileName(imageBase641, 'event1');
+          const fileBuffer = base64ToBuffer(imageBase641);
+          imageUrl1 = await uploadToFTP(fileName, fileBuffer);
+
+          // Delete old image1 from FTP if it exists and new image is uploaded
+          if (results.length > 0 && results[0].imagepath1) {
+            await deleteFromFTP(results[0].imagepath1);
+          }
+        } catch (ftpError) {
+          console.error("❌ FTP upload error for image1:", ftpError);
+          return res.status(500).json({
+            success: false,
+            message: "Failed to upload image 1",
+            error: ftpError.message
+          });
+        }
+      } else if (results.length > 0) {
+        // Keep existing image1 if no new image provided
+        imageUrl1 = results[0].imagepath1;
+      }
+
+      // Upload image2 if provided
+      if (imageBase642) {
+        try {
+          const fileName = generateUniqueFileName(imageBase642, 'event2');
+          const fileBuffer = base64ToBuffer(imageBase642);
+          imageUrl2 = await uploadToFTP(fileName, fileBuffer);
+
+          // Delete old image2 from FTP if it exists and new image is uploaded
+          if (results.length > 0 && results[0].imagepath2) {
+            await deleteFromFTP(results[0].imagepath2);
+          }
+        } catch (ftpError) {
+          console.error("❌ FTP upload error for image2:", ftpError);
+          // Delete image1 if it was uploaded but image2 failed
+          if (imageBase641 && imageUrl1) {
+            deleteFromFTP(imageUrl1);
+          }
+          return res.status(500).json({
+            success: false,
+            message: "Failed to upload image 2",
+            error: ftpError.message
+          });
+        }
+      } else if (results.length > 0) {
+        // Keep existing image2 if no new image provided
+        imageUrl2 = results[0].imagepath2;
+      }
+
+      if (results.length > 0) {
+        // Update existing record
+        const updateQuery = `
+          UPDATE event_description 
+          SET description = ?, imagepath1 = ?, imagepath2 = ? 
+          WHERE id = ?
+        `;
+        
+        db1.query(updateQuery, [
+          description,
+          imageUrl1,
+          imageUrl2,
+          results[0].id
+        ], (err, updateResults) => {
+          if (err) {
+            console.error("❌ Error updating event data:", err);
+            // Delete uploaded images if database update fails
+            if (imageBase641 && imageUrl1) {
+              deleteFromFTP(imageUrl1);
+            }
+            if (imageBase642 && imageUrl2) {
+              deleteFromFTP(imageUrl2);
+            }
+            return res.status(500).json({
+              success: false,
+              message: "Failed to update event data",
+              error: err.message
+            });
+          }
+          
+          res.json({
+            success: true,
+            message: "Event data updated successfully",
+            data: {
+              id: results[0].id,
+              description,
+              imagepath1: imageUrl1,
+              imagepath2: imageUrl2
+            }
+          });
+        });
+      } else {
+        // Insert new record (first time setup)
+        const insertQuery = `
+          INSERT INTO event_description (description, imagepath1, imagepath2) 
+          VALUES (?, ?, ?)
+        `;
+        
+        db1.query(insertQuery, [
+          description,
+          imageUrl1,
+          imageUrl2
+        ], (err, insertResults) => {
+          if (err) {
+            console.error("❌ Error creating event data:", err);
+            // Delete uploaded images if database insert fails
+            if (imageBase641 && imageUrl1) {
+              deleteFromFTP(imageUrl1);
+            }
+            if (imageBase642 && imageUrl2) {
+              deleteFromFTP(imageUrl2);
+            }
+            return res.status(500).json({
+              success: false,
+              message: "Failed to create event data",
+              error: err.message
+            });
+          }
+          
+          res.status(201).json({
+            success: true,
+            message: "Event data created successfully",
+            data: {
+              id: insertResults.insertId,
+              description,
+              imagepath1: imageUrl1,
+              imagepath2: imageUrl2
+            }
+          });
+        });
+      }
+    });
+    
+  } catch (error) {
+    console.error("❌ Error in updateEventData:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to update event data",
+      error: error.message
+    });
+  }
+};
+
+
+
+// Get telephone data (single instance)
+export const getTelephoneData = (req, res) => {
+  const query = "SELECT * FROM telephone LIMIT 1";
+  
+  db1.query(query, (err, results) => {
+    if (err) {
+      console.error("❌ Error fetching telephone data:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch telephone data",
+        error: err.message
+      });
+    }
+    
+    // If no data exists, return empty object
+    const data = results.length > 0 ? results[0] : {
+      id: null,
+      phone_number: "",
+      icon_name: "",
+      created_at: null,
+      updated_at: null
+    };
+    
+    res.json({
+      success: true,
+      data: data
+    });
+  });
+};
+
+// Update telephone data (single instance)
+export const updateTelephoneData = (req, res) => {
+  const { phone_number, icon_name } = req.body;
+
+  // Validate required fields
+  if (!phone_number || !icon_name) {
+    return res.status(400).json({
+      success: false,
+      message: "Phone number and icon name are required"
+    });
+  }
+
+  // First check if data exists
+  const checkQuery = "SELECT id FROM telephone LIMIT 1";
+  
+  db1.query(checkQuery, (err, results) => {
+    if (err) {
+      console.error("❌ Error checking telephone data:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to update telephone data",
+        error: err.message
+      });
+    }
+
+    if (results.length > 0) {
+      // Update existing record
+      const updateQuery = `
+        UPDATE telephone 
+        SET phone_number = ?, icon_name = ? 
+        WHERE id = ?
+      `;
+      
+      db1.query(updateQuery, [
+        phone_number,
+        icon_name,
+        results[0].id
+      ], (err, updateResults) => {
+        if (err) {
+          console.error("❌ Error updating telephone data:", err);
+          return res.status(500).json({
+            success: false,
+            message: "Failed to update telephone data",
+            error: err.message
+          });
+        }
+        
+        res.json({
+          success: true,
+          message: "Telephone data updated successfully",
+          data: {
+            id: results[0].id,
+            phone_number,
+            icon_name
+          }
+        });
+      });
+    } else {
+      // Insert new record (first time setup)
+      const insertQuery = `
+        INSERT INTO telephone (phone_number, icon_name) 
+        VALUES (?, ?)
+      `;
+      
+      db1.query(insertQuery, [
+        phone_number,
+        icon_name
+      ], (err, insertResults) => {
+        if (err) {
+          console.error("❌ Error creating telephone data:", err);
+          return res.status(500).json({
+            success: false,
+            message: "Failed to create telephone data",
+            error: err.message
+          });
+        }
+        
+        res.status(201).json({
+          success: true,
+          message: "Telephone data created successfully",
+          data: {
+            id: insertResults.insertId,
+            phone_number,
+            icon_name
+          }
+        });
+      });
+    }
+  });
+};

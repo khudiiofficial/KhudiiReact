@@ -42,7 +42,7 @@ export default function OrganizationsPage() {
       try {
         setLoading(true);
         const res = await axios.get(`${APIPath}/organizations`, { withCredentials: true });
-        setOrganizations(res.data);
+        setOrganizations(res.data.reverse());
         setError(null);
       } catch (err) {
         console.error("Error fetching organizations:", err);

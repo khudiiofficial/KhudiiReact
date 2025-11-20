@@ -104,11 +104,26 @@
 
 // 2nd Code
 
-import React, { useState } from 'react'
-
+import React, { useState,useEffect } from 'react'
+import axios from 'axios'
+const APIPath = import.meta.env.VITE_BACKEND_PATH;
 const WelcomeSection = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
-
+  const [data,setdata]=useState({youtube_video_id:"hZyp2wOkqBs"})
+  useEffect(()=>{
+const call=async()=>{
+  try {
+    const res=await axios.get(`${APIPath}/api/welcome`)
+    if(res.status===200){
+    setdata(res.data.data)
+    
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+call();
+  },[])
   const handlePlayVideo = () => {
     setVideoLoaded(true);
   };
@@ -166,7 +181,7 @@ const WelcomeSection = () => {
         }
 
         .videoPlaceholder {
-          background-image: url('https://img.youtube.com/vi/hZyp2wOkqBs/hqdefault.jpg');
+          
           background-size: cover;
           background-position: center;
           cursor: pointer;
@@ -329,16 +344,17 @@ const WelcomeSection = () => {
       <div className="parent">
         <div className="pad">
           <div className="newclass"> 
-            <h1 className="size">Welcome To Khudii</h1> 
-            Not the kind of dream that we see when asleep though. A dream that doesn't discriminate between color, caste, creed, nationality, status or any other identity marker. This all-encompassing vision of service to mankind is what Islam also preaches and stands for. It has been stated in the Quran:
-            "Indeed, We created you from a male and a female, and made you into peoples and tribes so that you may ˹get to˺ know one another. Surely the most noble of you in the sight of Allah is the most righteous among you. Allah is truly All-Knowing, All-Aware." (Surah Al-Hujraat :13)
+            <h1 className="size">{data.welcome_title}</h1> 
+            {/* Not the kind of dream that we see when asleep though. A dream that doesn't discriminate between color, caste, creed, nationality, status or any other identity marker. This all-encompassing vision of service to mankind is what Islam also preaches and stands for. It has been stated in the Quran:
+            "Indeed, We created you from a male and a female, and made you into peoples and tribes so that you may ˹get to˺ know one another. Surely the most noble of you in the sight of Allah is the most righteous among you. Allah is truly All-Knowing, All-Aware." (Surah Al-Hujraat :13) */}
+            {data.welcome_description}
           </div>
 
           <div className="videoContainer">
             {!videoLoaded ? (
               <div 
               style={{
-    backgroundImage: "url('https://img.youtube.com/vi/hZyp2wOkqBs/hqdefault.jpg')"
+    backgroundImage: `url(https://img.youtube.com/vi/${data.youtube_video_id}/hqdefault.jpg)`
   }}
                 className="gborder videoPlaceholder"
                 onClick={handlePlayVideo}
@@ -362,7 +378,7 @@ const WelcomeSection = () => {
                 className="gborder"
                 width="560"
                 height="315"
-                src="https://www.youtube.com/embed/hZyp2wOkqBs?autoplay=1"
+                src={`https://www.youtube.com/embed/${data.youtube_video_id}?autoplay=1`}
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

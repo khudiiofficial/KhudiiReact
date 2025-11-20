@@ -206,7 +206,7 @@ getStories();
         title="Success Stories - Khudii Pakistan | Inspiring Welfare Journeys"
         description="Watch inspiring success stories from Khudii's welfare initiatives across Pakistan. Real stories of hope, community impact, and transformative change through education, healthcare, and social welfare."
         keywords="khudii success stories, pakistan welfare stories, inspiring charity stories, community impact stories, khudii videos, welfare organization success, humanitarian stories pakistan, social impact videos"
-        url="https://new.khudii.com/success-stories"
+        url="https://khudii.com/success-stories"
         type="website"
       />
 

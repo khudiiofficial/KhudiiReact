@@ -121,7 +121,7 @@ export default function FAQSection() {
         title="FAQ - Khudii Pakistan | Frequently Asked Questions"
         description="Find answers to common questions about Khudii Welfare Organization - Pakistan's leading digital welfare platform. Learn about our services, donations, volunteer opportunities, and community impact."
         keywords="khudii faq, welfare organization questions, pakistan charity faq, khudii services, donation queries, volunteer opportunities, healthcare services, education programs, NGO Pakistan"
-        url="https://new.khudii.com/faqs"
+        url="https://khudii.com/faqs"
         type="FAQPage"
       />
     <PageHeader 

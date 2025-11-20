@@ -1138,3 +1138,154 @@ export const getAllCarouselImages = (req, res) => {
     });
   });
 };
+
+
+export const getWelcomeSection = (req, res) => {
+  const query = "SELECT * FROM welcomesection LIMIT 1";
+  
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("❌ Error fetching welcome section:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch welcome section",
+        error: err.message
+      });
+    }
+    
+    // If no data exists, return empty object
+    const data = results.length > 0 ? results[0] : {
+      id: null,
+      welcome_title: "",
+      welcome_description: "",
+      youtube_video_id: "",
+      created_at: null,
+      updated_at: null
+    };
+    
+    res.status(200).json({
+      success: true,
+      data: data
+    });
+  });
+};
+
+
+
+
+export const getAllVisionMissionItems = (req, res) => {
+  const query = "SELECT * FROM vision_mission_items ORDER BY sort_order ASC, created_at ASC";
+  
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("❌ Error fetching vision mission items:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch vision mission items",
+        error: err.message
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      data: results,
+      count: results.length
+    });
+  });
+};
+
+
+
+export const getStoriesData = (req, res) => {
+  const query = "SELECT * FROM stories_description LIMIT 1";
+  
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("❌ Error fetching stories data:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch stories data",
+        error: err.message
+      });
+    }
+    
+    // If no data exists, return empty object
+    const data = results.length > 0 ? results[0] : {
+      id: null,
+      title: "",
+      description: "",
+      image_path: "",
+      created_at: null,
+      updated_at: null
+    };
+    
+    res.status(200).json({
+      success: true,
+      data: data
+    });
+  });
+};
+
+
+
+export const getEventData = (req, res) => {
+  const query = "SELECT * FROM event_description LIMIT 1";
+  
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("❌ Error fetching event data:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch event data",
+        error: err.message
+      });
+    }
+    
+    // If no data exists, return empty object
+    const data = results.length > 0 ? results[0] : {
+      id: null,
+      description: "",
+      imagepath1: "",
+      imagepath2: "",
+      created_at: null,
+      updated_at: null
+    };
+    
+    res.status(200).json({
+      success: true,
+      data: data
+    });
+  });
+};
+
+
+
+// Get telephone data (single instance)
+export const getTelephoneData = (req, res) => {
+  const query = "SELECT * FROM telephone LIMIT 1";
+  
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("❌ Error fetching telephone data:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch telephone data",
+        error: err.message
+      });
+    }
+    
+    // If no data exists, return empty object
+    const data = results.length > 0 ? results[0] : {
+      id: null,
+      phone_number: "",
+      icon_name: "",
+      created_at: null,
+      updated_at: null
+    };
+    
+    res.status(200).json({
+      success: true,
+      data: data
+    });
+  });
+};

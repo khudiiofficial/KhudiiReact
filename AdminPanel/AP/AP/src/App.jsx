@@ -38,6 +38,8 @@ import { useLocation } from 'react-router-dom'
 import SectorsList from './Pages/sectors/Secrors'
 import WelcomeAdmin from './Pages/welcome/welcome'
 import VisionMissionAdmin from './Pages/vision/Vision'
+import StoriesAdmin from './Pages/SuccessStoriesDescription/SuccessStoriesDescription'
+import EventAdmin from './Pages/Event_description/Event_description'
 function App() {
 const location=useLocation()  
 const dispatch=useDispatch()
@@ -67,7 +69,7 @@ const dispatch=useDispatch()
   return (
     <>
 
-<Navbar/>
+{/* <Navbar/> */}
 <Routes>
 <Route path='/' element={<Protected><></></Protected>}/>
           
@@ -95,6 +97,8 @@ const dispatch=useDispatch()
           <Route path='crousel-images' element={<CarouselAdmin/>}/>
           <Route path='welcome-secton' element={<WelcomeAdmin/>}/>
           <Route path='vision' element={<VisionMissionAdmin/>}/>
+          <Route path='storiesDescription' element={<StoriesAdmin/>}/>
+            <Route path='eventDescription' element={<EventAdmin/>}/>
           
           {/* <Route path="change-password" element={<ChangePassword />} /> */}
           <Route index element={<DashboardIndex/>} />

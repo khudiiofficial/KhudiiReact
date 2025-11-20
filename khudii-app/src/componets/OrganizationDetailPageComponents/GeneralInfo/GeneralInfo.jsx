@@ -119,7 +119,29 @@ const Socials = ({ name,itemId, setgooglemap }) => {
   const [socials, setSocials] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
  const [isModalOpen, setIsModalOpen] = useState(false);
- 
+  const [data,setdata]=useState({})
+   const [tel,settel]=useState('')
+   useEffect(()=>{
+const fun=async ()=>{
+  try {
+    const res=await axios.get(`${APIPath}/api/telephone`,{withCredentials:true})
+    if(res.status===200){
+      let ch=''
+    for(let i=0; i<res.data.data.phone_number.length; i++){
+      if(Number.isInteger(parseInt(res.data.data.phone_number[i])) || res.data.data.phone_number[i]==='+' ){
+ch=ch+res.data.data.phone_number[i]
+      }
+    }
+    settel(ch)
+     setdata(res.data.data)
+    }
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
+fun()
+  },[])
   useEffect(() => {
     (async () => {
       try {
@@ -245,7 +267,7 @@ const Socials = ({ name,itemId, setgooglemap }) => {
        <a href="tel:+923198548344" target="_blank">    <li className={`${styles.item}`}>
            <div className="bg-gradient-to-r from-[#E3001C] to-[#FF6B6B] hover:from-[#FF6B6B] hover:to-[#E3001C]" rel="noopener noreferrer">
               <p className="text-white">Call Khudii:</p>
-              <span className="text-white">(+92) 3198 - KHUDII (548344)</span>
+              <span className="text-white">{data.phone_number}</span>
             </div>
       
           </li> 

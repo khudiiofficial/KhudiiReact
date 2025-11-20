@@ -10,6 +10,7 @@ const SuccessStories = () => {
 const [arr,setarr]=useState([
 ])
 const [width,setWidth]=useState(null)
+const [item,setitems]=useState({})
 
 useEffect(()=>{
 const adjustwidth=()=>{
@@ -34,6 +35,24 @@ try {
 }
 func()
 },[])
+
+
+useEffect(()=>{
+const call=async()=>{
+  try {
+    const res=await axios.get(`${APIPath}/api/stories`)
+    if(res.status===200){
+    setitems(res.data.data)
+    
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+call();
+  },[])
+
+
   return (
    <>
    <div className={`${styles.class3}`}>
@@ -127,7 +146,7 @@ func()
 </div>
 {/* Fix Img bg section */}
     <div style={{
-    backgroundImage: "url('https://www.khudii.com/wp-content/uploads/2025/09/8.jpg')",
+    backgroundImage: `url(${item.image_path})`,
   }} className={`${styles.class5}`}>
       <div className={`${styles.class6} flex lg:items-center lg:justify-center`}>
       <div className={styles.sample}>
@@ -148,10 +167,12 @@ func()
       <div className="py-6 lg:py-8 flex flex-wrap gap-3
       ">
         <h3 className={`${styles.title_flood} text-white lg:text-[32px] md:text-2xl font-bold mb-4 text-left lg:text-left flex-wrap text-wrap`}>
-        Floods in Pakistan
+        {/* Floods in Pakistan */}
+        {item.title}
         </h3>
         <p className={`${styles.desp_flood} text-white lg:text-[25px] leading-relaxed mb-6 text-left lg:text-left`}>
-        At KHUDII, we are working tirelessly to support communities devastated by the recent floods in Pakistan. Thousands of families have lost their homes, livelihoods, and access to basic necessities. Your donation can help rebuild lives — by providing shelter, food, clean water, and long-term rehabilitation support. Together, we can restore hope and bring relief to those who need it most.
+        {/* At KHUDII, we are working tirelessly to support communities devastated by the recent floods in Pakistan. Thousands of families have lost their homes, livelihoods, and access to basic necessities. Your donation can help rebuild lives — by providing shelter, food, clean water, and long-term rehabilitation support. Together, we can restore hope and bring relief to those who need it most. */}
+       {item.description}
         </p>
 
         {/* Button: right-aligned on mobile/tablet, left-aligned on desktop */}

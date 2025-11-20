@@ -139,7 +139,7 @@ const [val,setval]=useState('')
         title="Volunteer with Khudii Pakistan | Make a Difference in Your Community"
         description="Join Khudii as a volunteer and help transform lives across Pakistan. Contribute your time and skills to support healthcare, education, and community welfare initiatives."
         keywords="khudii volunteer, welfare volunteering, pakistan charity volunteer, community service, humanitarian work, volunteer opportunities, social work volunteer, khudii volunteer program"
-        url="https://new.khudii.com/volunteer"
+        url="https://khudii.com/volunteer"
         type="website"
       />
      <PageHeader 

@@ -8,6 +8,8 @@ const APIPath = import.meta.env.VITE_BACKEND_PATH;
 const Topbar = () => {
   const [isMobile, setIsMobile] = useState(false)
   const [texts,settexts]=useState([])
+  const [data,setdata]=useState({})
+  const [tel,settel]=useState('')
 const handleAnimationComplete = () => {
   console.log('All letters have animated!');
 };
@@ -32,6 +34,31 @@ const fun=async ()=>{
 }
 fun()
   },[])
+
+
+
+  useEffect(()=>{
+const fun=async ()=>{
+  try {
+    const res=await axios.get(`${APIPath}/api/telephone`,{withCredentials:true})
+    if(res.status===200){
+      let ch=''
+    for(let i=0; i<res.data.data.phone_number.length; i++){
+      if(Number.isInteger(parseInt(res.data.data.phone_number[i])) || res.data.data.phone_number[i]==='+' ){
+ch=ch+res.data.data.phone_number[i]
+      }
+    }
+    settel(ch)
+     setdata(res.data.data)
+    }
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
+fun()
+  },[])
+
   useEffect(()=>{
     if(texts.length===0){return}
 const fun=setInterval(()=>{
@@ -62,10 +89,12 @@ return ()=>clearInterval(fun)
     return () => window.removeEventListener('resize', checkScreenSize)
   }, [])
 
+
+
   return (
     <div className={`${styles.topbar} ${styles.color}`}>
       <p className={styles.contact}>
-        <a href="tel:+923198548344" target="_blank"><i class="text-[#e7001e]  fa-solid fa-phone-volume"></i> (+92) 3198 - KHUDII (548344)</a>
+        <a href={`tel:${tel}`} target="_blank"><i class="text-[#e7001e]  fa-solid fa-phone-volume"></i> &nbsp;{data.phone_number} </a>
       </p>
 
       {/* <p className={styles.mid}>

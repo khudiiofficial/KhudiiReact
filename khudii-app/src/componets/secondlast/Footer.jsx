@@ -1,7 +1,33 @@
 import React from 'react';
 import './Footer.css';
 import { Link } from 'react-router-dom';
+const APIPath = import.meta.env.VITE_BACKEND_PATH;
+import  { useEffect, useState } from "react";
+import axios from "axios";
 const Footer = () => {
+    const [data,setdata]=useState({})
+     const [tel,settel]=useState('')
+     useEffect(()=>{
+const fun=async ()=>{
+  try {
+    const res=await axios.get(`${APIPath}/api/telephone`,{withCredentials:true})
+    if(res.status===200){
+      let ch=''
+    for(let i=0; i<res.data.data.phone_number.length; i++){
+      if(Number.isInteger(parseInt(res.data.data.phone_number[i])) || res.data.data.phone_number[i]==='+' ){
+ch=ch+res.data.data.phone_number[i]
+      }
+    }
+    settel(ch)
+     setdata(res.data.data)
+    }
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
+fun()
+  },[])
   return (
     <footer className="khudii-footer">
       {/* Main Footer Section */}
@@ -25,7 +51,7 @@ const Footer = () => {
                     <span className="contact-icon">
                       <i className="fas fa-phone"></i>
                     </span>
-                    <span className="contact-text"> <a href="tel:+923198548344" target="_blank">(+92) 3198 - KHUDII (548344)</a></span>
+                    <span className="contact-text"> <a href={`tel:${tel}`} target="_blank">{data.phone_number}</a></span>
                   </a>
                 </li>
                 <li className="contact-item">
