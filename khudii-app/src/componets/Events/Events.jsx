@@ -277,7 +277,7 @@ const callevents=async ()=>{
   try {
     const res=await axios.get(`${APIPath}/events`)
     if(res.status===200){
-      setevents(res.data.data.slice(0,6))
+      setevents(res.data.data)
     }
   } catch (error) {
     console.error(error)
@@ -541,14 +541,14 @@ call();
 // 2nd code
 
 return (
-    <section ref={sectionRef} className="bg-white">
-      <div className="max-w-[1240px] mx-auto px-4">
+    <section ref={sectionRef} className="bg-white py-10 sm:py-12 md:py-16">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'} transition-opacity duration-700 py-8`}>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#02236e] text-center">
+        <div className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'} transition-opacity duration-700`}>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#02236e] p-6 text-center">
             News & Events
           </h2>
-          <p className="text-gray-600 text-lg md:text-xl max-w-4xl mx-auto text-center animate-slide-in-right">
+          <p className="text-gray-600 mb-8 text-lg md:text-xl max-w-4xl mx-auto text-center animate-slide-in-right">
             Watch highlights from our partner organizations and community events.
           </p>
         </div>

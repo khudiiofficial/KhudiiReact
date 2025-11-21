@@ -632,146 +632,116 @@ width: 100% ;
 .aboutUs {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   line-height: 1.7;
-  /* color: #2d3748; */
+  color: #2d3748;
+  background: #ffffff;
 }
-
-/* ===== Fade-in Animation (Replaces IntersectionObserver) ===== */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fadeIn {
-  animation: fadeInUp 0.8s ease-out forwards;
-}
-
-/* Optional: Add slight stagger for natural flow (uncomment if desired) */
-/* .fadeIn:nth-of-type(1) { animation-delay: 0.1s; }
-.fadeIn:nth-of-type(2) { animation-delay: 0.2s; }
-.fadeIn:nth-of-type(3) { animation-delay: 0.3s; }
-.fadeIn:nth-of-type(4) { animation-delay: 0.4s; }
-.fadeIn:nth-of-type(5) { animation-delay: 0.5s; }
-.fadeIn:nth-of-type(6) { animation-delay: 0.6s; }
-.fadeIn:nth-of-type(7) { animation-delay: 0.7s; } */
 
 /* Container */
 .container {
   max-width: 1240px;
   margin: 0 auto;
-  /* background-color: #cedcff; */
-  /* padding: 0 1.5rem; */
+  padding: 0 1.5rem;
 }
 
 /* Divider */
 .divider {
-  /* height: 8px; */
-  /* background: linear-gradient(90deg, #e2e8f0 0%, #cbd5e0 100%); */
+  height: 8px;
+  background: linear-gradient(90deg, #e2e8f0 0%, #cbd5e0 100%);
   border: none;
   margin: 0;
 }
 
 /* Typography */
+.heroTitle,
 .sectionTitle,
 .joinTitle {
   font-size: 2.75rem;
   font-weight: 800;
-  color: #02236e;
+  color: #1a365d;
   text-align: center;
+  margin-bottom: 2rem;
   letter-spacing: -0.5px;
-}
-
-.heroTitle {
-  font-size: 2.75rem;
-  font-weight: 800;
-  color: #02236e;
-  text-align: left;
-  margin-bottom: 1.5rem;
-}
-
-.teamsection {
-  font-size: 2.5rem;
-  color: #02236e;
-  text-align: center;
-  font-weight: 700;
-}
-
-.paragraph_who {
-  font-size: 1rem;
-  color: #222222;
 }
 
 .paragraph,
 .joinIntro,
 .joinConclusion,
 .tagline {
-  font-size: 1rem;
-  text-align: left;
+  font-size: 1.125rem;
   margin-bottom: 1.5rem;
-  color: #222222;
+  color: #4a5568;
 }
 
 strong {
-  color: #02236e;
+  color: #1a365d;
   font-weight: 600;
+}
+
+/* Fade-in */
+.hero,
+.dream,
+.impact,
+.ceo,
+.teamIntro,
+.team,
+.joinSection {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* HERO */
 .hero {
-  padding: 2rem 0;
-  /* background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%); */
+  padding: 5rem 0;
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
 }
 .heroGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 4rem;
   align-items: center;
-  border-radius: 20px;
 }
 .heroText p {
-  width: 100%;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   line-height: 1.8;
-  color: #222222;
+  color: #2d3748;
 }
-.heroVideoWrapper {
+.heroVideoWrapper,
+.joinVideoWrapper {
   position: relative;
   padding-bottom: 56.25%;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
-
 .video {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   border: 0;
 }
 
 /* PURPOSE */
 .dream {
-  padding: 2rem 0;
-  background: #e4ebff;
+  padding: 5rem 0;
+  background: #ffffff;
 }
 .purposeBox {
-  background: #f0f0f0;
+  background: #ebf8ff;
   padding: 2.5rem;
   border-radius: 16px;
-  border-left: 5px solid #02236e;
+  border-left: 5px solid #3182ce;
   box-shadow: 0 4px 20px rgba(49, 130, 206, 0.1);
 }
 .purposeTitle {
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  color: #222222;
+  color: #1a365d;
 }
 .bulletList,
 .joinList {
@@ -785,10 +755,10 @@ strong {
   align-items: flex-start;
   margin-bottom: 1rem;
   font-size: 1.1rem;
-  color: #222222;
+  color: #2d3748;
 }
 .bullet {
-  color: #e7001e;
+  color: #e53e3e;
   font-weight: 900;
   font-size: 1.4rem;
   margin-right: 0.75rem;
@@ -797,20 +767,20 @@ strong {
 .purposeConclusion,
 .joinConclusion {
   font-style: italic;
-  color: #222222;
-  font-weight: 600;
+  color: #2b6cb0;
+  font-weight: 500;
 }
 
 /* IMPACT */
 .impact {
-  padding: 2rem 0;
+  padding: 5rem 0;
   background: #f8fafc;
 }
 
 /* CEO */
 .ceo {
-  padding: 2rem 0;
-  background: #e4ebff;
+  padding: 5rem 0;
+  background: #ffffff;
 }
 .ceoGrid {
   display: grid;
@@ -819,14 +789,13 @@ strong {
   align-items: center;
 }
 .ceoName {
-  font-size: 2.75rem;
-  font-weight: 800;
-  color: #02236e;
+  font-size: 2.1rem;
+  color: #1a365d;
   margin-bottom: 0.25rem;
 }
 .ceoTitle {
-  color: #6a6e71;
-  font-size: 1rem;
+  color: #718096;
+  font-size: 1.1rem;
   margin-bottom: 1.5rem;
 }
 .ceoImage img {
@@ -841,13 +810,13 @@ strong {
 
 /* TEAM */
 .teamIntro {
-  padding: 2rem 0;
+  padding: 5rem 0;
   background: #f8fafc;
   text-align: center;
 }
 .team {
-  padding: 2rem 0;
-  background: #e4ebff;
+  padding: 5rem 0;
+  background: #ffffff;
 }
 .teamGrid {
   display: grid;
@@ -888,11 +857,34 @@ strong {
 }
 .teamDesc {
   font-size: 0.9rem;
-  color: #222222;
+  color: #718096;
   line-height: 1.5;
 }
 
-/* JOIN US */
+/* JOIN US – FULLY VISIBLE */
+.joinSection {
+  padding: 5rem 0;
+  background: linear-gradient(135deg, #edf2f7 0%, #f7fafc 100%);
+}
+.joinGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.joinTitle {
+  font-size: 2.5rem;
+  color: #1a365d;
+  text-align: center;
+}
+.tagline {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2b6cb0;
+  text-align: center;
+  margin-top: 2rem;
+}
+
 /* Add this near other join-related styles */
 .joinContentWrapper {
   display: flex;
@@ -927,29 +919,6 @@ strong {
   height: 100%;
   border: 0;
 }
-
-.joinSection {
-  padding: 2rem 0;
-}
-.joinGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  /* gap: 4rem; */
-  align-items: center;
-}
-.joinTitle {
-  font-size: 2.5rem;
-  color: #1a365d;
-  text-align: center;
-}
-.tagline {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #2b6cb0;
-  text-align: center;
-  margin-top: 2rem;
-}
-
 /* Responsive */
 @media (max-width: 1024px) {
   .heroGrid,
@@ -965,17 +934,14 @@ strong {
   .heroTitle,
   .sectionTitle,
   .joinTitle {
-    font-size: 1.5rem;
-    font-weight: 500 !important;
+    font-size: 2.2rem;
   }
   .teamGrid {
     grid-template-columns: 1fr;
   }
 }
 @media (max-width: 480px) {
-  .container {
-    padding: 0 1rem;
-  }
+  .container { padding: 0 1rem; }
   .hero,
   .dream,
   .impact,
@@ -983,22 +949,6 @@ strong {
   .teamIntro,
   .team,
   .joinSection {
-    padding: 2rem 0;
+    padding: 3rem 0;
   }
-}
-
-/* Fade-in Animation */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fadeIn {
-  animation: fadeInUp 0.8s ease-out forwards;
 }

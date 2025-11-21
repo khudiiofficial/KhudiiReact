@@ -62,8 +62,8 @@ call();
     <div  className={`${styles.gw} ${styles.btn_story} ${styles.class1}`}><Link to={'/success-stories/'}>Explore More Stories&nbsp; <span> {`>`}</span></Link></div>
     </div> */}
     {/* 2nd Code */}
-    <div className="max-w-[1240px] w-full mx-auto relative px-4">
-  <div className="flex items-center justify-between py-8">
+    <div className="max-w-[1240px] w-full mx-auto pt-6 sm:px-6 relative">
+  <div className="flex items-center justify-between py-4">
     {/* Left: empty (or tiny spacer) */}
     <div className={`${styles.ssh_left} flex-shrink-0 invisible`}>
       <span className="inline-block font-semibold">
@@ -121,7 +121,7 @@ call();
 })}
     </div> */}
     {/* 2nd code */}
-    <div className="max-w-[1240px] w-full mx-auto pb-6 px-4 sm:px-6">
+    <div className="max-w-[1240px] w-full mx-auto pt-6 pb-6 px-4 sm:px-6">
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
     {arr.map((ele, index) => (
       <Link 
@@ -144,7 +144,7 @@ call();
     ))}
   </div>
 </div>
-{/* Fix Img bg section */}
+
     <div style={{
     backgroundImage: `url(${item.image_path})`,
   }} className={`${styles.class5}`}>

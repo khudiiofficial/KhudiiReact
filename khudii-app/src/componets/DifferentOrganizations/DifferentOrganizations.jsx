@@ -75,7 +75,6 @@ if(error){
           {organizations.length > 0 ? (
             organizations.map((org, idx) => (
               <article
-                onClick={() => nav(`/organization/${org.slug}`, { state: { id: org.id } })}
                 key={org.id || idx}
                 className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
                 role="article"
@@ -114,7 +113,7 @@ if(error){
 
                   <div className="text-left">
                     <button
-                    
+                      onClick={() => nav(`/organization/${org.slug}`, { state: { id: org.id } })}
                       className="inline-flex rounded-[25px] w-50 sm:w-auto px-5 py-2.5 text-sm font-medium bg-[#E3001C] text-white transition-all duration-300 focus:outline-none"
                       aria-label={`Explore ${org.name}`}
                     >
