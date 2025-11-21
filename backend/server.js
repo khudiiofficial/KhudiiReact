@@ -19,12 +19,9 @@ app.use('/storage',express.static('storage'))
 
 app.use(cors(
   {
-<<<<<<< HEAD
-    origin:'http://localhost:5173',
-=======
-    origin:'http://localhost:5174',
->>>>>>> 592b394 (20/11/2025)
-  // origin: 'https://new.khudii.com',
+
+    // origin:'http://localhost:5173',
+  origin: 'https://new.khudii.com',
   credentials: true
   }
 ))
@@ -37,10 +34,10 @@ app.get('/',(req,res)=>{
   res.json("backend is running")
 })
 
-app.listen(PORT,()=>{
-    console.log(`App is running on the port ${PORT} `)
-})
-// export default app
+// app.listen(PORT,()=>{
+//     console.log(`App is running on the port ${PORT} `)
+// })
+export default app
 
 
 
