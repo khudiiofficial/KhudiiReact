@@ -58,6 +58,7 @@ export default function Sidebar() {
     { path: "/dashboard/crousel-images", label: "Carousel Images" },
     { path: "/dashboard/vision", label: "Vision" },
     { path: "/dashboard/storiesDescription", label: "Home Page Story Description" },
+    { path: "/dashboard/contentAdmin", label: "About Page" },
   ];
 
   // const moreLinks = [

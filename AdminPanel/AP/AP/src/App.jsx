@@ -40,10 +40,11 @@ import WelcomeAdmin from './Pages/welcome/welcome'
 import VisionMissionAdmin from './Pages/vision/Vision'
 import StoriesAdmin from './Pages/SuccessStoriesDescription/SuccessStoriesDescription'
 import EventAdmin from './Pages/Event_description/Event_description'
+import ContentAdmin from './Pages/About/About'
 function App() {
 const location=useLocation()  
 const dispatch=useDispatch()
-
+// dispatch(resetUser());
  useEffect(() => {
     const interval = setInterval(async () => {
       try {
@@ -98,8 +99,9 @@ const dispatch=useDispatch()
           <Route path='welcome-secton' element={<WelcomeAdmin/>}/>
           <Route path='vision' element={<VisionMissionAdmin/>}/>
           <Route path='storiesDescription' element={<StoriesAdmin/>}/>
-            <Route path='eventDescription' element={<EventAdmin/>}/>
-          
+          <Route path='eventDescription' element={<EventAdmin/>}/>
+          <Route path='contentAdmin' element={<ContentAdmin/>}/>
+            
           {/* <Route path="change-password" element={<ChangePassword />} /> */}
           <Route index element={<DashboardIndex/>} />
           

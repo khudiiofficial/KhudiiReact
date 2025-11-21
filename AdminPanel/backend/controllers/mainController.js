@@ -6489,3 +6489,818 @@ export const updateTelephoneData = (req, res) => {
     }
   });
 };
+
+
+
+
+//About page
+
+
+// Helper functions
+
+
+
+
+// Get all content data
+export const getAllContent = (req, res) => {
+  const queries = {
+    who_we_are: "SELECT * FROM who_we_are LIMIT 1",
+    dream_and_purpose: "SELECT * FROM dream_and_purpose LIMIT 1",
+    impact: "SELECT * FROM impact LIMIT 1",
+    ceo: "SELECT * FROM ceo LIMIT 1",
+    people_behind: "SELECT * FROM people_behind LIMIT 1",
+    expert_team: "SELECT * FROM expert_team ORDER BY sort_order ASC",
+    join_us: "SELECT * FROM join_us LIMIT 1",
+    new_section: "SELECT * FROM new_section ORDER BY created_at DESC"
+  };
+
+  db1.getConnection((err, connection) => {
+    if (err) {
+      console.error("❌ Database connection failed:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Database connection failed",
+        error: err.message
+      });
+    }
+
+    const results = {};
+    let completed = 0;
+    const totalQueries = Object.keys(queries).length;
+
+    Object.keys(queries).forEach((key) => {
+      connection.query(queries[key], (err, data) => {
+        if (err) {
+          console.error(`❌ Error fetching ${key}:`, err);
+          results[key] = null;
+        } else {
+          if (key === 'expert_team' || key === 'new_section') {
+            results[key] = data;
+          } else {
+            results[key] = data.length > 0 ? data[0] : createEmptyRecord(key);
+          }
+        }
+
+        completed++;
+        if (completed === totalQueries) {
+          connection.release();
+          res.json({
+            success: true,
+            data: results
+          });
+        }
+      });
+    });
+  });
+};
+
+function createEmptyRecord(section) {
+  const emptyRecords = {
+    who_we_are: { heading: "", paragraph1: "", paragraph2: "", youtube_video_id: "" },
+    dream_and_purpose: { heading: "", paragraph: "", bullets_header: "", bullets: "[]", conclusion: "" },
+    impact: { heading: "", paragraph1: "", paragraph2: "", paragraph3: "" },
+    ceo: { name: "", title: "", paragraph1: "", paragraph2: "", paragraph3: "", image_path: "" },
+    people_behind: { heading: "", paragraph1: "", paragraph2: "", paragraph3: "" },
+    join_us: { heading: "", paragraph: "", bullets: "[]", paragraph2: "", paragraph3: "", youtube_video_id: "" }
+  };
+  return emptyRecords[section] || {};
+}
+
+// UPDATE operations for single-instance sections (Read & Update only)
+export const updateSection = async (req, res) => {
+  const { section } = req.params;
+  const data = req.body;
+
+  const validSections = ['who_we_are', 'dream_and_purpose', 'impact', 'ceo', 'people_behind', 'join_us'];
+  
+  if (!validSections.includes(section)) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid section"
+    });
+  }
+
+  db1.getConnection(async (err, connection) => {
+    if (err) {
+      console.error("❌ Database connection failed:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Database connection failed",
+        error: err.message
+      });
+    }
+
+    try {
+      await new Promise((resolve, reject) => {
+        connection.beginTransaction((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      let imagePath = data.image_path;
+      // Handle image upload for CEO section
+      if (section === 'ceo' && data.imageBase64) {
+        try {
+          const fileName = generateUniqueFileName(data.imageBase64, 'ceo');
+          const fileBuffer = base64ToBuffer(data.imageBase64);
+          imagePath = await uploadToFTP(fileName, fileBuffer);
+
+          // Get current image to delete if exists
+          const currentQuery = "SELECT image_path FROM ceo LIMIT 1";
+          const [current] = await new Promise((resolve, reject) => {
+            connection.query(currentQuery, (err, results) => {
+              if (err) reject(err);
+              else resolve(results);
+            });
+          });
+
+          if (current && current.image_path) {
+            await deleteFromFTP(current.image_path);
+          }
+        } catch (ftpError) {
+          await new Promise((resolve) => {
+            connection.rollback(() => {
+              connection.release();
+              resolve();
+            });
+          });
+          return res.status(500).json({
+            success: false,
+            message: "Failed to upload image",
+            error: ftpError.message
+          });
+        }
+      }
+
+      // Prepare update data
+      const updateData = { ...data };
+      if (imagePath) updateData.image_path = imagePath;
+      delete updateData.imageBase64;
+
+      // Handle JSON fields
+      if (updateData.bullets && typeof updateData.bullets === 'object') {
+        updateData.bullets = JSON.stringify(updateData.bullets);
+      }
+
+      // Check if record exists
+      const checkQuery = `SELECT id FROM ${section} LIMIT 1`;
+      const [existing] = await new Promise((resolve, reject) => {
+        connection.query(checkQuery, (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        });
+      });
+
+      let query, params;
+      if (existing) {
+        // UPDATE existing record
+        const setClause = Object.keys(updateData).map(key => `${key} = ?`).join(', ');
+        query = `UPDATE ${section} SET ${setClause} WHERE id = ?`;
+        params = [...Object.values(updateData), existing.id];
+      } else {
+        // INSERT new record (shouldn't happen with sample data, but just in case)
+        const columns = Object.keys(updateData).join(', ');
+        const placeholders = Object.keys(updateData).map(() => '?').join(', ');
+        query = `INSERT INTO ${section} (${columns}) VALUES (${placeholders})`;
+        params = Object.values(updateData);
+      }
+
+      await new Promise((resolve, reject) => {
+        connection.query(query, params, (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        });
+      });
+
+      await new Promise((resolve, reject) => {
+        connection.commit((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      connection.release();
+
+      res.json({
+        success: true,
+        message: `${section.replace(/_/g, ' ')} updated successfully`,
+        data: updateData
+      });
+
+    } catch (error) {
+      await new Promise((resolve) => {
+        connection.rollback(() => {
+          connection.release();
+          resolve();
+        });
+      });
+
+      console.error(`❌ Error updating ${section}:`, error);
+      res.status(500).json({
+        success: false,
+        message: `Failed to update ${section}`,
+        error: error.message
+      });
+    }
+  });
+};
+
+// CRUD operations for Expert Team
+export const createExpertTeam = async (req, res) => {
+  const data = req.body;
+
+  db1.getConnection(async (err, connection) => {
+    if (err) {
+      console.error("❌ Database connection failed:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Database connection failed",
+        error: err.message
+      });
+    }
+
+    try {
+      await new Promise((resolve, reject) => {
+        connection.beginTransaction((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      let imagePath = null;
+      if (data.imageBase64) {
+        try {
+          const fileName = generateUniqueFileName(data.imageBase64, 'expert');
+          const fileBuffer = base64ToBuffer(data.imageBase64);
+          imagePath = await uploadToFTP(fileName, fileBuffer);
+        } catch (ftpError) {
+          await new Promise((resolve) => {
+            connection.rollback(() => {
+              connection.release();
+              resolve();
+            });
+          });
+          return res.status(500).json({
+            success: false,
+            message: "Failed to upload image",
+            error: ftpError.message
+          });
+        }
+      }
+
+      const insertData = {
+        image_path: imagePath,
+        image_alt: data.image_alt,
+        name: data.name,
+        position: data.position,
+        description: data.description,
+        sort_order: data.sort_order || 0
+      };
+
+      const query = "INSERT INTO expert_team (image_path, image_alt, name, position, description, sort_order) VALUES (?, ?, ?, ?, ?, ?)";
+      
+      const result = await new Promise((resolve, reject) => {
+        connection.query(query, Object.values(insertData), (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        });
+      });
+
+      await new Promise((resolve, reject) => {
+        connection.commit((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      connection.release();
+
+      res.status(201).json({
+        success: true,
+        message: "Expert team member created successfully",
+        data: {
+          id: result.insertId,
+          ...insertData
+        }
+      });
+
+    } catch (error) {
+      await new Promise((resolve) => {
+        connection.rollback(() => {
+          connection.release();
+          resolve();
+        });
+      });
+
+      console.error("❌ Error creating expert team member:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to create expert team member",
+        error: error.message
+      });
+    }
+  });
+};
+
+export const updateExpertTeam = async (req, res) => {
+  const { id } = req.params;
+  const data = req.body;
+
+  db1.getConnection(async (err, connection) => {
+    if (err) {
+      console.error("❌ Database connection failed:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Database connection failed",
+        error: err.message
+      });
+    }
+
+    try {
+      await new Promise((resolve, reject) => {
+        connection.beginTransaction((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      const [current] = await new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM expert_team WHERE id = ?", [id], (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        });
+      });
+
+      if (!current) {
+        await new Promise((resolve) => {
+          connection.rollback(() => {
+            connection.release();
+            resolve();
+          });
+        });
+        return res.status(404).json({
+          success: false,
+          message: "Expert team member not found"
+        });
+      }
+
+      let imagePath = current.image_path;
+      if (data.imageBase64) {
+        try {
+          const fileName = generateUniqueFileName(data.imageBase64, 'expert');
+          const fileBuffer = base64ToBuffer(data.imageBase64);
+          imagePath = await uploadToFTP(fileName, fileBuffer);
+
+          if (current.image_path) {
+            await deleteFromFTP(current.image_path);
+          }
+        } catch (ftpError) {
+          await new Promise((resolve) => {
+            connection.rollback(() => {
+              connection.release();
+              resolve();
+            });
+          });
+          return res.status(500).json({
+            success: false,
+            message: "Failed to upload image",
+            error: ftpError.message
+          });
+        }
+      }
+
+      const updateData = {
+        image_path: imagePath,
+        image_alt: data.image_alt !== undefined ? data.image_alt : current.image_alt,
+        name: data.name !== undefined ? data.name : current.name,
+        position: data.position !== undefined ? data.position : current.position,
+        description: data.description !== undefined ? data.description : current.description,
+        sort_order: data.sort_order !== undefined ? data.sort_order : current.sort_order
+      };
+
+      const query = "UPDATE expert_team SET image_path = ?, image_alt = ?, name = ?, position = ?, description = ?, sort_order = ? WHERE id = ?";
+      
+      await new Promise((resolve, reject) => {
+        connection.query(query, [...Object.values(updateData), id], (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        });
+      });
+
+      await new Promise((resolve, reject) => {
+        connection.commit((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      connection.release();
+
+      res.json({
+        success: true,
+        message: "Expert team member updated successfully",
+        data: updateData
+      });
+
+    } catch (error) {
+      await new Promise((resolve) => {
+        connection.rollback(() => {
+          connection.release();
+          resolve();
+        });
+      });
+
+      console.error("❌ Error updating expert team member:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to update expert team member",
+        error: error.message
+      });
+    }
+  });
+};
+
+export const deleteExpertTeam = async (req, res) => {
+  const { id } = req.params;
+
+  db1.getConnection(async (err, connection) => {
+    if (err) {
+      console.error("❌ Database connection failed:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Database connection failed",
+        error: err.message
+      });
+    }
+
+    try {
+      await new Promise((resolve, reject) => {
+        connection.beginTransaction((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      const [current] = await new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM expert_team WHERE id = ?", [id], (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        });
+      });
+
+      if (!current) {
+        await new Promise((resolve) => {
+          connection.rollback(() => {
+            connection.release();
+            resolve();
+          });
+        });
+        return res.status(404).json({
+          success: false,
+          message: "Expert team member not found"
+        });
+      }
+
+      // Delete image from FTP
+      if (current.image_path) {
+        await deleteFromFTP(current.image_path);
+      }
+
+      await new Promise((resolve, reject) => {
+        connection.query("DELETE FROM expert_team WHERE id = ?", [id], (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        });
+      });
+
+      await new Promise((resolve, reject) => {
+        connection.commit((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      connection.release();
+
+      res.json({
+        success: true,
+        message: "Expert team member deleted successfully"
+      });
+
+    } catch (error) {
+      await new Promise((resolve) => {
+        connection.rollback(() => {
+          connection.release();
+          resolve();
+        });
+      });
+
+      console.error("❌ Error deleting expert team member:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to delete expert team member",
+        error: error.message
+      });
+    }
+  });
+};
+
+// CRUD operations for New Section
+export const createNewSection = async (req, res) => {
+  const data = req.body;
+
+  db1.getConnection(async (err, connection) => {
+    if (err) {
+      console.error("❌ Database connection failed:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Database connection failed",
+        error: err.message
+      });
+    }
+
+    try {
+      await new Promise((resolve, reject) => {
+        connection.beginTransaction((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      let imagePath = null;
+      if (data.imageBase64) {
+        try {
+          const fileName = generateUniqueFileName(data.imageBase64, 'new-section');
+          const fileBuffer = base64ToBuffer(data.imageBase64);
+          imagePath = await uploadToFTP(fileName, fileBuffer);
+        } catch (ftpError) {
+          await new Promise((resolve) => {
+            connection.rollback(() => {
+              connection.release();
+              resolve();
+            });
+          });
+          return res.status(500).json({
+            success: false,
+            message: "Failed to upload image",
+            error: ftpError.message
+          });
+        }
+      }
+
+      const insertData = {
+        heading: data.heading,
+        paragraphs: data.paragraphs ? JSON.stringify(data.paragraphs) : "[]",
+        bullets_header: data.bullets_header,
+        bullets: data.bullets ? JSON.stringify(data.bullets) : "[]",
+        image_path: imagePath,
+        youtube_video_id: data.youtube_video_id
+      };
+
+      const query = "INSERT INTO new_section (heading, paragraphs, bullets_header, bullets, image_path, youtube_video_id) VALUES (?, ?, ?, ?, ?, ?)";
+      
+      const result = await new Promise((resolve, reject) => {
+        connection.query(query, Object.values(insertData), (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        });
+      });
+
+      await new Promise((resolve, reject) => {
+        connection.commit((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      connection.release();
+
+      res.status(201).json({
+        success: true,
+        message: "New section created successfully",
+        data: {
+          id: result.insertId,
+          ...insertData
+        }
+      });
+
+    } catch (error) {
+      await new Promise((resolve) => {
+        connection.rollback(() => {
+          connection.release();
+          resolve();
+        });
+      });
+
+      console.error("❌ Error creating new section:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to create new section",
+        error: error.message
+      });
+    }
+  });
+};
+
+export const updateNewSection = async (req, res) => {
+  const { id } = req.params;
+  const data = req.body;
+
+  db1.getConnection(async (err, connection) => {
+    if (err) {
+      console.error("❌ Database connection failed:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Database connection failed",
+        error: err.message
+      });
+    }
+
+    try {
+      await new Promise((resolve, reject) => {
+        connection.beginTransaction((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      const [current] = await new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM new_section WHERE id = ?", [id], (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        });
+      });
+
+      if (!current) {
+        await new Promise((resolve) => {
+          connection.rollback(() => {
+            connection.release();
+            resolve();
+          });
+        });
+        return res.status(404).json({
+          success: false,
+          message: "Section not found"
+        });
+      }
+
+      let imagePath = current.image_path;
+      if (data.imageBase64) {
+        try {
+          const fileName = generateUniqueFileName(data.imageBase64, 'new-section');
+          const fileBuffer = base64ToBuffer(data.imageBase64);
+          imagePath = await uploadToFTP(fileName, fileBuffer);
+
+          if (current.image_path) {
+            await deleteFromFTP(current.image_path);
+          }
+        } catch (ftpError) {
+          await new Promise((resolve) => {
+            connection.rollback(() => {
+              connection.release();
+              resolve();
+            });
+          });
+          return res.status(500).json({
+            success: false,
+            message: "Failed to upload image",
+            error: ftpError.message
+          });
+        }
+      }
+
+      const updateData = {
+        heading: data.heading !== undefined ? data.heading : current.heading,
+        paragraphs: data.paragraphs ? JSON.stringify(data.paragraphs) : current.paragraphs,
+        bullets_header: data.bullets_header !== undefined ? data.bullets_header : current.bullets_header,
+        bullets: data.bullets ? JSON.stringify(data.bullets) : current.bullets,
+        image_path: imagePath,
+        youtube_video_id: data.youtube_video_id !== undefined ? data.youtube_video_id : current.youtube_video_id
+      };
+
+      const query = "UPDATE new_section SET heading = ?, paragraphs = ?, bullets_header = ?, bullets = ?, image_path = ?, youtube_video_id = ? WHERE id = ?";
+      
+      await new Promise((resolve, reject) => {
+        connection.query(query, [...Object.values(updateData), id], (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        });
+      });
+
+      await new Promise((resolve, reject) => {
+        connection.commit((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      connection.release();
+
+      res.json({
+        success: true,
+        message: "New section updated successfully",
+        data: updateData
+      });
+
+    } catch (error) {
+      await new Promise((resolve) => {
+        connection.rollback(() => {
+          connection.release();
+          resolve();
+        });
+      });
+
+      console.error("❌ Error updating new section:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to update new section",
+        error: error.message
+      });
+    }
+  });
+};
+
+export const deleteNewSection = async (req, res) => {
+  const { id } = req.params;
+
+  db1.getConnection(async (err, connection) => {
+    if (err) {
+      console.error("❌ Database connection failed:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Database connection failed",
+        error: err.message
+      });
+    }
+
+    try {
+      await new Promise((resolve, reject) => {
+        connection.beginTransaction((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      const [current] = await new Promise((resolve, reject) => {
+        connection.query("SELECT * FROM new_section WHERE id = ?", [id], (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        });
+      });
+
+      if (!current) {
+        await new Promise((resolve) => {
+          connection.rollback(() => {
+            connection.release();
+            resolve();
+          });
+        });
+        return res.status(404).json({
+          success: false,
+          message: "Section not found"
+        });
+      }
+
+      if (current.image_path) {
+        await deleteFromFTP(current.image_path);
+      }
+
+      await new Promise((resolve, reject) => {
+        connection.query("DELETE FROM new_section WHERE id = ?", [id], (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        });
+      });
+
+      await new Promise((resolve, reject) => {
+        connection.commit((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      connection.release();
+
+      res.json({
+        success: true,
+        message: "New section deleted successfully"
+      });
+
+    } catch (error) {
+      await new Promise((resolve) => {
+        connection.rollback(() => {
+          connection.release();
+          resolve();
+        });
+      });
+
+      console.error("❌ Error deleting new section:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to delete new section",
+        error: error.message
+      });
+    }
+  });
+};

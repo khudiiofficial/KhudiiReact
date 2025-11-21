@@ -9,7 +9,7 @@ const Protected = ({children}) => {
     // dis(resetUser())
     const location=useLocation()
     const auth=useSelector((state)=>state.users.auth)
-    if(auth && location.pathname==='/Login'){
+    if(auth && location.pathname==='/Login' ||  location.pathname==='/'){
         return <Navigate to={'/dashboard'}/>
     }
     if(auth){

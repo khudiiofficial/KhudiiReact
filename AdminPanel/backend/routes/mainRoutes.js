@@ -133,8 +133,20 @@ updateEventData,
 
 //telephone
 getTelephoneData,
-updateTelephoneData
+updateTelephoneData,
+
+//about page
+
+getAllContent,
+updateSection,
+createExpertTeam,
+updateExpertTeam,
+deleteExpertTeam,
+createNewSection,
+updateNewSection,
+deleteNewSection
 } from "../controllers/mainController.js";
+
 
 const router = express.Router();
 
@@ -286,7 +298,28 @@ router.put("/api/stories",auth, updateStoriesData);
 router.get("/api/events",auth, getEventData);
 router.put("/api/events",auth, updateEventData);
 
-
+// telephone
 router.get("/api/telephone", auth,getTelephoneData);
 router.put("/api/telephone",auth, updateTelephoneData);
+
+
+
+//about page
+
+// Get all content
+router.get("/api/content", getAllContent);
+
+// UPDATE operations for single-instance sections (Read & Update only)
+router.put("/api/content/section/:section", updateSection);
+
+// CRUD operations for Expert Team
+router.post("/api/content/expert-team", createExpertTeam);
+router.put("/api/content/expert-team/:id", updateExpertTeam);
+router.delete("/api/content/expert-team/:id", deleteExpertTeam);
+
+// CRUD operations for New Section
+router.post("/api/content/new-section", createNewSection);
+router.put("/api/content/new-section/:id", updateNewSection);
+router.delete("/api/content/new-section/:id", deleteNewSection);
+
 export default router;
