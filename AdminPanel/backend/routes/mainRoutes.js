@@ -144,7 +144,11 @@ updateExpertTeam,
 deleteExpertTeam,
 createNewSection,
 updateNewSection,
-deleteNewSection
+deleteNewSection,
+
+//seo
+getSEOData,
+updateSEOData
 } from "../controllers/mainController.js";
 
 
@@ -322,4 +326,7 @@ router.post("/api/content/new-section", createNewSection);
 router.put("/api/content/new-section/:id", updateNewSection);
 router.delete("/api/content/new-section/:id", deleteNewSection);
 
+// seo 
+router.get("/api/seo", getSEOData);
+router.put("/api/seo", updateSEOData);
 export default router;

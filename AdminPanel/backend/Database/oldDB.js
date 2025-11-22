@@ -1,6 +1,6 @@
 // import mysql from "mysql2";
 
-// // Create the connection
+// Create the connection
 // const db1 = mysql.createConnection({
 //   host: "localhost",   // WAMP default
 //   user: "root",        // default MySQL user
@@ -19,9 +19,12 @@
 // });
 
 
-
-
 // export default db1;
+
+
+
+
+
 
 
 
@@ -51,6 +54,212 @@ db1.getConnection((err, connection) => {
     connection.release();
   }
 });
+
+
+
+
+// createSEOTable()
+
+// function createSEOTable() {
+//   const connection = mysql.createConnection({
+//     host: process.env.DB_HOST,
+//     user: process.env.DB_USER,
+//     password: process.env.DB_PASS,
+//     database: process.env.DB_NAME,
+//     port: process.env.DB_PORT || 3306,
+//     ssl: { rejectUnauthorized: false },
+
+
+
+//   });
+
+//   connection.connect((err) => {
+//     if (err) {
+//       console.error("❌ Connection failed:", err);
+//       return;
+//     }
+
+
+
+//     const createTableQuery = `
+//       CREATE TABLE IF NOT EXISTS website_seo (
+//         id INT AUTO_INCREMENT PRIMARY KEY,
+//         url TEXT NOT NULL,
+//         pages JSON NOT NULL,
+//         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+//         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+//       )
+//     `;
+
+//     connection.query(createTableQuery, (err) => {
+//       if (err) {
+//         console.error("❌ Error creating website_seo table:", err);
+//         connection.end();
+//         return;
+//       }
+      
+//       console.log("✅ Website SEO table created successfully!");
+//       insertSampleSEOData(connection);
+//     });
+//   });
+// }
+
+// function insertSampleSEOData(connection) {
+//   // Check if data already exists
+//   const checkQuery = "SELECT COUNT(*) as count FROM website_seo";
+  
+//   connection.query(checkQuery, (err, results) => {
+//     if (err) {
+//       console.error("❌ Error checking existing data:", err);
+//       connection.end();
+//       return;
+//     }
+
+//     if (results[0].count === 0) {
+//       const seoData = {
+//         url: "https://khudii.com",
+//         pages: [
+//           {
+//             page_url: '/',
+//             page_name: 'Home Page',
+//             meta_title: 'Khudii - Empowering Communities in Pakistan',
+//             meta_description: 'Join Khudii in creating positive change across Pakistan. Support local communities, education, healthcare, and sustainable development initiatives.',
+//             meta_keywords: 'khudii, pakistan, community, education, healthcare, development, charity, welfare'
+//           },
+//           {
+//             page_url: '/organizations',
+//             page_name: 'Organizations',
+//             meta_title: 'Partner Organizations - Khudii',
+//             meta_description: 'Discover our trusted partner organizations working together to create sustainable impact across Pakistan.',
+//             meta_keywords: 'partner organizations, NGOs, charities, collaborations, pakistan'
+//           },
+//           {
+//             page_url: '/about-khudii',
+//             page_name: 'About Khudii',
+//             meta_title: 'About Us - Khudii Organization',
+//             meta_description: 'Learn about Khudii mission, vision, and our journey in empowering communities across Pakistan since our inception.',
+//             meta_keywords: 'about khudii, mission, vision, history, team, values'
+//           },
+//           {
+//             page_url: '/golden-people',
+//             page_name: 'Golden People',
+//             meta_title: 'Golden People - Khudii Champions',
+//             meta_description: 'Meet our Golden People - the champions and change-makers who are making a difference in communities across Pakistan.',
+//             meta_keywords: 'golden people, champions, change-makers, volunteers, supporters'
+//           },
+//           {
+//             page_url: '/contact',
+//             page_name: 'Contact Us',
+//             meta_title: 'Contact Khudii - Get in Touch',
+//             meta_description: 'Get in touch with Khudii team. We would love to hear from you about partnerships, volunteering, or any inquiries.',
+//             meta_keywords: 'contact khudii, get in touch, email, phone, address, inquiry'
+//           },
+//           {
+//             page_url: '/contribute-your-story',
+//             page_name: 'Contribute Your Story',
+//             meta_title: 'Share Your Story - Khudii',
+//             meta_description: 'Share your inspiring story with Khudii community. Your experiences can motivate others to create positive change.',
+//             meta_keywords: 'share story, contribute, experiences, inspiration, community stories'
+//           },
+//           {
+//             page_url: '/donate-now',
+//             page_name: 'Donate Now',
+//             meta_title: 'Donate to Khudii - Support Our Mission',
+//             meta_description: 'Make a donation to support Khudii initiatives in education, healthcare, and community development across Pakistan.',
+//             meta_keywords: 'donate, support, charity, donation, help, contribute funds'
+//           },
+//           {
+//             page_url: '/success-stories',
+//             page_name: 'Success Stories',
+//             meta_title: 'Success Stories - Khudii Impact',
+//             meta_description: 'Read inspiring success stories from Khudii initiatives. See how your support is creating real change in communities.',
+//             meta_keywords: 'success stories, impact, achievements, results, community success'
+//           },
+//           {
+//             page_url: '/social-media',
+//             page_name: 'Social Media',
+//             meta_title: 'Social Media - Khudii Online Presence',
+//             meta_description: 'Connect with Khudii on social media. Follow our journey and stay updated with our latest initiatives and events.',
+//             meta_keywords: 'social media, facebook, twitter, instagram, linkedin, follow'
+//           },
+//           {
+//             page_url: '/videos',
+//             page_name: 'Videos',
+//             meta_title: 'Videos - Khudii Visual Stories',
+//             meta_description: 'Watch inspiring videos from Khudii initiatives. See our work in action and the impact we are creating together.',
+//             meta_keywords: 'videos, visual stories, documentaries, impact videos, khudii videos'
+//           },
+//           {
+//             page_url: '/testimonials',
+//             page_name: 'Testimonials',
+//             meta_title: 'Testimonials - What People Say About Khudii',
+//             meta_description: 'Read testimonials from partners, volunteers, and community members about their experiences with Khudii.',
+//             meta_keywords: 'testimonials, reviews, feedback, experiences, partner feedback'
+//           },
+//           {
+//             page_url: '/tribute',
+//             page_name: 'Tribute',
+//             meta_title: 'Tribute - Honoring Our Supporters',
+//             meta_description: 'Pay tribute to the incredible supporters and contributors who have made Khudii mission possible.',
+//             meta_keywords: 'tribute, honor, supporters, contributors, appreciation'
+//           },
+//           {
+//             page_url: '/certifications',
+//             page_name: 'Certifications',
+//             meta_title: 'Certifications - Khudii Credentials',
+//             meta_description: 'View Khudii certifications, accreditations, and credentials that demonstrate our commitment to transparency and excellence.',
+//             meta_keywords: 'certifications, accreditations, credentials, transparency, compliance'
+//           },
+//           {
+//             page_url: '/faqs',
+//             page_name: 'FAQs',
+//             meta_title: 'Frequently Asked Questions - Khudii',
+//             meta_description: 'Find answers to frequently asked questions about Khudii, our programs, partnerships, and how you can get involved.',
+//             meta_keywords: 'FAQs, frequently asked questions, help, information, support'
+//           },
+//           {
+//             page_url: '/blogs',
+//             page_name: 'Blogs',
+//             meta_title: 'Blog - Khudii Insights and Stories',
+//             meta_description: 'Read the latest blog posts from Khudii featuring insights, stories, and updates about our community development work.',
+//             meta_keywords: 'blog, articles, insights, stories, updates, khudii blog'
+//           },
+//           {
+//             page_url: '/jobs',
+//             page_name: 'Jobs',
+//             meta_title: 'Careers - Join Khudii Team',
+//             meta_description: 'Explore career opportunities and job openings at Khudii. Join our team and help create positive change in Pakistan.',
+//             meta_keywords: 'jobs, careers, employment, vacancies, work with khudii'
+//           },
+//           {
+//             page_url: '/volunteer',
+//             page_name: 'Volunteer',
+//             meta_title: 'Volunteer with Khudii - Make a Difference',
+//             meta_description: 'Become a Khudii volunteer and contribute your time and skills to create meaningful impact in communities across Pakistan.',
+//             meta_keywords: 'volunteer, volunteer opportunities, help, contribute time, make difference'
+//           }
+//         ]
+//       };
+
+//       const insertQuery = "INSERT INTO website_seo (url, pages) VALUES (?, ?)";
+      
+//       connection.query(insertQuery, [
+//         seoData.url,
+//         JSON.stringify(seoData.pages)
+//       ], (err, results) => {
+//         if (err) {
+//           console.error("❌ Error inserting sample SEO data:", err);
+//         } else {
+//           console.log("✅ Sample SEO data inserted successfully!");
+//         }
+//         connection.end();
+//       });
+//     } else {
+//       console.log("ℹ️  SEO data already exists");
+//       connection.end();
+//     }
+//   });
+// }
 
 
 

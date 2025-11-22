@@ -7304,3 +7304,135 @@ export const deleteNewSection = async (req, res) => {
     }
   });
 };
+
+
+
+//seo
+
+
+// Get all SEO data
+export const getSEOData = (req, res) => {
+  const query = "SELECT * FROM website_seo LIMIT 1";
+  
+  db1.getConnection((err, connection) => {
+    if (err) {
+      console.error("❌ Database connection failed:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Database connection failed",
+        error: err.message
+      });
+    }
+
+    connection.query(query, (err, results) => {
+      connection.release();
+      
+      if (err) {
+        console.error("❌ Error fetching SEO data:", err);
+        return res.status(500).json({
+          success: false,
+          message: "Failed to fetch SEO data",
+          error: err.message
+        });
+      }
+
+      if (results.length === 0) {
+        return res.json({
+          success: true,
+          data: {
+            url: "",
+            pages: []
+          }
+        });
+      }
+
+      const data = {
+        id: results[0].id,
+        url: results[0].url,
+        pages: JSON.parse(results[0].pages)
+      };
+
+      res.json({
+        success: true,
+        data: data
+      });
+    });
+  });
+};
+
+// Update SEO data
+export const updateSEOData = (req, res) => {
+  const { url, pages } = req.body;
+
+  if (!url || !Array.isArray(pages)) {
+    return res.status(400).json({
+      success: false,
+      message: "URL and pages array are required"
+    });
+  }
+
+  db1.getConnection((err, connection) => {
+    if (err) {
+      console.error("❌ Database connection failed:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Database connection failed",
+        error: err.message
+      });
+    }
+
+    // Check if record exists
+    const checkQuery = "SELECT id FROM website_seo LIMIT 1";
+    
+    connection.query(checkQuery, (err, results) => {
+      if (err) {
+        connection.release();
+        console.error("❌ Error checking SEO data:", err);
+        return res.status(500).json({
+          success: false,
+          message: "Failed to update SEO data",
+          error: err.message
+        });
+      }
+
+      let query, params;
+      
+      if (results.length > 0 && results.length===1) {
+        // Update existing record
+        query = "UPDATE website_seo SET url = ?, pages = ? WHERE id = ?";
+        params = [url, JSON.stringify(pages), results[0].id];
+      } else {
+        // Insert new record
+        // query = "INSERT INTO website_seo (url, pages) VALUES (?, ?)";
+        // params = [url, JSON.stringify(pages)];
+        res.status(404).json({
+           success: false,
+          message: "Not Found",
+          error: "data does not exists"
+        })
+      }
+
+      connection.query(query, params, (err, updateResults) => {
+        connection.release();
+        
+        if (err) {
+          console.error("❌ Error updating SEO data:", err);
+          return res.status(500).json({
+            success: false,
+            message: "Failed to update SEO data",
+            error: err.message
+          });
+        }
+
+        res.json({
+          success: true,
+          message: "SEO data updated successfully",
+          data: {
+            url,
+            pages
+          }
+        });
+      });
+    });
+  });
+};

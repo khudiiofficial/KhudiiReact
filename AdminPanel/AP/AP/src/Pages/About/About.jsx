@@ -20,7 +20,7 @@ const ContentAdmin = () => {
   const [activeSection, setActiveSection] = useState('who_we_are');
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
-
+const [show,setshow]=useState('image')
   // Expert Team states
   const [editingExpert, setEditingExpert] = useState(null);
   const [expertForm, setExpertForm] = useState({
@@ -67,6 +67,18 @@ const ContentAdmin = () => {
   // Fetch all content
   const fetchAllContent = async () => {
     setLoading(true);
+    setExpertPreview('')
+    setExpertForm((pre)=>{
+      return {...pre,
+        imageFile:null
+      }
+    })
+    setNewSectionPreview('')
+    setNewSectionForm((pre)=>{
+      return {...pre,
+        imageFile:null
+      }
+    })
     try {
       const response = await api.get('/api/content');
       if (response.data.success) {
@@ -802,168 +814,185 @@ const ContentAdmin = () => {
           </div>
         );
 
-      case 'new_section':
-        return (
-          <div className={styles.crudSection}>
-            <form onSubmit={editingNewSection ? updateNewSection : createNewSection} className={styles.crudForm}>
-              <h3>{editingNewSection ? 'Edit Section' : 'Add New Section'}</h3>
+//       case 'new_section':
+//         return (
+//           <div className={styles.crudSection}>
+//             <form onSubmit={editingNewSection ? updateNewSection : createNewSection} className={styles.crudForm}>
+//               <h3>{editingNewSection ? 'Edit Section' : 'Add New Section'}</h3>
               
-              <div className={styles.formGroup}>
-                <label>Heading *</label>
-                <input
-                  type="text"
-                  value={newSectionForm.heading}
-                  onChange={(e) => handleNewSectionChange('heading', e.target.value)}
-                  required
-                />
-              </div>
+//               <div className={styles.formGroup}>
+//                 <label>Heading *</label>
+//                 <input
+//                   type="text"
+//                   value={newSectionForm.heading}
+//                   onChange={(e) => handleNewSectionChange('heading', e.target.value)}
+//                   required
+//                 />
+//               </div>
 
-              <div className={styles.formGroup}>
-                <label>Paragraphs</label>
-                {newSectionForm.paragraphs.map((paragraph, index) => (
-                  <div key={index} className={styles.arrayItem}>
-                    <textarea
-                      value={paragraph}
-                      onChange={(e) => {
-                        const newParagraphs = [...newSectionForm.paragraphs];
-                        newParagraphs[index] = e.target.value;
-                        handleNewSectionChange('paragraphs', newParagraphs);
-                      }}
-                      rows="2"
-                      placeholder="Enter paragraph"
-                    />
-                    {newSectionForm.paragraphs.length > 1 && (
-                      <button
-                        type="button"
-                        onClick={() => removeArrayItem('newSection', 'paragraphs', index)}
-                        className={styles.removeBtn}
-                      >
-                        Remove
-                      </button>
-                    )}
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  onClick={() => addArrayItem('newSection', 'paragraphs')}
-                  className={styles.addBtn}
-                >
-                  Add Paragraph
-                </button>
-              </div>
+//               <div className={styles.formGroup}>
+//                 <label>Paragraphs</label>
+//                 {newSectionForm.paragraphs.map((paragraph, index) => (
+//                   <div key={index} className={styles.arrayItem}>
+//                     <textarea
+//                       value={paragraph}
+//                       onChange={(e) => {
+//                         const newParagraphs = [...newSectionForm.paragraphs];
+//                         newParagraphs[index] = e.target.value;
+//                         handleNewSectionChange('paragraphs', newParagraphs);
+//                       }}
+//                       rows="2"
+//                       placeholder="Enter paragraph"
+//                     />
+//                     {newSectionForm.paragraphs.length > 1 && (
+//                       <button
+//                         type="button"
+//                         onClick={() => removeArrayItem('newSection', 'paragraphs', index)}
+//                         className={styles.removeBtn}
+//                       >
+//                         Remove
+//                       </button>
+//                     )}
+//                   </div>
+//                 ))}
+//                 <button
+//                   type="button"
+//                   onClick={() => addArrayItem('newSection', 'paragraphs')}
+//                   className={styles.addBtn}
+//                 >
+//                   Add Paragraph
+//                 </button>
+//               </div>
 
-              <div className={styles.formGroup}>
-                <label>Bullets Header</label>
-                <input
-                  type="text"
-                  value={newSectionForm.bullets_header}
-                  onChange={(e) => handleNewSectionChange('bullets_header', e.target.value)}
-                />
-              </div>
+//               <div className={styles.formGroup}>
+//                 <label>Bullets Header</label>
+//                 <input
+//                   type="text"
+//                   value={newSectionForm.bullets_header}
+//                   onChange={(e) => handleNewSectionChange('bullets_header', e.target.value)}
+//                 />
+//               </div>
 
-              <div className={styles.formGroup}>
-                <label>Bullets</label>
-                {newSectionForm.bullets.map((bullet, index) => (
-                  <div key={index} className={styles.arrayItem}>
-                    <input
-                      type="text"
-                      value={bullet}
-                      onChange={(e) => {
-                        const newBullets = [...newSectionForm.bullets];
-                        newBullets[index] = e.target.value;
-                        handleNewSectionChange('bullets', newBullets);
-                      }}
-                      placeholder="Enter bullet point"
-                    />
-                    {newSectionForm.bullets.length > 1 && (
-                      <button
-                        type="button"
-                        onClick={() => removeArrayItem('newSection', 'bullets', index)}
-                        className={styles.removeBtn}
-                      >
-                        Remove
-                      </button>
-                    )}
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  onClick={() => addArrayItem('newSection', 'bullets')}
-                  className={styles.addBtn}
-                >
-                  Add Bullet
-                </button>
-              </div>
+//               <div className={styles.formGroup}>
+//                 <label>Bullets</label>
+//                 {newSectionForm.bullets.map((bullet, index) => (
+//                   <div key={index} className={styles.arrayItem}>
+//                     <input
+//                       type="text"
+//                       value={bullet}
+//                       onChange={(e) => {
+//                         const newBullets = [...newSectionForm.bullets];
+//                         newBullets[index] = e.target.value;
+//                         handleNewSectionChange('bullets', newBullets);
+//                       }}
+//                       placeholder="Enter bullet point"
+//                     />
+//                     {newSectionForm.bullets.length > 1 && (
+//                       <button
+//                         type="button"
+//                         onClick={() => removeArrayItem('newSection', 'bullets', index)}
+//                         className={styles.removeBtn}
+//                       >
+//                         Remove
+//                       </button>
+//                     )}
+//                   </div>
+//                 ))}
+//                 <button
+//                   type="button"
+//                   onClick={() => addArrayItem('newSection', 'bullets')}
+//                   className={styles.addBtn}
+//                 >
+//                   Add Bullet
+//                 </button>
+//               </div>
+// <br />
+// Choose: <br />
+// <div className='flex items-center justify-center gap-2'>
+// <div className='flex items-center justify-items-end gap-2'>
+// <label htmlFor="img">image</label>
+// <input  type="radio" onChange={(e)=>{setshow(e.target.value)}} checked={show==='image'} value={'image'} name="choose" id="img" />
+// </div>
+// <div className='flex items-center justify-items-end gap-2'>
+// <label htmlFor="ved">Youtube vedio</label>
+// <input type="radio" onChange={(e)=>{setshow(e.target.value)}}  value={'vedio'} name="choose" id="ved" />
+// </div>
+// </div>
 
-              <div className={styles.formGroup}>
-                <label>YouTube Video ID</label>
-                <input
-                  type="text"
-                  value={newSectionForm.youtube_video_id}
-                  onChange={(e) => handleNewSectionChange('youtube_video_id', e.target.value)}
-                />
-                <YouTubePreview videoId={newSectionForm.youtube_video_id} />
-              </div>
+// {show==='vedio'&&
+//               <div className={styles.formGroup}>
+//                 <label>YouTube Video ID</label>
+//                 <input
+//                   type="text"
+//                   value={newSectionForm.youtube_video_id}
+//                   onChange={(e) => handleNewSectionChange('youtube_video_id', e.target.value)}
+//                 />
+//                 <YouTubePreview videoId={newSectionForm.youtube_video_id} />
+//               </div>
 
-              <div className={styles.formGroup}>
-                <label>Image</label>
-                <input
-                  type="file"
-                  ref={el => fileInputRefs.current.newSection = el}
-                  accept="image/*"
-                  onChange={(e) => handleFileSelect('newSection', 'imageFile', e)}
-                />
-                {(newSectionPreview || newSectionForm.imageFile) && (
-                  <div className={styles.imagePreview}>
-                    <h4>Image Preview:</h4>
-                    <img src={newSectionPreview} alt="Section Preview" />
-                  </div>
-                )}
-              </div>
+// }
 
-              <div className={styles.formActions}>
-                <button type="submit" className={styles.primaryBtn}>
-                  {editingNewSection ? 'Update Section' : 'Add Section'}
-                </button>
-                {editingNewSection && (
-                  <button type="button" onClick={resetNewSectionForm} className={styles.secondaryBtn}>
-                    Cancel
-                  </button>
-                )}
-              </div>
-            </form>
+//         {    show==='image'&&  <div className={styles.formGroup}>
+//                 <label>Image</label>
+//                 <input
+//                   type="file"
+//                   ref={el => fileInputRefs.current.newSection = el}
+//                   accept="image/*"
+//                   onChange={(e) => handleFileSelect('newSection', 'imageFile', e)}
+//                 />
+//                 {(newSectionPreview || newSectionForm.imageFile) && (
+//                   <div className={styles.imagePreview}>
+//                     <h4>Image Preview:</h4>
+//                     <img src={newSectionPreview} alt="Section Preview" />
+//                   </div>
+//                 )}
+//               </div>
+//               }
 
-            <div className={styles.itemsList}>
-              <h3>New Sections ({contentData.new_section.length})</h3>
-              {contentData.new_section.map((section) => (
-                <div key={section.id} className={styles.itemCard}>
-                  <div className={styles.itemContent}>
-                    <h4>{section.heading}</h4>
-                    <p>{Array.isArray(section.paragraphs) ? section.paragraphs[0] : section.paragraphs}</p>
-                    {section.youtube_video_id && (
-                      <YouTubePreview videoId={section.youtube_video_id} />
-                    )}
-                    {section.image_path && (
-                      <div className={styles.imagePreview}>
-                        <h5>Current Image:</h5>
-                        <img src={section.image_path} alt={section.heading} />
-                      </div>
-                    )}
-                  </div>
-                  <div className={styles.itemActions}>
-                    <button onClick={() => startEditNewSection(section)} className={styles.editBtn}>
-                      Edit
-                    </button>
-                    <button onClick={() => deleteNewSection(section.id)} className={styles.deleteBtn}>
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
+//               <div className={styles.formActions}>
+//                 <button type="submit" className={styles.primaryBtn}>
+//                   {editingNewSection ? 'Update Section' : 'Add Section'}
+//                 </button>
+//                 {editingNewSection && (
+//                   <button type="button" onClick={resetNewSectionForm} className={styles.secondaryBtn}>
+//                     Cancel
+//                   </button>
+//                 )}
+//               </div>
+//             </form>
 
+//             <div className={styles.itemsList}>
+//               <h3>New Sections ({contentData.new_section.length})</h3>
+//               {contentData.new_section.map((section) => (
+//                 <div key={section.id} className={styles.itemCard}>
+//                   <div className={styles.itemContent}>
+//                     <h4>{section.heading}</h4>
+//                     <p>{Array.isArray(section.paragraphs) ? section.paragraphs[0] : section.paragraphs}</p>
+//                     {section.youtube_video_id && (
+//                       <YouTubePreview videoId={section.youtube_video_id} />
+//                     )}
+//                     {section.image_path && (
+//                       <div className={styles.imagePreview}>
+//                         <h5>Current Image:</h5>
+//                         <img src={section.image_path} alt={section.heading} />
+//                       </div>
+//                     )}
+//                   </div>
+//                   <div className={styles.itemActions}>
+//                     <button onClick={() => startEditNewSection(section)} className={styles.editBtn}>
+//                       Edit
+//                     </button>
+//                     <button onClick={() => deleteNewSection(section.id)} className={styles.deleteBtn}>
+//                       Delete
+//                     </button>
+//                   </div>
+//                 </div>
+//               ))}
+//             </div>
+//           </div>
+//         );
+
+//  
       default:
         return null;
     }
@@ -997,7 +1026,10 @@ const ContentAdmin = () => {
         <div className={styles.sidebar}>
           <h3>Sections</h3>
           <nav className={styles.nav}>
-            {Object.keys(sectionTitles).map(section => (
+            {Object.keys(sectionTitles).map(section =>{
+              
+              if(sectionTitles[section]!=='New Sections'){
+                return(
               <button
                 key={section}
                 className={`${styles.navItem} ${activeSection === section ? styles.active : ''}`}
@@ -1005,7 +1037,7 @@ const ContentAdmin = () => {
               >
                 {sectionTitles[section]}
               </button>
-            ))}
+            )}})}
           </nav>
         </div>
 

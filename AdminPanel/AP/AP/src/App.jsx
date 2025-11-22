@@ -41,6 +41,7 @@ import VisionMissionAdmin from './Pages/vision/Vision'
 import StoriesAdmin from './Pages/SuccessStoriesDescription/SuccessStoriesDescription'
 import EventAdmin from './Pages/Event_description/Event_description'
 import ContentAdmin from './Pages/About/About'
+import SEOAdmin from './Pages/SEO/Seo'
 function App() {
 const location=useLocation()  
 const dispatch=useDispatch()
@@ -101,7 +102,8 @@ const dispatch=useDispatch()
           <Route path='storiesDescription' element={<StoriesAdmin/>}/>
           <Route path='eventDescription' element={<EventAdmin/>}/>
           <Route path='contentAdmin' element={<ContentAdmin/>}/>
-            
+          <Route path='seo' element={<SEOAdmin/>}/>
+           
           {/* <Route path="change-password" element={<ChangePassword />} /> */}
           <Route index element={<DashboardIndex/>} />
           

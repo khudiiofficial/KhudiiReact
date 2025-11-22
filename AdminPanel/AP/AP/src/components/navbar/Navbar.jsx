@@ -59,6 +59,7 @@ export default function Sidebar() {
     { path: "/dashboard/vision", label: "Vision" },
     { path: "/dashboard/storiesDescription", label: "Home Page Story Description" },
     { path: "/dashboard/contentAdmin", label: "About Page" },
+       { path: "/dashboard/seo", label: "SEO Management" }
   ];
 
   // const moreLinks = [
