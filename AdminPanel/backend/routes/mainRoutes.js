@@ -148,8 +148,13 @@ deleteNewSection,
 
 //seo
 getSEOData,
-updateSEOData
+updateSEOData,
+//footer
+getFooterContent,
+updateFooterContent,
+deleteFooterImage
 } from "../controllers/mainController.js";
+
 
 
 const router = express.Router();
@@ -311,22 +316,29 @@ router.put("/api/telephone",auth, updateTelephoneData);
 //about page
 
 // Get all content
-router.get("/api/content", getAllContent);
+router.get("/api/content", auth,getAllContent);
 
 // UPDATE operations for single-instance sections (Read & Update only)
-router.put("/api/content/section/:section", updateSection);
+router.put("/api/content/section/:section",auth, updateSection);
 
 // CRUD operations for Expert Team
-router.post("/api/content/expert-team", createExpertTeam);
-router.put("/api/content/expert-team/:id", updateExpertTeam);
+router.post("/api/content/expert-team",auth, createExpertTeam);
+router.put("/api/content/expert-team/:id",auth, updateExpertTeam);
 router.delete("/api/content/expert-team/:id", deleteExpertTeam);
 
 // CRUD operations for New Section
-router.post("/api/content/new-section", createNewSection);
-router.put("/api/content/new-section/:id", updateNewSection);
-router.delete("/api/content/new-section/:id", deleteNewSection);
+router.post("/api/content/new-section",auth, createNewSection);
+router.put("/api/content/new-section/:id",auth, updateNewSection);
+router.delete("/api/content/new-section/:id",auth, deleteNewSection);
 
 // seo 
-router.get("/api/seo", getSEOData);
-router.put("/api/seo", updateSEOData);
+router.get("/api/seo",auth, getSEOData);
+router.put("/api/seo",auth, updateSEOData);
+
+
+//footer
+
+router.get("/api/footer",auth, getFooterContent);
+router.put("/api/footer",auth, updateFooterContent);
+router.delete("/api/footer/image/:imageType",auth, deleteFooterImage); // Optional: DELETE /api/footer/image/logo or 
 export default router;

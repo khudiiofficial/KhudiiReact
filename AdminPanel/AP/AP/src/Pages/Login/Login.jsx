@@ -34,8 +34,12 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-100 to-gray-300">
-      <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-8">
+    <div style={{backgroundImage:'url(/khudiilogo.png)',
+      backgroundSize:'cover',
+      backgroundRepeat:'no-repeat',
+      backgroundPosition:'center'
+    }} className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-100 to-gray-300">
+      <div className=" opacity-90 hover:opacity-100 w-full max-w-md bg-white shadow-lg rounded-2xl p-8">
         <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Admin Panel Login
         </h1>

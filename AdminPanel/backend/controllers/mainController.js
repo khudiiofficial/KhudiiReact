@@ -7436,3 +7436,285 @@ export const updateSEOData = (req, res) => {
     });
   });
 };
+
+// footer and other images
+
+// Get footer content (single instance)
+export const getFooterContent = (req, res) => {
+  const query = "SELECT * FROM footercontents LIMIT 1";
+  
+  db1.query(query, (err, results) => {
+    if (err) {
+      console.error("❌ Error fetching footer content:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch footer content",
+        error: err.message
+      });
+    }
+    
+    // If no data exists, return empty object
+    const data = results.length > 0 ? results[0] : {
+      id: null,
+      logoimage: "",
+      pageimage: "",
+      footertext: "",
+      email: "",
+      location: "",
+      created_at: null,
+      updated_at: null
+    };
+    
+    res.json({
+      success: true,
+      data: data
+    });
+  });
+};
+
+// Update footer content (single instance)
+export const updateFooterContent = (req, res) => {
+  const { footertext, email, location, logoimage_base64,locationinfo, pageimage_base64 } = req.body;
+
+  db1.getConnection((err, connection) => {
+    if (err) {
+      console.error("❌ Database connection failed:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Database connection failed",
+        error: err.message
+      });
+    }
+
+    // Get current footer data first
+    connection.query("SELECT * FROM footercontents LIMIT 1", async (err, currentResults) => {
+      if (err) {
+        connection.release();
+        console.error("❌ Error fetching current footer data:", err);
+        return res.status(500).json({
+          success: false,
+          message: "Failed to fetch current footer data",
+          error: err.message
+        });
+      }
+
+      const currentFooter = currentResults.length > 0 ? currentResults[0] : null;
+      let logoimage = currentFooter ? currentFooter.logoimage : "";
+      let pageimage = currentFooter ? currentFooter.pageimage : "";
+
+      // Process logo image upload if provided
+      const processLogoImage = () => {
+        return new Promise(async (resolve, reject) => {
+          if (!logoimage_base64) {
+            resolve(logoimage);
+            return;
+          }
+
+          try {
+            const matches = logoimage_base64.match(/^data:(.+);base64,(.+)$/);
+            if (matches) {
+              const ext = matches[1].split("/")[1] || "png";
+              const fileName = `footer-logo-${uniqueImageName(ext)}`;
+              const fileBuffer = Buffer.from(matches[2], "base64");
+              
+              // Upload new logo
+              const uploadedUrl = await uploadToFTP(fileName, fileBuffer);
+              
+              // Delete old logo if exists
+              if (currentFooter && currentFooter.logoimage) {
+                await deleteImageFile(currentFooter.logoimage);
+              }
+              
+              logoimage = uploadedUrl;
+            }
+            resolve(logoimage);
+          } catch (ftpError) {
+            reject(ftpError);
+          }
+        });
+      };
+
+      // Process page image upload if provided
+      const processPageImage = () => {
+        return new Promise(async (resolve, reject) => {
+          if (!pageimage_base64) {
+            resolve(pageimage);
+            return;
+          }
+
+          try {
+            const matches = pageimage_base64.match(/^data:(.+);base64,(.+)$/);
+            if (matches) {
+              const ext = matches[1].split("/")[1] || "png";
+              const fileName = `footer-page-${uniqueImageName(ext)}`;
+              const fileBuffer = Buffer.from(matches[2], "base64");
+              
+              // Upload new page image
+              const uploadedUrl = await uploadToFTP(fileName, fileBuffer);
+              
+              // Delete old page image if exists
+              if (currentFooter && currentFooter.pageimage) {
+                await deleteImageFile(currentFooter.pageimage);
+              }
+              
+              pageimage = uploadedUrl;
+            }
+            resolve(pageimage);
+          } catch (ftpError) {
+            reject(ftpError);
+          }
+        });
+      };
+
+      // Process both images in parallel
+      Promise.all([processLogoImage(), processPageImage()])
+        .then(([finalLogo, finalPage]) => {
+          // Prepare update data
+          const updateData = {
+            logoimage: finalLogo || null,
+            pageimage: finalPage || null,
+            footertext: footertext || null,
+            email: email || null,
+            location: location || null,
+            locationinfo:locationinfo ||null
+          };
+
+          let query, params;
+
+          if (currentFooter) {
+            // Update existing record
+            query = "UPDATE footercontents SET logoimage = ?, pageimage = ?, footertext = ?, email = ?, location = ?,locationinfo=? WHERE id = ?";
+            params = [
+              updateData.logoimage,
+              updateData.pageimage,
+              updateData.footertext,
+              updateData.email,
+              updateData.location,
+              updateData.locationinfo,
+              currentFooter.id
+            ];
+          } else {
+            // Insert new record (first time setup)
+          res.status(400).json({
+                success: false,
+                message: "content Not found deleted",
+                error: " content Not found or deleted"
+              });
+          }
+
+          // Execute the query
+          connection.query(query, params, (err, results) => {
+            connection.release();
+            
+            if (err) {
+              console.error("❌ Error updating footer content:", err);
+              return res.status(500).json({
+                success: false,
+                message: "Failed to update footer content",
+                error: err.message
+              });
+            }
+
+            res.json({
+              success: true,
+              message: "Footer content updated successfully",
+              data: updateData
+            });
+          });
+        })
+        .catch((ftpError) => {
+          connection.release();
+          console.error("❌ FTP upload error:", ftpError);
+          return res.status(500).json({
+            success: false,
+            message: "Failed to upload images",
+            error: ftpError.message
+          });
+        });
+    });
+  });
+};
+
+// Delete footer images
+export const deleteFooterImage = (req, res) => {
+  const { imageType } = req.params;
+
+  db1.getConnection((err, connection) => {
+    if (err) {
+      console.error("❌ Database connection failed:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Database connection failed",
+        error: err.message
+      });
+    }
+
+    // Get current footer data
+    connection.query("SELECT * FROM footercontents LIMIT 1", async (err, currentResults) => {
+      if (err) {
+        connection.release();
+        console.error("❌ Error fetching current footer data:", err);
+        return res.status(500).json({
+          success: false,
+          message: "Failed to fetch footer data",
+          error: err.message
+        });
+      }
+
+      if (currentResults.length === 0) {
+        connection.release();
+        return res.status(404).json({
+          success: false,
+          message: "Footer content not found"
+        });
+      }
+
+      const currentFooter = currentResults[0];
+      let updateQuery;
+      let imageUrl;
+
+      if (imageType === 'logo') {
+        imageUrl = currentFooter.logoimage;
+        updateQuery = "UPDATE footercontents SET logoimage = NULL WHERE id = ?";
+      } else if (imageType === 'page') {
+        imageUrl = currentFooter.pageimage;
+        updateQuery = "UPDATE footercontents SET pageimage = NULL WHERE id = ?";
+      } else {
+        connection.release();
+        return res.status(400).json({
+          success: false,
+          message: "Invalid image type. Use 'logo' or 'page'"
+        });
+      }
+
+      // Delete image from FTP if it exists
+      if (imageUrl) {
+        try {
+          await deleteImageFile(imageUrl);
+        } catch (ftpError) {
+          console.error("❌ Error deleting image from FTP:", ftpError);
+          // Continue with database update even if FTP delete fails
+        }
+      }
+
+      // Update database
+      connection.query(updateQuery, [currentFooter.id], (err, results) => {
+        connection.release();
+        
+        if (err) {
+          console.error("❌ Error updating footer:", err);
+          return res.status(500).json({
+            success: false,
+            message: "Failed to delete image",
+            error: err.message
+          });
+        }
+
+        res.json({
+          success: true,
+          message: `${imageType} image deleted successfully`
+        });
+      });
+    });
+  });
+};

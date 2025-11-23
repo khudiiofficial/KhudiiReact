@@ -42,6 +42,7 @@ import StoriesAdmin from './Pages/SuccessStoriesDescription/SuccessStoriesDescri
 import EventAdmin from './Pages/Event_description/Event_description'
 import ContentAdmin from './Pages/About/About'
 import SEOAdmin from './Pages/SEO/Seo'
+import FooterAdmin from './Pages/footer/Footer'
 function App() {
 const location=useLocation()  
 const dispatch=useDispatch()
@@ -103,7 +104,8 @@ const dispatch=useDispatch()
           <Route path='eventDescription' element={<EventAdmin/>}/>
           <Route path='contentAdmin' element={<ContentAdmin/>}/>
           <Route path='seo' element={<SEOAdmin/>}/>
-           
+           <Route path='footer' element={<FooterAdmin/>}/>
+          
           {/* <Route path="change-password" element={<ChangePassword />} /> */}
           <Route index element={<DashboardIndex/>} />
           
