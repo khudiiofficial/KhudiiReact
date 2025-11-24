@@ -13,7 +13,7 @@ const Golden_people = ({con,url}) => {
         image="/golden-people.png.webp"
       />
        <PageHeader 
-            title="Golden_people"
+            title="Golden People"
             breadcrumbs={[
               { label: "Home", link: "/" },
               { label: "Golden People" }

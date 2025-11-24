@@ -154,7 +154,7 @@ const [val,setval]=useState('')
     <section className="w-full max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
         {/* Header Section */}
-        <div className="bg-gradient-to-r from-blue-900 to-blue-700 px-8 py-6">
+        <div className="bg-gradient-to-br from-[#E3001C] to-[#FF6B6B] px-8 py-6">
           <h2 className="text-3xl font-bold text-white text-center">Job Application</h2>
           <p className="text-blue-100 text-center mt-2">
             Join our team and make a difference
@@ -385,7 +385,7 @@ const [val,setval]=useState('')
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-blue-900 hover:bg-blue-800 text-white py-4 px-6 rounded-xl font-semibold text-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full bg-[#e7001e] hover:bg-[#02236e] text-white py-4 px-6 rounded-xl font-semibold text-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <>

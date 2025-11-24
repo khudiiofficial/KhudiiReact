@@ -138,16 +138,16 @@ return (
 
     // 2nd Code
     <div className="w-full">
-  <div className="max-w-[1240px] w-full mx-auto px-6 sm:px-6 py-6 sm:py-6">
+  <div className="max-w-[1240px] w-full mx-auto">
     {/* Header */}
-    <div className="mb-8 text-center">
+    <div className="text-center">
       {location.pathname !== '/blogs' && (
-        <h2 className="text-2xl sm:text-3xl font-bold text-[#02236e]">Blogs</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold text-[#02236e] p-4 md:p-8 lg:p-10">Blogs</h2>
       )}
     </div>
 
     {/* Blog Grid */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 md:px-4 sm:px-6 gap-6 pb-8">
       {visiblePosts.map((post, index) => (
         <article
         onClick={() => nav(`/Blog/${post.slug}`, { state: { id: post.id } })}
@@ -169,7 +169,7 @@ return (
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:bg-opacity-40 transition-all duration-300">
               <button
                 aria-label="Read more about this blog post"
-                className="flex items-center justify-center w-12 h-12 bg-white text-blue-600 rounded-full shadow-lg hover:bg-blue-50 transition-colors"
+                className="flex items-center justify-center w-12 h-12 bg-white text-[#222222] rounded-full shadow-lg hover:bg-blue-50 transition-colors"
               >
               </button>
             </div>
@@ -178,7 +178,7 @@ return (
           {/* Content */}
           <div className="p-5 sm:p-6">
             <header>
-              <h3 className="text-lg sm:text-xl font-semibold text-black-700 mb-0 line-clamp-2">
+              <h3 className={`blog_title text-lg sm:text-xl font-semibold text-black-700 mb-0 line-clamp-2 lg:h-[55px]`}>
                 <button
                   aria-label="Read more about this blog post"
                   className="transition-colors text-left block"

@@ -14,7 +14,7 @@ const Vedios = ({con,url}) => {
       />
       
      <PageHeader 
-            title="Vedios"
+            title="Videos"
             breadcrumbs={[
               { label: "Home", link: "/" },
               { label: "Vedios" }

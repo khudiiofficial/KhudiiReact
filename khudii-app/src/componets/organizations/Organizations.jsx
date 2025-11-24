@@ -104,9 +104,9 @@ function OrganizationsSection() {
 // 2nd Code
 
 return (
-    <section className="bg-[#f8fafc] py-6 sm:pt-3 sm:pb-3 md:pt-3 md:pb-3 lg:pt-5 lg:pb-5">
+    <section className="bg-[#f8fafc]">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-wrap items-center mb-8 sm:mb-10">
+        <div className="flex flex-wrap items-center">
   {/* Left spacer — same width as right link */}
   <div className={`${styles.org_sec_left} flex-shrink-0 invisible`}>
     <span className="inline-block font-semibold text-[#E3001C]">
@@ -116,7 +116,7 @@ return (
 
   {/* Centered heading */}
   <div className="flex-1 text-center">
-    <h2 className="text-2xl sm:text-3xl font-bold text-[#022279]">
+    <h2 className="text-2xl sm:text-3xl font-bold text-[#022279] p-4 md:p-8 lg:p-10">
       Organizations
     </h2>
   </div>
@@ -142,18 +142,18 @@ return (
 </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-8">
           {organizations.length > 0 ? (
             organizations.map((org, idx) => (
               <article
               onClick={() => nav(`/organization/${org.slug}`, { state: { id: org.id } })}
                 key={org.id || idx}
-                className="cursor-pointer group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
+                className="cursor-pointer group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
                 role="article"
                 aria-labelledby={`org-title-${org.id || idx}`}
               >
                 {/* Image */}
-                <div className="p-2 w-full overflow-hidden bg-white rounded-t-xl">
+                <div className="w-full overflow-hidden bg-white rounded-t-xl">
   <img
     src={org.introductory_image_path || '/placeholder-org.webp'}
     alt={org.name || 'Organization logo'}

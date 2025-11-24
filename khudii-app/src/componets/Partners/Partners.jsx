@@ -133,16 +133,16 @@ call()
 }, [arr]);
 
   return (
-    <div className="w-full flex flex-col bg-[#f0f0f0] items-center py-3 md:py-6">
+    <div className="w-full flex flex-col bg-[#f0f0f0] items-center">
       {/* Heading */}
-      <h2 className="text-2xl sm:text-3xl font-bold text-[#02236e] p-6">
+      <h2 className="text-2xl sm:text-3xl font-bold text-[#02236e] p-4 md:p-8 lg:p-10">
         Our Partners
       </h2>
 
       {/* Grid of Partners */}
       {/* 2nd code */}
       <div>
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-5 md:px-5 lg:px-0 flex flex-wrap justify-center items-center gap-2 sm:gap-2 md:gap-4">
+      <div className="max-w-[1240px] mx-auto px-4 flex flex-wrap justify-center items-center gap-2 sm:gap-2 md:gap-4 pb-8">
         {arr.map((ele, index) => (
           <div
             key={index}

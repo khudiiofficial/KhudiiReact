@@ -36,8 +36,8 @@ get()
                   { label: "Certifications" }
                 ]}
               />
-    <section className="w-full flex justify-center py-10 bg-white">
-      <div className="max-w-4xl w-full px-4 flex flex-col items-center gap-8 text-center">
+    <section className="w-[1240px] flex justify-center py-10 bg-white">
+      <div className="w-full w-full flex flex-col items-center gap-8 text-center">
         {/* Heading */}
         <h2 className="text-2xl md:text-3xl font-semibold text-gray-800">
           Securities and Exchange Commission of Pakistan
@@ -61,8 +61,8 @@ get()
           {cert.map((ele,idx)=>{
 return(
    <img
-   width={212}
-   height={300}
+   width={300}
+   height={425}
             
             src={ele.image_url}
             alt="Khudii Certificate"

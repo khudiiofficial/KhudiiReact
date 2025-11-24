@@ -363,9 +363,6 @@
   line-height: 1.5em;
 }
 
-
-
-
 .errorContainer {
   text-align: center;
   padding: 4rem 2rem;
@@ -406,7 +403,7 @@
 }
 
 
-@media (max-width:480px){
+@media (max-width:576px){
   .blog-card-inner{
   width: 100%;
   }

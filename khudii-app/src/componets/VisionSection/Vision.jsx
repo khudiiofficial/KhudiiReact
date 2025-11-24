@@ -73,9 +73,9 @@ const call=async()=>{
 call();
   },[])
   return (
-    <section className="py-6 sm:py-6 md:py-6">
-      <div className="max-w-[1240px] mx-auto px-2 sm:px-3">
-        <div className="flex flex-wrap justify-center gap-4 sm:gap-8 md:gap-6 pb-4 md:pb-8">
+    <section className="pt-6 pb-8 px-5">
+      <div className="max-w-[1240px] mx-auto">
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-8 md:gap-6">
           {items.map((item, idx) => (
             <div
               key={idx}

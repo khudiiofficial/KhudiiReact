@@ -37,11 +37,25 @@
     position: relative;
 }
 
-.class4 {
+.event_btn1 {
     padding: 12px 24px;
     border-radius: 25px;
     background: linear-gradient(135deg, #E3001C 0%, #FF6B6B 100%);
-    margin-top: 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    color: white;
+    font-weight: 600;
+    border: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.event_btn2 {
+    padding: 12px 24px;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #022279 0%, #3B82F6 100%);
+    margin-top: 10px;
     cursor: pointer;
     color: white;
     font-weight: 600;
@@ -193,7 +207,12 @@ button>span{
 }
 
 /* Mobile Screens */
-@media (max-width: 480px) {
+@media (max-width: 576px) {
+    .event_btn1, .event_btn2 {
+        padding: 5px 10px;
+        align-items: center;
+        justify-content: center;
+    }
     .class1 {
         width: 100%;
         max-width: 100%;

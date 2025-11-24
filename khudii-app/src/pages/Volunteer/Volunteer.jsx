@@ -153,7 +153,7 @@ const [val,setval]=useState('')
     <section className="w-full max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
         {/* Header Section */}
-        <div className="bg-gradient-to-r from-blue-900 to-blue-700 px-8 py-6">
+        <div className="bg-gradient-to-br from-[#E3001C] to-[#FF6B6B] px-8 py-6">
           <h2 className="text-3xl font-bold text-white text-center">Become A Volunteer</h2>
           <p className="text-blue-100 text-center mt-2">
             Join our mission and make a difference in your community
@@ -173,7 +173,7 @@ const [val,setval]=useState('')
               </div>
             )}
             {serverError && (
-              <div className="text-sm text-red-800 bg-red-50 border border-red-200 p-4 rounded-lg">
+              <div className="text-sm text-[#e7001e] bg-red-50 border border-red-200 p-4 rounded-lg">
                 {serverError}
               </div>
             )}
@@ -183,7 +183,7 @@ const [val,setval]=useState('')
               {/* Name Field */}
               <div className="flex flex-col">
                 <label className="text-sm font-semibold text-gray-700 mb-2">
-                  Name <span className="text-red-500">*</span>
+                  Name <span className="text-[#e7001e]">*</span>
                 </label>
                 <input
                   {...register("name", { 
@@ -199,14 +199,14 @@ const [val,setval]=useState('')
                   placeholder="Your full name"
                 />
                 {errors.name && (
-                  <span className="text-xs text-red-500 mt-1">{errors.name.message}</span>
+                  <span className="text-xs text-[#e7001e] mt-1">{errors.name.message}</span>
                 )}
               </div>
 
               {/* Email Field */}
               <div className="flex flex-col">
                 <label className="text-sm font-semibold text-gray-700 mb-2">
-                  Email <span className="text-red-500">*</span>
+                  Email <span className="text-[#e7001e]">*</span>
                 </label>
                 <input
                   type="email"
@@ -225,7 +225,7 @@ const [val,setval]=useState('')
                   placeholder="your.email@example.com"
                 />
                 {errors.email && (
-                  <span className="text-xs text-red-500 mt-1">{errors.email.message}</span>
+                  <span className="text-xs text-[#e7001e] mt-1">{errors.email.message}</span>
                 )}
               </div>
             </div>
@@ -235,7 +235,7 @@ const [val,setval]=useState('')
               {/* Phone Field */}
               <div className="flex flex-col">
                 <label className="text-sm font-semibold text-gray-700 mb-2">
-                  Phone <span className="text-red-500">*</span>
+                  Phone <span className="text-[#e7001e]">*</span>
                 </label>
                 <div ref={phoneInputRef} className="relative">
                   <div className="flex">
@@ -299,7 +299,7 @@ const [val,setval]=useState('')
                   )}
                 </div>
                 {errors.phone && (
-                  <span className="text-xs text-red-500 mt-1">{errors.phone.message}</span>
+                  <span className="text-xs text-[#e7001e] mt-1">{errors.phone.message}</span>
                 )}
                 
                 {/* Hidden fields for country data */}
@@ -311,7 +311,7 @@ const [val,setval]=useState('')
               {/* Contact Time Field */}
               <div className="flex flex-col">
                 <label className="text-sm font-semibold text-gray-700 mb-2">
-                  Time To Contact You <span className="text-red-500">*</span>
+                  Time To Contact You <span className="text-[#e7001e]">*</span>
                 </label>
                 <input
                   {...register("contactTime", {
@@ -323,7 +323,7 @@ const [val,setval]=useState('')
                   placeholder="e.g., Weekdays 2-5 PM, Saturday morning"
                 />
                 {errors.contactTime && (
-                  <span className="text-xs text-red-500 mt-1">{errors.contactTime.message}</span>
+                  <span className="text-xs text-[#e7001e] mt-1">{errors.contactTime.message}</span>
                 )}
                 <div className="text-xs text-gray-500 mt-1">
                   Let us know when you're available for a call
@@ -352,7 +352,7 @@ const [val,setval]=useState('')
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-blue-900 hover:bg-blue-800 text-white py-4 px-6 rounded-xl font-semibold text-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full bg-[#e7001e] hover:bg-[#02236e] text-white py-4 px-6 rounded-xl font-semibold text-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <>
@@ -391,7 +391,7 @@ const [val,setval]=useState('')
               
               <button
                 onClick={() => setShowSuccessModal(false)}
-                className="w-full bg-blue-900 text-white py-3 px-6 rounded-xl font-semibold hover:bg-blue-800 transition-colors"
+                className="w-full bg-[#e7001e] text-white py-3 px-6 rounded-xl font-semibold hover:bg-[#02236e] transition-colors"
               >
                 Close
               </button>

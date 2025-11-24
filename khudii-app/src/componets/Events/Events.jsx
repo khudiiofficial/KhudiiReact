@@ -541,20 +541,20 @@ call();
 // 2nd code
 
 return (
-    <section ref={sectionRef} className="bg-white">
+    <section ref={sectionRef} className="bg-white pb-6">
       <div className="max-w-[1240px] mx-auto px-4">
         {/* Section Header */}
-        <div className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'} transition-opacity duration-700 py-8`}>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#02236e] text-center">
+        <div className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'} transition-opacity duration-700`}>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#02236e] text-center pt-6 md:pt-8 lg:pt-10">
             News & Events
           </h2>
-          <p className="text-gray-600 text-lg md:text-xl max-w-4xl mx-auto text-center animate-slide-in-right">
+          <p className="text-gray-600 text-lg md:text-xl max-w-4xl mx-auto text-center animate-slide-in-right pb-6 md:pb-8 lg:pb-10">
             Watch highlights from our partner organizations and community events.
           </p>
         </div>
 
         {/* Events Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-8">
           {events.map((evt, idx) => (
             <div
               key={evt.id || idx}
@@ -604,7 +604,7 @@ return (
                 )}
               </div>
 
-              <div className="p-5 sm:p-6">
+              <div className="pt-8 pb-8">
                 <h3 className="text-lg sm:text-xl font-semibold text-gray-800 group-hover:text-[#02236e] transition-colors duration-300 line-clamp-2">
                   {evt.title}
                 </h3>
@@ -613,7 +613,7 @@ return (
           ))}
         </div>
         {/* Nasf e Mutmainna Img */}
-        <div className="max-w-[3/4] lg:col-span-1 order-1 lg:order-2 flex justify-center lg:pt-4">
+        <div className="max-w-[3/4] lg:col-span-1 order-1 lg:order-2 flex justify-center lg:mt-6">
               <img 
                 src={items.imagepath1}
                 alt="Community members receiving support from EHDI Foundation" 
@@ -622,8 +622,8 @@ return (
               />
             </div>
         {/* CTA Section */}
-        <div className={`max-w-[1240px] mx-auto px-4 sm:px-6 mt-6 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'} transition-opacity duration-700`}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
+        <div className={`max-w-[1240px] mx-auto px-4 sm:px-2 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'} transition-opacity duration-700`}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-4 items-center">
             {/* Text Content */}
             <div className="max-w-[100%] lg:col-span-1 order-2 lg:order-1">
               <div className="bg-gradient-to-r from-gray-50 to-white p-5 sm:p-6 md:p-4 rounded-xl border-l-4 border-[#E3001C] shadow-sm hover:shadow-md transition-shadow duration-300">
@@ -634,10 +634,10 @@ return (
                 <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 justify-center xs:justify-start">
                   <Link to="/contribute-your-story/">
                     <button 
-                      className="bg-gradient-to-r from-[#E3001C] to-[#FF6B6B] text-white px-5 py-3 sm:px-6 sm:py-3.5 rounded-full font-medium hover:from-[#FF6B6B] hover:to-[#E3001C] transform hover:scale-[1.03] transition-all duration-300 shadow hover:shadow-md whitespace-nowrap"
-                      aria-label="Contribute your story"
+                      className={`${styles.event_btn1} text-white px-5 py-3 sm:px-6 sm:py-3.5 rounded-full font-medium hover:from-[#FF6B6B] hover:to-[#E3001C] transform hover:scale-[1.03] transition-all duration-300 shadow hover:shadow-md whitespace-nowrap"
+                      aria-label="Contribute your story`}
                     >
-                      <span className="text-sm sm:text-base">Contribute your story</span>
+                      <span className="text-sm sm:text-base">Contribute your Story</span>
                       <svg className="w-4 h-4 sm:w-4.5 sm:h-4.5 ml-1.5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
@@ -645,7 +645,7 @@ return (
                   </Link>
                   <Link to="/donate-now/">
                     <button 
-                      className="bg-gradient-to-r from-[#022279] to-[#3B82F6] text-white px-5 py-3 sm:px-6 sm:py-3.5 rounded-full font-medium hover:from-[#3B82F6] hover:to-[#022279] transform hover:scale-[1.03] transition-all duration-300 shadow hover:shadow-md whitespace-nowrap"
+                      className={`${styles.event_btn2} text-white px-5 py-3 sm:px-6 sm:py-3.5 rounded-full font-medium hover:from-[#3B82F6] hover:to-[#022279] transform hover:scale-[1.03] transition-all duration-300 shadow hover:shadow-md whitespace-nowrap`}
                       aria-label="Donate Now"
                     >
                       <span className="text-sm sm:text-base">Donate Now</span>
