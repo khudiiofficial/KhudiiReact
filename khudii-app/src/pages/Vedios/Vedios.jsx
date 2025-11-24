@@ -17,7 +17,7 @@ const Vedios = ({con,url}) => {
             title="Videos"
             breadcrumbs={[
               { label: "Home", link: "/" },
-              { label: "Vedios" }
+              { label: "Videos" }
             ]}
           />
 
