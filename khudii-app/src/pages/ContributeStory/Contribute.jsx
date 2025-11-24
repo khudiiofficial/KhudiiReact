@@ -7,7 +7,7 @@ import axios from "axios";
 import SEO from "../../componets/Helmet/Helmet";
 const API_URL = import.meta.env.VITE_BACKEND_PATH;
 
-export default function ContributeStory() {
+export default function ContributeStory({con,url}) {
   const {
     register,
     handleSubmit,
@@ -133,10 +133,10 @@ if(res.status===200){
   return (
     <>
    <SEO 
-        title="Share Your Story - Khudii Pakistan | Contribute Your Experience"
-        description="Share your inspiring story with Khudii - Pakistan's digital welfare platform. Contribute as an individual or organization and inspire others with your journey of making a difference."
-        keywords="share story khudii, contribute story pakistan, welfare stories, inspirational stories, community experiences, khudii stories, personal journey, organization stories, social impact stories"
-        url="https://khudii.com/contribute-your-story"
+        title={con?.meta_title||"Share Your Story - Khudii Pakistan | Contribute Your Experience"}
+        description={con?.meta_description||"Share your inspiring story with Khudii - Pakistan's digital welfare platform. Contribute as an individual or organization and inspire others with your journey of making a difference."}
+        keywords={con?.meta_keywords||"share story khudii, contribute story pakistan, welfare stories, inspirational stories, community experiences, khudii stories, personal journey, organization stories, social impact stories"}
+        url={`${url}/contribute-your-story`}
         type="website"
       />
 

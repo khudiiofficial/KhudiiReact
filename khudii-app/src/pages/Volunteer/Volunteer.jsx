@@ -7,7 +7,7 @@ import PageHeader from "../../componets/PageHeader/PageHeader";
 import SEO from "../../componets/Helmet/Helmet";
 const API_URL = import.meta.env.VITE_BACKEND_PATH;
 
-export default function VolunteerForm() {
+export default function VolunteerForm({con,url}) {
   const {
     register,
     handleSubmit,
@@ -136,10 +136,10 @@ const [val,setval]=useState('')
   return (
     <>
         <SEO 
-        title="Volunteer with Khudii Pakistan | Make a Difference in Your Community"
-        description="Join Khudii as a volunteer and help transform lives across Pakistan. Contribute your time and skills to support healthcare, education, and community welfare initiatives."
-        keywords="khudii volunteer, welfare volunteering, pakistan charity volunteer, community service, humanitarian work, volunteer opportunities, social work volunteer, khudii volunteer program"
-        url="https://khudii.com/volunteer"
+        title={con?.meta_title||"Volunteer with Khudii Pakistan | Make a Difference in Your Community"}
+        description={con?.meta_description||"Join Khudii as a volunteer and help transform lives across Pakistan. Contribute your time and skills to support healthcare, education, and community welfare initiatives."}
+        keywords={con?.meta_keywords||"khudii volunteer, welfare volunteering, pakistan charity volunteer, community service, humanitarian work, volunteer opportunities, social work volunteer, khudii volunteer program"}
+        url={`${url}/volunteer`}
         type="website"
       />
      <PageHeader 

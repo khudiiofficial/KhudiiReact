@@ -1,15 +1,15 @@
 import React from 'react'
 import PageHeader from '../../componets/PageHeader/PageHeader'
 import SEO from '../../componets/Helmet/Helmet'
-const Golden_people = () => {
+const Golden_people = ({con,url}) => {
   return (
     <>
 
          <SEO 
-        title="Golden People - Inspiring Stories | Khudii Community Heroes"
-        description="Discover the inspiring stories of Golden People - community heroes and changemakers making a difference across Pakistan. Coming soon on Khudii's platform."
-        keywords="golden people, community heroes, inspiring stories, changemakers pakistan, social impact stories, khudii heroes, community leaders"
-        url="https://khudii.com/golden-people"
+        title={con?.meta_title||"Golden People - Inspiring Stories | Khudii Community Heroes"}
+        description={con?.meta_description||"Discover the inspiring stories of Golden People - community heroes and changemakers making a difference across Pakistan. Coming soon on Khudii's platform."}
+        keywords={con?.meta_keywords||"golden people, community heroes, inspiring stories, changemakers pakistan, social impact stories, khudii heroes, community leaders"}
+        url={`${url}/golden-people`}
         image="/golden-people.png.webp"
       />
        <PageHeader 

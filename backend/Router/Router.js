@@ -1,5 +1,5 @@
 import express from 'express'
-import { createContactInquiry,AddVolunteer, getAllBlogs, getAllorganization, getSmilarItems, getSocials, getSpecificItem,saveContacts, ApplyForJob, ContributeStory, Donation, getsuccessstories, getAllVideos,getAllTopbarContents,getAllCertifications,getAllTestimonials,getAllEvents,getAllSectors,getCBN,getAllCarouselImages,getWelcomeSection,getAllVisionMissionItems,getStoriesData,getEventData,getTelephoneData,getFooterContent } from '../controller/index.js';
+import { createContactInquiry,AddVolunteer, getAllBlogs, getAllorganization, getSmilarItems, getSocials, getSpecificItem,saveContacts, ApplyForJob, ContributeStory, Donation, getsuccessstories, getAllVideos,getAllTopbarContents,getAllCertifications,getAllTestimonials,getAllEvents,getAllSectors,getCBN,getAllCarouselImages,getWelcomeSection,getAllVisionMissionItems,getStoriesData,getEventData,getTelephoneData,getFooterContent,getAllContent,getSEOData } from '../controller/index.js';
 import { getAllIcons } from '../controller/index.js';
 import { getSpecificBlog } from '../controller/index.js';
 import { itemByCategory } from '../controller/index.js';
@@ -34,5 +34,7 @@ Router.get("/api/vision-mission", getAllVisionMissionItems);
 Router.get("/api/stories", getStoriesData);
 Router.get("/api/events", getEventData);
 Router.get("/api/telephone",getTelephoneData);
-Router.get('/api/footer',getFooterContent)
+Router.get('/api/footer',getFooterContent);
+Router.get('/api/getabout',getAllContent);
+Router.get('/api/seo',getSEOData)
 export default Router

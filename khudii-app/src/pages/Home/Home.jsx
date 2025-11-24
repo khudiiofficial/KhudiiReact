@@ -12,15 +12,16 @@ import Blogs from '../../componets/Blogs/Blogs'
 import FacebookPage from '../../componets/facebookCom/Facebook'
 import SEO from '../../componets/Helmet/Helmet'
 
-const HomePage = () => {
+const HomePage = ({con,url}) => {
+
   return (
 
     <>
       <SEO 
-        title="Khudii - Pakistan's Largest Digital Welfare Platform | Community Support"
-        description="Khudii is Pakistan's premier digital welfare platform connecting donors, volunteers, and organizations across health, education, autism support, orphan care, and community development programs. Join us in creating lasting change."
-        keywords="khudii pakistan, digital welfare platform, charity donors, volunteer opportunities, health programs pakistan, education support, autism care, orphanage support, visually impaired assistance, community development, social welfare, pakistan charity organizations"
-        url="https://khudii.com"
+        title={con?.meta_titile ||"Khudii - Pakistan's Largest Digital Welfare Platform | Community Support"}
+        description={con?.meta_description || "Khudii is Pakistan's premier digital welfare platform connecting donors, volunteers, and organizations across health, education, autism support, orphan care, and community development programs. Join us in creating lasting change."}
+        keywords={con?.meta_keywords||"khudii pakistan, digital welfare platform, charity donors, volunteer opportunities, health programs pakistan, education support, autism care, orphanage support, visually impaired assistance, community development, social welfare, pakistan charity organizations"}
+        url={ url||"https://khudii.com"}
         image="/Khudii.webp"
       />
     <Crousel/>

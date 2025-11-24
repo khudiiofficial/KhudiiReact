@@ -851,10 +851,10 @@ export const getAllVideos=(req,res)=>{
 
 db.query('SELECT * FROM videos',(err,results)=>{
   if(err){
-    req.status(500).json({message:"could not get"})
+    res.status(500).json({message:"could not get"})
   }
   if(results.length===0){
-    req.status(400).json({message:"No records found"})
+    res.status(400).json({message:"No records found"})
   }
   res.status(200).json(DtoArr(results))
 })
@@ -1325,3 +1325,104 @@ export const getFooterContent = (req, res) => {
 };
 
 
+export const getAllContent = (req, res) => {
+  const queries = {
+    who_we_are: "SELECT * FROM who_we_are LIMIT 1",
+    dream_and_purpose: "SELECT * FROM dream_and_purpose LIMIT 1",
+    impact: "SELECT * FROM impact LIMIT 1",
+    ceo: "SELECT * FROM ceo LIMIT 1",
+    people_behind: "SELECT * FROM people_behind LIMIT 1",
+    expert_team: "SELECT * FROM expert_team ORDER BY sort_order ASC",
+    join_us: "SELECT * FROM join_us LIMIT 1",
+    new_section: "SELECT * FROM new_section ORDER BY created_at DESC"
+  };
+
+  db.getConnection((err, connection) => {
+    if (err) {
+      console.error("❌ Database connection failed:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Database connection failed",
+        error: err.message
+      });
+    }
+
+    const results = {};
+    let completed = 0;
+    const totalQueries = Object.keys(queries).length;
+
+    Object.keys(queries).forEach((key) => {
+      connection.query(queries[key], (err, data) => {
+        if (err) {
+          console.error(`❌ Error fetching ${key}:`, err);
+          results[key] = null;
+        } else {
+          if (key === 'expert_team' || key === 'new_section') {
+            results[key] = data;
+          } else {
+            results[key] = data.length > 0 ? data[0] : createEmptyRecord(key);
+          }
+        }
+
+        completed++;
+        if (completed === totalQueries) {
+          connection.release();
+          res.json({
+            success: true,
+            data: results
+          });
+        }
+      });
+    });
+  });
+};
+
+
+export const getSEOData = (req, res) => {
+  const query = "SELECT * FROM website_seo LIMIT 1";
+  console.log('hello')
+  db.getConnection((err, connection) => {
+    if (err) {
+      console.error("❌ Database connection failed:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Database connection failed",
+        error: err.message
+      });
+    }
+
+    connection.query(query, (err, results) => {
+      connection.release();
+      
+      if (err) {
+        console.error("❌ Error fetching SEO data:", err);
+        return res.status(500).json({
+          success: false,
+          message: "Failed to fetch SEO data",
+          error: err.message
+        });
+      }
+
+      if (results.length === 0) {
+        return res.json({
+          success: true,
+          data: {
+            url: "",
+            pages: []
+          }
+        });
+      }
+
+      const data = {
+        id: results[0].id,
+        url: results[0].url,
+        pages: JSON.parse(results[0].pages)
+      };
+
+      res.json({
+        success: true,
+        data: data
+      });
+    });
+  });
+};

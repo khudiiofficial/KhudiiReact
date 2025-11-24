@@ -7,7 +7,7 @@ import PageHeader from "../../componets/PageHeader/PageHeader";
 import SEO from "../../componets/Helmet/Helmet";
 const API_URL = import.meta.env.VITE_BACKEND_PATH ;
 
-export default function JobApplicationForm() {
+export default function JobApplicationForm({con,url}) {
   const {
     register,
     handleSubmit,
@@ -136,10 +136,10 @@ const [val,setval]=useState('')
   return (
     <>
   <SEO 
-        title="Careers at Khudii Pakistan | Join Our Welfare Team"
-        description="Apply for meaningful career opportunities at Khudii Welfare Organization. Join our team dedicated to serving communities across Pakistan through healthcare, education, and social welfare initiatives."
-        keywords="khudii careers, welfare jobs pakistan, NGO jobs, charity careers, social work employment, khudii vacancies, humanitarian jobs, community development careers"
-        url="https://khudii.com/jobs"
+        title={con?.meta_title||"Careers at Khudii Pakistan | Join Our Welfare Team"}
+        description={con?.meta_description||"Apply for meaningful career opportunities at Khudii Welfare Organization. Join our team dedicated to serving communities across Pakistan through healthcare, education, and social welfare initiatives."}
+        keywords={con?.meta_keywords||"khudii careers, welfare jobs pakistan, NGO jobs, charity careers, social work employment, khudii vacancies, humanitarian jobs, community development careers"}
+        url={`${url}/jobs`}
         type="website"
       />
 

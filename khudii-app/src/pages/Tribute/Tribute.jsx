@@ -1,15 +1,15 @@
 import React from 'react'
 import PageHeader from '../../componets/PageHeader/PageHeader'
 import SEO from '../../componets/Helmet/Helmet'
-const Tribute = () => {
+const Tribute = ({con,url}) => {
   return (
     <>  
     
        <SEO 
-        title="Tribute - Khudii Pakistan | Honoring Our Supporters & Partners"
-        description="Khudii's tribute page is coming soon. We're preparing to honor and recognize our dedicated supporters, partners, and contributors who make our welfare work possible."
-        keywords="khudii tribute, honor supporters, welfare partners, pakistan charity recognition, donor appreciation, community contributors, khudii acknowledgments"
-        url="https://khudii.com/tribute"
+        title={con?.meta_title||"Tribute - Khudii Pakistan | Honoring Our Supporters & Partners"}
+        description={con?.meta_description||"Khudii's tribute page is coming soon. We're preparing to honor and recognize our dedicated supporters, partners, and contributors who make our welfare work possible."}
+        keywords={con?.meta_keywords||"khudii tribute, honor supporters, welfare partners, pakistan charity recognition, donor appreciation, community contributors, khudii acknowledgments"}
+        url={`${url}/tribute`}
         type="website"
       />
     

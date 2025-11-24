@@ -5,7 +5,7 @@ import { useEffect,useState } from 'react';
 import SEO from '../Helmet/Helmet';
 import axios from 'axios';
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
-const VideoGallery = () => {
+const VideoGallery = ({con,url}) => {
   const [videoData,setvideodata]=useState(null)
   const[error,setError]=useState(null)
   const[loader,setloader]=useState(false)
@@ -203,10 +203,10 @@ getStories();
 
   return (<>
   <SEO 
-        title="Success Stories - Khudii Pakistan | Inspiring Welfare Journeys"
-        description="Watch inspiring success stories from Khudii's welfare initiatives across Pakistan. Real stories of hope, community impact, and transformative change through education, healthcare, and social welfare."
-        keywords="khudii success stories, pakistan welfare stories, inspiring charity stories, community impact stories, khudii videos, welfare organization success, humanitarian stories pakistan, social impact videos"
-        url="https://khudii.com/success-stories"
+        title={con?.meta_title||"Success Stories - Khudii Pakistan | Inspiring Welfare Journeys"}
+        description={con?.meta_description||"Watch inspiring success stories from Khudii's welfare initiatives across Pakistan. Real stories of hope, community impact, and transformative change through education, healthcare, and social welfare."}
+        keywords={con?.meta_keywords||"khudii success stories, pakistan welfare stories, inspiring charity stories, community impact stories, khudii videos, welfare organization success, humanitarian stories pakistan, social impact videos"}
+        url={`${url}/success-stories`}
         type="website"
       />
 

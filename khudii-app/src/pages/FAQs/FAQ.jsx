@@ -112,16 +112,16 @@ function FAQItem({ faq, isOpen, onClick }) {
   );
 }
 
-export default function FAQSection() {
+export default function FAQSection({con,url}) {
   const [openIndex, setOpenIndex] = useState(null);
 
   return (
     <>
   <SEO 
-        title="FAQ - Khudii Pakistan | Frequently Asked Questions"
-        description="Find answers to common questions about Khudii Welfare Organization - Pakistan's leading digital welfare platform. Learn about our services, donations, volunteer opportunities, and community impact."
-        keywords="khudii faq, welfare organization questions, pakistan charity faq, khudii services, donation queries, volunteer opportunities, healthcare services, education programs, NGO Pakistan"
-        url="https://khudii.com/faqs"
+        title={con?.meta_title||"FAQ - Khudii Pakistan | Frequently Asked Questions"}
+        description={con?.meta_description||"Find answers to common questions about Khudii Welfare Organization - Pakistan's leading digital welfare platform. Learn about our services, donations, volunteer opportunities, and community impact."}
+        keywords={con?.meta_keywords||"khudii faq, welfare organization questions, pakistan charity faq, khudii services, donation queries, volunteer opportunities, healthcare services, education programs, NGO Pakistan"}
+        url={`${url}/faqs`}
         type="FAQPage"
       />
     <PageHeader 

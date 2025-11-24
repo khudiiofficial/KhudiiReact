@@ -28,9 +28,43 @@ import Blogss from './pages/Blogs/Blogs'
 import JobApplicationForm from './pages/Jobs/Jobs'
 import VolunteerForm from './pages/Volunteer/Volunteer'
 import Categories from './pages/Categories/Categories'
+import axios from 'axios'
+const APIPath = import.meta.env.VITE_BACKEND_PATH;
 // import TranslationWidget from './componets/translate/Translate'
 function App() {
 const location=useLocation()
+const [data,setSeoData]=useState([])
+const [url,seturl]=useState('')
+const findobj= (name)=>{
+return data?.find((ele,i)=>{
+  
+return ele.page_url===name
+})
+}
+
+// console.log(data)
+ const fetchSEOData = async () => {
+    // setLoading(true);
+    try {
+      const response = await axios.get(`${APIPath}/api/seo`);
+     
+      if (response.data.success) {
+
+       setSeoData(response.data.data.pages)
+        // console.log(response.data.data.pages)
+     
+        seturl(response.data.data.url)
+      }
+    } catch (error) {
+      console.error('Error fetching SEO data:', error);
+      
+    } finally {
+      // setLoading(false);
+    }
+  };
+   useEffect(() => {
+    fetchSEOData();
+  }, []);
 useEffect(()=>{
  window.scrollTo({
       top: 0
@@ -46,25 +80,25 @@ useEffect(()=>{
   <Topbar />
    <Navbar/>
 <Routes>
-<Route path='/' element={<HomePage/>}/>
-<Route path='/organizations' element={<Organizations/>}/>
+<Route path='/' element={<HomePage con={findobj('/')} url={url}/>}/>
+<Route path='/organizations' element={<Organizations con={findobj('/organizations')} url={url} />}/>
 <Route path='/organization/:slug' element={<Organization_Detail/>} />
-<Route path='/about-khudii' element={<About/>}/>
-<Route path='/Blog/:slug' element={<SpecificBlog/>}/>
-<Route path='/golden-people' element={<Golden_people/>}/>
-<Route path='/contact' element={<ContactUs/>}/>
-<Route path='/contribute-your-story' element={<ContributeStory/>}/>
-<Route path='/donate-now' element={<Donate/>}/>
-<Route path='/success-stories' element={<VideoGallery/>}/>
-<Route path='/social-media' element={<SocialMedai/>}/>
-<Route path='/videos' element={<Vedios/>}/>
-<Route path='/testimonials' element={<Testimonial/>}/>
-<Route path='/tribute' element={<Tribute/>}/>
-<Route path='/certifications' element={<Certification/>}/>
-<Route path='/faqs' element={<FAQSection/>}/>
-<Route path='/blogs' element={<Blogss/>}/>
-<Route path='/jobs' element={<JobApplicationForm/>}/>
-<Route path='/volunteer' element={<VolunteerForm/>}/>
+<Route path='/about-khudii' element={<About  con={findobj('/about-khudii')} url={url} />}/>
+<Route path='/Blog/:slug' element={<SpecificBlog />}/>
+<Route path='/golden-people' element={<Golden_people  con={findobj('/golden-people')} url={url}/>}/>
+<Route path='/contact' element={<ContactUs  con={findobj('/contact')} url={url}/>}/>
+<Route path='/contribute-your-story' element={<ContributeStory  con={findobj('/contribute-your-story')} url={url}/>}/>
+<Route path='/donate-now' element={<Donate  con={findobj('/donate-now')} url={url}/>}/>
+<Route path='/success-stories' element={<VideoGallery  con={findobj('/success-stories')} url={url}/>}/>
+<Route path='/social-media' element={<SocialMedai  con={findobj('/social-media')} url={url}/>}/>
+<Route path='/videos' element={<Vedios  con={findobj('/videos')} url={url}/>}/>
+<Route path='/testimonials' element={<Testimonial  con={findobj('/testimonials')} url={url}/>}/>
+<Route path='/tribute' element={<Tribute  con={findobj('/tribute')} url={url}/>}/>
+<Route path='/certifications' element={<Certification  con={findobj('/certifications')} url={url}/>}/>
+<Route path='/faqs' element={<FAQSection  con={findobj('/faqs')} url={url}/>}/>
+<Route path='/blogs' element={<Blogss  con={findobj('/blogs')} url={url}/>}/>
+<Route path='/jobs' element={<JobApplicationForm  con={findobj('/jobs')} url={url}/>}/>
+<Route path='/volunteer' element={<VolunteerForm  con={findobj('/volunteer')} url={url}/>}/>
 <Route path='Categories/:slug' element={<Categories/>}/>
 </Routes>
 <Footer/>

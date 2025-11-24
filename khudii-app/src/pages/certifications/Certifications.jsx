@@ -4,7 +4,7 @@ import SEO from "../../componets/Helmet/Helmet";
 import axios from "axios";
 import { useState,useEffect } from "react";
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
-export default function Certification() {
+export default function Certification({con,url}) {
 const [cert,setcert]=useState([])
 useEffect(()=>{
 const get=async()=>{
@@ -22,10 +22,10 @@ get()
   return (
 <>
 <SEO 
-        title="Certifications - Khudii Pakistan | SECP Registered Welfare Organization"
-        description="Khudii is officially certified and licensed by the Securities and Exchange Commission of Pakistan (SECP) under Section 42 of the Companies Act, 2017. View our official certification."
-        keywords="khudii certification, SECP registered, pakistan welfare license, section 42 company, khudii legal status, verified charity pakistan, SECP license 2020, registered welfare organization"
-        url="https://khudii.com/certifications"
+        title={con?.meta_title||"Certifications - Khudii Pakistan | SECP Registered Welfare Organization"}
+        description={con?.meta_description||"Khudii is officially certified and licensed by the Securities and Exchange Commission of Pakistan (SECP) under Section 42 of the Companies Act, 2017. View our official certification."}
+        keywords={con?.meta_keywords||"khudii certification, SECP registered, pakistan welfare license, section 42 company, khudii legal status, verified charity pakistan, SECP license 2020, registered welfare organization"}
+        url={`${url}/certifications`}
         type="website"
       />
 
