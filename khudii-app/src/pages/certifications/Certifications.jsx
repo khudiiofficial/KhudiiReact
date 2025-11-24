@@ -37,7 +37,7 @@ get()
                 ]}
               />
     <section className="w-[1240px] flex justify-center py-10 bg-white">
-      <div className="w-full w-full flex flex-col items-center gap-8 text-center">
+      <div className="w-full flex flex-col items-center gap-8 text-center">
         {/* Heading */}
         <h2 className="text-2xl md:text-3xl font-semibold text-gray-800">
           Securities and Exchange Commission of Pakistan
