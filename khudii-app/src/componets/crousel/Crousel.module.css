@@ -1,4 +1,5 @@
  /* Home Page CSS Protection against Vapi Widget */
+ /* 2nd Code */
 .carouselSection {
   width: 100%;
 }
@@ -31,13 +32,13 @@
 height: 12rem;
    width: 100%;
   }
-
+ 
   .carouselContainer{
 height: 12rem;
   }
 }
-
-
+ 
+ 
 @media (max-width:600px){
   .slide{
     width: 100%;
@@ -46,7 +47,7 @@ object-fit: cover;
 right: 50%;
 object-position: 0px 0px;
   }
-
+ 
   .carouselContainer{
 height: 12rem;
   }

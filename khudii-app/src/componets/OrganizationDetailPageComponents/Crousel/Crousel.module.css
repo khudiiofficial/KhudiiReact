@@ -10,12 +10,14 @@
 
 /* Slider */
 .slider-container {
+  /* width: 1240px; */
   display: flex;
   gap: 15px;
   margin-bottom: 2rem;
   align-items: center;
   justify-content: center;
 }
+
 .main-slider {
   /* flex: 1; */
   position: relative;
@@ -23,7 +25,7 @@
   overflow: hidden;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-  
+  /* border: 1px solid #02236e; */
 }
 .main-slider img {
   height: 100%;
@@ -43,7 +45,7 @@
   transform: translateY(-50%);
   border: none;
   background: rgba(255, 255, 255, 0.85);
-  color: #0b6fbf;
+  color: #02236e;
   font-size: 23px;
   width: 46px;
   height: 46px;
@@ -84,37 +86,33 @@
 .thumbnail-slider img:hover {
   opacity: 1;
   transform: scale(1.05);
-  border: 2px solid #0b6fbf;
+  border: 2px solid #02236e;
 }
 
 /* Org Details */
 .org-details {
 display: flex;
-/* align-items: center;
-justify-content: center; */
-padding: 0 30px;
+align-items: center;
+/* padding: 0 30px; */
 justify-content: center;
-gap: 33px;
-width: 100%;
-/* margin: auto; */
+gap: 30px;
+/* width: 1240px; */
+margin: auto;
 }
 .org-container h2 {
   text-align: center;
   font-size: 2rem;
-  color:#0b6fbf;
+  color:#02236e;
   margin-bottom: 2rem;
   font-weight: 900;
 }
 .org-description {
-  
+  /* width: 650px; */
   /* color: #4a5568; */
   color: black;
   /* margin: auto; */
-  
-
-
-
 }
+
 .arrange {
 width: 1000px;          /* 👈 limit width so text can break */
   text-align: justify;     /*  looks more symmetrical */

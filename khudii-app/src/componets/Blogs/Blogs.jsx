@@ -138,7 +138,7 @@ return (
 
     // 2nd Code
     <div className="w-full">
-  <div className="max-w-[1240px] w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+  <div className="max-w-[1240px] w-full mx-auto px-6 sm:px-6 py-6 sm:py-6">
     {/* Header */}
     <div className="mb-8 text-center">
       {location.pathname !== '/blogs' && (
@@ -150,8 +150,9 @@ return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
       {visiblePosts.map((post, index) => (
         <article
+        onClick={() => nav(`/Blog/${post.slug}`, { state: { id: post.id } })}
           key={post.id}
-          className="group bg-white rounded-xl shadow-md transition-all duration-300"
+          className="cursor-pointer group bg-white rounded-xl shadow-md transition-all duration-300"
           style={{ animationDelay: `${index * 0.2}s` }}
         >
           <div className="relative">
@@ -168,7 +169,6 @@ return (
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:bg-opacity-40 transition-all duration-300">
               <button
                 aria-label="Read more about this blog post"
-                onClick={() => nav(`/Blog/${post.slug}`, { state: { id: post.id } })}
                 className="flex items-center justify-center w-12 h-12 bg-white text-blue-600 rounded-full shadow-lg hover:bg-blue-50 transition-colors"
               >
               </button>
@@ -178,10 +178,9 @@ return (
           {/* Content */}
           <div className="p-5 sm:p-6">
             <header>
-              <h3 className="text-lg sm:text-xl font-semibold text-black-700 mb-2 line-clamp-2">
+              <h3 className="text-lg sm:text-xl font-semibold text-black-700 mb-0 line-clamp-2">
                 <button
                   aria-label="Read more about this blog post"
-                  onClick={() => nav(`/Blog/${post.slug}`, { state: { id: post.id } })}
                   className="transition-colors text-left block"
                 >
                   {post.Name}
@@ -192,13 +191,13 @@ return (
             <div className="text-sm text-gray-500 mb-3">
               <time dateTime={post.date}>{post.date}</time>
             </div>
-
+            {/* Button */}
             <div className="space-y-4">
               <p className="text-gray-700 line-clamp-3">{post.Intro}</p>
               <button
+              onClick={() => nav(`/Blog/${post.slug}`, { state: { id: post.id } })}
                 aria-label="Read more about this blog post"
-                onClick={() => nav(`/Blog/${post.slug}`, { state: { id: post.id } })}
-                className="inline-flex items-center justify-center rounded-[25px] w-50 sm:w-auto px-5 py-2.5 text-sm font-medium bg-[#E3001C] text-white"
+                className="cursor-pointer inline-flex items-center justify-center rounded-[25px] w-50 sm:w-auto px-5 py-2.5 text-sm font-medium bg-[#E3001C] text-white"
               >
                 Explore Blog
               </button>

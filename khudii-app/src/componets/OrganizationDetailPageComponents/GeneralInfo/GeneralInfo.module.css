@@ -197,10 +197,10 @@
 .item a[href*="facebook"]:hover i { color: #1877f2; }
 .item a[href*="instagram"]:hover i { color: #e4405f; }
 .item a[href*="twitter"]:hover i { color: #1da1f2; }
-.item a[href*="linkedin"]:hover i { color: #0a66c2; }
+.item a[href*="linkedin"]:hover i { color: #0077B5; }
 .item a[href*="mailto"]:hover i { color: #ea4335; }
 .item a[href*="tel"]:hover i { color: #34a853; }
-.item a[href*="location"]:hover i { color: #fbbc05; }
+.item a[href*="location"]:hover i { color: #ff0000; }
 .item a[href*="globe"]:hover i { color: #4285f4; }
 
 .item span {

@@ -70,7 +70,8 @@ return (
       <div className="max-w-[1240px] mx-auto">
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {organizations.map((org) => (
-            <div key={org.id} className="org-card">
+            <div key={org.id} className="cursor-pointer org-card" onClick={()=>{nav(`/organization/${org.slug}`,{state:{id:org.id}})}}>
+              
               <div className="w-full overflow-hidden bg-white rounded-t-xl">
                 <img src={org.introductory_image_path} alt={org.title} className="w-100 object-cover duration-500"/>
                 <button onClick={()=>{nav(`/organization/${org.slug}`,{state:{id:org.id}})}}>
@@ -92,7 +93,8 @@ return (
 ></div>
 
                   </div>
-                <button onClick={()=>{nav(`/organization/${org.slug}`,{state:{id:org.id}})}} className="inline-flex rounded-[25px] w-auto px-5 py-2.5 text-sm font-medium bg-[#E3001C] text-white transition-all duration-300 focus:outline-none">
+                <button 
+                className="inline-flex rounded-[25px] w-auto px-5 py-2.5 text-sm font-medium bg-[#E3001C] text-white transition-all duration-300 focus:outline-none">
                   Explore {org.name.split(' ').slice(0, 2).join(' ')}
                 </button>
               </div>

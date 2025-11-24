@@ -75,8 +75,9 @@ if(error){
           {organizations.length > 0 ? (
             organizations.map((org, idx) => (
               <article
+              onClick={()=>{nav(`/organization/${org.slug}`,{state:{id:org.id}})}}
                 key={org.id || idx}
-                className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
+                className="cursor-pointer group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
                 role="article"
                 aria-labelledby={`org-title-${org.id || idx}`}
               >

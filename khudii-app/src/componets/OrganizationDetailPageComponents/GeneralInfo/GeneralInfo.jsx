@@ -184,18 +184,18 @@ fun()
       <ul className={styles.list}>
         {socials.phone && (
           <li className={styles.item}>
-            <a href={`tel:${socials.phone}`} target="_blank" rel="noopener noreferrer">
+            <a href={socials.phone.slice(0,2)===`92`? `tel:+${socials.phone.split("-").join("").split(" ").join("")}`:socials.phone.slice(0,1)===`0`? `tel:+92${socials.phone.split("-").join("").split(" ").join("")}`:`tel:${socials.phone}`} target="_blank" rel="noopener noreferrer">
               <i className="fas fa-mobile-alt"></i>
-              <span>{socials.phone}</span>
+              <span>{ socials.phone.slice(0,2) ==="92" ? `0`+`${socials.phone.slice(2,socials.phone.length).trim().replace(" ","-")}`:socials.phone.slice(0,3) ==="+92" ? `0`+`${socials.phone.slice(3,socials.phone.length).trim().replaceAll(" ","-")}`:socials.phone}</span>
             </a>
           </li>
         )}
         
         {socials.Mobile_number && (
           <li className={styles.item}>
-            <a href={`tel:${socials.Mobile_number}`} target="_blank" rel="noopener noreferrer">
+            <a href={socials.Mobile_number.slice(0,2)===`92`? `tel:+${socials.Mobile_number.split("-").join("").split(" ").join("")}`:socials.Mobile_number.slice(0,1)===`0`? `tel:+92${socials.Mobile_number.split("-").join("").split(" ").join("")}`:`tel:${socials.Mobile_number}`} target="_blank" rel="noopener noreferrer">
               <i className="fas fa-phone-alt"></i>
-              <span>{socials.Mobile_number}</span>
+              <span>{ socials.Mobile_number.slice(0,2) ==="92" ? `0`+`${socials.Mobile_number.slice(2,socials.Mobile_number.length).trim().replace(" ","-")}`:socials.Mobile_number.slice(0,3) ==="+92" ? `0`+`${socials.Mobile_number.slice(3,socials.Mobile_number.length).trim().replaceAll(" ","-")}`:socials.Mobile_number}</span>
             </a>
           </li>
         )}
@@ -264,21 +264,33 @@ fun()
         )}
 
  
-       <a href="tel:+923198548344" target="_blank">    <li className={`${styles.item}`}>
+       {/* <a href={`tel:${data.phone_number.replace(/[^+\d]/g, '')}`} target="_blank">    <li className={`${styles.item}`}>
            <div className="bg-gradient-to-r from-[#E3001C] to-[#FF6B6B] hover:from-[#FF6B6B] hover:to-[#E3001C]" rel="noopener noreferrer">
               <p className="text-white">Call Khudii:</p>
               <span className="text-white">{data.phone_number}</span>
             </div>
       
           </li> 
-            </a>
+            </a> */}
+            <a 
+  href={data?.phone_number ? `tel:${data.phone_number.replace(/[^+\d]/g, '')}` : '#'} 
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <li className={`${styles.item}`}>
+    <div className="bg-gradient-to-r from-[#E3001C] to-[#FF6B6B] hover:from-[#FF6B6B] hover:to-[#E3001C]">
+      <p className="text-white">Call Khudii:</p>
+      <span className="text-white">{data?.phone_number || 'N/A'}</span>
+    </div>
+  </li>
+</a>
    <li  onClick={() => setIsModalOpen(true)} className={`${styles.item} `}>
             <div className="bg-gradient-to-r from-[#022279] to-[#3B82F6] hover:from-[#3B82F6] hover:to-[#022279]" target="_blank" rel="noopener noreferrer">
               {/* <p className="text-red-700"></p> */}
               <span className="text-white"><button >Know More About Organization?</button></span>
             </div>
           </li>
-
+{/* (+92) 3198 - KHUDII (548344) */}
       </ul>
     </div>
     <ContactModal 
