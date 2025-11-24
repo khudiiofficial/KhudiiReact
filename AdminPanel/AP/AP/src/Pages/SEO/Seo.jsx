@@ -9,6 +9,9 @@ const SEOAdmin = () => {
     url: '',
     pages: []
   });
+   const [cap,setcap]=useState('')
+
+
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [selectedPage, setSelectedPage] = useState(0);
@@ -51,6 +54,13 @@ const SEOAdmin = () => {
   // Update SEO data
   const updateSEOData = async () => {
     setSaving(true);
+     if(cap){
+      console.log('bot detected')
+setcap('')
+      return
+    }
+
+
     try {
       const response = await api.put('/api/seo', seoData);
       if (response.data.success) {
@@ -113,12 +123,15 @@ const SEOAdmin = () => {
         <div className={styles.urlSection}>
           <h2>Website URL</h2>
           <div className={styles.formGroup}>
+                <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
+
+
             <label>Main Website URL *</label>
             <input
               type="url"
               value={seoData.url}
               onChange={(e) => handleURLChange(e.target.value)}
-              placeholder="https://khudii.com"
+              placeholder="Like https://khudii.com"
               className={styles.urlInput}
             />
           </div>

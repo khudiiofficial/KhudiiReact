@@ -1,10 +1,33 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './pageHeader.css';
+const APIPath = import.meta.env.VITE_BACKEND_PATH;
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 const PageHeader = ({ title, breadcrumbs = [] }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [footer,setFooterData]=useState({})
   const headerRef = useRef(null);
+  const fetchFooterData = async () => {
+    try {
+     
+      const response = await axios.get(`${APIPath}/api/footer`, {
+        withCredentials: true
+      });
+      
+      if (response.data.success) {
+        setFooterData(response.data.data);
+          
+      }
+    } catch (error) {
+      console.error('Error fetching footer data:', error);
+    } finally {
+      
+    }
+  };
+  useEffect(()=>{
+fetchFooterData();    
 
+  },[])
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -35,7 +58,7 @@ const PageHeader = ({ title, breadcrumbs = [] }) => {
       <div
         className="page-header-bg"
         style={{
-          backgroundImage: `url(/page-title.jpg)`
+          backgroundImage: `url(${footer.pageimage || '/page-title.jpg'} )`
         }}
       ></div>
 

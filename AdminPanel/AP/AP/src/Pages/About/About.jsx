@@ -15,11 +15,15 @@ const ContentAdmin = () => {
     join_us: {},
     new_section: []
   });
+   const [cap,setcap]=useState('')
+
+
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [activeSection, setActiveSection] = useState('who_we_are');
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
+  const [loader,setlaoder]=useState(false)
 const [show,setshow]=useState('image')
   // Expert Team states
   const [editingExpert, setEditingExpert] = useState(null);
@@ -95,6 +99,13 @@ const [show,setshow]=useState('image')
   // Update single instance sections
   const updateSection = async (section, data) => {
     setSaving(true);
+     if(cap){
+      console.log('bot detected')
+setcap('')
+      return
+    }
+
+
     try {
       let updateData = { ...data };
       
@@ -126,6 +137,14 @@ const [show,setshow]=useState('image')
   // Expert Team CRUD
   const createExpertTeam = async (e) => {
     e.preventDefault();
+     if(cap){
+      console.log('bot detected')
+setcap('')
+      return
+    }
+
+
+    setlaoder(true)
     try {
       let imageBase64 = null;
       if (expertForm.imageFile) {
@@ -146,10 +165,19 @@ const [show,setshow]=useState('image')
       console.error('Error creating expert team member:', error);
       showMessage('Error creating expert team member', 'error');
     }
+     setlaoder(false)
   };
 
   const updateExpertTeam = async (e) => {
+     setlaoder(true)
     e.preventDefault();
+     if(cap){
+      console.log('bot detected')
+setcap('')
+      return
+    }
+
+
     try {
       let imageBase64 = null;
       if (expertForm.imageFile) {
@@ -170,6 +198,7 @@ const [show,setshow]=useState('image')
       console.error('Error updating expert team member:', error);
       showMessage('Error updating expert team member', 'error');
     }
+     setlaoder(false)
   };
 
   const deleteExpertTeam = async (id) => {
@@ -190,6 +219,13 @@ const [show,setshow]=useState('image')
   // New Section CRUD
   const createNewSection = async (e) => {
     e.preventDefault();
+     if(cap){
+      console.log('bot detected')
+setcap('')
+      return
+    }
+
+
     try {
       let imageBase64 = null;
       if (newSectionForm.imageFile) {
@@ -214,6 +250,13 @@ const [show,setshow]=useState('image')
 
   const updateNewSection = async (e) => {
     e.preventDefault();
+     if(cap){
+      console.log('bot detected')
+setcap('')
+      return
+    }
+
+
     try {
       let imageBase64 = null;
       if (newSectionForm.imageFile) {
@@ -470,6 +513,10 @@ const [show,setshow]=useState('image')
         return (
           <div className={styles.sectionForm}>
             <div className={styles.formGroup}>
+                 <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
+
+
+
               <label>Heading</label>
               <input
                 type="text"
@@ -529,6 +576,10 @@ const [show,setshow]=useState('image')
         return (
           <div className={styles.sectionForm}>
             <div className={styles.formGroup}>
+                 <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
+
+
+
               <label>Heading</label>
               <input
                 type="text"
@@ -642,6 +693,10 @@ const [show,setshow]=useState('image')
         return (
           <div className={styles.sectionForm}>
             <div className={styles.formGroup}>
+                 <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
+
+
+
               <label>Name</label>
               <input
                 type="text"
@@ -707,6 +762,10 @@ const [show,setshow]=useState('image')
         return (
           <div className={styles.crudSection}>
             <form onSubmit={editingExpert ? updateExpertTeam : createExpertTeam} className={styles.crudForm}>
+                <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
+
+
+
               <h3>{editingExpert ? 'Edit Expert' : 'Add New Expert'}</h3>
               
               <div className={styles.formGroup}>
@@ -774,8 +833,8 @@ const [show,setshow]=useState('image')
               </div>
 
               <div className={styles.formActions}>
-                <button type="submit" className={styles.primaryBtn}>
-                  {editingExpert ? 'Update Expert' : 'Add Expert'}
+                <button type="submit" disabled={loader} className={styles.primaryBtn}>
+                  {loader && editingExpert?'updating' :loader && !editingExpert? 'Adding' :!loader && editingExpert ? 'Update Expert' : 'Add Expert'}
                 </button>
                 {editingExpert && (
                   <button type="button" onClick={resetExpertForm} className={styles.secondaryBtn}>
@@ -787,7 +846,7 @@ const [show,setshow]=useState('image')
 
             <div className={styles.itemsList}>
               <h3>Expert Team Members ({contentData.expert_team.length})</h3>
-              {contentData.expert_team.map((expert) => (
+              {[...contentData.expert_team].reverse().map((expert) => (
                 <div key={expert.id} className={styles.itemCard}>
                   <div className={styles.itemContent}>
                     <h4>{expert.name}</h4>

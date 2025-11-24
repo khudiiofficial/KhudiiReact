@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import styles from "./Navbar.module.css";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 import { useNavigate } from "react-router-dom";
 const Navbar = () => {
@@ -10,8 +11,33 @@ const Navbar = () => {
   const [results, setResults] = useState([]);
   const [counter,setcounter]=useState(true)
   const [isMobile, setIsMobile] = useState(false)
+  const [footer,setFooterData]=useState({})
   const nav=useNavigate()
  const[err,seterr]=useState('')
+
+
+  const fetchFooterData = async () => {
+    try {
+     
+      const response = await axios.get(`${APIPath}/api/footer`, {
+        withCredentials: true
+      });
+      
+      if (response.data.success) {
+        setFooterData(response.data.data);
+     
+      }
+    } catch (error) {
+      console.error('Error fetching footer data:', error);
+    } finally {
+      
+    }
+  };
+  useEffect(()=>{
+fetchFooterData();    
+
+  },[])
+
 
    useEffect(() => {
      const checkScreenSize = () => {
@@ -114,7 +140,7 @@ const Navbar = () => {
         >
           {/* Logo */}
           <div className="w-36">
-           <Link to={'/'}> <img src="/Khudii.webp" width="223" height="79" alt="khudii logo" loading="lazy" /></Link>
+           <Link to={'/'}> <img src={`${footer.logoimage || '/Khudii.webp'} `} width="223" height="79" alt="khudii logo" loading="lazy" /></Link>
           </div>
 
           {/* Links */}

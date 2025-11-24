@@ -7,7 +7,8 @@ const EventsAdminPanel = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+   const [cap,setcap]=useState('')
+
   // Form states - following the exact schema
   const [formData, setFormData] = useState({
     title: '',
@@ -101,7 +102,11 @@ const EventsAdminPanel = () => {
   // Create or Update event
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+ if(cap){
+      console.log('bot detected')
+setcap('')
+      return
+    }
     if (!formData.title || !formData.url || !formData.videoId) {
       alert('Please fill in all fields');
       return;
@@ -261,6 +266,10 @@ const EventsAdminPanel = () => {
         </h2>
         
         <form onSubmit={handleSubmit}>
+          
+    <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
+
+
           <div style={{ marginBottom: '20px' }}>
             <label style={{
               display: 'block',

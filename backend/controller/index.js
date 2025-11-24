@@ -1289,3 +1289,39 @@ export const getTelephoneData = (req, res) => {
     });
   });
 };
+
+
+
+export const getFooterContent = (req, res) => {
+  const query = "SELECT * FROM footercontents LIMIT 1";
+  
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("❌ Error fetching footer content:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch footer content",
+        error: err.message
+      });
+    }
+    
+    // If no data exists, return empty object
+    const data = results.length > 0 ? results[0] : {
+      id: null,
+      logoimage: "",
+      pageimage: "",
+      footertext: "",
+      email: "",
+      location: "",
+      created_at: null,
+      updated_at: null
+    };
+    
+    res.json({
+      success: true,
+      data: data
+    });
+  });
+};
+
+

@@ -85,7 +85,7 @@
   min-width: 20px;
   text-align: center;
   color: #e7001e;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 1);
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -100,8 +100,12 @@
   font-weight: 600;
 }
 
-.contact-item a {
+/* Hover effect: only the email text turns red */
+.contact-item a:hover .contact-text {
   color: #e7001e;
+}
+
+.contact-item a {
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -109,7 +113,11 @@
   width: 100%;
 }
 
-.contact-item a:hover {
+/* .contact-item a:hover {
+  color: #e7001e;
+} */
+
+.contact-list .contact-item .contact-text a:hover {
   color: #e7001e;
 }
 

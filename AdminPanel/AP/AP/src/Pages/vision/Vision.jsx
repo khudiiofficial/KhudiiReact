@@ -5,6 +5,9 @@ import './VisionMissionAdmin.css';
 const API_BASE_URL = import.meta.env.VITE_BACKEND_PATH;
 
 const VisionMissionAdmin = () => {
+  
+ const [cap,setcap]=useState('')
+
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -38,6 +41,11 @@ const VisionMissionAdmin = () => {
   const handleAdd = async (e) => {
     e.preventDefault();
     
+ if(cap){
+      console.log('bot detected')
+setcap('')
+      return
+    }
     if (!formData.icon || !formData.title || !formData.description) {
       setMessage('Icon, title, and description are required');
       return;
@@ -68,6 +76,11 @@ const VisionMissionAdmin = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     
+ if(cap){
+      console.log('bot detected')
+setcap('')
+      return
+    }
     if (!formData.icon || !formData.title || !formData.description) {
       setMessage('Icon, title, and description are required');
       return;
@@ -140,6 +153,12 @@ const VisionMissionAdmin = () => {
 
   // Move item up
   const moveUp = async (index) => {
+    
+ if(cap){
+      console.log('bot detected')
+setcap('')
+      return
+    }
     if (index === 0) return;
     
     const updatedItems = [...items];
@@ -170,6 +189,12 @@ const VisionMissionAdmin = () => {
 
   // Move item down
   const moveDown = async (index) => {
+    
+ if(cap){
+      console.log('bot detected')
+setcap('')
+      return
+    }
     if (index === items.length - 1) return;
     
     const updatedItems = [...items];
@@ -245,6 +270,10 @@ const VisionMissionAdmin = () => {
       <div className="form-section">
         <h2>{editingId ? 'Edit Item' : 'Add New Item'}</h2>
         <form onSubmit={editingId ? handleUpdate : handleAdd} className="item-form">
+              <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
+
+
+
           <div className="form-row">
             <div className="form-group">
               <label>Icon Class *</label>

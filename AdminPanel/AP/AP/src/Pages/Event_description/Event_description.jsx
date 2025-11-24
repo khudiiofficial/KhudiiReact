@@ -10,6 +10,8 @@ const EventAdmin = () => {
     imagepath1: '',
     imagepath2: ''
   });
+   const [cap,setcap]=useState('')
+
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [formData, setFormData] = useState({
@@ -98,6 +100,11 @@ const EventAdmin = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     
+ if(cap){
+      console.log('bot detected')
+setcap('')
+      return
+    }
     if (!formData.description) {
       setMessage('Description is required');
       return;
@@ -188,6 +195,11 @@ const EventAdmin = () => {
       <div className="form-section">
         <h2>Edit Events Section</h2>
         <form onSubmit={handleUpdate} className="event-form">
+          
+
+    <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
+
+
           <div className="form-group">
             <label>Description *</label>
             <textarea

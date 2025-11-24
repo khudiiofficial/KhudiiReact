@@ -10,6 +10,8 @@ const StoriesAdmin = () => {
     description: '',
     image_path: ''
   });
+   const [cap,setcap]=useState('')
+
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [formData, setFormData] = useState({
@@ -80,8 +82,13 @@ const StoriesAdmin = () => {
 
   // Update stories data
   const handleUpdate = async (e) => {
+  
     e.preventDefault();
-    
+       if(cap){
+      console.log('bot detected')
+setcap('')
+      return
+    }
     if (!formData.title || !formData.description) {
       setMessage('Title and description are required');
       return;
@@ -157,6 +164,7 @@ const StoriesAdmin = () => {
       <div className="form-section">
         <h2>Edit Stories Section</h2>
         <form onSubmit={handleUpdate} className="story-form">
+             <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
           <div className="form-group">
             <label>Title *</label>
             <input

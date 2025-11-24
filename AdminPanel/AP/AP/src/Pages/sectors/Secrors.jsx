@@ -4,6 +4,9 @@ import { generateSlug, validateSlug } from './utils.js';
 import './sectors.css';
 
 const SectorsList = () => {
+  
+ const [cap,setcap]=useState('')
+
   const [sectors, setSectors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -84,7 +87,12 @@ const SectorsList = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+     if(cap){
+      console.log('bot detected')
+setcap('')
+      return
+    }
+
     if (slugError) {
       setError('Please fix slug errors before submitting');
       return;
@@ -249,6 +257,9 @@ const SectorsList = () => {
           <div className="modal-content">
             <h2>{editingSector ? 'Edit Sector' : 'Add New Sector'}</h2>
             <form onSubmit={handleSubmit}>
+
+                <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
+                
               <div className="form-group">
                 <label>Image:</label>
                 <div className="file-upload-container">

@@ -6,7 +6,9 @@ import  { useEffect, useState } from "react";
 import axios from "axios";
 const Footer = () => {
     const [data,setdata]=useState({})
+    const [arr,setArr]=useState([])
      const [tel,settel]=useState('')
+     const [footerdata,setFooterData]=useState({})
      useEffect(()=>{
 const fun=async ()=>{
   try {
@@ -28,6 +30,45 @@ ch=ch+res.data.data.phone_number[i]
 }
 fun()
   },[])
+
+    useEffect(()=>{
+const call=async()=>{
+    try {
+        const res=await axios.get(`${APIPath}/getAllSectors`)
+        if(res.status===200){
+            setArr(res.data.data.reverse())
+            
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+call()
+    },[])
+
+
+  const fetchFooterData = async () => {
+    try {
+     
+      const response = await axios.get(`${APIPath}/api/footer`, {
+        withCredentials: true
+      });
+      
+      if (response.data.success) {
+        setFooterData(response.data.data);
+        
+      }
+    } catch (error) {
+      console.error('Error fetching footer data:', error);
+    } finally {
+      
+    }
+  };
+  useEffect(()=>{
+fetchFooterData();    
+
+  },[])
+  
   return (
     <footer className="khudii-footer">
       {/* Main Footer Section */}
@@ -38,16 +79,19 @@ fun()
           <div className="footer-section">
             <div className="footer-logo">
               <a href="/">
-              <img  width="223" height="79" data-src="/main-logo.webp" className="attachment-full size-full wp-image-6195 entered litespeed-loaded" alt="khudii logo, dks, secict"  src="/main-logo.webp"></img>
+         {  footerdata.logoimage &&   <img  width="223" height="79" data-src={`${ footerdata.logoimage
+}`} className="attachment-full size-full wp-image-6195 entered litespeed-loaded" alt="khudii logo, dks, secict"  src={`${ footerdata.logoimage
+}`}></img>}
               </a>
             </div>
             <div className="footer-description">
-              <p>It is a dream that encompasses entire humanity within its scope. A dream that doesn't discriminate between color, caste, creed, nationality, status or any other identity marker.</p>
+              <p>{footerdata.footertext}</p>
             </div>
             <div className="footer-contact">
               <ul className="contact-list">
                 <li className="contact-item">
-                  <a href="tel:+923198548344" target="_blank" rel="noopener noreferrer">
+                  {/* (+92) 3198 - KHUDII (548344) */}
+                  <a href={`tel:${tel}`} target="_blank" rel="noopener noreferrer">
                     <span className="contact-icon">
                       <i className="fas fa-phone"></i>
                     </span>
@@ -59,15 +103,15 @@ fun()
                   <span className="contact-icon">
                     <i className="fas fa-map-marker-alt"></i>
                   </span>
-                  <a target='blank' href="https://maps.app.goo.gl/epgAPPSkHw5ai2hp9"><span className="contact-text">Lahore, Pakistan</span></a>
+                  <a target='blank' href={`${footerdata.location}`}><span className="contact-text">{footerdata.locationinfo}</span></a>
                   </a>
                 </li>
                 <li className="contact-item">
-                  <a href="mailto:info@khudii.com" target="_blank" rel="noopener noreferrer">
+                  <a href={`mailto:${footerdata.email}`} target="_blank" rel="noopener noreferrer">
                     <span className="contact-icon">
                       <i className="fas fa-envelope"></i>
                     </span>
-                    <span className="contact-text">info@khudii.com</span>
+                    <span className="contact-text">{footerdata.email}</span>
                   </a>
                 </li>
               </ul>
@@ -91,14 +135,23 @@ fun()
           <div className="footer-section">
             <h4 className="footer-heading">Categories</h4>
             <ul className="footer-links">
-              <li><Link to="Categories/Autism"><span className="link-icon"><i className="far fa-dot-circle"></i></span>Autism</Link></li>
+            
+            
+              
+
+{[...arr.slice(0,8)].map((ele,i)=>{
+  return(
+      <li key={i}><Link to={`Categories/${ele.slug}`}><span className="link-icon"><i className="far fa-dot-circle"></i></span>{ele.name}</Link></li>
+  )
+})}
+{/* 
               <li><Link to="Categories/Orphanage"><span className="link-icon"><i className="far fa-dot-circle"></i></span>Orphanage</Link></li>
               <li><Link to="Categories/Thalassemia"><span className="link-icon"><i className="far fa-dot-circle"></i></span>Thalassemia</Link></li>
               <li><Link to="Categories/Visually impaired"><span className="link-icon"><i className="far fa-dot-circle"></i></span>Visually Impaired</Link></li>
               <li><Link to="Categories/Health"><span className="link-icon"><i className="far fa-dot-circle"></i></span>Health</Link></li>
               <li><Link to="Categories/Education"><span className="link-icon"><i className="far fa-dot-circle"></i></span>Education</Link></li>
               <li><Link to="Categories/Differently Abled"><span className="link-icon"><i className="far fa-dot-circle"></i></span>Differently Abled</Link></li>
-              <li><Link to="Categories/Water And Food"><span className="link-icon"><i className="far fa-dot-circle"></i></span>Water and Food</Link></li>
+              <li><Link to="Categories/Water And Food"><span className="link-icon"><i className="far fa-dot-circle"></i></span>Water and Food</Link></li> */}
             </ul>
           </div>
 </div>

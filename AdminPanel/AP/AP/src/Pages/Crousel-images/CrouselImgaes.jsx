@@ -6,6 +6,8 @@ const API_BASE_URL = import.meta.env.VITE_BACKEND_PATH;
 
 const CarouselAdmin = () => {
   const [images, setImages] = useState([]);
+  const [cap,setcap]=useState('')
+
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [editingId, setEditingId] = useState(null);
@@ -70,7 +72,12 @@ const CarouselAdmin = () => {
   // Add new carousel image
   const handleAddImage = async (e) => {
     e.preventDefault();
-    
+     if(cap){
+      console.log('bot detected')
+setcap('')
+      return
+    }
+
     if (!formData.imageFile) {
       alert('Please select an image file');
       return;
@@ -103,6 +110,11 @@ const CarouselAdmin = () => {
   // Update carousel image
   const handleUpdateImage = async (e) => {
     e.preventDefault();
+ if(cap){
+      console.log('bot detected')
+setcap('')
+      return
+    }
 
     try {
       setUploading(true);
@@ -208,6 +220,7 @@ const CarouselAdmin = () => {
       <div className="image-form-section">
         <h2>{editingId ? 'Edit Image' : 'Add New Image'}</h2>
         <form onSubmit={editingId ? handleUpdateImage : handleAddImage} className="image-form">
+              <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
           <div className="form-group">
             <label htmlFor="imageFile">Image File *</label>
             <input

@@ -13,6 +13,9 @@ const WelcomeAdmin = () => {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const [cap,setcap]=useState('')
+
+
 
   // Fetch welcome section data
   const fetchWelcomeData = async () => {
@@ -37,6 +40,13 @@ const WelcomeAdmin = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     
+ if(cap){
+      console.log('bot detected')
+setcap('')
+      return
+    }
+
+
     if (!welcomeData.welcome_title.trim()) {
       setMessage('Welcome title is required');
       return;
@@ -89,6 +99,8 @@ const WelcomeAdmin = () => {
 
       <div className="welcome-form-section">
         <form onSubmit={handleUpdate} className="welcome-form">
+              <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
+
           <div className="form-group">
             <label htmlFor="welcome_title">Welcome Title *</label>
             <input

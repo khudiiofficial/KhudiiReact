@@ -14,6 +14,8 @@ const FooterAdmin = () => {
     location: '',
     locationinfo:""
   });
+   const [cap,setcap]=useState('')
+
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [logoPreview, setLogoPreview] = useState('');
@@ -82,6 +84,13 @@ const FooterAdmin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+ if(cap){
+      console.log('bot detected')
+setcap('')
+      return
+    }
+
     setLoading(true);
     setMessage('');
 
@@ -175,6 +184,11 @@ const FooterAdmin = () => {
       <form onSubmit={handleSubmit} className="footer-form">
         {/* Logo Image */}
         <div className="form-group">
+          
+
+    <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
+
+
           <label htmlFor="logoimage">Logo Image</label>
           <div className="file-input-group">
             <input
