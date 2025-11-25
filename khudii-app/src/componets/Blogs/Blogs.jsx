@@ -161,7 +161,7 @@ return (
               <img
                 src={post.Image}
                 alt={post.Name}
-                className="w-full transition-transform duration-500"
+                className="rounded-2xl w-full transition-transform duration-500"
               />
             </div>
 
@@ -192,16 +192,10 @@ return (
               <time dateTime={post.date}>{post.date}</time>
             </div>
             {/* Button */}
-            <div className="space-y-4">
-              <p className="text-gray-700 line-clamp-3">{post.Intro}</p>
-              <button
-              onClick={() => nav(`/Blog/${post.slug}`, { state: { id: post.id } })}
-                aria-label="Read more about this blog post"
-                className="cursor-pointer inline-flex items-center justify-center rounded-[25px] w-50 sm:w-auto px-5 py-2.5 text-sm font-medium bg-[#E3001C] text-white"
-              >
-                Explore Blog
-              </button>
-            </div>
+            <div class="flex flex-col space-y-4">
+  <p class="text-gray-700 line-clamp-3">At Khudii, we believe that raising awareness about life-threatening diseases like cancer is not just important—it’s a responsibility. Cancer affects millions of lives every year, but early detection, timely treatment, and emotional support can make a world of difference.</p>
+  <button aria-label="Read more about this blog post" class="bg-[#E3001C] cursor-pointer font-medium items-center justify-center px-5 py-2.5 rounded-[25px] mx-auto sm:w-auto text-sm text-white w-50">Explore Blog</button>
+</div>
           </div>
         </article>
       ))}

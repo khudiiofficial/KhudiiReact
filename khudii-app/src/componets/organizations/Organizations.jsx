@@ -105,7 +105,7 @@ function OrganizationsSection() {
 
 return (
     <section className="bg-[#f8fafc]">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
         <div className="flex flex-wrap items-center">
   {/* Left spacer — same width as right link */}
   <div className={`${styles.org_sec_left} flex-shrink-0 invisible`}>
