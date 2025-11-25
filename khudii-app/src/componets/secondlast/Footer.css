@@ -385,7 +385,12 @@
 .social-media-section{
   /* padding-bottom: 50px; */
 }
-
+@media (max-width:576px) {
+  .social-media-section{
+    display: flex;
+  justify-content: center;
+}
+}
 
 @media (max-width:439px){
 .footer_parent{

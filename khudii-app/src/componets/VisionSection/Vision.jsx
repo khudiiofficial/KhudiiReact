@@ -75,7 +75,7 @@ call();
   return (
     <section className="pt-6 pb-8 px-5">
       <div className="max-w-[1240px] mx-auto">
-        <div className="flex flex-wrap justify-center gap-4 sm:gap-8 md:gap-6">
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-8 md:gap-4">
           {items.map((item, idx) => (
             <div
               key={idx}
@@ -90,7 +90,7 @@ call();
               <h2 className="font-semibold text-[#022279] text-xl sm:text-2xl md:text-[1.8rem] mb-3">
                 {item.title}
               </h2>
-              <p className="text-gray-800 leading-relaxed text-sm sm:text-base">
+              <p className="text-gray-800 text-center leading-relaxed text-sm sm:text-base">
                 {item.description}
               </p>
             </div>

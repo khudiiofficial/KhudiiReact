@@ -72,7 +72,7 @@ fetchFooterData();
   return (
     <footer className="khudii-footer">
       {/* Main Footer Section */}
-      <div className="footer-main">
+      <div className="footer-main md:mx-5">
         <div className="footer-container">
           
           {/* Logo and Description Section */}
@@ -118,7 +118,7 @@ fetchFooterData();
             </div>
           </div>
 
-<div className='flex justify-center gap-30 footer_parent'>
+<div className="flex justify-center gap-30 sm:gap-15 md:gap-15 footer_parent">
           {/* Links Section */}
           <div className="footer-section">
             <h4 className="footer-heading">Links</h4>
@@ -159,7 +159,7 @@ fetchFooterData();
       </div>
 
       {/* Copyright and Social Media Section */}
-      <div className="footer-bottom">
+      <div className="footer-bottom md:px-5">
         <div className="footer-container">
           
           {/* Copyright */}

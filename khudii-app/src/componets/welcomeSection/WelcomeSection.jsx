@@ -240,7 +240,7 @@ call();
           .pad {
             grid-template-columns: 1fr;
             text-align: center;
-            padding: 0 40px;
+            padding: 0 20px;
             gap: 2rem;
           }
 

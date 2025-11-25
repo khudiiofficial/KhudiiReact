@@ -605,7 +605,7 @@ return (
               </div>
 
               <div className="pt-6 pb-6">
-                <h3 className="text-lg sm:text-xl px-6 font-semibold text-gray-800 group-hover:text-[#02236e] transition-colors duration-300 line-clamp-2">
+                <h3 className="text-lg sm:text-xl px-6 font-semibold text-[#222222] group-hover:text-[#02236e] transition-colors duration-300 line-clamp-2">
                   {evt.title}
                 </h3>
               </div>
@@ -626,8 +626,8 @@ return (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-4 items-center">
             {/* Text Content */}
             <div className="max-w-[100%] lg:col-span-1 order-2 lg:order-1">
-              <div className="bg-gradient-to-r from-gray-50 to-white p-5 sm:p-6 md:p-4 rounded-xl border-l-4 border-[#E3001C] shadow-sm hover:shadow-md transition-shadow duration-300">
-                <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-light text-gray-800 leading-relaxed mb-5 break-words text-justify">
+              <div className="bg-gradient-to-r from-gray-50 to-white p-5 sm:p-6 md:p-4 rounded-xl border-l-5 border-[#E3001C] shadow-sm hover:shadow-md transition-shadow duration-300">
+                <p className="sm:text-xl md:text-2xl lg:text-3xl font-light text-[#222222] leading-relaxed mb-3 break-words text-justify">
                   {/* We empower communities by providing essential services in health, education, disability support, water access, thalassemia care, and food security. */}
              {items.description}
                 </p>
