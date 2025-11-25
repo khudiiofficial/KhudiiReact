@@ -82,46 +82,7 @@ const APIPath = import.meta.env.VITE_BACKEND_PATH;
 const Cards = () => {
     const nav=useNavigate()
     const [arr, setArr] = useState([
-        // {
-        //     src: '/Sectors/health-khudii.png',
-        //     Name: 'Health',
-        //     Description: 'Healing lives with care and compassion — bringing affordable healthcare to those who need it most, so no one is left behind'
-        // },
-        // {
-        //     src: '/Sectors/autism-khudii.gif',
-        //     Name: 'Autism',
-        //     Description: 'Honoring each individual difference through empowering autistic individuals to develop, learn, and flourish within communities founded on love, acceptance, and inclusion.'
-        // },
-        // {
-        //     src: '/Sectors/orphange-khudii1.gif',
-        //     Name: 'Orphanage',
-        //     Description: 'Nurturing orphans with love and care, guiding each heart with hope to share. Empowering through education and light'
-        // },
-        // {
-        //     src: '/Sectors/health-khudii.png',
-        //     Name: 'Thalassemia',
-        //     Description: 'Standing with every fighter of Thalassemia—spreading awareness, delivering treatment, and restoring smiles one life at a time.'
-        // },
-        // {
-        //     src: '/Sectors/visually-impaired-khudii1.gif',
-        //     Name: 'Visually impaired',
-        //     Description: 'Opening worlds beyond vision by enabling the visually impaired with technology, learning, and opportunities to view life in hope, independence, and dignity.'
-        // },
-        // {
-        //     src: '/Sectors/education-khudii.gif',
-        //     Name: 'Education',
-        //     Description: 'Lighting the path to a brighter tomorrow by opening doors of knowledge, skills, and hope for every child and community.'
-        // },
-        // {
-        //     src: '/Sectors/different-abled-khudii.gif',
-        //     Name: 'Differently Abled',
-        //     Description: 'Championing ability in every heart—empowering people with disabilities to live with dignity, confidence, and opportunity.'
-        // },
-        // {
-        //     src: '/Sectors/Water-and-food.gif',
-        //     Name: 'Water And Food',
-        //     Description: 'Every drop and plate counts—delivering clean water and nourishing food now so families survive with health and dignity.'
-        // },
+ 
     ])
 
     useEffect(()=>{
@@ -165,5 +126,5 @@ call()
         </div>
     )
 }
-//   <Link to={`/Categories/${ele.name.replace(/\s+/g, '-')}`}></Link>
+
 export default Cards

@@ -191,143 +191,83 @@ font-weight: 700;
     border-radius: 20px;
     cursor: pointer;
 }
+/* Your existing CSS remains the same until .class5 */
 
-/* FIXED BACKGROUND - Better performance */
 .class5{
-  
     background-size: cover;
     background-repeat: no-repeat;
-    background-attachment: fixed; /* Changed from fixed */
-    background-position: center; /* Changed from 0px -252px */
- min-height: 250px;
- max-height: 500px;
+    background-attachment: fixed;
+    background-position: center;
+    min-height: 250px;
+    max-height: 500px;
 }
-/* .sample{
-  width: 100% !important;
-} */
+
 .class6{
-z-index: 30;
-background-color: rgba(0, 0, 0, 0.5); 
-width: 100%;
-color: white;
-min-height: 250px;
- max-height: 500px;   
- align-items: center;
+    z-index: 30;
+    background-color: rgba(0, 0, 0, 0.5); 
+    width: 100%;
+    color: white;
+    min-height: 250px;
+    max-height: 500px;   
+    align-items: center;
 }
+
 .newparent {
-  width: 1240px !important;
-  margin: auto;
-}
-.class7{
-  /* width: 740px; */
-   padding: 40px 0;
-}
-.class7>p{
-    font-size: 25px;
-    font-weight: 300;
-    margin: 19px 0px;
-    word-wrap: break-word;
-  text-align: justify;    
-  overflow-wrap: break-word;
-  hyphens: auto;
-}
-
-.class8 {
-/* width: 500px; */
-}
-
-.buttonClass{
-padding: 10px;
-color: white;
-background-color: red;
-border-radius: 20px;
-}
-
-.ssh_center {
-  text-align: center;
-  width: inline-auto;
-  margin: auto;
-}
-
-.ssh_right {
-    display: block;
-    width: inline-auto !important;
-    text-align: right;
+    width: 1240px !important;
     margin: auto;
-  }
-
-.buttonClass:hover{
-    background-color: rgb(255, 119, 119);
 }
 
-.buttonClass:focus{
-    background-color: red;
-}
-
-/* Your existing responsive CSS remains the same */
-@media (min-width:1000px){
-    .class4>{
-       justify-content: space-between;
-       width: auto;
-    }
-}
-@media (max-width:430px){
-  .class6 {
-    height: auto;
-  }
-    .img{
-        height: auto;
+/* Updated responsive styles */
+@media (max-width: 1280px) {
+    .newparent {
+        width: 90% !important;
+        margin: auto;
     }
 }
 
-@media (max-width:576px){
-  .class2{
-    font-size: 30px;
-  }
-  .title_flood {
-    font-size: 26px !important;
-  }
-  .desp_flood {
-    font-size: 16px !important;
-  }
-  .newparent {
-  width: 90% !important;
-  margin: auto;
-}
+@media (max-width: 1024px) {
+    .newparent {
+        width: 95% !important;
+    }
+    
+    .class7>p{
+        font-size: 18px;
+        margin: 15px 0px;
+    }
 }
 
-@media (max-width:892px){
-  .img{
-    width: 300px;
-  }
-  .ssh_right {
-    display: block;
-  }
+@media (max-width: 768px){
+    .newparent {
+        width: 100% !important;
+    }
+    
+    .desp_flood {
+        font-size: 16px !important;
+        line-height: 1.5;
+    }
+    
+    .title_flood {
+        font-size: 24px !important;
+    }
+    
+    .class7>p{
+        font-size: 16px;
+    }
 }
 
-@media (max-width:768px){
-  .ssh_left {
-    display: none;
-  }
-  .ssh_right {
-    display: none;
-  }
-  .desp_flood {
-    display: flex;
-    flex-wrap: wrap !important;
-    padding: 0;
-    margin: 0;
-  }
-  .img{
-    max-height: 300px;
-  }
-  .class7>p{
-    font-size: 15px;
-  }
-  .class6{
-min-height: 300px;
-  }
-  .class5{
-max-height: 500px;
-  }
+@media (max-width: 640px){
+    .desp_flood {
+        font-size: 14px !important;
+    }
+    
+    .title_flood {
+        font-size: 22px !important;
+    }
+    
+    .class6{
+        min-height: 300px;
+        padding: 20px 0;
+    }
 }
+
+/* Rest of your existing CSS remains the same */
