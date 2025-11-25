@@ -604,8 +604,8 @@ return (
                 )}
               </div>
 
-              <div className="pt-8 pb-8">
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-800 group-hover:text-[#02236e] transition-colors duration-300 line-clamp-2">
+              <div className="pt-6 pb-6">
+                <h3 className="text-lg sm:text-xl px-6 font-semibold text-gray-800 group-hover:text-[#02236e] transition-colors duration-300 line-clamp-2">
                   {evt.title}
                 </h3>
               </div>
