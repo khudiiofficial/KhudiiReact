@@ -238,7 +238,7 @@ fun()
 
            {socials.email && (
           <li className={styles.item}>
-            <a href={socials.email} target="_blank" rel="noopener noreferrer">
+            <a href={`mailto:${socials.email}`} target="_blank" rel="noopener noreferrer">
               <i className="fas fa-envelope"></i>
               <span>Email</span>
             </a>
