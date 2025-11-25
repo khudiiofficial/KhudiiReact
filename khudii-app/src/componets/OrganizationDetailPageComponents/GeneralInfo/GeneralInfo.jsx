@@ -184,7 +184,7 @@ fun()
       <ul className={styles.list}>
         {socials.phone && (
           <li className={styles.item}>
-            <a href={socials.phone.slice(0,2)===`92`? `tel:+${socials.phone.split("-").join("").split(" ").join("")}`:socials.phone.slice(0,1)===`0`? `tel:+92${socials.phone.split("-").join("").split(" ").join("")}`:`tel:${socials.phone}`} target="_blank" rel="noopener noreferrer">
+            <a href={socials.phone.slice(0,2)===`92`? `tel:+${socials.phone.split("-").join("").split(" ").join("")}`:socials.phone.slice(0,1)===`0`? `tel:+92${socials.phones.slice(1,socials.phones.length).split("-").join("").split(" ").join("")}`:`tel:${socials.phone.split("-").join("").split(" ").join("")}`} target="_blank" rel="noopener noreferrer">
               <i className="fas fa-mobile-alt"></i>
               <span>{ socials.phone.slice(0,2) ==="92" ? `0`+`${socials.phone.slice(2,socials.phone.length).trim().replace(" ","-")}`:socials.phone.slice(0,3) ==="+92" ? `0`+`${socials.phone.slice(3,socials.phone.length).trim().replaceAll(" ","-")}`:socials.phone}</span>
             </a>
@@ -193,7 +193,7 @@ fun()
         
         {socials.Mobile_number && (
           <li className={styles.item}>
-            <a href={socials.Mobile_number.slice(0,2)===`92`? `tel:+${socials.Mobile_number.split("-").join("").split(" ").join("")}`:socials.Mobile_number.slice(0,1)===`0`? `tel:+92${socials.Mobile_number.split("-").join("").split(" ").join("")}`:`tel:${socials.Mobile_number}`} target="_blank" rel="noopener noreferrer">
+            <a href={socials.Mobile_number.slice(0,2)===`92`? `tel:+${socials.Mobile_number.split("-").join("").split(" ").join("")}`:socials.Mobile_number.slice(0,1)===`0`? `tel:+92${socials.Mobile_number.slice(1,socials.Mobile_number.length).split("-").join("").split(" ").join("")}`:`tel:${socials.Mobile_number.split("-").join("").split(" ").join("")}`} target="_blank" rel="noopener noreferrer">
               <i className="fas fa-phone-alt"></i>
               <span>{ socials.Mobile_number.slice(0,2) ==="92" ? `0`+`${socials.Mobile_number.slice(2,socials.Mobile_number.length).trim().replace(" ","-")}`:socials.Mobile_number.slice(0,3) ==="+92" ? `0`+`${socials.Mobile_number.slice(3,socials.Mobile_number.length).trim().replaceAll(" ","-")}`:socials.Mobile_number}</span>
             </a>
