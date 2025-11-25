@@ -212,7 +212,7 @@ call();
 
                                 {/* Button */}
                                 <div className="text-center md:text-right lg:text-left">
-                                    <button className="bg-[#E3001C] rounded-[25px] text-white font-semibold py-3 px-6 flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-300 w-full sm:w-auto">
+                                    <button className="bg-[#E3001C] rounded-[25px] text-white font-semibold py-3 px-6 flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-300 ">
                                         <Link to="/donate-now/" className="flex items-center gap-2">
                                             Donate Now
                                             <i className="fa-solid fa-hands-praying"></i>

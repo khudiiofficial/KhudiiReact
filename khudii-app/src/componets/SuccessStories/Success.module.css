@@ -270,4 +270,29 @@ font-weight: 700;
     }
 }
 
+
+
+
+
+.ssh_center {
+  text-align: center;
+  width: inline-auto;
+  margin: auto;
+}
+
+.ssh_right {
+    display: block;
+    width: inline-auto !important;
+    text-align: right;
+    margin: auto;
+  }
+  
+@media (max-width:768px){
+  .ssh_left {
+    display: none;
+  }
+  .ssh_right {
+    display: none;
+  }
+}
 /* Rest of your existing CSS remains the same */

@@ -227,6 +227,25 @@ fun()
           </li>
         )}
 
+           {socials.youtubechannel && (
+          <li className={styles.item}>
+            <a href={socials.youtubechannel} target="_blank" rel="noopener noreferrer">
+              <i className="fab fa-youtube"></i>
+              <span>YouTube Channel </span>
+            </a>
+          </li>
+        )}
+
+           {socials.email && (
+          <li className={styles.item}>
+            <a href={socials.email} target="_blank" rel="noopener noreferrer">
+              <i className="fas fa-envelope"></i>
+              <span>Email</span>
+            </a>
+          </li>
+        )}
+       
+
         {socials.facebook && (
           <li className={styles.item}>
             <a href={socials.facebook} target="_blank" rel="noopener noreferrer">
