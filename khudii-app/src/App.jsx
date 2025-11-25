@@ -29,6 +29,7 @@ import JobApplicationForm from './pages/Jobs/Jobs'
 import VolunteerForm from './pages/Volunteer/Volunteer'
 import Categories from './pages/Categories/Categories'
 import axios from 'axios'
+import './cache.js'
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 // import TranslationWidget from './componets/translate/Translate'
 function App() {
