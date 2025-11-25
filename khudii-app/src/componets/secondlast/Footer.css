@@ -9,7 +9,7 @@
 }
 
 .footer-main {
-  padding: 20px 0 30px;
+  padding: 20px 0 0 0;
 }
 
 .footer-container {
@@ -80,7 +80,7 @@
 }
 
 .contact-icon {
-  margin-right: 15px;
+  margin-right: 8px;
   font-size: 16px;
   min-width: 20px;
   text-align: center;
@@ -274,24 +274,24 @@
 @media (max-width: 1024px) {
   .footer-container {
     grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    gap: 20px;
   }
 }
 
 @media (max-width: 768px) {
   .footer-main {
-    padding: 40px 0 20px;
+    padding: 30px 0 20px;
   }
   
   .footer-container {
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 20px;
     /* text-align: center; */
   }
   
   .footer-bottom .footer-container {
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     text-align: center;
   }
   
@@ -310,11 +310,11 @@
 
 @media (max-width: 480px) {
   .footer-main {
-    padding: 30px 0 15px;
+    padding: 30px 0 0px;
   }
   
   .footer-container {
-    padding: 0 15px;
+    padding: 0 10px;
     
   }
   
