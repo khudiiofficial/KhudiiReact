@@ -2,12 +2,14 @@
  /* 2nd Code */
 .carouselSection {
   width: 100%;
+   cursor: pointer;
 }
 
 .carouselContainer {
   height: 19.1rem; 
   position: relative;
   overflow: hidden;
+   cursor: pointer;
 }
 
 
