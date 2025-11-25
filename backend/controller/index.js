@@ -1380,7 +1380,7 @@ export const getAllContent = (req, res) => {
 
 export const getSEOData = (req, res) => {
   const query = "SELECT * FROM website_seo LIMIT 1";
-  console.log('hello')
+  
   db.getConnection((err, connection) => {
     if (err) {
       console.error("❌ Database connection failed:", err);
