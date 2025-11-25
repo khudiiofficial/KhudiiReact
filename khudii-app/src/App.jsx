@@ -82,9 +82,9 @@ useEffect(()=>{
 <Routes>
 <Route path='/' element={<HomePage con={findobj('/')} url={url}/>}/>
 <Route path='/organizations' element={<Organizations con={findobj('/organizations')} url={url} />}/>
-<Route path='/organization/:slug' element={<Organization_Detail/>} />
+<Route path='/organization/:slug' element={<Organization_Detail url={url}/>} />
 <Route path='/about-khudii' element={<About  con={findobj('/about-khudii')} url={url} />}/>
-<Route path='/Blog/:slug' element={<SpecificBlog />}/>
+<Route path='/Blog/:slug' element={<SpecificBlog url={url}/>}/>
 <Route path='/golden-people' element={<Golden_people  con={findobj('/golden-people')} url={url}/>}/>
 <Route path='/contact' element={<ContactUs  con={findobj('/contact')} url={url}/>}/>
 <Route path='/contribute-your-story' element={<ContributeStory  con={findobj('/contribute-your-story')} url={url}/>}/>
@@ -99,7 +99,7 @@ useEffect(()=>{
 <Route path='/blogs' element={<Blogss  con={findobj('/blogs')} url={url}/>}/>
 <Route path='/jobs' element={<JobApplicationForm  con={findobj('/jobs')} url={url}/>}/>
 <Route path='/volunteer' element={<VolunteerForm  con={findobj('/volunteer')} url={url}/>}/>
-<Route path='Categories/:slug' element={<Categories/>}/>
+<Route path='Categories/:slug' element={<Categories url={url}/>}/>
 </Routes>
 <Footer/>
 <VapiAssistant/>

@@ -6,7 +6,7 @@ import SEO from '../../componets/Helmet/Helmet'
 import { useState,useEffect } from 'react'
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 import axios from 'axios'
-const Categories = () => {
+const Categories = ({url}) => {
     const [cat,setcat]=useState({})
 
     let {slug}=useParams()
@@ -96,7 +96,7 @@ func()
             title={cat.meta_title}
             description={cat.meta_description}
             keywords={cat.meta_keywords}
-            url={`https://khudii.com/Categories/${cat.name}`}
+            url={`${url}/Categories/${cat.name}`}
             type="website"
         />
         

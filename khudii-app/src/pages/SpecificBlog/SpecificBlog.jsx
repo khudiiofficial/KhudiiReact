@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import SEO from "../../componets/Helmet/Helmet";
 
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
-export default function BlogDetails() {
+export default function BlogDetails({url}) {
   
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -72,7 +72,7 @@ export default function BlogDetails() {
             : "khudii blog, community insights, welfare articles, social impact"
         }
         image={blog?.Image || "/Khudii.webp"}
-        url={`https://khudii.com/Blog/${blog.slug || slug}`}
+        url={`${url}/Blog/${blog.slug || slug}`}
         type="article"
       />
     

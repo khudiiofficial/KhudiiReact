@@ -12,7 +12,7 @@ import Blogs from "../../componets/Blogs/Blogs";
 import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
-const OrganizationDetail = () => {
+const OrganizationDetail = ({url}) => {
   const location=useLocation()
   const {slug}=useParams()
   const [org, setOrg] = useState(null);
@@ -66,7 +66,7 @@ if (error) return (
       : "welfare organizations, verified charities, partner organizations, community support pakistan"
   }
   image={org?.introductory_image_path || "/Khudii.webp"}
-  url={`https://khudii.com/organization/${org?.slug || slug}`}
+  url={`${url}/organization/${org?.slug || slug}`}
 />
 <>
   <Crousel key={slug}/>
