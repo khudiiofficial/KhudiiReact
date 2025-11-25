@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import styles from './Crousel.module.css'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 // import img from '../../../public/'
 const Crousel = () => {
@@ -14,7 +15,7 @@ const Crousel = () => {
             { image_path:'/8-taryaq-flood-2025-monthly-theme-khudii.webp'},
             
         ])
-    
+    const nav=useNavigate()
     useEffect(()=>{
      const func=async()=>{
         try {
@@ -41,7 +42,7 @@ func()
             <section className={`${styles.homePage} ${styles.carouselSection}`}>
                 <div className={styles.carouselContainer}>
                     {hero.map((src, i) => (
-                       <img
+                       <img onClick={()=>{nav(`/organization/${src.description}`)}}
   key={i}
   src={src.image_path}
   alt={`Slide ${i}`}
