@@ -549,18 +549,33 @@ export const getAllBlogs = (req, res) => {
 };
 
 
-export const getSmilarItems=(req,res)=>{
+// export const getSmilarItems=(req,res)=>{
 
+//     const search = req.query.search || "";
+//   const sql = "SELECT * FROM items WHERE name LIKE ?";
+//   db.query(sql, [`%${search}%`], (err, results) => {
+//     if (err) {
+//       console.error("❌ Error fetching organizations:", err);
+//       return res.status(500).json({ error: "Database error" });
+//     }
+//     res.status(200).json(DtoArr(results));
+//   });
+// }
+export const getSmilarItems = (req, res) => {
     const search = req.query.search || "";
-  const sql = "SELECT * FROM items WHERE name LIKE ?";
-  db.query(sql, [`%${search}%`], (err, results) => {
-    if (err) {
-      console.error("❌ Error fetching organizations:", err);
-      return res.status(500).json({ error: "Database error" });
-    }
-    res.status(200).json(DtoArr(results));
-  });
+    
+    // Search in both name and search_tags fields
+    const sql = "SELECT * FROM items WHERE name LIKE ? OR search_tags LIKE ?";
+    
+    db.query(sql, [`%${search}%`, `%${search}%`], (err, results) => {
+        if (err) {
+            console.error("❌ Error fetching items:", err);
+            return res.status(500).json({ error: "Database error" });
+        }
+        res.status(200).json(DtoArr(results));
+    });
 }
+
 
 import { sendContactEmail } from "../utils/emailService.js";
 export const saveContacts=(req,res)=>{

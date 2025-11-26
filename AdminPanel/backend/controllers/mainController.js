@@ -1447,6 +1447,7 @@ export const createOrganization = async (req, res) => {
     introductory_image_base64,
     youtube_video_url,
     slug,
+    search_tags,
     meta_title,
     meta_description,
     meta_keywords,
@@ -1492,8 +1493,8 @@ export const createOrganization = async (req, res) => {
     // 3. Insert main organization record with SEO fields
     const [result] = await conn.query(
       `INSERT INTO items 
-       (name, description, category, introductory_image_path, youtube_video_url, slug, meta_title, meta_description, meta_keywords) 
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+       (name, description, category, introductory_image_path, youtube_video_url, slug, meta_title, meta_description, meta_keywords,search_tags) 
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         name, 
         description, 
@@ -1503,7 +1504,8 @@ export const createOrganization = async (req, res) => {
         slug,
         meta_title || null,
         meta_description || null,
-        meta_keywords || null
+        meta_keywords || null,
+        search_tags ||null
       ]
     );
 
@@ -2007,6 +2009,7 @@ export const updateOrganization = async (req, res) => {
     introductory_image_base64,
     youtube_video_url,
     slug,
+    search_tags,
     meta_title,
     meta_description,
     meta_keywords,
@@ -2066,7 +2069,8 @@ export const updateOrganization = async (req, res) => {
         slug = ?,
         meta_title = ?,
         meta_description = ?,
-        meta_keywords = ?
+        meta_keywords = ?,
+        search_tags = ?
        WHERE id = ?`,
       [
         name, 
@@ -2078,6 +2082,7 @@ export const updateOrganization = async (req, res) => {
         meta_title || null,
         meta_description || null,
         meta_keywords || null,
+        search_tags || null,
         id
       ]
     );
