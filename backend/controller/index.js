@@ -590,38 +590,106 @@ export const getAllBlogs = (req, res) => {
 //     });
 // }
 
-export const getSmilarItems = (req, res) => {
+// export const getSmilarItems = (req, res) => {
+//   const search = req.query.search || "";
+
+//   const sql1 = "SELECT * FROM items WHERE JSON_CONTAINS(category, ?)";
+//   //   const sql1 = `
+//   //   SELECT * FROM items
+//   //   WHERE JSON_SEARCH(LOWER(category), 'one', LOWER(?)) IS NOT NULL
+//   // `;
+//   const sql2 = "SELECT * FROM items WHERE name LIKE ? OR search_tags LIKE ?";
+
+//   db.query(sql1, [JSON.stringify(search)], (err, result1) => {
+//     if (err) {
+//       console.error("❌ Database Error:", err);
+//       return res.status(500).json({ error: "Database Error" });
+//     }
+//     console.log(DtoArr(result1))
+//     const arr1 = DtoArr(result1);
+
+//     // if (arr1.length > 0) {
+//     //   return res.status(200).json(arr1); // ⬅ response sent here
+//     // }
+
+//     // otherwise run second query
+//     db.query(sql2, [`%${search}%`, `%${search}%`], (err, result2) => {
+//       if (err) {
+//         console.error("❌ Database Error:", err);
+//         return res.status(500).json({ error: "Database Error" });
+//       }
+// const newarr=[...result1,...result2]
+// const data=[...new Set(newarr)]
+//       return res.status(200).json(DtoArr(data)); // ⬅ only sent once
+//     });
+//   });
+// };
+
+export const getSimilarItems = async (req, res) => {
   const search = req.query.search || "";
 
-  const sql1 = "SELECT * FROM items WHERE JSON_CONTAINS(category, ?)";
-  //   const sql1 = `
-  //   SELECT * FROM items
-  //   WHERE JSON_SEARCH(LOWER(category), 'one', LOWER(?)) IS NOT NULL
-  // `;
-  const sql2 = "SELECT * FROM items WHERE name LIKE ? OR search_tags LIKE ?";
+  if (!search) {
+    return res.status(400).json({ error: "Search parameter is required" });
+  }
 
-  db.query(sql1, [JSON.stringify(search)], (err, result1) => {
-    if (err) {
-      console.error("❌ Database Error:", err);
-      return res.status(500).json({ error: "Database Error" });
-    }
+  try {
+    // Case insensitive search in JSON category array
+    const sql1 = `
+      SELECT * FROM items 
+      WHERE EXISTS (
+        SELECT 1 FROM JSON_TABLE(
+          category, 
+          '$[*]' COLUMNS (category_name VARCHAR(50) PATH '$')
+        ) AS categories 
+        WHERE LOWER(categories.category_name) = LOWER(?)
+      )
+    `;
 
-    const arr1 = DtoArr(result1);
+    // Alternative if JSON_TABLE not supported:
+    // const sql1 = `
+    //   SELECT * FROM items 
+    //   WHERE JSON_SEARCH(LOWER(category), 'all', LOWER(?)) IS NOT NULL
+    // `;
 
-    if (arr1.length > 0) {
-      return res.status(200).json(arr1); // ⬅ response sent here
-    }
+    // Case insensitive search in name and search_tags
+    const sql2 = "SELECT * FROM items WHERE LOWER(name) LIKE LOWER(?) OR LOWER(search_tags) LIKE LOWER(?)";
 
-    // otherwise run second query
-    db.query(sql2, [`%${search}%`, `%${search}%`], (err, result2) => {
-      if (err) {
-        console.error("❌ Database Error:", err);
-        return res.status(500).json({ error: "Database Error" });
-      }
+    // Execute both queries in parallel for better performance
+    const [result1, result2] = await Promise.all([
+      new Promise((resolve, reject) => {
+        db.query(sql1, [search], (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        });
+      }),
+      new Promise((resolve, reject) => {
+        db.query(sql2, [`%${search}%`, `%${search}%`], (err, results) => {
+          if (err) reject(err);
+          else resolve(results);
+        });
+      })
+    ]);
 
-      return res.status(200).json(DtoArr(result2)); // ⬅ only sent once
-    });
-  });
+    // Combine results from both queries
+    const combinedResults = [...DtoArr(result1), ...DtoArr(result2)];
+    
+    // Remove duplicates based on item ID (assuming each item has unique 'id')
+    const uniqueResults = combinedResults.filter((item, index, self) => 
+      index === self.findIndex(i => i.id === item.id)
+    );
+
+    // Alternative: Using Map for better performance with large datasets
+    // const uniqueResults = Array.from(
+    //   new Map(combinedResults.map(item => [item.id, item])).values()
+    // );
+
+    // console.log(`Found ${uniqueResults.length} unique items`);
+    return res.status(200).json(uniqueResults);
+
+  } catch (err) {
+    console.error("❌ Database Error:", err);
+    return res.status(500).json({ error: "Database Error" });
+  }
 };
 
 import { sendContactEmail } from "../utils/emailService.js";
