@@ -564,6 +564,19 @@ export const getAllBlogs = (req, res) => {
 export const getSmilarItems = (req, res) => {
     const search = req.query.search || "";
     
+ db.query('SELECT * FROM items WHERE JSON_CONTAINS(category, ?)', [JSON.stringify(search)], (err, result) => {
+    if (err) {
+      console.error("Database Error:", err);
+      res.status(500).json({ error: "Database Error" });
+      return;
+    }
+    if(DtoArr(result).length!==0){
+ return res.status(200).json(DtoArr(result));
+    }
+  
+  });
+
+
     // Search in both name and search_tags fields
     const sql = "SELECT * FROM items WHERE name LIKE ? OR search_tags LIKE ?";
     
