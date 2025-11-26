@@ -561,34 +561,68 @@ export const getAllBlogs = (req, res) => {
 //     res.status(200).json(DtoArr(results));
 //   });
 // }
-export const getSmilarItems = (req, res) => {
-    const search = req.query.search || "";
+// export const getSmilarItems = (req, res) => {
+//     const search = req.query.search || "";
     
- db.query('SELECT * FROM items WHERE JSON_CONTAINS(category, ?)', [JSON.stringify(search)], (err, result) => {
-    if (err) {
-      console.error("Database Error:", err);
-      res.status(500).json({ error: "Database Error" });
-      return;
-    }
-    if(DtoArr(result).length!==0){
- return res.status(200).json(DtoArr(result));
-    }
+//  db.query('SELECT * FROM items WHERE JSON_CONTAINS(category, ?)', [JSON.stringify(search)], (err, result) => {
+//     if (err) {
+//       console.error("Database Error:", err);
+//       res.status(500).json({ error: "Database Error" });
+//       return;
+//     }
+//     console.log(result)
+//     if(DtoArr(result).length!==0){
+//  return res.status(200).json(DtoArr(result));
+//     }
   
-  });
+//   });
 
 
-    // Search in both name and search_tags fields
-    const sql = "SELECT * FROM items WHERE name LIKE ? OR search_tags LIKE ?";
+//     // Search in both name and search_tags fields
+//     const sql = "SELECT * FROM items WHERE name LIKE ? OR search_tags LIKE ?";
     
-    db.query(sql, [`%${search}%`, `%${search}%`], (err, results) => {
-        if (err) {
-            console.error("❌ Error fetching items:", err);
-            return res.status(500).json({ error: "Database error" });
-        }
-        res.status(200).json(DtoArr(results));
-    });
-}
+//     db.query(sql, [`%${search}%`, `%${search}%`], (err, results) => {
+//         if (err) {
+//             console.error("❌ Error fetching items:", err);
+//             return res.status(500).json({ error: "Database error" });
+//         }
+//         res.status(200).json(DtoArr(results));
+//     });
+// }
 
+export const getSmilarItems = (req, res) => {
+  const search = req.query.search || "";
+
+  const sql1 = "SELECT * FROM items WHERE JSON_CONTAINS(category, ?)";
+  //   const sql1 = `
+  //   SELECT * FROM items
+  //   WHERE JSON_SEARCH(LOWER(category), 'one', LOWER(?)) IS NOT NULL
+  // `;
+  const sql2 = "SELECT * FROM items WHERE name LIKE ? OR search_tags LIKE ?";
+
+  db.query(sql1, [JSON.stringify(search)], (err, result1) => {
+    if (err) {
+      console.error("❌ Database Error:", err);
+      return res.status(500).json({ error: "Database Error" });
+    }
+
+    const arr1 = DtoArr(result1);
+
+    if (arr1.length > 0) {
+      return res.status(200).json(arr1); // ⬅ response sent here
+    }
+
+    // otherwise run second query
+    db.query(sql2, [`%${search}%`, `%${search}%`], (err, result2) => {
+      if (err) {
+        console.error("❌ Database Error:", err);
+        return res.status(500).json({ error: "Database Error" });
+      }
+
+      return res.status(200).json(DtoArr(result2)); // ⬅ only sent once
+    });
+  });
+};
 
 import { sendContactEmail } from "../utils/emailService.js";
 export const saveContacts=(req,res)=>{
