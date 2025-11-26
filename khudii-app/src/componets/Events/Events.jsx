@@ -631,7 +631,7 @@ return (
                   {/* We empower communities by providing essential services in health, education, disability support, water access, thalassemia care, and food security. */}
              {items.description}
                 </p>
-                <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 justify-center xs:justify-start">
+                <div className="flex flex-row xs:flex-row gap-3 sm:gap-4 justify-center xs:justify-start">
                   <Link to="/contribute-your-story/">
                     <button 
                       className={`${styles.event_btn1} text-white px-5 py-3 sm:px-6 sm:py-3.5 rounded-full font-medium hover:from-[#FF6B6B] hover:to-[#E3001C] transform hover:scale-[1.03] transition-all duration-300 shadow hover:shadow-md whitespace-nowrap"

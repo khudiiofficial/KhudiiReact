@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  width: 40%; /* full width of parent */
+  width: 615px; /* full width of parent */
 }
 
 .class2 {
@@ -29,7 +29,7 @@
     flex-direction: column;
   }
 .class1{
-    width: 100%;
+    width: 95%;
 }
   .class1 iframe {
     max-width: 100%;   /* shrink to container */

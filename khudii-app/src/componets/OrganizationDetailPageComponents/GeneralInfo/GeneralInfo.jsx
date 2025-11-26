@@ -195,7 +195,7 @@ fun()
           <li className={styles.item}>
             <a href={socials.Mobile_number.slice(0,2)===`92`? `tel:+${socials.Mobile_number.split("-").join("").split(" ").join("")}`:socials.Mobile_number.slice(0,1)===`0`? `tel:+92${socials.Mobile_number.slice(1,socials.Mobile_number.length).split("-").join("").split(" ").join("")}`:`tel:${socials.Mobile_number.split("-").join("").split(" ").join("")}`} target="_blank" rel="noopener noreferrer">
               <i className="fas fa-phone-alt"></i>
-              <span>{ socials.Mobile_number.slice(0,2) ==="92" ? `0`+`${socials.Mobile_number.slice(2,socials.Mobile_number.length).trim().replace(" ","-")}`:socials.Mobile_number.slice(0,3) ==="+92" ? `0`+`${socials.Mobile_number.slice(3,socials.Mobile_number.length).trim().replaceAll(" ","-")}`:socials.Mobile_number}</span>
+              <span>{ socials.Mobile_number.slice(0,2) ==="92" ? `0`+`${socials.Mobile_number.slice(2,socials.Mobile_number.length).trim().replace(" ","-")}`:socials.Mobile_number.slice(0,3) ==="+92" ? `0`+`${socials.Mobile_number.slice(3,socials.Mobile_number.length).trim().split("-").join("")}`:socials.Mobile_number}</span>
             </a>
           </li>
         )}

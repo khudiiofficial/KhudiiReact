@@ -278,6 +278,7 @@
     transform: translateY(-2px);
   }
   .item span {
+    display: flex;
     text-align: center;
     font-size: 0.8rem;
     line-height: 1.2;
@@ -297,11 +298,11 @@
   }
   
   .item a {
-    padding: 0.75rem 0.5rem;
+    padding: 0.5rem 0.5rem;
     min-height: 55px;
   }
    .item div {
-    padding: 0.75rem 0.5rem;
+    padding: 0.5rem 0.5rem;
     min-height: 55px;
   }
   

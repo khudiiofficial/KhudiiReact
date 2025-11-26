@@ -112,10 +112,10 @@ if(error){
                       : 'Empowering communities through sustainable initiatives.'}
                   </p>
 
-                  <div className="text-left">
+                  <div className="text-center">
                     <button
              
-                      className="inline-flex rounded-[25px] w-50 sm:w-auto px-5 py-2.5 text-sm font-medium bg-[#E3001C] text-white transition-all duration-300 focus:outline-none"
+                      className="cursor-pointer inline-flex rounded-[25px] w-50 sm:w-auto px-5 py-2.5 text-sm font-medium bg-[#E3001C] text-white transition-all duration-300 focus:outline-none"
                       aria-label={`Explore ${org.name}`}
                     >
                       Explore {org.name.split(' ').slice(0, 2).join(' ')}

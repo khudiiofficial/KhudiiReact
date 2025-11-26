@@ -144,7 +144,7 @@ getStories();
       </div>
       
       <div className="p-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-3 leading-tight">
+        <h3 className="h-[60px] text-lg font-semibold text-gray-900 mb-3 leading-tight">
           {video.link ? (
             <a 
               href={video.link} 
@@ -167,17 +167,9 @@ getStories();
           {video.description}
         </p>
         
-        <div className="mt-4 flex items-center justify-between">
+        {/* <div className="mt-4 flex items-center justify-between">
           <span className="text-sm text-gray-500">Video #{video.id}</span>
-          {/* <a
-            href={`https://www.youtube.com/watch?v=${video.youtube_id}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors duration-200"
-          >
-            Watch on YouTube →
-          </a> */}
-        </div>
+        </div> */}
       </div>
     </div>
   );
@@ -251,22 +243,6 @@ getStories();
           {videoData && videoData.map((video) => (
             <VideoCard key={video.id} video={video} />
           ))}
-        </div>
-
-        {/* Footer */}
-        <div className="text-center mt-12 pt-8 border-t border-gray-200">
-          <p className="text-gray-600">
-            Don't forget to subscribe for more uplifting stories and visit our website{" "}
-            <a 
-              href="https://www.khudii.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 font-medium"
-            >
-              www.khudii.com
-            </a>{" "}
-            for updates!
-          </p>
         </div>
       </div>
     </div>

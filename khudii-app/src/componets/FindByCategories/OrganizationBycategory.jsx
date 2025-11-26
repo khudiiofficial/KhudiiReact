@@ -74,13 +74,13 @@ return (
               
               <div className="w-full overflow-hidden bg-white rounded-t-xl">
                 <img src={org.introductory_image_path} alt={org.title} className="w-100 object-cover duration-500"/>
-                <button onClick={()=>{nav(`/organization/${org.slug}`,{state:{id:org.id}})}}>
+                <button className="cursor-pointer">
                   {/* <span>Explore</span> */}
                 </button>
               </div>
               <div className="p-4 sm:p-4">
                 <h3 className={`${styles.title} h-[50px] text-xl font-semibold text-[#022279] mb-2`}>
-                  <button onClick={()=>{nav(`/organization/${org.slug}`,{state:{id:org.id}})}} className="text-left">{org.name}</button>
+                  <button className="cursor-pointer text-left">{org.name}</button>
                 </h3>
                 {/* <div className="text-[#222222]-600 text-sm leading-relaxed mb-4 line-clamp-2">  <div dangerouslySetInnerHTML={{ __html: org.description }}></div></div> */}
                 <div className="text-[#222222]-600 text-sm leading-relaxed mb-4">
@@ -94,7 +94,7 @@ return (
 
                   </div>
                 <button 
-                className="inline-flex rounded-[25px] w-auto px-5 py-2.5 text-sm font-medium bg-[#E3001C] text-white transition-all duration-300 focus:outline-none">
+                className="cursor-pointer flex block rounded-[25px] mx-auto w-auto px-5 py-2.5 text-sm font-medium bg-[#E3001C] text-white transition-all duration-300 focus:outline-none">
                   Explore {org.name.split(' ').slice(0, 2).join(' ')}
                 </button>
               </div>
