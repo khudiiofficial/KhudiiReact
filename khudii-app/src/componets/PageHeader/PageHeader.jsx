@@ -73,7 +73,7 @@ fetchFooterData();
           </h1>
 
           {/* Breadcrumbs */}
-          <nav className="breadcrumb-nav">
+          {/* <nav className="breadcrumb-nav">
             <ul className="thm-breadcrumb">
               {breadcrumbs.map((item, index) => (
                 <li key={index} className="breadcrumb-item">
@@ -90,7 +90,7 @@ fetchFooterData();
                 </li>
               ))}
             </ul>
-          </nav>
+          </nav> */}
         </div>
       </div>
 
