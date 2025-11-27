@@ -244,13 +244,13 @@ setcap('')
           )}
 
           <div className="form-group">
-            <label htmlFor="description">Description</label>
-            <textarea
+            <label htmlFor="description">Organization slug</label>
+            <input
               id="description"
               value={formData.description}
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-              placeholder="Enter image description (optional)"
-              rows="3"
+              placeholder="enter slug organization of which you are upaloding the image"
+              required
             />
           </div>
 

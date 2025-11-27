@@ -41,7 +41,7 @@ let id;
            GROUP_CONCAT(DISTINCT img.image_path) AS images
     FROM items i
     LEFT JOIN item_images img ON i.id = img.item_id
-    WHERE i.slug = ?
+    WHERE i.slug = ? AND i.deletestatus = 0
     GROUP BY i.id;
   `;
 

@@ -1472,7 +1472,7 @@ export const createOrganization = async (req, res) => {
 
     // Check if slug already exists
     const [existingSlug] = await conn.query(
-      `SELECT id FROM items WHERE slug = ?`,
+      `SELECT id FROM items WHERE slug = ? AND deletestatus = 0`,
       [slug]
     );
 
@@ -2032,11 +2032,12 @@ export const updateOrganization = async (req, res) => {
     }
 
     // 2. Check if slug is being changed and if new slug already exists (excluding current organization)
-    if (slug && slug !== rows[0].slug) {
-      const [existingSlug] = await conn.query(
-        "SELECT id FROM items WHERE slug = ? AND id != ?",
-        [slug, id]
-      );
+  if (slug && slug !== rows[0].slug) {
+  const [existingSlug] = await conn.query(
+    "SELECT id FROM items WHERE slug = ? AND id != ? AND deletestatus = 0",
+    [slug, id]
+  );
+
 
       if (existingSlug.length > 0) {
         await conn.rollback();
