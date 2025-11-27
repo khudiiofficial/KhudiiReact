@@ -25,17 +25,19 @@ export const useGoogleAnalytics = () => {
 
     // Initialize gtag
     window.dataLayer = window.dataLayer || [];
-    function gtag(){window.dataLayer.push(arguments);}
+    function gtag() {
+      window.dataLayer.push(arguments);
+    }
     window.gtag = gtag;
-    gtag('js', new Date());
-    gtag('config', GA_TRACKING_ID);
 
+    window.gtag('js', new Date());
+    window.gtag('config', GA_TRACKING_ID);
   }, []);
 
   // Track page views when location changes
   useEffect(() => {
     if (window.gtag && GA_TRACKING_ID) {
-      gtag('config', GA_TRACKING_ID, {
+      window.gtag('config', GA_TRACKING_ID, {
         page_path: location.pathname + location.search,
       });
     }
