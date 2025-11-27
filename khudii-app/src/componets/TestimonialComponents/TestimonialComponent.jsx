@@ -505,7 +505,7 @@ const ClientFeedbacks = () => {
               Have you worked with Khudii? We'd love to hear about your
               experience and feature your feedback.
             </p>
-            <Link to="/Story">
+            <Link to="/success-stories/">
               <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
                 Share Your Story
               </button>
