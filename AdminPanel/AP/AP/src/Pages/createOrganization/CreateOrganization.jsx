@@ -1288,7 +1288,11 @@ export default function CreateOrganizationPage() {
       setErrors({});
     } catch (err) {
       console.error(err);
-      alert(`❌ Error creating organization\n${err.message}`);
+     if (err.response?.data?.message === "Slug already exists. Please choose a different one.") {
+        alert("❌ Slug already exists. Please choose a different one.");
+      } else {
+        alert("❌ Error creating  organization");
+      }
     } finally {
       setIsSubmitting(false);
     }
