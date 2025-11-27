@@ -138,7 +138,6 @@
 
 }
 
-
 .item a::before {
   content: '';
   position: absolute;
@@ -146,7 +145,7 @@
   top: 0;
   height: 100%;
   width: 3px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #02236e;
   transform: scaleY(0);
   transition: transform 0.3s ease;
 }
@@ -157,13 +156,13 @@
   top: 0;
   height: 100%;
   width: 3px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #02236e;
   transform: scaleY(0);
   transition: transform 0.3s ease;
 }
 
 .item a:hover {
-  color: #1f2937;
+  color: #02236e;
   background: #f8fafc;
   border-color: #d1d5db;
   transform: translateX(4px);
@@ -171,7 +170,7 @@
 }
 
 .item div:hover {
-  color: #1f2937;
+  color: #02236e;
   transform: translateX(4px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -198,10 +197,10 @@
 .item a[href*="instagram"]:hover i { color: #e4405f; }
 .item a[href*="twitter"]:hover i { color: #1da1f2; }
 .item a[href*="linkedin"]:hover i { color: #0077B5; }
-.item a[href*="mailto"]:hover i { color: #ea4335; }
-.item a[href*="tel"]:hover i { color: #34a853; }
+.item a[href*="mailto"]:hover i { color: #e7001e; }
+.item a[href*="tel"]:hover i { color: #00691c; }
 .item a[href*="location"]:hover i { color: #ff0000; }
-.item a[href*="globe"]:hover i { color: #4285f4; }
+.item a[href*="globe"]:hover i { color: #ff0000; }
 
 .item span {
   flex: 1;
@@ -333,11 +332,11 @@
 
 /* Professional focus states for accessibility */
 .item a:focus {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid #02236e;
   outline-offset: 2px;
 }
 .item div:focus {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid #02236e;
   outline-offset: 2px;
 }
 

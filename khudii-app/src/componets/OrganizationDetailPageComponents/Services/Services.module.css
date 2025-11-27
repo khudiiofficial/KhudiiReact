@@ -55,14 +55,14 @@
 
 .icon {
   font-size: 2.5rem;
-  color: #0b6fbf;
+  color: #02236e;
   margin-bottom: 0.8rem;
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .card:hover .icon {
   transform: scale(1.2) rotate(8deg);
-  color: #e63946;
+  color: #e7001e;
 }
 
 .info {
@@ -84,7 +84,7 @@
 }
 
 .card:hover .name {
-  color: #0b6fbf;
+  color: #02236e;
 }
 
 /* Simple fade-in animation */
@@ -105,7 +105,7 @@
 }
 
 .Call_Khudii{
-  color: #e63946;
+  color: #e7001e;
   font-size: 2vw;
   font-weight: 700;
 }
@@ -113,7 +113,7 @@
 .Phone{
 font-size: 1.5vw;
 color:white;
-background-color:#0b6fbf;
+background-color:#02236e;
 cursor: pointer;
 padding: 10px;
 border-radius: 20px;
@@ -131,8 +131,8 @@ width: 400px;
 .Phone:hover{
   background-color: white;
   transition: ease-in-out .5s;
-  color:red;
-  border: solid rgb(26, 26, 91) 2px;
+  color:#02236e;
+  border: solid #02236e 2px;
   box-shadow: 0 12px 14x black;
 }
 
