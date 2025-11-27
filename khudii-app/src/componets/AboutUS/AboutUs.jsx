@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AboutUs.module.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 const AboutUs = () => {
+  const nav=useNavigate()
   const teamMembers = [
     {
       id: 1,
@@ -293,9 +295,11 @@ const [loading,setLoading]=useState(false)
   {/* Centered Button */}
   <div className={styles.joinButtonContainer}>
     <button
+      onClick={()=>{nav('/volunteer/')}}
       className="cursor-pointer inline-flex items-center justify-center rounded-[25px] w-full sm:w-auto px-6 py-3 text-sm font-medium bg-[#E3001C] text-white transition-all duration-300 focus:outline-none shadow-md hover:shadow-lg"
       aria-label="Join Us as Volunteer"
     >
+
       Join Us as Volunteer
     </button>
   </div>
