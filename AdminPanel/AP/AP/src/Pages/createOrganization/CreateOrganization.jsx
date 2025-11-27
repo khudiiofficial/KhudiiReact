@@ -1288,7 +1288,7 @@ export default function CreateOrganizationPage() {
       setErrors({});
     } catch (err) {
       console.error(err);
-      alert("❌ Error creating organization");
+      alert(`❌ Error creating organization\n${err.message}`);
     } finally {
       setIsSubmitting(false);
     }
