@@ -30,9 +30,11 @@ import VolunteerForm from './pages/Volunteer/Volunteer'
 import Categories from './pages/Categories/Categories'
 import axios from 'axios'
 import './cache.js'
+import { useGoogleAnalytics } from './Hooks/GoogleAnalytics.jsx'
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 // import TranslationWidget from './componets/translate/Translate'
 function App() {
+useGoogleAnalytics()
 const location=useLocation()
 const [data,setSeoData]=useState([])
 const [url,seturl]=useState('')

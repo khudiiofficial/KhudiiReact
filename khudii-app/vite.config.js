@@ -29,7 +29,8 @@ export default defineConfig(({ mode }) => {
     define: {
       __VITE_BACKEND_PATH__: JSON.stringify(env.VITE_BACKEND_PATH),
       __VITE_VAPI_PUBLIC_KEY__:JSON.stringify(env.VAPI_PUBLIC_KEY),
-      __VITE_VAPI_ASSISTANT_ID__:JSON.stringify(env.VAPI_ASSISTANT_ID)
+      __VITE_VAPI_ASSISTANT_ID__:JSON.stringify(env.VAPI_ASSISTANT_ID),
+      __VITE_REACT_APP_GA_TRACKING_ID__:JSON.stringify(env.REACT_APP_GA_TRACKING_ID)
     },
   }
 })
