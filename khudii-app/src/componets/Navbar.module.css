@@ -168,6 +168,7 @@ padding: 10px;
   gap: 12px;
   padding: 10px;
   border-bottom: 1px solid #eee;
+  cursor: pointer;
   transition: background 0.2s ease;
 }
 

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 import { useNavigate } from "react-router-dom";
+import { div } from "framer-motion/client";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -12,6 +13,7 @@ const Navbar = () => {
   const [counter,setcounter]=useState(true)
   const [isMobile, setIsMobile] = useState(false)
   const [footer,setFooterData]=useState({})
+  const [load,setload]=useState(false)
   const nav=useNavigate()
  const[err,seterr]=useState('')
 
@@ -54,12 +56,22 @@ fetchFooterData();
      return () => window.removeEventListener('resize', checkScreenSize)
    }, [])
 
+useEffect(()=>{
+  setResults([])
+  if(!search){
+    setload(false)
+  }
+  const handler=setTimeout(()=>{handleSearch(search,true)},1500)
+  return ()=> clearTimeout(handler)
+},[search])
+
   // Fetch organizations from backend
-  const handleSearch = async (value,add=false) => {
-    if(!add){
-     setcounter(false)
-    }
-    setSearch(value);
+  const handleSearch = async (value) => {
+    // if(!add){
+    //  setcounter(false)
+    // }
+    // setSearch(value);
+    setload(true)
     if (value.length > 1) {
       try {
         const res = await fetch(
@@ -76,6 +88,7 @@ fetchFooterData();
     } else {
       setResults([]);
     }
+    setload(false)
   };
 // console.log("hey abu",err)
   return (
@@ -87,21 +100,23 @@ fetchFooterData();
           <input
             type="text"
             value={search}
-            onChange={(e) => handleSearch(e.target.value)}
+            onChange={(e) => {setSearch(e.target.value);setcounter(false); setload(true)}}
             placeholder="Search Organization"
             className={styles.bgcolor}
           />
-           {search && <i onClick={()=>{setSearch('')}} className={`fa-solid fa-x ${styles.cross}`}></i>} 
+           {search && <i onClick={()=>{setSearch(''),setload(false)}} className={`fa-solid fa-x ${styles.cross}`}></i>} 
         </div>
 
         {/* Results Dropdown for top search */}
         {err ?<>{search && <div className={`${styles.searchResults} ${styles.helper_class}`}>Netwrok Error</div>}</>:<>
-        {results.length===0 &&  search && <div className={`${styles.searchResults} ${styles.helper_class}`}>No Results</div> }
+        {load ? <div className={`${styles.searchResults} ${styles.helper_class}`}>  <div className="flex items-center justify-center w-full h-full py-1">
+      <div className="w-3 h-3 sm:w-5 sm:h-5 md:w-5 md:h-5 border-4 border-red-500 border-t-transparent rounded-full animate-spin" />
+    </div></div>: results.length===0 &&  search && <div className={`${styles.searchResults} ${styles.helper_class}`}>No Results</div> }
 
         {results.length > 0 && search && (
           <div className={styles.searchResults}>
             {results.map((org) => (
-              <div key={org.id} className={styles.resultCard}>
+              <div key={org.id} onClick={()=>{setSearch(''),nav(`/organization/${org.slug}`,{state:{id:org.id}})}}  className={styles.resultCard}>
                 <img
                   src={org.introductory_image_path}
                   alt={org.name}
@@ -110,7 +125,7 @@ fetchFooterData();
                 <div>
                   <b>{org.name}</b>
            
-                 <p dangerouslySetInnerHTML={{ __html: org.description.slice(0, 80) + "..." }} />
+                 <p dangerouslySetInnerHTML={{ __html: org.description.slice(0, 95) + "..." }} />
 
                   {/* <Link
                     to={`/organization/${org.id}`}
@@ -119,7 +134,8 @@ fetchFooterData();
                   >
                     View More
                   </Link> */}
-                      <button onClick={()=>{setSearch(''),nav(`/organization/${org.slug}`,{state:{id:org.id}})}} className="org-btn">
+                       <br />
+                      <button style={{cursor:'pointer'}} className="org-btn">
                     View More
                 </button>
                 </div>
@@ -222,20 +238,22 @@ fetchFooterData();
               <input
                 type="text"
                 value={search}
-                onChange={(e) => handleSearch(e.target.value,true)}
+                onChange={(e) => {setSearch(e.target.value);setcounter(true);setload(true)}}
                 placeholder="Search Organization"
                 className={styles.bgcolor}
               />
-           {search && <i onClick={()=>{setSearch('')}} className={`fa-solid fa-x ${styles.cross}`}></i>}   
+           {search && <i onClick={()=>{setSearch('');setload(false)}} className={`fa-solid fa-x ${styles.cross}`}></i>}   
             </div>
 
             {/* Results for desktop search */}
           {err ?<>{search&& counter &&<div className={`${styles.searchResults} ${styles.helper_class}`}>Netwrok Error</div> }</>:<>
-           {results.length===0 && counter && search  &&<div className={`${styles.searchResults} ${styles.helper_class}`}>No Results</div> }
+           {load? <div className={`${styles.searchResults} ${styles.helper_class}`}> <div className="flex items-center justify-center w-full h-full py-1">
+      <div className="w-3 h-3 sm:w-5 sm:h-5 md:w-5 md:h-5 border-4 border-red-500 border-t-transparent rounded-full animate-spin" />
+    </div></div>: results.length===0 && counter && search  &&<div className={`${styles.searchResults} ${styles.helper_class}`}>No Results</div> }
         {results.length > 0 && counter && search && (
           <div className={styles.searchResults}>
             {results.map((org) => (
-              <div key={org.id} className={styles.resultCard}>
+              <div key={org.id} onClick={()=>{setSearch(''),nav(`/organization/${org.slug}`,{state:{id:org.id}})}}  className={styles.resultCard}>
                 <img
                   src={org.introductory_image_path}
                   alt={org.name}
@@ -243,7 +261,7 @@ fetchFooterData();
                 />
                 <div>
                   <b>{org.name}</b>
-                    <p dangerouslySetInnerHTML={{ __html: org.description.slice(0, 80) + "..." }} />
+                    <p dangerouslySetInnerHTML={{ __html: org.description.slice(0, 95) + "..." }} />
                   {/* <Link
                     to={`/organization/${org.id}`}
                     className={styles.resultLink}
@@ -251,7 +269,8 @@ fetchFooterData();
                   >
                     View More
                   </Link> */}
-                      <button onClick={()=>{setSearch(''),nav(`/organization/${org.slug}`,{state:{id:org.id}})}} className="org-btn">
+                  <br />
+                      <button style={{cursor:'pointer'}} className="org-btn">
                   View More
                 </button>
                 </div>

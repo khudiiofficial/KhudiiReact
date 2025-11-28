@@ -1,11 +1,13 @@
 // src/setupAxiosCache.js
 import axios from "axios";
-
+const cache={}
 // Helper functions
 const getCache = (key) => {
   try {
-    const cached = sessionStorage.getItem(key);
-    return cached ? JSON.parse(cached) : null;
+    // const cached = sessionStorage.getItem(key);
+    const cached = cache[key];
+    // return cached ? JSON.parse(cached) : null;
+        return cached ? cached : null;
   } catch {
     return null;
   }
@@ -13,7 +15,8 @@ const getCache = (key) => {
 
 const setCache = (key, data) => {
   try {
-    sessionStorage.setItem(key, JSON.stringify(data));
+    // sessionStorage.setItem(key, JSON.stringify(data));
+    cache[key]=data
   } catch {}
 };
 
