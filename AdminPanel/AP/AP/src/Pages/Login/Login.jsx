@@ -34,7 +34,7 @@ export default function AdminLogin() {
   };
 
   return (
-    <div style={{backgroundImage:'url(/khudiilogo.png)',
+    <div style={{backgroundImage:'url(/Khudii_login_bg_logo.webp)',
       backgroundSize:'cover',
       backgroundRepeat:'no-repeat',
       backgroundPosition:'center'

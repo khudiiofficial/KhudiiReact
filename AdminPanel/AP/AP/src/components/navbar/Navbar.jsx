@@ -59,8 +59,10 @@ export default function Sidebar() {
     { path: "/dashboard/vision", label: "Vision" },
     { path: "/dashboard/storiesDescription", label: "Home Page Story Description" },
     { path: "/dashboard/contentAdmin", label: "About Page" },
-       { path: "/dashboard/seo", label: "SEO Management" },
-         { path: "/dashboard/footer", label: "Footer and other images" }
+    { path: "/dashboard/seo", label: "SEO Management" },
+    { path: "/dashboard/footer", label: "Footer and other images" },
+    { path: "/dashboard/faqs", label: "FAQS" },
+    { path: "/dashboard/bank", label: "Conatct Bank Details" }
   ];
 
   // const moreLinks = [
@@ -85,12 +87,12 @@ export default function Sidebar() {
 
   return (
     <div 
-      className={`bg-blue-600 text-white transition-all duration-300 ${
+      className={`bg-[#02236e] text-white transition-all duration-300 ${
         isCollapsed ? "w-20" : "w-64"
       } flex flex-col shadow-lg`}
     >
       {/* Header */}
-      <div className="p-4 border-b border-blue-500 flex items-center justify-between">
+      <div className="p-4 border-b border-[#02236e]-500 flex items-center justify-between">
         {!isCollapsed && (
           <div className="text-lg font-bold tracking-wide">
             <Link to={'/dashboard'}>Admin Panel</Link>
@@ -114,7 +116,7 @@ export default function Sidebar() {
               to={link.path}
               className={`flex items-center px-3 py-3 rounded-lg transition font-medium ${
                 isActiveLink(link.path)
-                  ? "bg-blue-700 text-white shadow-inner"
+                  ? "bg-blue-500 text-white shadow-inner"
                   : "hover:bg-blue-500 hover:shadow"
               } ${isCollapsed ? "justify-center" : ""}`}
               title={isCollapsed ? link.label : ""}
@@ -133,10 +135,10 @@ export default function Sidebar() {
       </div>
 
       {/* Footer Actions */}
-      <div className="p-4 border-t border-blue-500 space-y-2">
+      <div className="p-4 border-t border-[#02236e]-500 space-y-2">
         <button
           onClick={() => navigate("/dashboard/Profile")}
-          className={`w-full bg-white text-blue-600 px-3 py-2 rounded-lg font-medium hover:bg-gray-100 transition shadow ${
+          className={`w-full bg-white text-[#02236e] px-3 py-2 rounded-lg font-medium hover:bg-gray-100 transition shadow ${
             isCollapsed ? "text-xs" : ""
           }`}
           title={isCollapsed ? "Profile" : ""}
@@ -145,7 +147,7 @@ export default function Sidebar() {
         </button>
         <button
           onClick={handleLogout}
-          className={`w-full bg-white text-blue-600 px-3 py-2 rounded-lg font-medium hover:bg-gray-100 transition shadow ${
+          className={`w-full bg-white text-[#02236e] px-3 py-2 rounded-lg font-medium hover:bg-gray-100 transition shadow ${
             isCollapsed ? "text-xs" : ""
           }`}
           title={isCollapsed ? "Logout" : ""}

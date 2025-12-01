@@ -26,6 +26,22 @@ const [val,setval]=useState('')
     iban: false,
     account: false
   });
+const [data,setdata]=useState({})
+useEffect(()=>{
+const call=async()=>{
+  setloader(true)
+try {
+  const res=await axios.get(`${API_URL}/api/bank`)
+  if(res.status===200){
+    setdata(res.data.data)
+  }
+} catch (error) {
+  console.log(error)
+}
+setloader(false)
+}
+call()
+},[])
 
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -195,14 +211,14 @@ const myDivRef = useRef(null);
     }
   };
 
-  const bankDetails = {
-    name: "Meezan Bank",
-    accountTitle: "Khudii Welfare Organization",
-    branch: "DHA Y Block, Lahore, Punjab, Pakistan",
-    iban: "PK34 MEZN 0002 0501 1076 2400",
-    accountNumber: "0205 0110 7624 00",
-    logo: "/meezan1.png.webp"
-  };
+  // const bankDetails = {
+  //   name: "Meezan Bank",
+  //   accountTitle: "Khudii Welfare Organization",
+  //   branch: "DHA Y Block, Lahore, Punjab, Pakistan",
+  //   iban: "PK34 MEZN 0002 0501 1076 2400",
+  //   accountNumber: "0205 0110 7624 00",
+  //   logo: "/meezan1.png.webp"
+  // };
 
   const donationTypes = [
     { value: 'General', label: 'General', icon: '💰' },
@@ -222,7 +238,10 @@ const myDivRef = useRef(null);
   const selectedCountry = countryCodes.find(country => country.dialCode === formData.countryCode);
 // console.log(formData)
 // console.log(phonePatterns.phonePatterns.Afghanistan)
-  return (
+  return (<>
+    {loader?<div className="flex justify-center items-center h-64">
+        <div className="loader"></div>
+      </div>:
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
@@ -236,7 +255,7 @@ const myDivRef = useRef(null);
           <div className="bg-white rounded-2xl shadow-lg p-8">
             <div className="text-center mb-8">
               <img 
-                src={bankDetails.logo} 
+                src={data.imagepath} 
                 alt="Meezan Bank" 
                 className="mx-auto mb-4 w-32 h-24 object-contain"
               />
@@ -247,17 +266,17 @@ const myDivRef = useRef(null);
               <div className="grid grid-cols-1 gap-4">
                 <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
                   <span className="font-semibold text-gray-700">Bank Name:</span>
-                  <span className="text-gray-900">{bankDetails.name}</span>
+                  <span className="text-gray-900">{data.name}</span>
                 </div>
                 
                 <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
                   <span className="font-semibold text-gray-700">Account Title:</span>
-                  <span className="text-gray-900">{bankDetails.accountTitle}</span>
+                  <span className="text-gray-900">{data.account_title}</span>
                 </div>
                 
                 <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
                   <span className="font-semibold text-gray-700">Branch:</span>
-                  <span className="text-gray-900 text-right">{bankDetails.branch}</span>
+                  <span className="text-gray-900 text-right">{data.branch}</span>
                 </div>
               </div>
 
@@ -266,7 +285,7 @@ const myDivRef = useRef(null);
                 <div className="flex justify-between items-center mb-3">
                   <span className="font-semibold text-gray-900">IBAN:</span>
                   <button
-                    onClick={() => copyToClipboard(bankDetails.iban.replace(/\s/g, ''), 'iban')}
+                    onClick={() => copyToClipboard(data.iban.replace(/\s/g, ''), 'iban')}
                     className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 transition-colors"
                   >
                     {copied.iban ? (
@@ -288,7 +307,7 @@ const myDivRef = useRef(null);
                   </button>
                 </div>
                 <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                  <code className="text-blue-900 font-mono text-lg">{bankDetails.iban}</code>
+                  <code className="text-blue-900 font-mono text-lg">{data.iban}</code>
                 </div>
               </div>
 
@@ -297,7 +316,7 @@ const myDivRef = useRef(null);
                 <div className="flex justify-between items-center mb-3">
                   <span className="font-semibold text-gray-900">Account Number:</span>
                   <button
-                    onClick={() => copyToClipboard(bankDetails.accountNumber.replace(/\s/g, ''), 'account')}
+                    onClick={() => copyToClipboard(data.accountNumber.replace(/\s/g, ''), 'account')}
                     className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 transition-colors"
                   >
                     {copied.account ? (
@@ -319,7 +338,7 @@ const myDivRef = useRef(null);
                   </button>
                 </div>
                 <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                  <code className="text-green-900 font-mono text-lg">{bankDetails.accountNumber}</code>
+                  <code className="text-green-900 font-mono text-lg">{data.accountNumber}</code>
                 </div>
               </div>
             </div>
@@ -608,6 +627,8 @@ const myDivRef = useRef(null);
         </div>
       )}
     </div>
+    }
+    </>
   );
 };
 

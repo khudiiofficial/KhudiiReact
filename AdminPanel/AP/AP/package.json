@@ -15,10 +15,11 @@
     "axios": "^1.12.2",
     "dotenv": "^17.2.3",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.3",
     "redux-persist": "^6.0.0",
+    "slate": "^0.118.1",
+    "slate-react": "^0.119.0",
     "tailwindcss": "^4.1.13"
   },
   "devDependencies": {

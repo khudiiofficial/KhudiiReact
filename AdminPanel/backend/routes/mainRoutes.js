@@ -152,10 +152,22 @@ updateSEOData,
 //footer
 getFooterContent,
 updateFooterContent,
-deleteFooterImage
+deleteFooterImage,
+// faqs
+getActiveFAQs,
+getAllFAQs,
+getFAQById,
+createFAQ,
+updateFAQ,
+deleteFAQ,
+toggleFAQStatus,
+updateDisplayOrder,
+//bank
+getBankData,
+updateBankData,
+removeBankLogo
+
 } from "../controllers/mainController.js";
-
-
 
 const router = express.Router();
 
@@ -341,4 +353,27 @@ router.put("/api/seo",auth, updateSEOData);
 router.get("/api/footer",auth, getFooterContent);
 router.put("/api/footer",auth, updateFooterContent);
 router.delete("/api/footer/image/:imageType",auth, deleteFooterImage); // Optional: DELETE /api/footer/image/logo or 
+
+
+//faqs
+// Public routes
+router.get('/api/faqs/public',auth, getActiveFAQs); // Get active FAQs for public
+
+// Admin routes (protect these with authentication middleware if needed)
+router.get('/api/faqs',auth, getAllFAQs); // Get all FAQs (admin)
+router.get('/api/faqs/:id',auth, getFAQById); // Get single FAQ
+router.post('/api/faqs',auth, createFAQ); // Create new FAQ
+router.put('/api/faqs/:id',auth, updateFAQ); // Update FAQ
+router.delete('/api/faqs/:id',auth, deleteFAQ); // Delete FAQ
+router.put('/api/faqs/:id/toggle',auth, toggleFAQStatus); // Toggle FAQ status
+router.put('/api/faqs/display-order/update',auth, updateDisplayOrder); // Bulk update display order
+
+
+// bank
+// Bank data routes
+router.get('/api/bank',auth, getBankData); // Get bank data (returns imagepath URL)
+router.put('/api/bank',auth, updateBankData); // Update bank details with base64 image
+router.delete('api/bank/logo',auth, removeBankLogo); // Remove logo
+
+
 export default router;

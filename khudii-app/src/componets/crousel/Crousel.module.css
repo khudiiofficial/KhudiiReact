@@ -6,7 +6,7 @@
 }
 
 .carouselContainer {
-  height: 19.1rem; 
+  height: 19rem; 
   position: relative;
   overflow: hidden;
    cursor: pointer;
@@ -17,7 +17,7 @@
 .slide {
   position: absolute;
   top: 0;
-  height: 19.1rem;
+  height: 19rem;
   left: 0;
   right: 0;
   bottom: 0;

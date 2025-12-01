@@ -22,6 +22,7 @@ const ContactUs = ({con,url}) => {
               />
 
     <ContactSection/>
+    
     </>
   )
 }

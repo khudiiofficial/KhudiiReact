@@ -848,6 +848,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
+import RichTextEditor from "../../components/editor/TextEditor";
 export default function CreateOrganizationPage() {
   const [form, setForm] = useState({
     name: "",
@@ -1297,7 +1298,7 @@ export default function CreateOrganizationPage() {
       setIsSubmitting(false);
     }
   };
-
+console.log(form)
   // Helper function to render error messages
   const renderErrors = (errorArray) => {
     if (!errorArray || errorArray.length === 0) return null;
@@ -1373,7 +1374,7 @@ export default function CreateOrganizationPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Description *
                 </label>
-                <textarea
+                {/* <textarea
                   placeholder="Provide a detailed description of the organization"
                   value={form.description}
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
@@ -1381,7 +1382,8 @@ export default function CreateOrganizationPage() {
                   className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                     errors.description?.length ? 'border-red-500' : 'border-gray-300'
                   }`}
-                />
+                /> */}
+                <RichTextEditor form={form} setForm={setForm}/>
                 {renderErrors(errors.description)}
               </div>
 

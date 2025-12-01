@@ -966,6 +966,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import RichTextEditor from "../../components/editor/TextEditor";
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 
 export default function EditOrganizationPage() {
@@ -1557,7 +1558,7 @@ func()
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Description *
                 </label>
-                <textarea
+                {/* <textarea
                   placeholder="Provide a detailed description of the organization"
                   value={form.description}
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
@@ -1565,7 +1566,8 @@ func()
                   className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                     errors.description?.length ? 'border-red-500' : 'border-gray-300'
                   }`}
-                />
+                /> */}
+                <RichTextEditor form={form} setForm={setForm}/>
                 {renderErrors(errors.description)}
               </div>
 

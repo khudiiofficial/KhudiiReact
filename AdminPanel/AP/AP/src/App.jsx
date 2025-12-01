@@ -43,6 +43,8 @@ import EventAdmin from './Pages/Event_description/Event_description'
 import ContentAdmin from './Pages/About/About'
 import SEOAdmin from './Pages/SEO/Seo'
 import FooterAdmin from './Pages/footer/Footer'
+import FAQManager from './Pages/faqs/Faqs'
+import BankDataManager from './Pages/contactbank/Bank'
 function App() {
 const location=useLocation()  
 const dispatch=useDispatch()
@@ -104,7 +106,9 @@ const dispatch=useDispatch()
           <Route path='eventDescription' element={<EventAdmin/>}/>
           <Route path='contentAdmin' element={<ContentAdmin/>}/>
           <Route path='seo' element={<SEOAdmin/>}/>
+           <Route path='faqs' element={<FAQManager/>}/>
            <Route path='footer' element={<FooterAdmin/>}/>
+           <Route path='bank' element={<BankDataManager/>}/>
           
           {/* <Route path="change-password" element={<ChangePassword />} /> */}
           <Route index element={<DashboardIndex/>} />

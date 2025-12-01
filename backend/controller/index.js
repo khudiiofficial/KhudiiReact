@@ -1541,3 +1541,54 @@ export const getSEOData = (req, res) => {
     });
   });
 };
+
+
+
+export const getActiveFAQs = async (req, res) => {
+  try {
+    const [faqs] = await db.promise().query(
+      'SELECT id, question, answer, display_order FROM faqs WHERE is_active = TRUE ORDER BY display_order'
+    );
+    
+    res.status(200).json({
+      success: true,
+      data: faqs,
+      count: faqs.length
+    });
+  } catch (error) {
+    console.error('Error fetching active FAQs:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching FAQs',
+      error: error.message
+    });
+  }
+};
+
+
+export const getBankData = async (req, res) => {
+  try {
+    const [bankData] = await db.promise().query(
+      'SELECT * FROM bankdata WHERE id = 1'
+    );
+    
+    if (bankData.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Bank data not found'
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      data: bankData[0]
+    });
+  } catch (error) {
+    console.error('Error fetching bank data:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching bank data',
+      error: error.message
+    });
+  }
+};

@@ -9,7 +9,7 @@ import phonePatterns from './countryPatternsByName.json';
  * Falls back to http://localhost:5000 if not set.
  */
 const API_URL = import.meta.env.VITE_BACKEND_PATH;
-
+const APIPath = import.meta.env.VITE_BACKEND_PATH;
 export default function ContactSection() {
   const {
     register,
@@ -27,6 +27,52 @@ export default function ContactSection() {
       country: "PK"
     }
   });
+ const [tel,settel]=useState('')
+ const [data,setdata]=useState({})
+ const [footerdata,setFooterData]=useState({})
+       useEffect(()=>{
+const fun=async ()=>{
+  try {
+    const res=await axios.get(`${APIPath}/api/telephone`,{withCredentials:true})
+    if(res.status===200){
+      let ch=''
+    for(let i=0; i<res.data.data.phone_number.length; i++){
+      if(Number.isInteger(parseInt(res.data.data.phone_number[i])) || res.data.data.phone_number[i]==='+' ){
+ch=ch+res.data.data.phone_number[i]
+      }
+    }
+    settel(ch)
+     setdata(res.data.data)
+    }
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
+fun()
+  },[])
+
+  const fetchFooterData = async () => {
+    try {
+     
+      const response = await axios.get(`${APIPath}/api/footer`, {
+        withCredentials: true
+      });
+      
+      if (response.data.success) {
+        setFooterData(response.data.data);
+        
+      }
+    } catch (error) {
+      console.error('Error fetching footer data:', error);
+    } finally {
+      
+    }
+  };
+  useEffect(()=>{
+fetchFooterData();    
+
+  },[])
 const [showSuccessModal,setshowSuccessModal]=useState(false)
   const [serverMessage, setServerMessage] = useState(null);
   const [serverError, setServerError] = useState(null);
@@ -168,12 +214,12 @@ const myDivRef = useRef(null);
               </div>
               <div>
                 <h3 className="font-semibold text-slate-800">Call Us</h3>
-                <a
+                <a  target="_blank"
                   className="text-slate-700 font-medium block"
-                  href="tel:+923198548344"
+                  href={`tel:${tel}`}
                 >
                   <span className="text-sm text-slate-500 block">Hotline</span>
-                  <span className="text-[#02236e]">(+92) 3198 - KHUDII (548344)</span>
+                  <span className="text-[#02236e]">{data.phone_number}</span>
                 </a>
                 <p className="text-xs text-slate-400 mt-1">Available 9:00am — 6:00pm</p>
               </div>
@@ -189,11 +235,11 @@ const myDivRef = useRef(null);
               </div>
               <div>
                 <h3 className="font-semibold text-slate-800">Email Us</h3>
-                <a
+                <a  target="_blank"
                   className="text-slate-700 font-medium block"
-                  href="mailto:info@khudii.com"
+                  href={`mailto:${footerdata.email}`}
                 >
-                  <span className="text-[#02236e]">info@khudii.com</span>
+                  <span className="text-[#02236e]">{footerdata.email}</span>
                 </a>
                 <p className="text-xs text-slate-400 mt-1">We reply within 24–48 hours.</p>
               </div>

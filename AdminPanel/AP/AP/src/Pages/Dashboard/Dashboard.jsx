@@ -14,7 +14,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Sidebar from '../../components/navbar/Navbar' // Adjust the import path as needed
-
+import SimpleEditor from '../../components/editor/TextEditor'
 const Dashboard = () => {
   return (
     <div className="flex h-screen">

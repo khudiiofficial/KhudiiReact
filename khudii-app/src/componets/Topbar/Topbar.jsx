@@ -15,7 +15,6 @@ const handleAnimationComplete = () => {
 };
 const [idx,setidx]=useState(0)
 
-
   useEffect(()=>{
 const fun=async ()=>{
   try {

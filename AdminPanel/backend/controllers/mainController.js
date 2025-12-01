@@ -7724,3 +7724,510 @@ export const deleteFooterImage = (req, res) => {
     });
   });
 };
+
+
+
+
+// faqs
+
+
+// Get all FAQs
+export const getAllFAQs = async (req, res) => {
+  try {
+    const [faqs] = await db1.promise().query(
+      'SELECT * FROM faqs ORDER BY display_order, created_at DESC'
+    );
+    
+    res.status(200).json({
+      success: true,
+      data: faqs,
+      count: faqs.length
+    });
+  } catch (error) {
+    console.error('Error fetching FAQs:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching FAQs',
+      error: error.message
+    });
+  }
+};
+
+// Get active FAQs (for public display)
+export const getActiveFAQs = async (req, res) => {
+  try {
+    const [faqs] = await db1.promise().query(
+      'SELECT id, question, answer, display_order FROM faqs WHERE is_active = TRUE ORDER BY display_order'
+    );
+    
+    res.status(200).json({
+      success: true,
+      data: faqs,
+      count: faqs.length
+    });
+  } catch (error) {
+    console.error('Error fetching active FAQs:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching FAQs',
+      error: error.message
+    });
+  }
+};
+
+// Get single FAQ by ID
+export const getFAQById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const [faq] = await db1.promise().query(
+      'SELECT * FROM faqs WHERE id = ?',
+      [id]
+    );
+    
+    if (faq.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'FAQ not found'
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      data: faq[0]
+    });
+  } catch (error) {
+    console.error('Error fetching FAQ:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching FAQ',
+      error: error.message
+    });
+  }
+};
+
+// Create new FAQ
+export const createFAQ = async (req, res) => {
+  try {
+    const { question, answer, display_order = 0, is_active = true } = req.body;
+    
+    // Validation
+    if (!question || !answer) {
+      return res.status(400).json({
+        success: false,
+        message: 'Question and answer are required'
+      });
+    }
+    
+    const [result] = await db1.promise().query(
+      'INSERT INTO faqs (question, answer, display_order, is_active) VALUES (?, ?, ?, ?)',
+      [question, answer, display_order, is_active]
+    );
+    
+    // Fetch the created FAQ
+    const [newFAQ] = await db1.promise().query(
+      'SELECT * FROM faqs WHERE id = ?',
+      [result.insertId]
+    );
+    
+    res.status(201).json({
+      success: true,
+      message: 'FAQ created successfully',
+      data: newFAQ[0]
+    });
+  } catch (error) {
+    console.error('Error creating FAQ:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error creating FAQ',
+      error: error.message
+    });
+  }
+};
+
+// Update FAQ
+export const updateFAQ = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { question, answer, display_order, is_active } = req.body;
+    
+    // Check if FAQ exists
+    const [existingFAQ] = await db1.promise().query(
+      'SELECT * FROM faqs WHERE id = ?',
+      [id]
+    );
+    
+    if (existingFAQ.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'FAQ not found'
+      });
+    }
+    
+    // Update FAQ
+    await db1.promise().query(
+      'UPDATE faqs SET question = ?, answer = ?, display_order = ?, is_active = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+      [
+        question || existingFAQ[0].question,
+        answer || existingFAQ[0].answer,
+        display_order !== undefined ? display_order : existingFAQ[0].display_order,
+        is_active !== undefined ? is_active : existingFAQ[0].is_active,
+        id
+      ]
+    );
+    
+    // Fetch updated FAQ
+    const [updatedFAQ] = await db1.promise().query(
+      'SELECT * FROM faqs WHERE id = ?',
+      [id]
+    );
+    
+    res.status(200).json({
+      success: true,
+      message: 'FAQ updated successfully',
+      data: updatedFAQ[0]
+    });
+  } catch (error) {
+    console.error('Error updating FAQ:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error updating FAQ',
+      error: error.message
+    });
+  }
+};
+
+// Delete FAQ
+export const deleteFAQ = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Check if FAQ exists
+    const [existingFAQ] = await db1.promise().query(
+      'SELECT * FROM faqs WHERE id = ?',
+      [id]
+    );
+    
+    if (existingFAQ.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'FAQ not found'
+      });
+    }
+    
+    // Delete FAQ
+    await db1.promise().query('DELETE FROM faqs WHERE id = ?', [id]);
+    
+    res.status(200).json({
+      success: true,
+      message: 'FAQ deleted successfully'
+    });
+  } catch (error) {
+    console.error('Error deleting FAQ:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error deleting FAQ',
+      error: error.message
+    });
+  }
+};
+
+// Bulk update display order
+export const updateDisplayOrder = async (req, res) => {
+  try {
+    const { faqs } = req.body; // Array of {id, display_order}
+    
+    if (!Array.isArray(faqs)) {
+      return res.status(400).json({
+        success: false,
+        message: 'FAQs array is required'
+      });
+    }
+    
+    // Use transaction for multiple updates
+    const connection = await db1.promise().getConnection();
+    
+    try {
+      await connection.beginTransaction();
+      
+      for (const faq of faqs) {
+        await connection.query(
+          'UPDATE faqs SET display_order = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+          [faq.display_order, faq.id]
+        );
+      }
+      
+      await connection.commit();
+      
+      res.status(200).json({
+        success: true,
+        message: 'Display order updated successfully'
+      });
+    } catch (error) {
+      await connection.rollback();
+      throw error;
+    } finally {
+      connection.release();
+    }
+  } catch (error) {
+    console.error('Error updating display order:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error updating display order',
+      error: error.message
+    });
+  }
+};
+
+// Toggle FAQ status (active/inactive)
+export const toggleFAQStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Get current status
+    const [faq] = await db1.promise().query(
+      'SELECT is_active FROM faqs WHERE id = ?',
+      [id]
+    );
+    
+    if (faq.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'FAQ not found'
+      });
+    }
+    
+    const newStatus = !faq[0].is_active;
+    
+    await db1.promise().query(
+      'UPDATE faqs SET is_active = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+      [newStatus, id]
+    );
+    
+    res.status(200).json({
+      success: true,
+      message: `FAQ ${newStatus ? 'activated' : 'deactivated'} successfully`,
+      data: { is_active: newStatus }
+    });
+  } catch (error) {
+    console.error('Error toggling FAQ status:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error toggling FAQ status',
+      error: error.message
+    });
+  }
+};
+
+
+
+
+
+
+
+// Helper function to generate unique filename
+const generateUniqueFilename = (base64String) => {
+  // Extract image type from base64
+  const match = base64String.match(/^data:image\/(\w+);base64,/);
+  const extension = match ? match[1] : 'png';
+  const timestamp = Date.now();
+  const randomString = Math.random().toString(36).substring(2, 15);
+  return `bank_logo_${timestamp}_${randomString}.${extension}`;
+};
+
+// Get bank data (single instance)
+export const getBankData = async (req, res) => {
+  try {
+    const [bankData] = await db1.promise().query(
+      'SELECT * FROM bankdata WHERE id = 1'
+    );
+    
+    if (bankData.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Bank data not found'
+      });
+    }
+    
+    res.status(200).json({
+      success: true,
+      data: bankData[0]
+    });
+  } catch (error) {
+    console.error('Error fetching bank data:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching bank data',
+      error: error.message
+    });
+  }
+};
+
+// Update bank data with base64 image (FIXED VERSION)
+export const updateBankData = async (req, res) => {
+  try {
+    const { 
+      name, 
+      account_title, 
+      branch, 
+      iban, 
+      accountNumber,
+      image_base64  // This is the base64 string
+    } = req.body;
+    
+    // Validation
+    if (!name || !account_title) {
+      return res.status(400).json({
+        success: false,
+        message: 'Bank name and account title are required'
+      });
+    }
+    
+    // Get existing data first
+    const [existingData] = await db1.promise().query(
+      'SELECT * FROM bankdata WHERE id = 1'
+    );
+    
+    let imagePath = existingData.length > 0 ? existingData[0].imagepath : null;
+    
+    // Handle image upload if NEW base64 is provided
+    if (image_base64 && typeof image_base64 === 'string' && image_base64.startsWith('data:image/')) {
+      try {
+        // Convert base64 to buffer
+        const imageBuffer = base64ToBuffer(image_base64);
+        
+        // Generate unique filename
+        const fileName = generateUniqueFilename(image_base64);
+        
+        // Upload to FTP
+        const newImagePath = await uploadToFTP(fileName, imageBuffer);
+        
+        // Delete old image if exists (and it's different from new one)
+        if (imagePath && imagePath !== newImagePath) {
+          try {
+            await deleteFromFTP(imagePath);
+          } catch (deleteError) {
+            console.log('Could not delete old image from FTP:', deleteError.message);
+          }
+        }
+        
+        imagePath = newImagePath;
+        
+      } catch (uploadError) {
+        console.error('Error uploading image to FTP:', uploadError);
+        return res.status(500).json({
+          success: false,
+          message: 'Failed to upload image to FTP',
+          error: uploadError.message
+        });
+      }
+    } 
+    // If image_base64 is explicitly null, remove image
+    else if (image_base64 === null) {
+      // Delete old image if exists
+      if (imagePath) {
+        try {
+          await deleteFromFTP(imagePath);
+        } catch (deleteError) {
+          console.log('Could not delete old image:', deleteError.message);
+        }
+      }
+      imagePath = null;
+    }
+    // If image_base64 is undefined (not sent in request), KEEP existing image
+    // This is the fix: Don't overwrite image if not provided in request
+    
+    if (existingData.length === 0) {
+      // Create new record
+      await db1.promise().query(
+        `INSERT INTO bankdata 
+        (id, name, imagepath, account_title, branch, iban, accountNumber) 
+        VALUES (1, ?, ?, ?, ?, ?, ?)`,
+        [name, imagePath, account_title, branch, iban, accountNumber]
+      );
+    } else {
+      // Update existing record - ONLY update imagepath if it was changed
+      await db1.promise().query(
+        `UPDATE bankdata SET 
+        name = ?, 
+        ${image_base64 !== undefined ? 'imagepath = ?,' : ''}
+        account_title = ?, 
+        branch = ?, 
+        iban = ?, 
+        accountNumber = ?, 
+        updated_at = CURRENT_TIMESTAMP 
+        WHERE id = 1`,
+        image_base64 !== undefined 
+          ? [name, imagePath, account_title, branch, iban, accountNumber]
+          : [name, account_title, branch, iban, accountNumber]
+      );
+    }
+    
+    // Fetch updated data
+    const [updatedData] = await db1.promise().query(
+      'SELECT * FROM bankdata WHERE id = 1'
+    );
+    
+    res.status(200).json({
+      success: true,
+      message: 'Bank data updated successfully',
+      data: updatedData[0]
+    });
+  } catch (error) {
+    console.error('Error updating bank data:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error updating bank data',
+      error: error.message
+    });
+  }
+};
+
+// Remove bank logo
+export const removeBankLogo = async (req, res) => {
+  try {
+    // Get existing image path
+    const [existingData] = await db1.promise().query(
+      'SELECT imagepath FROM bankdata WHERE id = 1'
+    );
+    
+    if (existingData.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Bank data not found'
+      });
+    }
+    
+    // Delete image from FTP if exists
+    if (existingData[0].imagepath) {
+      try {
+        await deleteFromFTP(existingData[0].imagepath);
+      } catch (deleteError) {
+        console.log('Could not delete image from FTP:', deleteError.message);
+      }
+    }
+    
+    // Remove image path from database
+    await db1.promise().query(
+      'UPDATE bankdata SET imagepath = NULL, updated_at = CURRENT_TIMESTAMP WHERE id = 1'
+    );
+    
+    // Fetch updated data
+    const [updatedData] = await db1.promise().query(
+      'SELECT * FROM bankdata WHERE id = 1'
+    );
+    
+    res.status(200).json({
+      success: true,
+      message: 'Bank logo removed successfully',
+      data: updatedData[0]
+    });
+  } catch (error) {
+    console.error('Error removing bank logo:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error removing bank logo',
+      error: error.message
+    });
+  }
+};

@@ -21,7 +21,7 @@ const Crousel = () => {
         try {
             const res=await axios.get(`${APIPath}/getCrouselimages`)
             if(res.status===200){
-                sethero(res.data.data)
+                sethero(res.data.data.reverse())
             
             }
         } catch (error) {
