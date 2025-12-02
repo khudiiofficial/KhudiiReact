@@ -90,7 +90,7 @@ const Crousel = () => {
           </div>
         </div>
       )}
-<br />
+{/* <br /> */}
       {/* Org Info */}
       <div className={styles["org-details"]}>
         <div className={`${styles["org-description"]} ${styles.customCss}`}>
