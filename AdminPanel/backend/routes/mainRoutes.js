@@ -104,12 +104,15 @@ deleteSector,
 restoreSector,
 permanentDeleteSector,
 
-//crousel images
-getAllCarouselImages,
-getCarouselImageById,
-createCarouselImage,
-updateCarouselImage,
-deleteCarouselImage,
+// //crousel images
+// getAllCarouselImages,
+// getCarouselImageById,
+// createCarouselImage,
+// updateCarouselImage,
+// deleteCarouselImage,
+
+
+
 
 //welcome
 getWelcomeSection,
@@ -165,8 +168,16 @@ updateDisplayOrder,
 //bank
 getBankData,
 updateBankData,
-removeBankLogo
+removeBankLogo,
 
+//carousel images
+getAllCarouselImages,
+getDesktopImages,
+getMobileImages,
+getCarouselImageById,
+createCarouselImage,
+updateCarouselImage,
+deleteCarouselImage
 } from "../controllers/mainController.js";
 
 const router = express.Router();
@@ -290,11 +301,30 @@ router.delete('/sectors/admin/permanent/:id',auth, permanentDeleteSector);
 
 
 // crousel-images
-router.get("/api/carousel",auth, getAllCarouselImages);
-router.get("/api/carousel/:id",auth, getCarouselImageById);
-router.post("/api/carousel",auth, createCarouselImage);
-router.put("/api/carousel/:id",auth, updateCarouselImage);
-router.delete("/api/carousel/:id",auth, deleteCarouselImage);
+// router.get("/api/carousel",auth, getAllCarouselImages);
+// router.get("/api/carousel/:id",auth, getCarouselImageById);
+// router.post("/api/carousel",auth, createCarouselImage);
+// router.put("/api/carousel/:id",auth, updateCarouselImage);
+// router.delete("/api/carousel/:id",auth, deleteCarouselImage);
+
+// Get all images (both mobile and desktop)
+router.get('/api/carousel', getAllCarouselImages);
+
+// Optional separate endpoints
+router.get('/api/carousel/desktop', getDesktopImages);
+router.get('/api/carousel/mobile', getMobileImages);
+
+// Get single image by ID
+router.get('/api/carousel/:id', getCarouselImageById);
+
+// Create new image
+router.post('/api/carousel', createCarouselImage);
+
+// Update image
+router.put('/api/carousel/:id', updateCarouselImage);
+
+// Delete image
+router.delete('/api/carousel/:id', deleteCarouselImage);
 
 
 //welcome
@@ -374,6 +404,7 @@ router.put('/api/faqs/display-order/update',auth, updateDisplayOrder); // Bulk u
 router.get('/api/bank',auth, getBankData); // Get bank data (returns imagepath URL)
 router.put('/api/bank',auth, updateBankData); // Update bank details with base64 image
 router.delete('api/bank/logo',auth, removeBankLogo); // Remove logo
+
 
 
 export default router;

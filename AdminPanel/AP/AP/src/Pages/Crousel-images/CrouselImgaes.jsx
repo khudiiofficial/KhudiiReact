@@ -6,16 +6,17 @@ const API_BASE_URL = import.meta.env.VITE_BACKEND_PATH;
 
 const CarouselAdmin = () => {
   const [images, setImages] = useState([]);
-  const [cap,setcap]=useState('')
-
+  const [cap, setcap] = useState('');
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({
     description: '',
-    imageFile: null
+    imageFile: null,
+    isMobile: false
   });
   const [previewUrl, setPreviewUrl] = useState('');
+  const [activeFilter, setActiveFilter] = useState('all'); // 'all', 'mobile', 'desktop'
   const fileInputRef = useRef(null);
 
   // Fetch all carousel images
@@ -72,10 +73,10 @@ const CarouselAdmin = () => {
   // Add new carousel image
   const handleAddImage = async (e) => {
     e.preventDefault();
-     if(cap){
-      console.log('bot detected')
-setcap('')
-      return
+    if (cap) {
+      console.log('bot detected');
+      setcap('');
+      return;
     }
 
     if (!formData.imageFile) {
@@ -89,7 +90,8 @@ setcap('')
 
       const response = await axios.post(`${API_BASE_URL}/api/carousel`, {
         imageBase64,
-        description: formData.description
+        description: formData.description,
+        isMobile: formData.isMobile
       }, {
         withCredentials: true
       });
@@ -110,15 +112,18 @@ setcap('')
   // Update carousel image
   const handleUpdateImage = async (e) => {
     e.preventDefault();
- if(cap){
-      console.log('bot detected')
-setcap('')
-      return
+    if (cap) {
+      console.log('bot detected');
+      setcap('');
+      return;
     }
 
     try {
       setUploading(true);
-      let requestData = { description: formData.description };
+      let requestData = { 
+        description: formData.description,
+        isMobile: formData.isMobile 
+      };
 
       // Only include image if a new one was selected
       if (formData.imageFile) {
@@ -170,7 +175,8 @@ setcap('')
     setEditingId(image.id);
     setFormData({
       description: image.description || '',
-      imageFile: null
+      imageFile: null,
+      isMobile: Boolean(image.isMobile)
     });
     setPreviewUrl(image.image_path);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -180,7 +186,8 @@ setcap('')
   const resetForm = () => {
     setFormData({
       description: '',
-      imageFile: null
+      imageFile: null,
+      isMobile: false
     });
     setPreviewUrl('');
     setEditingId(null);
@@ -205,9 +212,21 @@ setcap('')
     });
   };
 
+  // Get filtered images based on active filter
+  const getFilteredImages = () => {
+    if (activeFilter === 'all') return images;
+    if (activeFilter === 'mobile') return images.filter(img => img.isMobile === 1 || img.isMobile === true);
+    if (activeFilter === 'desktop') return images.filter(img => img.isMobile === 0 || img.isMobile === false);
+    return images;
+  };
+
   useEffect(() => {
     fetchImages();
   }, []);
+
+  const filteredImages = getFilteredImages();
+  const mobileCount = images.filter(img => img.isMobile === 1 || img.isMobile === true).length;
+  const desktopCount = images.filter(img => img.isMobile === 0 || img.isMobile === false).length;
 
   return (
     <div className="carousel-admin">
@@ -220,7 +239,8 @@ setcap('')
       <div className="image-form-section">
         <h2>{editingId ? 'Edit Image' : 'Add New Image'}</h2>
         <form onSubmit={editingId ? handleUpdateImage : handleAddImage} className="image-form">
-              <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
+          <input type="hidden" onChange={(e) => { setcap(e.target.value) }} />
+          
           <div className="form-group">
             <label htmlFor="imageFile">Image File *</label>
             <input
@@ -244,14 +264,33 @@ setcap('')
           )}
 
           <div className="form-group">
-            <label htmlFor="description">Organization slug</label>
+            <label htmlFor="description">Slug</label>
             <input
+              required
               id="description"
               value={formData.description}
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-              placeholder="enter slug organization of which you are upaloding the image"
-              required
+              placeholder="Enter slug of organization of which you are uploading the image"
             />
+          </div>
+
+          <div className="">
+            <div className="checkbox-group">
+              <input
+                required
+                type="checkbox"
+                id="isMobile"
+                checked={formData.isMobile}
+                onChange={(e) => setFormData(prev => ({ ...prev, isMobile: e.target.checked }))}
+                className="checkbox-input"
+              />
+              <label htmlFor="isMobile" className="checkbox-label">
+                Mobile Image
+                <span className="checkbox-help">
+                  (Check this if this image is optimized for mobile devices)
+                </span>
+              </label>
+            </div>
           </div>
 
           <div className="form-actions">
@@ -285,10 +324,39 @@ setcap('')
         </form>
       </div>
 
+      {/* Filter Section */}
+      <div className="filter-section">
+        <div className="filter-buttons">
+          <button 
+            className={`filter-btn ${activeFilter === 'all' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('all')}
+          >
+            All ({images.length})
+          </button>
+          <button 
+            className={`filter-btn ${activeFilter === 'desktop' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('desktop')}
+          >
+            Desktop ({desktopCount})
+          </button>
+          <button 
+            className={`filter-btn ${activeFilter === 'mobile' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('mobile')}
+          >
+            Mobile ({mobileCount})
+          </button>
+        </div>
+      </div>
+
       {/* Images List */}
       <div className="images-list-section">
         <div className="section-header">
-          <h2>Carousel Images ({images.length})</h2>
+          <h2>
+            {activeFilter === 'all' && 'All Carousel Images'}
+            {activeFilter === 'desktop' && 'Desktop Images'}
+            {activeFilter === 'mobile' && 'Mobile Images'}
+            ({filteredImages.length})
+          </h2>
           <button 
             onClick={fetchImages} 
             disabled={loading}
@@ -300,24 +368,32 @@ setcap('')
 
         {loading ? (
           <div className="loading">Loading images...</div>
-        ) : images.length === 0 ? (
+        ) : filteredImages.length === 0 ? (
           <div className="no-images">
-            <p>No carousel images found. Add your first image above.</p>
+            <p>No images found. {activeFilter !== 'all' ? 'Try switching to "All" filter.' : 'Add your first image above.'}</p>
           </div>
         ) : (
           <div className="images-grid">
-            {images.map((image) => (
+            {filteredImages.map((image) => (
               <div key={image.id} className="image-card">
                 <div className="image-container">
                   <img src={image.image_path} alt={image.description || 'Carousel image'} />
+                  <div className="image-badge">
+                    {image.isMobile ? '📱 Mobile' : '🖥️ Desktop'}
+                  </div>
                 </div>
                 <div className="image-details">
                   <p className="image-description">
                     {image.description || 'No description'}
                   </p>
-                  <p className="image-date">
-                    Added: {formatDate(image.created_at)}
-                  </p>
+                  <div className="image-meta">
+                    <p className="image-date">
+                      Added: {formatDate(image.created_at)}
+                    </p>
+                    <p className="image-type">
+                      Type: {image.isMobile ? 'Mobile' : 'Desktop'}
+                    </p>
+                  </div>
                 </div>
                 <div className="image-actions">
                   <button 

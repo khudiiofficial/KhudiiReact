@@ -106,9 +106,9 @@ const dispatch=useDispatch()
           <Route path='eventDescription' element={<EventAdmin/>}/>
           <Route path='contentAdmin' element={<ContentAdmin/>}/>
           <Route path='seo' element={<SEOAdmin/>}/>
-           <Route path='faqs' element={<FAQManager/>}/>
-           <Route path='footer' element={<FooterAdmin/>}/>
-           <Route path='bank' element={<BankDataManager/>}/>
+          <Route path='faqs' element={<FAQManager/>}/>
+          <Route path='footer' element={<FooterAdmin/>}/>
+          <Route path='bank' element={<BankDataManager/>}/>
           
           {/* <Route path="change-password" element={<ChangePassword />} /> */}
           <Route index element={<DashboardIndex/>} />

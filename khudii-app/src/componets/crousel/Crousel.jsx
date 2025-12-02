@@ -21,8 +21,21 @@ const Crousel = () => {
         try {
             const res=await axios.get(`${APIPath}/getCrouselimages`)
             if(res.status===200){
-                sethero(res.data.data.reverse())
-            
+               
+                if(window.innerWidth<600){
+    
+const arr=res.data.data.filter((ele,index)=>{
+    return ele.isMobile===1
+})   
+console.log(arr) 
+sethero([...arr])
+}
+else{
+    const arr=res.data.data.filter((ele,index)=>{
+    return ele.isMobile===0
+})
+sethero([...arr])   
+}
             }
         } catch (error) {
             console.log(error)
@@ -30,6 +43,27 @@ const Crousel = () => {
      }
 func()
     },[])
+
+///////////////////
+//   useEffect(() => {
+//     const handleResize = () => {
+    
+      
+//       // call your function here
+//       myFunction(window.innerWidth);
+//     };
+// handleResize()
+//     window.addEventListener("resize", handleResize);
+
+//     return () => window.removeEventListener("resize", handleResize);
+//   }, []);
+
+//   const myFunction = (w) => {
+//     // console.log("Called function with width:", w);
+
+//   };
+///////////////////
+
     const [index, setIndex] = useState(0);
     
     useEffect(() => {

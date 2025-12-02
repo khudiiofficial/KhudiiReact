@@ -51,70 +51,75 @@ export default db1;
 
 
 
-// async function setupBankDataTable() {
-//   const createTableSQL = `
-//     CREATE TABLE IF NOT EXISTS bankdata (
-//       id INT PRIMARY KEY DEFAULT 1, -- Always use ID 1 for single instance
-//       name VARCHAR(255) NOT NULL COMMENT 'Bank name',
-//       imagepath VARCHAR(500) COMMENT 'Path to bank logo/image on FTP',
-//       account_title VARCHAR(255) NOT NULL COMMENT 'Account title',
-//       branch VARCHAR(255) COMMENT 'Bank branch name',
-//       iban VARCHAR(100) COMMENT 'IBAN number',
-//       accountNumber VARCHAR(100) COMMENT 'Account number',
-//       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-//       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-//       CONSTRAINT single_row CHECK (id = 1) -- Ensures only one row
-//     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-//   `;
-
+// async function addIsMobileColumn() {
 //   try {
-//     const [result] = await db1.promise().query(createTableSQL);
-//     console.log('✅ BankData table created/verified successfully');
-
-//     // Insert sample data (only if table is empty)
-//     const [existingRows] = await db1.promise().query('SELECT COUNT(*) as count FROM bankdata WHERE id = 1');
+//     console.log('🔄 Adding isMobile column to crousel_images table...');
     
-//     if (existingRows[0].count === 0) {
-//       const sampleDataSQL = `
-//         INSERT INTO bankdata 
-//         (id, name, account_title, branch, iban, accountNumber) 
-//         VALUES 
-//         (1, 'Habib Bank Limited', 'KHUDII WELFARE ORGANIZATION', 'Main Branch', 'PK00HABB0000001234567890', '1234567890123')
-//       `;
-      
-//       await db1.promise().query(sampleDataSQL);
-//       console.log('✅ Sample bank data inserted successfully');
+//     // Check if column already exists
+//     const [existingColumns] = await db1.promise().query(`
+//       SELECT COLUMN_NAME 
+//       FROM INFORMATION_SCHEMA.COLUMNS 
+//       WHERE TABLE_SCHEMA = ? 
+//       AND TABLE_NAME = 'crousel_images' 
+//       AND COLUMN_NAME = 'isMobile'
+//     `, [process.env.DB_NAME]);
+    
+//     if (existingColumns.length > 0) {
+//       console.log('✅ isMobile column already exists');
 //     } else {
-//       console.log(`ℹ️ BankData already has data`);
+//       // Add the new column
+//       await db1.promise().query(`
+//         ALTER TABLE crousel_images 
+//         ADD COLUMN isMobile BOOLEAN DEFAULT FALSE 
+//         COMMENT 'Flag to identify if image is for mobile devices'
+//       `);
+      
+//       console.log('✅ isMobile column added successfully');
 //     }
-
-//     // Display current data
-//     const [bankData] = await db1.promise().query('SELECT * FROM bankdata WHERE id = 1');
     
-//     if (bankData.length > 0) {
-//       const bank = bankData[0];
-//       console.log('\n📊 Current Bank Data:');
-//       console.log(`🏦 Bank Name: ${bank.name}`);
-//       console.log(`   Account Title: ${bank.account_title}`);
-//       console.log(`   Branch: ${bank.branch}`);
-//       console.log(`   IBAN: ${bank.iban}`);
-//       console.log(`   Account No: ${bank.accountNumber}`);
-//       console.log(`   Image: ${bank.imagepath || 'No image'}`);
-//     }
-
+//     // Display table structure
+//     const [tableStructure] = await db1.promise().query(`
+//       SHOW COLUMNS FROM crousel_images
+//     `);
+    
+//     console.log('\n📊 Updated table structure:');
+//     console.table(tableStructure.map(col => ({
+//       Field: col.Field,
+//       Type: col.Type,
+//       Null: col.Null,
+//       Default: col.Default,
+//       Extra: col.Extra
+//     })));
+    
+//     // Show current data count by isMobile
+//     const [dataStats] = await db1.promise().query(`
+//       SELECT 
+//         isMobile,
+//         COUNT(*) as count
+//       FROM crousel_images 
+//       GROUP BY isMobile
+//     `);
+    
+//     console.log('\n📈 Data Statistics:');
+//     dataStats.forEach(stat => {
+//       console.log(`   isMobile = ${stat.isMobile}: ${stat.count} images`);
+//     });
+    
+//     return true;
+    
 //   } catch (error) {
-//     console.error('❌ Error setting up BankData table:', error);
+//     console.error('❌ Error adding column:', error);
 //     throw error;
 //   }
 // }
 
-// // Run the setup
-// setupBankDataTable()
+// // Run the migration
+// addIsMobileColumn()
 //   .then(() => {
-//     console.log('\n✨ BankData setup completed successfully!');
+//     console.log('\n✨ Migration completed successfully!');
 //     process.exit(0);
 //   })
 //   .catch(error => {
-//     console.error('💥 Setup failed:', error);
+//     console.error('💥 Migration failed:', error);
 //     process.exit(1);
 //   });
