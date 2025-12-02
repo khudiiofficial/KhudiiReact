@@ -33,3 +33,7 @@
   cursor: pointer;
   transition: background 0.3s ease;
 }
+
+.card_size {
+  height: 455px;
+}

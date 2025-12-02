@@ -156,7 +156,7 @@ useEffect(()=>{
         >
           {/* Logo */}
           <div className="w-36">
-           <Link to={'/'}> <img src={`${footer.logoimage || '/Khudii.webp'} `} width="223" height="79" alt="khudii logo" loading="lazy" /></Link>
+           <Link to={'/'}> <img src={`${footer.logoimage || '/Khudii.webp'} `} className={`${styles.khudii_logo}`} width="223" height="79" alt="khudii logo" loading="lazy" /></Link>
           </div>
 
           {/* Links */}
