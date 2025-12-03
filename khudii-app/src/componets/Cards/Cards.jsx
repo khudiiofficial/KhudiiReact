@@ -90,7 +90,8 @@ const call=async()=>{
     try {
         const res=await axios.get(`${APIPath}/getAllSectors`)
         if(res.status===200){
-            setArr(res.data.data.reverse())
+            setArr(res.data.data)
+            // console.log(res.data.data)
         }
     } catch (error) {
         console.log(error)

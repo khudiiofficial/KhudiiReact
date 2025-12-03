@@ -80,7 +80,7 @@ useEffect(()=>{
     <>
 
 <main id="main-content">
-  <Topbar />
+  <Topbar/>
    <Navbar/>
 <Routes>
 <Route path='/' element={<HomePage con={findobj('/')} url={url}/>}/>

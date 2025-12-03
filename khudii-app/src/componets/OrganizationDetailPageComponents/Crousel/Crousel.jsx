@@ -7,7 +7,7 @@ import Socials from "../GeneralInfo/GeneralInfo";
 import Services from "../Services/Services";
 import { useLocation } from "react-router-dom";
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
-const Crousel = () => {
+const Crousel = ({setloader}) => {
  const [id,setid]=useState(null)
   const {slug}=useParams()
   const [org, setOrg] = useState(null);
@@ -15,6 +15,7 @@ const Crousel = () => {
 
   useEffect(() => {
     (async () => {
+      setloader(true)
       try {
         const res = await axios.get(`${APIPath}/item/${slug}`);
         setOrg(res.data);
@@ -22,6 +23,7 @@ const Crousel = () => {
       } catch (err) {
         console.error("Error fetching org:", err);
       }
+      setloader(false)
     })();
   }, [id]);
 
@@ -37,8 +39,11 @@ const Crousel = () => {
     return () => clearInterval(interval);
   }, [org]);
 
-  if (!org){ return ( <div className="flex items-center justify-center h-40 ">
-      <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"></div>
+  if (!org){ return ( <div className="flex items-center justify-center h-90 ">
+     
+      {/* <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"> */}
+        <img src="/siteicon.png" alt="" width={200} height={200}/>
+      {/* </div> */}
     </div>)}
 
   const goPrev = () =>

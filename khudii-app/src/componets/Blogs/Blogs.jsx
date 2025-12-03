@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 
 
-const Blog = () => {
+const Blog = ({loader1=false}) => {
   const [visiblePosts, setVisiblePosts] = useState([]);
   const [err,seterr]=useState(null)
   const [loader,setloader]=useState(false)
@@ -28,9 +28,10 @@ const location=useLocation()
 
    function Loader() {
   return (
-    <div className="flex items-center justify-center h-40 ">
-      <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"></div>
-    </div>
+    // <div className="flex items-center justify-center h-40 ">
+    //   <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"></div>
+    // </div>
+    ""
   );
 }
 
@@ -50,7 +51,7 @@ const location=useLocation()
   },[])
 
 
-  if(loader){
+  if(loader || loader1){
     return <Loader/>
   }
 if(err){

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect,useRef } from 'react'
 import styles from './Crousel.module.css'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
@@ -16,18 +16,25 @@ const Crousel = () => {
             
         ])
     const nav=useNavigate()
+
+const heroRef = useRef(hero);
+const [temp,settemp]=useState([])
+useEffect(() => {
+  heroRef.current = temp; // keep ref updated
+}, [temp]);
+
     useEffect(()=>{
      const func=async()=>{
         try {
             const res=await axios.get(`${APIPath}/getCrouselimages`)
             if(res.status===200){
-               
+               settemp(res.data.data)
                 if(window.innerWidth<600){
     
 const arr=res.data.data.filter((ele,index)=>{
     return ele.isMobile===1
 })   
-console.log(arr) 
+
 sethero([...arr])
 }
 else{
@@ -45,23 +52,33 @@ func()
     },[])
 
 ///////////////////
-//   useEffect(() => {
-//     const handleResize = () => {
+  useEffect(() => {
+    const handleResize = () => {
+       
+                  if(window.innerWidth<600){
     
+const arr=heroRef.current.filter((ele,index)=>{
+    return ele.isMobile===1
+})   
+// console.log(arr) 
+sethero([...arr])
+}
+else{
+    const arr=heroRef.current.filter((ele,index)=>{
+    return ele.isMobile===0
+})
+sethero([...arr])   
+}
       
-//       // call your function here
-//       myFunction(window.innerWidth);
-//     };
+   
+    };
 // handleResize()
-//     window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize);
 
-//     return () => window.removeEventListener("resize", handleResize);
-//   }, []);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-//   const myFunction = (w) => {
-//     // console.log("Called function with width:", w);
 
-//   };
 ///////////////////
 
     const [index, setIndex] = useState(0);

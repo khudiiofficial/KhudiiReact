@@ -18,6 +18,7 @@ const OrganizationDetail = ({url}) => {
   const [org, setOrg] = useState(null);
   const [error,seterror]=useState(false)
   const [id,setid]=useState(null)
+  const [loader,setloader]=useState(false)
 // console.log(googlemap)
   useEffect(() => {
     (async () => {
@@ -69,7 +70,7 @@ if (error) return (
   url={`${url}/organization/${org?.slug || slug}`}
 />
 <>
-  <Crousel key={slug}/>
+  <Crousel setloader={setloader} key={slug}/>
   </>
   {/* <Socials itemId={id}  /> */}
   {/* <Services id={id}/> */}
@@ -77,7 +78,7 @@ if (error) return (
   {id && <YouTubeAndGoogle_map key={slug}  id={id}/>}
   </>
   <>
-  <Blogs key={slug}/>
+  <Blogs loader1={loader} key={slug}/>
   </>
   </>
   );

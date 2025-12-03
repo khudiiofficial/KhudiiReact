@@ -1217,7 +1217,7 @@ export const getAllEvents = (req, res) => {
 
 //sector
 export const getAllSectors = (req, res) => {
-  const query = 'SELECT * FROM sectors ORDER BY id DESC';
+  const query = 'SELECT * FROM sectors ORDER BY id ASC';
   db.query(query, (err, results) => {
     if (err) {
       console.error('❌ Error fetching sectors:', err);
@@ -1249,7 +1249,7 @@ export const getCBN=async(req,res)=>{
 
 //get images
 export const getAllCarouselImages = (req, res) => {
-  const query = "SELECT * FROM crousel_images ORDER BY created_at DESC";
+  const query = "SELECT * FROM crousel_images ORDER BY created_at ASC";
   
   db.query(query, (err, results) => {
     if (err) {

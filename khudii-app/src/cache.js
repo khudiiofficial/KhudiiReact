@@ -18,6 +18,7 @@ const setCache = (key, data) => {
     // sessionStorage.setItem(key, JSON.stringify(data));
     cache[key]=data
   } catch {}
+  
 };
 
 // Request interceptor: check cache
@@ -41,6 +42,19 @@ axios.interceptors.request.use((config) => {
 // Response interceptor: store response in cache
 axios.interceptors.response.use((response) => {
   const key = response.config.url + JSON.stringify(response.config.params || {});
-  setCache(key, response.data);
+ 
+    const cachedData = getCache(key);
+    if(!cachedData){
+  //      if(response.config.url.split('/')[response.config.url.split('/').length-1]==='getAllSectors'){
+  //   // response.data.data=response.data.data.reverse()
+  //   console.log(response.data.data.reverse()) // four outputs in alternate ascending and descending .but why? because reverse() changes the orginal array
+   
+  // } 
+ setCache(key, response.data);
+    }
+
+ 
+  
   return response;
 });
+

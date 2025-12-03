@@ -26,9 +26,15 @@ const DifferentOrganizations = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <div className="loader"></div>
-      </div>
+      // <div className="flex justify-center items-center h-64">
+      //   <div className="loader"></div>
+      // </div>
+      <div className="flex items-center justify-center h-90 ">
+     
+      {/* <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"> */}
+        <img src="/siteicon.png" alt="" width={200} height={200}/>
+      {/* </div> */}
+    </div>
     );
   }
 
