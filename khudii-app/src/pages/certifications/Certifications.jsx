@@ -6,8 +6,10 @@ import { useState,useEffect } from "react";
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 export default function Certification({con,url}) {
 const [cert,setcert]=useState([])
+const [loader,setloader]=useState(false)
 useEffect(()=>{
 const get=async()=>{
+  setloader(true)
   try {
     const res=await axios.get(`${APIPath}/certifications`)
     if(res.status===200){
@@ -16,9 +18,23 @@ const get=async()=>{
   } catch (error) {
     
   }
+  setloader(false)
 }
 get()
 },[])
+
+
+// if(loader){
+//   return (
+
+//       <div className="flex items-center justify-center h-90 ">
+     
+//       {/* <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"> */}
+//         <img src="/siteicon.png" alt="" width={200} height={200}/>
+//       {/* </div> */}
+//     </div>
+//   )
+// }
   return (
 <>
 <SEO 
@@ -36,6 +52,12 @@ get()
                   { label: "Certifications" }
                 ]}
               />
+    {loader ? <div className="flex items-center justify-center h-90 ">
+     
+      {/* <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"> */}
+        <img src="/siteicon.png" alt="" width={200} height={200}/>
+      {/* </div> */}
+    </div>:
     <section className="w-[1240px] mx-auto flex justify-center py-10 bg-white">
       <div className="w-full flex flex-col items-center gap-8 text-center">
         {/* Heading */}
@@ -79,7 +101,7 @@ return(
         </div>
       </div>
     </section>
-
+}
     </>
   );
 }

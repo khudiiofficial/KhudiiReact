@@ -28,6 +28,7 @@ import Blogss from './pages/Blogs/Blogs'
 import JobApplicationForm from './pages/Jobs/Jobs'
 import VolunteerForm from './pages/Volunteer/Volunteer'
 import Categories from './pages/Categories/Categories'
+import BackToTopButton from './componets/backToTopButton/BackToTopButton.jsx'
 import axios from 'axios'
 import './cache.js'
 import { useGoogleAnalytics } from './Hooks/GoogleAnalytics.jsx'
@@ -106,6 +107,7 @@ useEffect(()=>{
 </Routes>
 <Footer/>
 <VapiAssistant/>
+<BackToTopButton/>
 {/* <TranslationWidget/> */}
 </main>
     </>
