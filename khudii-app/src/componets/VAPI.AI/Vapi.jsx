@@ -76,9 +76,9 @@ const VapiAssistant = () => {
       theme="light"
       position="bottom-right"
       size={widgetSize} // 👈 dynamic
-      // accentColor="#e7001e"
+      accentColor="#02236e"
       ctaButtonColor="#bbbbbb"
-      ctaButtonTextColor="#02236e"
+      ctaButtonTextColor="#FFFFFF"
       title="AI Assistant"
       ctaTitle="Ask Khudii"
       ctaSubtitle="24/7 Support"

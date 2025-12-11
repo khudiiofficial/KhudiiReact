@@ -67,3 +67,15 @@
 #main-content > div.vapi-widget-wrapper > div > div > div > div.relative > svg * {
   display: none;
 }
+
+
+#main-content > div.vapi-widget-wrapper > div > div > div.relative.z-10.p-4.flex.items-center.justify-between.border-b.text-gray-900.border-gray-200.shadow-sm > div.flex.items-center.space-x-3 > div.relative > svg{
+  width: 30px;
+  height: 30px;
+  background-image: url("/siteicon.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+#main-content > div.vapi-widget-wrapper > div > div > div.relative.z-10.p-4.flex.items-center.justify-between.border-b.text-gray-900.border-gray-200.shadow-sm > div.flex.items-center.space-x-3 > div.relative > svg * {
+  display: none;
+}
