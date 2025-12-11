@@ -30,9 +30,20 @@ const db = mysql.createPool({
   database: process.env.DB_NAME,
   port: process.env.DB_PORT || 3306,
   waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-  ssl: { rejectUnauthorized: false }, // required for Hostinger
+  connectionLimit: 5, // REDUCE THIS - 10 might be too high for shared hosting
+  maxIdle: 5, // Maximum number of idle connections
+  idleTimeout: 60000, // 60 seconds - close idle connections after 1 min
+  queueLimit: 50, // Reasonable queue limit
+  enableKeepAlive: true, // Keep connections alive
+  keepAliveInitialDelay: 10000, // 10 seconds
+  
+  // Connection settings
+  connectTimeout: 10000, // 10 second timeout
+  ssl: { rejectUnauthorized: false },
+  
+  // IMPORTANT: Add these to manage connections better
+  acquireTimeout: 10000, // Wait 10 seconds max for a connection
+  multipleStatements: false, // Disable multiple statements for security
 });
 
 // Test the connection once
@@ -48,25 +59,7 @@ db.getConnection((err, connection) => {
 
 
 
-// function addSearchTagsColumn() {
-//   const alterQuery = `
-//     ALTER TABLE items 
-//     ADD COLUMN search_tags TEXT NULL
-//   `;
 
-//   db.query(alterQuery, (err, results) => {
-//     if (err) {
-//       console.error("❌ Error adding search_tags column:", err);
-//       return;
-//     }
-//     console.log("✅ search_tags column added successfully!");
-//     console.log("Results:", results);
-    
-//     // Close the connection
-//     db.end();
-//   });
-// }
-// addSearchTagsColumn()
 
 
 export default db;
