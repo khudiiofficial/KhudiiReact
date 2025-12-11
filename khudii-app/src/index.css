@@ -79,3 +79,7 @@
 #main-content > div.vapi-widget-wrapper > div > div > div.relative.z-10.p-4.flex.items-center.justify-between.border-b.text-gray-900.border-gray-200.shadow-sm > div.flex.items-center.space-x-3 > div.relative > svg * {
   display: none;
 }
+
+#main-content > div.vapi-widget-wrapper > div > div > div:nth-child(3) > div > button > svg > path {
+  fill: white;
+}
