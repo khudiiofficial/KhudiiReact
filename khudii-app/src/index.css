@@ -53,3 +53,17 @@
 .gw{
   width: 33.333%;
 }
+
+
+#main-content > div.vapi-widget-wrapper > div > div > div > div.relative > svg {
+  width: 30px;
+  height: 30px;
+  background-image: url("/siteicon.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* Hide the SVG's internal paths/elements */
+#main-content > div.vapi-widget-wrapper > div > div > div > div.relative > svg * {
+  display: none;
+}
