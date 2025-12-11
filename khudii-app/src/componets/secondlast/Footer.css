@@ -217,7 +217,7 @@
 }
 
 .copyright-section a:hover {
-  color: #02236e;
+  /* color: #02236e; */
   text-decoration: underline;
 }
 
