@@ -94,13 +94,13 @@ export default function Sidebar() {
       {/* Header */}
       <div className="p-4 border-b border-[#02236e]-500 flex items-center justify-between">
         {!isCollapsed && (
-          <div className="text-lg font-bold tracking-wide">
+          <div className="text-2xl font-bold tracking-wide">
             <Link to={'/dashboard'}>Admin Panel</Link>
           </div>
         )}
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="p-2 rounded-lg hover:bg-blue-500 transition"
+          className="p-2 rounded-lg hover:bg-blue-600 transition"
         >
           {isCollapsed ? "→" : "←"}
         </button>

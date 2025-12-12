@@ -1602,7 +1602,7 @@ console.log(form)
                       name={key}
                       value={form.socials[key]}
                       onChange={handleSocialChange}
-                      placeholder={`Enter ${key} ${key==='googlemap'? "(<iframe>...</iframe>)":''}`}
+                      placeholder={`Enter ${key} ${key==='Googlemap'? "(<iframe>...</iframe>)":''}`}
                       className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                         errors.socials?.[key]?.length ? 'border-red-500' : 'border-gray-300'
                       }`}
@@ -1622,7 +1622,7 @@ console.log(form)
                 <div key={i} className="bg-gray-50 p-4 rounded-lg space-y-3">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Name*</label>
                       <input
                         type="text"
                         value={icon.name}
@@ -1635,7 +1635,7 @@ console.log(form)
                       {renderErrors(errors.icons?.[i]?.name)}
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">ICON Code *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">ICON Code*</label>
                       <input
                         type="text"
                         value={icon.svg}

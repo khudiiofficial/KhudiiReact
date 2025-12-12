@@ -6,9 +6,9 @@ const DashboardIndex = () => {
       <div className="bg-white shadow-lg rounded-2xl p-10 text-center max-w-md w-full border border-gray-200">
         {/* <div className="text-5xl mb-4">👋</div> */}
         <h1 className="text-3xl font-bold text-gray-800 mb-3">
-          Welcome, <span className="text-indigo-600">Admin</span>
+          Welcome, <span className="text-[#02236e]">Admin</span>
         </h1>
-        <p className="text-gray-600 text-lg">
+        <p className="text-gray-700 text-lg">
           You’re now in your dashboard. Manage your content, and settings with ease.
         </p>
       </div>

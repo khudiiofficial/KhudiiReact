@@ -97,7 +97,7 @@ export default function OrganizationsPage() {
 
         {organizations.length === 0 ? (
           <div className="text-center py-12">
-            <div className="bg-white rounded-lg shadow-sm p-8 max-w-md mx-auto">
+            <div className="bg-white rounded-lg shadow-sm p-6 max-w-md mx-auto">
               <svg
                 className="mx-auto h-12 w-12 text-gray-400"
                 fill="none"
@@ -137,7 +137,7 @@ export default function OrganizationsPage() {
                     // }}
                   />
                 </div>
-                <div className="p-5">
+                <div className="p-4">
                   <h2 className="text-xl font-semibold text-gray-900 mb-2 line-clamp-1">
                     {org.name}
                   </h2>
