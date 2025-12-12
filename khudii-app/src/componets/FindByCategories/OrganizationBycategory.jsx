@@ -86,9 +86,9 @@ return (
                 <div className="text-[#222222]-600 text-sm leading-relaxed mb-4">
                   <div
   dangerouslySetInnerHTML={{
-    __html: org.description.length > 140
-      ? org.description.slice(0, 140) + "..."
-      : org.description
+    __html: org.description.replace(/<[^>]*>/g, '').length > 140
+      ? org.description.replace(/<[^>]*>/g, '').slice(0, 140) + "..."
+      : org.description.replace(/<[^>]*>/g, '')
   }}
 ></div>
 

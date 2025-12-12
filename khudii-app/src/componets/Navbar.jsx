@@ -93,7 +93,7 @@ useEffect(()=>{
 // console.log("hey abu",err)
   return (
     <div>
-      {/* 🔎 Top Search */}
+      {/* 🔎 Top Search For Mobile */}
       <div className={`${styles.newclass} relative`}>
         <div className={styles.pos1}>
           <i className={`fas fa-search ${styles.ss1}`}></i>
@@ -107,7 +107,7 @@ useEffect(()=>{
            {search && <i onClick={()=>{setSearch(''),setload(false)}} className={`fa-solid fa-x ${styles.cross}`}></i>} 
         </div>
 
-        {/* Results Dropdown for top search */}
+        {/* Results Dropdown for top search desktop */}
         {err ?<>{search && <div className={`${styles.searchResults} ${styles.helper_class}`}>Netwrok Error</div>}</>:<>
         {load ? <div className={`${styles.searchResults} ${styles.helper_class}`}>  <div className="flex items-center justify-center w-full h-full py-1">
       <div className="w-5 h-5 sm:w-8 sm:h-8 md:w-5 md:h-5 border-4 border-red-500 border-t-transparent rounded-full animate-spin" />
@@ -254,14 +254,15 @@ useEffect(()=>{
           <div className={styles.searchResults}>
             {results.map((org) => (
               <div key={org.id} onClick={()=>{setSearch(''),nav(`/${org.slug}`,{state:{id:org.id}})}}  className={styles.resultCard}>
+                <div className="flex items-center">
                 <img
                   src={org.introductory_image_path}
                   alt={org.name}
                   className={styles.resultImage}
                 />
-                <div>
-                  <b>{org.name}</b>
-                    <p dangerouslySetInnerHTML={{ __html: org.description.slice(0, 95) + "..." }} />
+                <b className="text-md font-bold pl-5 leading-5">{org.name}</b>
+                </div>
+                    <p className="text-sm" dangerouslySetInnerHTML={{ __html: org.description.replace(/<[^>]*>/g, '').slice(0, 95) + "..." }} />
                   {/* <Link
                     to={`/organization/${org.id}`}
                     className={styles.resultLink}
@@ -269,11 +270,10 @@ useEffect(()=>{
                   >
                     View More
                   </Link> */}
-                  <br />
+                  {/* <br />
                       <button style={{cursor:'pointer'}} className="org-btn">
                   View More
-                </button>
-                </div>
+                </button> */}
               </div>
             ))}
           </div>
