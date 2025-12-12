@@ -70,6 +70,7 @@ return (
         </div>
 )
 }
+
 // console.log(visiblePosts)
   return (
     // <div className="blog-container-full">
@@ -151,7 +152,7 @@ return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 md:px-4 sm:px-6 gap-6 pb-8">
       {visiblePosts.map((post, index) => (
         <article
-        onClick={() => nav(`/Blog/${post.slug}`, { state: { id: post.id } })}
+        onClick={() => nav(`/${post.slug}`, { state: { id: post.id } })}
           key={post.id}
           className="cursor-pointer group bg-white rounded-xl shadow-md transition-all duration-300"
           style={{ animationDelay: `${index * 0.2}s` }}
@@ -194,7 +195,7 @@ return (
             </div>
             {/* Button */}
             <div class="flex flex-col space-y-4">
-  <p class="text-gray-700 line-clamp-3">At Khudii, we believe that raising awareness about life-threatening diseases like cancer is not just important—it’s a responsibility. Cancer affects millions of lives every year, but early detection, timely treatment, and emotional support can make a world of difference.</p>
+  <p class="text-gray-700 line-clamp-3">{post.Intro}</p>
   <button aria-label="Read more about this blog post" class="bg-[#E3001C] cursor-pointer font-medium items-center justify-center px-5 py-2.5 rounded-[25px] mx-auto sm:w-auto text-sm text-white w-50">Explore Blog</button>
 </div>
           </div>

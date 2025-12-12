@@ -116,7 +116,7 @@ useEffect(()=>{
         {results.length > 0 && search && (
           <div className={styles.searchResults}>
             {results.map((org) => (
-              <div key={org.id} onClick={()=>{setSearch(''),nav(`/organization/${org.slug}`,{state:{id:org.id}})}}  className={styles.resultCard}>
+              <div key={org.id} onClick={()=>{setSearch(''),nav(`/${org.slug}`,{state:{id:org.id}})}}  className={styles.resultCard}>
                 <img
                   src={org.introductory_image_path}
                   alt={org.name}
@@ -253,7 +253,7 @@ useEffect(()=>{
         {results.length > 0 && counter && search && (
           <div className={styles.searchResults}>
             {results.map((org) => (
-              <div key={org.id} onClick={()=>{setSearch(''),nav(`/organization/${org.slug}`,{state:{id:org.id}})}}  className={styles.resultCard}>
+              <div key={org.id} onClick={()=>{setSearch(''),nav(`/${org.slug}`,{state:{id:org.id}})}}  className={styles.resultCard}>
                 <img
                   src={org.introductory_image_path}
                   alt={org.name}

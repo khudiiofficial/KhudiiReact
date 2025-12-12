@@ -141,7 +141,7 @@ fetchFooterData();
 
 {[...arr.slice(0,8)].map((ele,i)=>{
   return(
-      <li key={i}><Link to={`Categories/${ele.slug}`}><span className="link-icon"><i className="far fa-dot-circle"></i></span>{ele.name}</Link></li>
+      <li key={i}><Link to={`/${ele.slug}`}><span className="link-icon"><i className="far fa-dot-circle"></i></span>{ele.name}</Link></li>
   )
 })}
 {/* 

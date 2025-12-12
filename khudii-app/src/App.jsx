@@ -11,7 +11,7 @@ import Organizations from './pages/Organizations/Organizations'
 import Footer from './componets/secondlast/Footer'
 import Organization_Detail from './pages/OrganizationDetail/Organization_Detail'
 import About from './pages/About/About'
-import SpecificBlog from './pages/SpecificBlog/SpecificBlog'
+import BlogDetails from './pages/SpecificBlog/SpecificBlog'
 import  VapiAssistant  from './componets/VAPI.AI/Vapi'
 import Golden_people from './pages/GoldenPeople/Golden_people'
 import ContactUs from './pages/Contacts/ContactUs'
@@ -32,6 +32,7 @@ import BackToTopButton from './componets/backToTopButton/BackToTopButton.jsx'
 import axios from 'axios'
 import './cache.js'
 import { useGoogleAnalytics } from './Hooks/GoogleAnalytics.jsx'
+import Detailforall from './pages/DetailforAll/Detailforall.jsx'
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 // import TranslationWidget from './componets/translate/Translate'
 function App() {
@@ -86,9 +87,9 @@ useEffect(()=>{
 <Routes>
 <Route path='/' element={<HomePage con={findobj('/')} url={url}/>}/>
 <Route path='/organizations' element={<Organizations con={findobj('/organizations')} url={url} />}/>
-<Route path='/organization/:slug' element={<Organization_Detail url={url}/>} />
+{/* <Route path='/organization/:slug' element={<Organization_Detail url={url}/>} /> */}
 <Route path='/about-khudii' element={<About  con={findobj('/about-khudii')} url={url} />}/>
-<Route path='/Blog/:slug' element={<SpecificBlog url={url}/>}/>
+{/* <Route path='/Blog/:slug' element={<BlogDetails url={url}/>}/> */}
 <Route path='/golden-people' element={<Golden_people  con={findobj('/golden-people')} url={url}/>}/>
 <Route path='/contact' element={<ContactUs  con={findobj('/contact')} url={url}/>}/>
 <Route path='/contribute-your-story' element={<ContributeStory  con={findobj('/contribute-your-story')} url={url}/>}/>
@@ -104,6 +105,7 @@ useEffect(()=>{
 <Route path='/jobs' element={<JobApplicationForm  con={findobj('/jobs')} url={url}/>}/>
 <Route path='/volunteer' element={<VolunteerForm  con={findobj('/volunteer')} url={url}/>}/>
 <Route path='Categories/:slug' element={<Categories url={url}/>}/>
+<Route path='/:slug' element={<Detailforall url={url}/>}/>
 </Routes>
 <Footer/>
 <VapiAssistant/>

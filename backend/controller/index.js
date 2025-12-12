@@ -1592,3 +1592,165 @@ export const getBankData = async (req, res) => {
     });
   }
 };
+
+
+
+export const DetailForAll = async (req, res) => {
+  const { slug } = req.params;
+
+  try {
+    // Try to find in items/organizations first
+    const sql = `
+      SELECT i.id, i.name, i.description, i.deletestatus, i.category, i.youtube_video_url, i.introductory_image_path,
+             i.slug, i.meta_title, i.meta_description, i.meta_keywords,
+             GROUP_CONCAT(DISTINCT img.image_path) AS images
+      FROM items i
+      LEFT JOIN item_images img ON i.id = img.item_id
+      WHERE i.slug = ? AND i.deletestatus = 0
+      GROUP BY i.id;
+    `;
+
+    // Using promises for better async handling
+    const itemRows = await new Promise((resolve, reject) => {
+      db.query(sql, [slug], (err, rows) => {
+        if (err) reject(err);
+        else resolve(rows);
+      });
+    });
+
+    // If item found
+    if (itemRows.length > 0) {
+      const item = {
+        ...itemRows[0],
+        images: itemRows[0].images ? itemRows[0].images.split(",") : [],
+        urls: [],
+        slug: itemRows[0].slug || "",
+        meta_title: itemRows[0].meta_title || "",
+        meta_description: itemRows[0].meta_description || "",
+        meta_keywords: itemRows[0].meta_keywords || "",
+      };
+
+      // Fetch URLs for the item
+      const urlRows = await new Promise((resolve, reject) => {
+        db.query(
+          "SELECT CAST(urls AS CHAR) AS urls FROM item_urls WHERE item_id = ?",
+          [itemRows[0].id],
+          (err, rows) => {
+            if (err) reject(err);
+            else resolve(rows);
+          }
+        );
+      });
+
+      if (urlRows.length > 0) {
+        try {
+          item.urls = JSON.parse(urlRows[0].urls);
+        } catch (e) {
+          item.urls = urlRows[0].urls.split(",").map((u) => u.trim());
+        }
+      }
+
+      return res.status(200).json({data:item,category:"organization"});
+    }
+
+    // If not found in items, try documents/blogs
+    const [docRows] = await db.promise().query(
+      "SELECT * FROM document WHERE slug = ? AND deletestatus = 0",
+      [slug]
+    );
+
+    if (docRows.length > 0) {
+      const doc = docRows[0];
+      const document = {
+        Intro: doc.intro,
+        Name: doc.Name,
+        Conclusion: doc.conclusion,
+        Image: doc.image_path,
+        slug: doc.slug || "",
+        meta_title: doc.meta_title || "",
+        meta_description: doc.meta_description || "",
+        meta_keywords: doc.meta_keywords || "",
+        Arr: [],
+        NGOs: { INTRO: "", Arr: [] },
+      };
+
+      // Fetch document array data
+      const [arrRows] = await db.promise().query(
+        "SELECT * FROM documentarr WHERE document_id = ? ORDER BY id ASC",
+        [doc.id]
+      );
+
+      for (const arr of arrRows) {
+        const [bRows] = await db.promise().query(
+          "SELECT bullet FROM documentarrbullets WHERE arr_id = ? ORDER BY id ASC",
+          [arr.id]
+        );
+
+        document.Arr.push({
+          Heading: arr.heading,
+          Start: arr.start,
+          Bullet_Header: arr.bullet_header,
+          Bullets: bRows.map((b) => b.bullet),
+          End: arr.end,
+        });
+      }
+
+      // Fetch NGO data
+      const [ngoRows] = await db.promise().query(
+        "SELECT * FROM ngos WHERE document_id = ? ORDER BY id ASC",
+        [doc.id]
+      );
+
+      if (ngoRows.length > 0) {
+        const ngo = ngoRows[0];
+        document.NGOs.INTRO = ngo.intro;
+
+        const [ngosArrRows] = await db.promise().query(
+          "SELECT * FROM ngosarr WHERE ngos_id = ? ORDER BY id ASC",
+          [ngo.id]
+        );
+
+        for (const n of ngosArrRows) {
+          const [ofRows] = await db.promise().query(
+            "SELECT value FROM ngosarrof WHERE ngos_arr_id = ? ORDER BY id ASC",
+            [n.id]
+          );
+
+          document.NGOs.Arr.push({
+            h1: n.h1,
+            OF: ofRows.map((o) => o.value),
+          });
+        }
+      }
+
+      return res.status(200).json({data:document,category:"blog"});
+    }
+
+    // If not found in documents, try sectors/categories
+    const [sectorRows] = await db.promise().query(
+      "SELECT * FROM sectors WHERE slug = ?",
+      [slug]
+    );
+
+    if (sectorRows.length > 0) {
+      return res.status(200).json({ 
+        success: true, 
+        data: sectorRows[0],
+        category:"sectors" 
+      });
+    }
+
+    // If nothing found
+    return res.status(404).json({ 
+      success: false, 
+      message: "Not found" 
+    });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ 
+      success: false, 
+      error: err.message 
+    });
+  }
+};

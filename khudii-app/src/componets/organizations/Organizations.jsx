@@ -146,7 +146,7 @@ return (
           {organizations.length > 0 ? (
             organizations.map((org, idx) => (
               <article
-              onClick={() => nav(`/organization/${org.slug}`, { state: { id: org.id } })}
+              onClick={() => nav(`/${org.slug}`, { state: { id: org.id } })}
                 key={org.id || idx}
                 className="cursor-pointer group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
                 role="article"

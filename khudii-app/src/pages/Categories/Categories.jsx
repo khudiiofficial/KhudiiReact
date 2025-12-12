@@ -6,29 +6,29 @@ import SEO from '../../componets/Helmet/Helmet'
 import { useState,useEffect } from 'react'
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 import axios from 'axios'
-const Categories = ({url}) => {
-    const [cat,setcat]=useState({})
+const Categories = ({cat,url}) => {
+    // const [cat,setcat]=useState({})
 
-    let {slug}=useParams()
+    // let {slug}=useParams()
     // name=name.replace(/-/g,' ')
-    useEffect(()=>{
-const func=async()=>{
-try {
-    const res=await axios.get(`${APIPath}/CBN/${slug}`)
-   if(res.status===200){
-setcat(res.data.data)
-console.log(res.data)
+//     useEffect(()=>{
+// const func=async()=>{
+// try {
+//     const res=await axios.get(`${APIPath}/CBN/${slug}`)
+//    if(res.status===200){
+// setcat(res.data.data)
+// console.log(res.data)
 
-// console.log(res.data.data)
-   }
+// // console.log(res.data.data)
+//    }
     
-} catch (error) {
-    console.log(error)
-}
+// } catch (error) {
+//     console.log(error)
+// }
 
-}
-func()
-    },[slug])   
+// }
+// func()
+//     },[slug])   
    
     //    const getCategorySEODetails = (categoryName) => {
     //     const categoryMap = {
@@ -96,7 +96,7 @@ func()
             title={cat.meta_title}
             description={cat.meta_description}
             keywords={cat.meta_keywords}
-            url={`${url}/Categories/${cat.name}`}
+            url={`${url}/${cat.name}`}
             type="website"
         />
         

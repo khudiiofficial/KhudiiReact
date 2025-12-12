@@ -70,7 +70,7 @@ return (
       <div className="max-w-[1240px] mx-auto">
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {organizations.map((org) => (
-            <div key={org.id} className={`cursor-pointer org-card ${styles.card_size}`} onClick={()=>{nav(`/organization/${org.slug}`,{state:{id:org.id}})}}>
+            <div key={org.id} className={`cursor-pointer org-card ${styles.card_size}`} onClick={()=>{nav(`/${org.slug}`,{state:{id:org.id}})}}>
               
               <div className="w-full overflow-hidden bg-white rounded-t-xl">
                 <img src={org.introductory_image_path} alt={org.title} className="w-100 object-cover duration-500"/>

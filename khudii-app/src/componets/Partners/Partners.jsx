@@ -67,11 +67,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './partners.module.css';
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 const Partners = () => {
   const [animatedIndices, setAnimatedIndices] = useState(new Set());
   const imageRefs = useRef([]);
-  
+  const nav=useNavigate()
   // Reduced array size - remove duplicates to avoid loading same images multiple times
     // const [arr,setarr] = useState([1,2,3,4,5,6,7]);
     const [arr,setarr] = useState([]);
@@ -144,10 +145,10 @@ call()
       <div>
       <div className="max-w-[1240px] mx-auto px-4 flex flex-wrap justify-center items-center gap-2 sm:gap-2 md:gap-4 pb-8">
         {arr.map((ele, index) => (
-          <div
+          <div onClick={()=>{nav(`/${ele.slug}`)}}
             key={index}
             ref={(el) => (imageRefs.current[index] = el)}
-            className={`${styles.partner_mob} flex flex-wrap items-center justify-center transition-transform duration-300 hover:scale-105 overflow-hidden sm:w-[calc(40%-4px)] lg:w-[225px] lg:h-[225px] bg-white rounded-[20px]`}
+            className={`${styles.partner_mob} cursor-pointer flex flex-wrap items-center justify-center transition-transform duration-300 hover:scale-105 overflow-hidden sm:w-[calc(40%-4px)] lg:w-[225px] lg:h-[225px] bg-white rounded-[20px]`}
           >
             {/* Image with fade-in animation on view */}
             <img

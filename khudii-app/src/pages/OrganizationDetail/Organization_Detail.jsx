@@ -1,39 +1,40 @@
 // src/components/OrganizationDetail.jsx
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, {  useState } from "react";
+// import axios from "axios";
 import SEO from "../../componets/Helmet/Helmet";
 import "./Organization_Details.css";
 import Crousel from "../../componets/OrganizationDetailPageComponents/Crousel/Crousel";
 // import Services from "../../componets/OrganizationDetailPageComponents/Services/services";
-import Services from "../../componets/OrganizationDetailPageComponents/Services/Services";
+// import Services from "../../componets/OrganizationDetailPageComponents/Services/Services";
 // import Socials from "../../componets/OrganizationDetailPageComponents/GeneralInfo/GeneralInfo";
 import YouTubeAndGoogle_map from "../../componets/OrganizationDetailPageComponents/YoutubeANDGoogleMap/YouTubeAndGoogle_map";
 import Blogs from "../../componets/Blogs/Blogs";
-import { useLocation } from "react-router-dom";
-import { useParams } from "react-router-dom";
-const APIPath = import.meta.env.VITE_BACKEND_PATH;
-const OrganizationDetail = ({url}) => {
-  const location=useLocation()
-  const {slug}=useParams()
-  const [org, setOrg] = useState(null);
+// import { useLocation } from "react-router-dom";
+// import { useParams } from "react-router-dom";
+// const APIPath = import.meta.env.VITE_BACKEND_PATH;
+const OrganizationDetail = ({url,org}) => {
+  // const location=useLocation()
+  // const {slug}=useParams()
+  // const [org, setOrg] = useState(null);
+  const id=org.id
   const [error,seterror]=useState(false)
-  const [id,setid]=useState(null)
+  // const [id,setid]=useState(null)
   const [loader,setloader]=useState(false)
 // console.log(googlemap)
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await axios.get(`${APIPath}/item/${slug}`);
-        setOrg(res.data);
-        setid(res.data.id)
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const res = await axios.get(`${APIPath}/item/${slug}`);
+  //       setOrg(res.data);
+  //       setid(res.data.id)
       
-      } catch (err) {
-        seterror(true)
-        console.error("Error fetching org:", err);
-      }
-    })();
+  //     } catch (err) {
+  //       seterror(true)
+  //       console.error("Error fetching org:", err);
+  //     }
+  //   })();
  
-  }, [slug]);
+  // }, [slug]);
 
  
 if (error) return (
@@ -67,18 +68,18 @@ if (error) return (
       : "welfare organizations, verified charities, partner organizations, community support pakistan"
   }
   image={org?.introductory_image_path || "/Khudii.webp"}
-  url={`${url}/organization/${org?.slug || slug}`}
+  url={`${url}/${org?.slug || slug}`}
 />
 <>
-  <Crousel setloader={setloader} key={slug}/>
+  <Crousel setloader={setloader} key={org.slug}/>
   </>
   {/* <Socials itemId={id}  /> */}
   {/* <Services id={id}/> */}
   <>
-  {id && <YouTubeAndGoogle_map key={slug}  id={id}/>}
+  {id && <YouTubeAndGoogle_map key={org.slug}  id={id}/>}
   </>
   <>
-  <Blogs loader1={loader} key={slug}/>
+  <Blogs loader1={loader} key={org.slug}/>
   </>
   </>
   );

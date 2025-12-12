@@ -6,53 +6,54 @@ import { useLocation } from "react-router-dom";
 import SEO from "../../componets/Helmet/Helmet";
 
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
-export default function BlogDetails({url}) {
+export default function BlogDetails({blog,url}) {
   
-  const [blog, setBlog] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const location=useLocation();
-  const {slug}=useParams()
-
-  useEffect(() => {
-    (async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get(`${APIPath}/Blog/${slug}`);
-        setBlog(res.data);
+  // const [blog, setBlog] = useState(null);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
+  // const location=useLocation();
+  // const {slug}=useParams()
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       setLoading(true);
+  //       const res = await axios.get(`${APIPath}/Blog/${slug}`);
+  //       setBlog(res.data);
         
-        setError(null);
-      } catch (err) {
-        console.error("Error fetching blog:", err);
-        setError("Failed to load blog post. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, [slug]);
+  //       setError(null);
+  //     } catch (err) {
+  //       console.error("Error fetching blog:", err);
+  //       setError("Failed to load blog post. Please try again later.");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   })();
+  // }, [slug]);
 
-  if (loading) return (
-    <div className={styles.loadingContainer}>
-      <div className={styles.loadingSpinner}></div>
-      <p className={styles.loadingText}>Loading blog content...</p>
-    </div>
-  );
+  // if (loading) return (
+  //  (  <div className="flex items-center justify-center h-90 ">
+     
+  //     {/* <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"> */}
+  //       <img src="/siteicon.png" alt="" width={200} height={200}/>
+  //     {/* </div> */}
+  //   </div>)
+  // );
 
-  if (error) return (
-    <div className={styles.errorContainer}>
-      <div className={styles.errorIcon}>⚠️</div>
-      <h2 className={styles.errorTitle}>Unable to Load Content</h2>
-      <p className={styles.errorMessage}>{error}</p>
-      <button 
-        className={styles.retryButton}
-        onClick={() => window.location.reload()}
-      >
-        Retry
-      </button>
-    </div>
-  );
+  // if (error) return (
+  //   <div className={styles.errorContainer}>
+  //     <div className={styles.errorIcon}>⚠️</div>
+  //     <h2 className={styles.errorTitle}>Unable to Load Content</h2>
+  //     <p className={styles.errorMessage}>{error}</p>
+  //     <button 
+  //       className={styles.retryButton}
+  //       onClick={() => window.location.reload()}
+  //     >
+  //       Retry
+  //     </button>
+  //   </div>
+  // );
 
-  if (!blog) return null;
+  // if (!blog) return null;
 
   return (
 
@@ -72,7 +73,7 @@ export default function BlogDetails({url}) {
             : "khudii blog, community insights, welfare articles, social impact"
         }
         image={blog?.Image || "/Khudii.webp"}
-        url={`${url}/Blog/${blog.slug || slug}`}
+        url={`${url}/${blog.slug || slug}`}
         type="article"
       />
     

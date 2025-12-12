@@ -105,7 +105,7 @@ call()
         <div className={styles.parent}>
             {arr.map((ele, index) => (
                   <div key={index} >
-                <div className={styles.class1} onClick={()=>{nav(`/Categories/${ele.slug}`)}} >
+                <div className={styles.class1} onClick={()=>{nav(`/${ele.slug}`)}} >
                     <img 
                         src={ele.src} 
                         className={styles.class2} 
