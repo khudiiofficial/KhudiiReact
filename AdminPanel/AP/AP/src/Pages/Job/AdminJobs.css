@@ -79,18 +79,17 @@
 .applications-table table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 1200px;
+  min-width: 1240px;
 }
 
 .applications-table th {
-  background: #2c3e50;
-  color: white;
+  background: #cedcff;
+  color: #222222;
   font-weight: 600;
   padding: 15px 12px;
   text-align: left;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-size: 1rem;
+  text-transform: capitalize;
 }
 
 .applications-table td {
@@ -133,7 +132,7 @@
 }
 
 .position-badge {
-  background: #e67e22;
+  background: #fcdd2d !important;
   color: white;
   padding: 4px 8px;
   border-radius: 4px;
@@ -250,7 +249,6 @@
   display: grid;
   grid-template-columns: 180px 1fr;
   gap: 15px;
-  align-items: start;
 }
 
 .detail-group.full-width {
@@ -278,7 +276,7 @@
 }
 
 .position-badge {
-  background: #e67e22;
+  background: #fcdd2d !important;
   color: white;
   padding: 6px 12px;
   border-radius: 6px;
@@ -290,11 +288,12 @@
 
 .message-content {
   background: #f8f9fa;
+  width: 100%;
   padding: 15px;
   border-radius: 8px;
   border: 1px solid #e9ecef;
-  line-height: 1.6;
-  white-space: pre-wrap;
+  line-height: 0.6 !important;
+  white-space: wrap;
   max-height: 200px;
   overflow-y: auto;
 }

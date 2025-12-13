@@ -100,10 +100,10 @@ const AdminInquiries = () => {
       });
       setOwner(ownerForm);
       setEditingOwner(false);
-      alert('Owner information updated successfully!');
+      alert('Owner Iformation Updated Successfully!');
     } catch (error) {
       console.error('Error updating owner:', error);
-      alert(error.response?.data?.error || 'Failed to update owner information');
+      alert(error.response?.data?.error || 'Failed to Ppdate Owner Information');
     }
   };
 
@@ -230,7 +230,7 @@ const AdminInquiries = () => {
           <div className="search-box">
             <input
               type="text"
-              placeholder="Search by name, email, phone, or organization..."
+              placeholder="Search by Name, Email, Phone, or Organizations..."
               value={search}
               onChange={handleSearch}
             />
@@ -238,7 +238,7 @@ const AdminInquiries = () => {
         </div>
 
         {inquiries.length === 0 ? (
-          <div className="no-data">No inquiries found</div>
+          <div className="no-data">No Inquiries Found</div>
         ) : (
           <>
             <div className="inquiries-table">

@@ -100,7 +100,7 @@ export default function Sidebar() {
         )}
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="p-2 rounded-lg hover:bg-blue-600 transition"
+          className="cursor-pointer p-2 rounded-lg hover:bg-blue-600 transition"
         >
           {isCollapsed ? "→" : "←"}
         </button>
@@ -138,7 +138,7 @@ export default function Sidebar() {
       <div className="p-4 border-t border-[#02236e]-500 space-y-2">
         <button
           onClick={() => navigate("/dashboard/Profile")}
-          className={`w-full bg-white text-[#02236e] px-3 py-2 rounded-lg font-medium hover:bg-gray-100 transition shadow ${
+          className={`cursor-pointer w-full bg-white text-[#02236e] px-3 py-2 rounded-lg font-medium hover:bg-gray-100 transition shadow ${
             isCollapsed ? "text-xs" : ""
           }`}
           title={isCollapsed ? "Profile" : ""}
@@ -147,7 +147,7 @@ export default function Sidebar() {
         </button>
         <button
           onClick={handleLogout}
-          className={`w-full bg-white text-[#02236e] px-3 py-2 rounded-lg font-medium hover:bg-gray-100 transition shadow ${
+          className={`cursor-pointer w-full bg-[#e7001e] text-white px-3 py-2 rounded-lg font-medium hover:bg-opacity-10 transition shadow ${
             isCollapsed ? "text-xs" : ""
           }`}
           title={isCollapsed ? "Logout" : ""}

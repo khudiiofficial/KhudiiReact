@@ -147,13 +147,13 @@ export default function OrganizationsPage() {
                   <div className="flex justify-between items-center">
                     <button
                       onClick={() => navigate(`/dashboard/edit-organization/${org.id}`)}
-                      className="bg-[#02236e] text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition-colors duration-200 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                      className="cursor-pointer bg-[#02236e] text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition-colors duration-200 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                     >
                       Edit Organization
                     </button>
                     <button
                       onClick={() => { Delete(org.id, org.name) }}
-                      className="bg-[#e7001e] text-white px-4 py-2 rounded-lg hover:bg-red-500 transition-colors duration-200 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                      className="cursor-pointer bg-[#e7001e] text-white px-4 py-2 rounded-lg hover:bg-red-500 transition-colors duration-200 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                     >
                       Delete
                     </button>

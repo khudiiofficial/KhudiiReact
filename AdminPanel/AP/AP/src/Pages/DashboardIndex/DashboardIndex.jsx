@@ -8,7 +8,7 @@ const DashboardIndex = () => {
         <h1 className="text-3xl font-bold text-gray-800 mb-3">
           Welcome, <span className="text-[#02236e]">Admin</span>
         </h1>
-        <p className="text-gray-700 text-lg">
+        <p className="text-[#222222] text-lg">
           You’re now in your dashboard. Manage your content, and settings with ease.
         </p>
       </div>

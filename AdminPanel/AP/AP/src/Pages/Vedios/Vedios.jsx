@@ -93,7 +93,7 @@ const fetchVideos = async () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Videos Management</h1>
+          <h1 className="text-3xl font-bold text-[#222222]">Videos Management</h1>
           <p className="mt-2 text-sm text-gray-600">
             Manage your video content and YouTube integrations
           </p>
@@ -109,13 +109,13 @@ const fetchVideos = async () => {
         {/* Action Bar */}
         <div className="mb-6 flex justify-between items-center">
           <div>
-            <span className="text-sm text-gray-500">
-              Total Videos: <span className="font-semibold">{videos.length}</span>
+            <span className="text-md text-[#059b0f]">
+              Total Videos: <span className="text-lg font-semibold">{videos.length}</span>
             </span>
           </div>
           <button
             onClick={handleCreate}
-            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center"
+            className="cursor-pointer bg-[#059b0f] hover:bg-[#3cc645] text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center"
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />

@@ -206,7 +206,7 @@ setcap('')
 
   return (
     <div style={{ 
-      maxWidth: '1200px', 
+      maxWidth: '1240px', 
       margin: '0 auto', 
       padding: '20px',
       fontFamily: 'Arial, sans-serif'
@@ -215,7 +215,7 @@ setcap('')
       <header style={{ 
         textAlign: 'center', 
         marginBottom: '40px',
-        borderBottom: '2px solid #007bff',
+        borderBottom: '2px solid #009dc8',
         paddingBottom: '20px'
       }}>
         <h1 style={{ 
@@ -259,7 +259,7 @@ setcap('')
         <h2 style={{ 
           color: '#333',
           marginBottom: '25px',
-          borderBottom: '2px solid #007bff',
+          borderBottom: '2px solid #009dc8',
           paddingBottom: '10px'
         }}>
           {editingId ? 'Edit Event' : 'Add New Event'}
@@ -284,7 +284,7 @@ setcap('')
               name="title"
               value={formData.title}
               onChange={handleInputChange}
-              placeholder="Enter event title (max 500 characters)"
+              placeholder="Enter Event Title (Max 500 characters)"
               maxLength="500"
               required
               style={{
@@ -296,7 +296,7 @@ setcap('')
                 boxSizing: 'border-box'
               }}
             />
-            <div style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>
+            <div style={{ fontSize: '12px', color: '#009dc8', marginTop: '5px' }}>
               {formData.title.length}/500 characters
             </div>
           </div>
@@ -315,7 +315,7 @@ setcap('')
               name="url"
               value={formData.url}
               onChange={handleInputChange}
-              placeholder="Enter YouTube embed URL (max 500 characters)"
+              placeholder="Enter YouTube Embeded URL (max 500 characters)"
               maxLength="500"
               required
               style={{
@@ -327,7 +327,7 @@ setcap('')
                 boxSizing: 'border-box'
               }}
             />
-            <div style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>
+            <div style={{ fontSize: '12px', color: '#009dc8', marginTop: '5px' }}>
               {formData.url.length}/500 characters
             </div>
           </div>
@@ -358,7 +358,7 @@ setcap('')
                 boxSizing: 'border-box'
               }}
             />
-            <div style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>
+            <div style={{ fontSize: '12px', color: '#009dc8', marginTop: '5px' }}>
               {formData.videoId.length}/100 characters
             </div>
           </div>
@@ -409,7 +409,7 @@ setcap('')
               type="submit" 
               disabled={isSubmitting}
               style={{
-                background: '#007bff',
+                background: '#02236e',
                 color: 'white',
                 padding: '12px 25px',
                 border: 'none',
@@ -448,7 +448,7 @@ setcap('')
       {/* Events List */}
       <div>
         <h2 style={{ 
-          color: '#333',
+          color: '#222222',
           marginBottom: '25px',
           borderBottom: '2px solid #007bff',
           paddingBottom: '10px'
@@ -464,7 +464,7 @@ setcap('')
             borderRadius: '10px',
             color: '#666'
           }}>
-            No events found. Create your first event above!
+            No Events Found. Create your First Event Above!
           </div>
         ) : (
           <div style={{
@@ -477,19 +477,22 @@ setcap('')
                 key={event.id}
                 style={{
                   border: '1px solid #ddd',
-                  borderRadius: '10px',
-                  padding: '20px',
-                  background: 'white',
+                  borderRadius: '15px',
+                  padding: '15px',
+                  background: '#cedcff',
                   boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
                   transition: 'transform 0.2s'
                 }}
               >
                 <h3 style={{ 
-                  color: '#007bff', 
+                  color: '#02236e', 
                   marginTop: 0,
                   marginBottom: '15px',
-                  fontSize: '1.3rem'
-                }}>
+                  fontSize: '1.2rem',
+                  fontWeight: '600',
+                }}
+                className="line-clamp-1"
+                >
                   {event.title}
                 </h3>
                 
@@ -503,7 +506,7 @@ setcap('')
                 }}>
                   <iframe
                     width="100%"
-                    height="200"
+                    height="215"
                     src={`https://www.youtube.com/embed/${event.videoId}`}
                     title={event.title}
                     frameBorder="0"
@@ -517,7 +520,7 @@ setcap('')
                   <span style={{ 
                     background: '#e9ecef', 
                     padding: '2px 8px', 
-                    borderRadius: '3px',
+                    borderRadius: '5px',
                     marginLeft: '8px',
                     fontFamily: 'monospace'
                   }}>
@@ -541,7 +544,7 @@ setcap('')
                   </div>
                 </div>
                 
-                <div style={{ marginBottom: '20px', color: '#666', fontSize: '14px' }}>
+                <div style={{ marginBottom: '20px', color: '#e7001e', fontSize: '14px' }}>
                   <strong>Created:</strong> {new Date(event.created_at).toLocaleDateString()}
                 </div>
                 
@@ -549,13 +552,13 @@ setcap('')
                   <button 
                     onClick={() => window.open(event.url, '_blank')}
                     style={{
-                      background: '#28a745',
-                      color: 'white',
+                      background: '#31e700',
+                      color: 'black',
                       padding: '8px 16px',
                       border: 'none',
                       borderRadius: '5px',
                       cursor: 'pointer',
-                      fontSize: '14px',
+                      fontSize: '16px',
                       flex: 1
                     }}
                   >
@@ -565,13 +568,13 @@ setcap('')
                   <button 
                     onClick={() => handleEdit(event)}
                     style={{
-                      background: '#ffc107',
+                      background: '#ffe931',
                       color: 'black',
                       padding: '8px 16px',
                       border: 'none',
                       borderRadius: '5px',
                       cursor: 'pointer',
-                      fontSize: '14px',
+                      fontSize: '16px',
                       flex: 1
                     }}
                   >
@@ -581,13 +584,13 @@ setcap('')
                   <button 
                     onClick={() => handleDelete(event.id)}
                     style={{
-                      background: '#dc3545',
+                      background: '#e7001e',
                       color: 'white',
                       padding: '8px 16px',
                       border: 'none',
                       borderRadius: '5px',
                       cursor: 'pointer',
-                      fontSize: '14px',
+                      fontSize: '16px',
                       flex: 1
                     }}
                   >
@@ -605,10 +608,10 @@ setcap('')
         textAlign: 'center',
         marginTop: '50px',
         padding: '20px',
-        borderTop: '1px solid #ddd',
-        color: '#666'
+        borderTop: '2px solid #009dc8',
+        color: '#222222'
       }}>
-        <p>Events Admin Panel &copy; 2024</p>
+        <p>Events Admin Panel &copy; 2025</p>
       </footer>
     </div>
   );

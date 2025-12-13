@@ -103,7 +103,7 @@ const SuccessStoryForm = ({ story, onSubmit, onCancel }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">
+      <h2 className="text-2xl font-bold text-[#222222] mb-6">
         {story ? 'Edit Success Story' : 'Create New Success Story'}
       </h2>
 
@@ -123,10 +123,10 @@ const SuccessStoryForm = ({ story, onSubmit, onCancel }) => {
             name="title"
             value={formData.title}
             onChange={handleChange}
-            className={`w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+            className={`w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#02236e] focus:border-transparent ${
               errors.title ? 'border-red-500' : 'border-gray-300'
             }`}
-            placeholder="Enter success story title"
+            placeholder="Enter Success Story Title"
           />
           {errors.title && <p className="mt-1 text-sm text-red-600">{errors.title}</p>}
         </div>
@@ -142,8 +142,8 @@ const SuccessStoryForm = ({ story, onSubmit, onCancel }) => {
             name="urdu_title"
             value={formData.urdu_title}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Enter title in Urdu (optional)"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#02236e] focus:border-transparent"
+            placeholder="Enter Title in Urdu (Optional)"
           />
         </div>
 
@@ -158,13 +158,13 @@ const SuccessStoryForm = ({ story, onSubmit, onCancel }) => {
             name="youtube_id"
             value={formData.youtube_id}
             onChange={handleChange}
-            className={`w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+            className={`w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#02236e] focus:border-transparent ${
               errors.youtube_id ? 'border-red-500' : 'border-gray-300'
             }`}
-            placeholder="Enter YouTube video ID (e.g., vCLNTJyC60I)"
+            placeholder="Enter YouTube Video ID (e.g., vCLNTJyC60I)"
           />
           {errors.youtube_id && <p className="mt-1 text-sm text-red-600">{errors.youtube_id}</p>}
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-[#009dc8]">
             The ID is the part after "v=" in YouTube URL
           </p>
         </div>
@@ -180,8 +180,8 @@ const SuccessStoryForm = ({ story, onSubmit, onCancel }) => {
             name="link"
             value={formData.link}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Enter custom link (optional)"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#02236e] focus:border-transparent"
+            placeholder="Enter Custom Link (Optional)"
           />
         </div>
 
@@ -196,8 +196,8 @@ const SuccessStoryForm = ({ story, onSubmit, onCancel }) => {
             value={formData.description}
             onChange={handleChange}
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Enter story description (optional)"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#02236e] focus:border-transparent"
+            placeholder="Enter Story Description (Optional)"
           />
         </div>
 
@@ -224,7 +224,7 @@ const SuccessStoryForm = ({ story, onSubmit, onCancel }) => {
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-200"
+            className="bg-[#e7001e] btn border-[#f80120] hover:bg-[#f80120] text-white ml-3 rounded-xl"
             disabled={loading}
           >
             Cancel
@@ -232,7 +232,7 @@ const SuccessStoryForm = ({ story, onSubmit, onCancel }) => {
           <button
             type="submit"
             disabled={loading}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+            className="bg-[#02236e] btn hover:bg-[#032f95] text-white rounded-xl"
           >
             {loading && (
               <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">

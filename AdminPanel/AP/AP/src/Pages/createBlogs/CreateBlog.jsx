@@ -299,7 +299,7 @@
 //                   type="text"
 //                   value={form.Name}
 //                   onChange={(e) => handleDocumentChange("Name", e.target.value)}
-//                   className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+//                   className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#02236e] focus:border-[#02236e] ${
 //                     errors.Name ? 'border-red-500' : 'border-gray-300'
 //                   }`}
 //                   placeholder="Enter blog title"
@@ -316,7 +316,7 @@
 //                   value={form.intro}
 //                   onChange={(e) => handleDocumentChange("intro", e.target.value)}
 //                   rows={4}
-//                   className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+//                   className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#02236e] focus:border-[#02236e] ${
 //                     errors.intro ? 'border-red-500' : 'border-gray-300'
 //                   }`}
 //                   placeholder="Write the introduction of your blog..."
@@ -333,7 +333,7 @@
 //                   value={form.conclusion}
 //                   onChange={(e) => handleDocumentChange("conclusion", e.target.value)}
 //                   rows={3}
-//                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+//                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02236e] focus:border-[#02236e]"
 //                   placeholder="Write the conclusion of your blog..."
 //                 />
 //               </div>
@@ -391,7 +391,7 @@
 //                         type="text"
 //                         value={section.heading || ""}
 //                         onChange={(e) => handleSectionChange(sectionIndex, "heading", e.target.value)}
-//                         className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+//                         className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#02236e]"
 //                         placeholder="Section heading"
 //                       />
 //                     </div>
@@ -402,7 +402,7 @@
 //                         value={section.start || ""}
 //                         onChange={(e) => handleSectionChange(sectionIndex, "start", e.target.value)}
 //                         rows={2}
-//                         className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+//                         className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#02236e]"
 //                         placeholder="Introductory text for this section"
 //                       />
 //                     </div>
@@ -413,7 +413,7 @@
 //                         type="text"
 //                         value={section.bullet_header || ""}
 //                         onChange={(e) => handleSectionChange(sectionIndex, "bullet_header", e.target.value)}
-//                         className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+//                         className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#02236e]"
 //                         placeholder="Header for bullet points"
 //                       />
 //                     </div>
@@ -436,7 +436,7 @@
 //                             type="text"
 //                             value={bullet}
 //                             onChange={(e) => handleBulletChange(sectionIndex, bulletIndex, e.target.value)}
-//                             className="flex-1 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+//                             className="flex-1 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#02236e]"
 //                             placeholder="Bullet point content"
 //                           />
 //                           <button
@@ -456,7 +456,7 @@
 //                         value={section.end || ""}
 //                         onChange={(e) => handleSectionChange(sectionIndex, "end", e.target.value)}
 //                         rows={2}
-//                         className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+//                         className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#02236e]"
 //                         placeholder="Concluding text for this section"
 //                       />
 //                     </div>
@@ -486,7 +486,7 @@
 //                   value={form.ngos.intro || ""}
 //                   onChange={(e) => handleNgoIntroChange(e.target.value)}
 //                   rows={3}
-//                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+//                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02236e] focus:border-[#02236e]"
 //                   placeholder="Introduction about NGO partners..."
 //                 />
 //               </div>
@@ -511,7 +511,7 @@
 //                         type="text"
 //                         value={category.h1 || ""}
 //                         onChange={(e) => handleCategoryChange(categoryIndex, "h1", e.target.value)}
-//                         className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+//                         className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#02236e]"
 //                         placeholder="Category title (e.g., Healthcare, Education)"
 //                       />
 //                     </div>
@@ -534,7 +534,7 @@
 //                             type="text"
 //                             value={value}
 //                             onChange={(e) => handleCategoryValueChange(categoryIndex, valueIndex, e.target.value)}
-//                             className="flex-1 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+//                             className="flex-1 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#02236e]"
 //                             placeholder="NGO name and description"
 //                           />
 //                           <button
@@ -893,11 +893,11 @@ export default function CreateBlogPage() {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Create New Blog</h1>
-              <p className="text-gray-600 mt-2">Add a new blog post with all related content</p>
+              <p className="text-gray-600 mt-2">Add a New Blog post With All related Content</p>
             </div>
             <button
               onClick={() => navigate("/dashboard/BlogPage")}
-              className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
+              className="bg-[#e7001e] text-white px-4 py-2 rounded-lg hover:bg-[#f80020] transition-colors"
             >
               ← Back to Blogs
             </button>
@@ -908,7 +908,7 @@ export default function CreateBlogPage() {
                
             {/* Main Document Section */}
             <div className="space-y-6 p-6 bg-blue-50 rounded-xl">
-              <h2 className="text-2xl font-semibold text-gray-800">Main Blog Content</h2>
+              <h2 className="text-2xl font-semibold text-[#222222]">Main Blog Content</h2>
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -922,10 +922,10 @@ export default function CreateBlogPage() {
                     // Auto-generate slug from title
                     handleSeoChange("slug", generateSlug(e.target.value));
                   }}
-                  className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#02236e] focus:border-[#02236e] ${
                     errors.Name ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="Enter blog title"
+                  placeholder="Blog Title"
                   required
                 />
                 {errors.Name && <p className="text-red-600 text-sm mt-1">{errors.Name}</p>}
@@ -939,13 +939,13 @@ export default function CreateBlogPage() {
                   type="text"
                   value={form.slug}
                   onChange={(e) => handleSeoChange("slug", e.target.value)}
-                  className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#02236e] focus:border-[#02236e] ${
                     errors.slug ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="blog-url-slug"
+                  placeholder="Blog URL Slug"
                   required
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-[#009dc8] mt-1">
                   URL-friendly version of the title. Use lowercase letters, numbers, and hyphens only.
                 </p>
                 {errors.slug && <p className="text-red-600 text-sm mt-1">{errors.slug}</p>}
@@ -959,10 +959,10 @@ export default function CreateBlogPage() {
                   value={form.intro}
                   onChange={(e) => handleDocumentChange("intro", e.target.value)}
                   rows={4}
-                  className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#02236e] focus:border-[#02236e] ${
                     errors.intro ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="Write the introduction of your blog..."
+                  placeholder="Write the Introduction of Blog..."
                   required
                 />
                 {errors.intro && <p className="text-red-600 text-sm mt-1">{errors.intro}</p>}
@@ -976,8 +976,8 @@ export default function CreateBlogPage() {
                   value={form.conclusion}
                   onChange={(e) => handleDocumentChange("conclusion", e.target.value)}
                   rows={3}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Write the conclusion of your blog..."
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02236e] focus:border-[#02236e]"
+                  placeholder="Write the Conclusion of Blog..."
                 />
               </div>
 
@@ -989,12 +989,12 @@ export default function CreateBlogPage() {
                   type="file"
                   onChange={handleImageChange}
                   accept="image/*"
-                  className="w-full p-3 border border-gray-300 rounded-lg"
+                  className="cursor-pointer w-[25%] p-3 border border-gray-300 hover:bg-gray-400 rounded-lg"
                 />
                 {errors.image && <p className="text-red-600 text-sm mt-1">{errors.image}</p>}
                 {form.image_base64 && (
                   <div className="mt-2">
-                    <p className="text-sm text-green-600">Image preview:</p>
+                    <p className="text-sm text-green-600">Image Preview:</p>
                     <img src={form.image_base64} alt="Preview" className="h-32 mt-2 rounded" />
                   </div>
                 )}
@@ -1013,12 +1013,12 @@ export default function CreateBlogPage() {
                   type="text"
                   value={form.meta_title}
                   onChange={(e) => handleSeoChange("meta_title", e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Enter meta title for SEO"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02236e] focus:border-[#02236e]"
+                  placeholder="Enter Meta Title for SEO"
                 />
                 <div className="flex justify-between text-xs text-gray-500 mt-1">
                   <span>{form.meta_title.length}/60 characters</span>
-                  <span>Recommended for search engines</span>
+                  <span className="text-[#009dc8]">Recommended for search engines</span>
                 </div>
               </div>
 
@@ -1030,12 +1030,12 @@ export default function CreateBlogPage() {
                   value={form.meta_description}
                   onChange={(e) => handleSeoChange("meta_description", e.target.value)}
                   rows={3}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Enter meta description for SEO"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02236e] focus:border-[#02236e]"
+                  placeholder="Enter Meta Description for SEO"
                 />
                 <div className="flex justify-between text-xs text-gray-500 mt-1">
                   <span>{form.meta_description.length}/160 characters</span>
-                  <span>Appears in search results</span>
+                  <span className="text-[#009dc8]">Appears in search results</span>
                 </div>
               </div>
 
@@ -1047,10 +1047,10 @@ export default function CreateBlogPage() {
                   type="text"
                   value={form.meta_keywords}
                   onChange={(e) => handleSeoChange("meta_keywords", e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02236e] focus:border-[#02236e]"
                   placeholder="keyword1, keyword2, keyword3"
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-[#009dc8] mt-1">
                   Separate keywords with commas. Maximum 255 characters.
                 </p>
               </div>
@@ -1063,7 +1063,7 @@ export default function CreateBlogPage() {
                 <button
                   type="button"
                   onClick={addSection}
-                  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+                  className="cursor-pointer bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
                 >
                   + Add Section
                 </button>
@@ -1076,7 +1076,7 @@ export default function CreateBlogPage() {
                     <button
                       type="button"
                       onClick={() => removeSection(sectionIndex)}
-                      className="text-red-600 hover:text-red-800"
+                      className="cursor-pointer bg-[#e7001e] text-white p-1 px-2 rounded-lg hover:bg-[#f80020] transition-colors"
                     >
                       Remove
                     </button>
@@ -1089,8 +1089,8 @@ export default function CreateBlogPage() {
                         type="text"
                         value={section.heading || ""}
                         onChange={(e) => handleSectionChange(sectionIndex, "heading", e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
-                        placeholder="Section heading"
+                        className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#02236e]"
+                        placeholder="Section Heading"
                       />
                     </div>
 
@@ -1100,8 +1100,8 @@ export default function CreateBlogPage() {
                         value={section.start || ""}
                         onChange={(e) => handleSectionChange(sectionIndex, "start", e.target.value)}
                         rows={2}
-                        className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
-                        placeholder="Introductory text for this section"
+                        className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#02236e]"
+                        placeholder="Introductory Text for this Section"
                       />
                     </div>
 
@@ -1111,7 +1111,7 @@ export default function CreateBlogPage() {
                         type="text"
                         value={section.bullet_header || ""}
                         onChange={(e) => handleSectionChange(sectionIndex, "bullet_header", e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+                        className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#02236e]"
                         placeholder="Header for bullet points"
                       />
                     </div>
@@ -1123,7 +1123,7 @@ export default function CreateBlogPage() {
                         <button
                           type="button"
                           onClick={() => addBullet(sectionIndex)}
-                          className="text-blue-600 hover:text-blue-800 text-sm"
+                          className="cursor-pointer text-[#009dc8] text-sm"
                         >
                           + Add Bullet
                         </button>
@@ -1134,13 +1134,13 @@ export default function CreateBlogPage() {
                             type="text"
                             value={bullet}
                             onChange={(e) => handleBulletChange(sectionIndex, bulletIndex, e.target.value)}
-                            className="flex-1 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+                            className="flex-1 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#02236e]"
                             placeholder="Bullet point content"
                           />
                           <button
                             type="button"
                             onClick={() => removeBullet(sectionIndex, bulletIndex)}
-                            className="text-red-600 hover:text-red-800 px-2"
+                            className="cursor-pointer bg-[#e7001e] text-white p-1 px-2 rounded-lg hover:bg-[#f80020] transition-colors"
                           >
                             ✕
                           </button>
@@ -1154,8 +1154,8 @@ export default function CreateBlogPage() {
                         value={section.end || ""}
                         onChange={(e) => handleSectionChange(sectionIndex, "end", e.target.value)}
                         rows={2}
-                        className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
-                        placeholder="Concluding text for this section"
+                        className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#02236e]"
+                        placeholder="Concluding Text for this Section"
                       />
                     </div>
                   </div>
@@ -1170,7 +1170,7 @@ export default function CreateBlogPage() {
                 <button
                   type="button"
                   onClick={addCategory}
-                  className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+                  className="cursor-pointer bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
                 >
                   + Add Category
                 </button>
@@ -1184,8 +1184,8 @@ export default function CreateBlogPage() {
                   value={form.ngos.intro || ""}
                   onChange={(e) => handleNgoIntroChange(e.target.value)}
                   rows={3}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Introduction about NGO partners..."
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02236e] focus:border-[#02236e]"
+                  placeholder="Introduction About NGO Partners..."
                 />
               </div>
 
@@ -1196,7 +1196,7 @@ export default function CreateBlogPage() {
                     <button
                       type="button"
                       onClick={() => removeCategory(categoryIndex)}
-                      className="text-red-600 hover:text-red-800"
+                      className="cursor-pointer bg-[#e7001e] text-white p-1 px-2 rounded-lg hover:bg-[#f80020] transition-colors"
                     >
                       Remove
                     </button>
@@ -1209,8 +1209,8 @@ export default function CreateBlogPage() {
                         type="text"
                         value={category.h1 || ""}
                         onChange={(e) => handleCategoryChange(categoryIndex, "h1", e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
-                        placeholder="Category title (e.g., Healthcare, Education)"
+                        className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#02236e]"
+                        placeholder="Category Title (e.g., Health, Education, Autism etc.)"
                       />
                     </div>
 
@@ -1221,7 +1221,7 @@ export default function CreateBlogPage() {
                         <button
                           type="button"
                           onClick={() => addCategoryValue(categoryIndex)}
-                          className="text-blue-600 hover:text-blue-800 text-sm"
+                          className="cursor-pointer text-[#009dc8] text-sm"
                         >
                           + Add NGO
                         </button>
@@ -1232,13 +1232,13 @@ export default function CreateBlogPage() {
                             type="text"
                             value={value}
                             onChange={(e) => handleCategoryValueChange(categoryIndex, valueIndex, e.target.value)}
-                            className="flex-1 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
-                            placeholder="NGO name and description"
+                            className="flex-1 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#02236e]"
+                            placeholder="NGO Name and Description"
                           />
                           <button
                             type="button"
                             onClick={() => removeCategoryValue(categoryIndex, valueIndex)}
-                            className="text-red-600 hover:text-red-800 px-2"
+                            className="cursor-pointer bg-[#e7001e] text-white p-1 px-2 rounded-lg hover:bg-[#f80020] transition-colors"
                           >
                             ✕
                           </button>
@@ -1255,14 +1255,14 @@ export default function CreateBlogPage() {
               <button
                 type="submit"
                 disabled={saving}
-                className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                className="cursor-pointer bg-[#02236e] text-white px-8 py-3 rounded-lg hover:bg-[#0336a9] transition-colors font-semibold disabled:opacity-50"
               >
                 {saving ? "Creating..." : "Create Blog"}
               </button>
               <button
                 type="button"
                 onClick={() => navigate("/dashboard/BlogPage")}
-                className="bg-gray-500 text-white px-8 py-3 rounded-lg hover:bg-gray-600 transition-colors font-semibold"
+                className="cursor-pointer bg-[#e7001e] text-white px-8 py-3 rounded-lg hover:bg-[#f80120] transition-colors font-semibold"
               >
                 Cancel
               </button>

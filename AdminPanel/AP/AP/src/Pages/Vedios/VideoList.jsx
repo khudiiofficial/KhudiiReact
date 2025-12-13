@@ -19,28 +19,28 @@ const VideoList = ({ videos, onEdit, onDelete }) => {
     <div className="bg-white shadow-md rounded-lg overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+          <thead className="bg-[#cedcff]">
             <tr>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-[#222222] uppercase tracking-wider">
                 Thumbnail
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-[#222222] uppercase tracking-wider">
                 Title
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-[#222222] uppercase tracking-wider">
                 YouTube ID
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-[#222222] uppercase tracking-wider">
                 Description
               </th>
-              <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-right text-sm font-medium text-[#222222] uppercase tracking-wider">
                 Actions
               </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {videos.map((video) => (
-              <tr key={video.id} className="hover:bg-gray-50 transition-colors duration-150">
+              <tr key={video.id} className="hover:bg-[#f0f0f0] transition-colors duration-150">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="w-20 h-12 bg-gray-100 rounded overflow-hidden border">
                     {video.thumbnail ? (
@@ -77,7 +77,7 @@ const VideoList = ({ videos, onEdit, onDelete }) => {
                   <div className="flex justify-end space-x-3">
                     <button
                       onClick={() => onEdit(video)}
-                      className="text-green-600 hover:text-green-900 transition-colors duration-200 flex items-center font-medium"
+                      className="cursor-pointer text-[#059b0f] hover:text-[#3cc645] transition-colors duration-200 flex items-center font-medium"
                     >
                       <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -86,7 +86,7 @@ const VideoList = ({ videos, onEdit, onDelete }) => {
                     </button>
                     <button
                       onClick={() => onDelete(video.id)}
-                      className="text-red-600 hover:text-red-900 transition-colors duration-200 flex items-center font-medium"
+                      className="cursor-pointer text-[#e7001e] hover:text-[#f80120] transition-colors duration-200 flex items-center font-medium"
                     >
                       <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />

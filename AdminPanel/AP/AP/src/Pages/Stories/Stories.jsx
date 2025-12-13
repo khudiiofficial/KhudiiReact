@@ -90,7 +90,7 @@ const AdminStories = () => {
   if (loading) {
     return (
       <div className="admin-stories-container">
-        <div className="loading">Loading stories...</div>
+        <div className="loading">Loading Stories...</div>
       </div>
     );
   }
@@ -99,7 +99,7 @@ const AdminStories = () => {
     <div className="admin-stories-container">
       <div className="admin-header">
         <h1>Contributed Stories Management</h1>
-        <p>Manage all story submissions from contributors</p>
+        <p>Manage All Story Submissions From Contributors</p>
       </div>
 
       <div className="stories-section">
@@ -140,7 +140,8 @@ const AdminStories = () => {
                         <strong>{story.name}</strong>
                       </td>
                       <td>
-                        <span className="entity-type">{story.entityType}</span>
+                        {/* Color Condition */}
+                        <span className={`${story.entityType==="Individual"?"entity-type-individual":"entity-type-organization"}`}>{story.entityType}</span>
                       </td>
                       <td>
                         <div className="contact-info">
@@ -208,7 +209,7 @@ const AdminStories = () => {
         )}
       </div>
 
-      {/* Story Details Modal */}
+      {/* Story Details Popup */}
       {showModal && selectedStory && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -226,20 +227,22 @@ const AdminStories = () => {
                 
                 <div className="detail-group">
                   <label>Entity Type:</label>
-                  <span className="entity-type-badge">{selectedStory.entityType}</span>
+                  {/* <span className="entity-type-badge">{selectedStory.entityType}</span> */}
+
+                  <span className={`${selectedStory.entityType==="Individual"?"entity-type-badge-individual":"entity-type-badge-organization"}`}>{selectedStory.entityType}</span>
                 </div>
                 
                 <div className="detail-group">
                   <label>Email:</label>
                   <span>
-                    <a href={`mailto:${selectedStory.email}`}>{selectedStory.email}</a>
+                    <a href={`mailto:${selectedStory.email} target="_blank`}>{selectedStory.email}</a>
                   </span>
                 </div>
                 
                 <div className="detail-group">
                   <label>Phone:</label>
                   <span>
-                    <a href={`tel:${selectedStory.phone}`}>
+                    <a href={`tel:${selectedStory.phone} target="_blank"`}>
                       +{selectedStory.countryCode} {selectedStory.phone}
                     </a>
                   </span>
@@ -257,7 +260,7 @@ const AdminStories = () => {
                   </div>
                 )}
                 
-                <div className="detail-group full-width">
+                <div className="detail-group">
                   <label>Story:</label>
                   <div className="story-content">
                     {selectedStory.story}

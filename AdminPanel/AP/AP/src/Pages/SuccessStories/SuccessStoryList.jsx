@@ -19,28 +19,28 @@ const SuccessStoryList = ({ stories, onEdit, onDelete }) => {
     <div className="bg-white shadow-md rounded-lg overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+          <thead className="bg-[#cedcff]">
             <tr>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-[#222222] uppercase tracking-wider">
                 Video
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-[#222222] uppercase tracking-wider">
                 Title
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-[#222222] uppercase tracking-wider">
                 YouTube ID
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-[#222222] uppercase tracking-wider">
                 Description
               </th>
-              <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-right text-sm font-medium text-[#222222] uppercase tracking-wider">
                 Actions
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-white divide-y divide-gray-300">
             {stories.map((story) => (
-              <tr key={story.id} className="hover:bg-gray-50">
+              <tr key={story.id} className="hover:bg-[#f0f0f0]">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="w-24 h-16 bg-gray-100 rounded overflow-hidden">
                     <img
@@ -68,13 +68,13 @@ const SuccessStoryList = ({ stories, onEdit, onDelete }) => {
                   <div className="flex justify-end space-x-2">
                     <button
                       onClick={() => onEdit(story)}
-                      className="text-blue-600 hover:text-blue-900 transition-colors duration-200"
+                      className="cursor-pointer text-[#02236e] hover:text-[#032f95] transition-colors duration-200"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => onDelete(story.id)}
-                      className="text-red-600 hover:text-red-900 transition-colors duration-200"
+                      className="cursor-pointer text-[#e7001e] hover:text-[#f80120] transition-colors duration-200"
                     >
                       Delete
                     </button>

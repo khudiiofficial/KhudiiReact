@@ -8,7 +8,7 @@ const RichTextEditor = ({form,setForm}) => {
 
   useEffect(() => {
     if (editorRef.current) {
-      editorRef.current.innerHTML =form.description || 'write your description here...';
+      editorRef.current.innerHTML =form.description || 'Write Your Description Here...';
     }
 
     // Close context menu when clicking outside
@@ -378,10 +378,10 @@ const RichTextEditor = ({form,setForm}) => {
       {/* Preview & Export */}
       <div className="preview-section">
         <div className="preview-controls">
-          <button   type="button"  onClick={() => document.getElementById('htmlPreview').classList.toggle('hidden')}>
+          <button type="button"  onClick={() => document.getElementById('htmlPreview').classList.toggle('hidden')}>
             Toggle HTML Preview
           </button>
-          <button   type="button"  onClick={exportContent}>Export as HTML</button>
+          <button type="button"  onClick={exportContent}>Export as HTML</button>
         </div>
         <div id="htmlPreview" className="html-preview hidden">
           <h4>HTML Output:</h4>

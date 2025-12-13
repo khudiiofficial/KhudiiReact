@@ -141,9 +141,9 @@ const AdminJobs = () => {
                       </td>
                       <td>
                         <div className="contact-info">
-                          <div><a href={`mailto:${application.email}`}>{application.email}</a></div>
+                          <div><a href={`mailto:${application.email} target="_blank`}>{application.email}</a></div>
                           {application.phone && (
-                            <div><a href={`tel:${application.phone}`}>+{application.countryCode} {application.phone}</a></div>
+                            <div><a href={`tel:${application.phone} target="_blank`}>+{application.countryCode} {application.phone}</a></div>
                           )}
                         </div>
                       </td>
@@ -210,7 +210,7 @@ const AdminJobs = () => {
         )}
       </div>
 
-      {/* Application Details Modal */}
+      {/* Application Details Popup */}
       {showModal && selectedApplication && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -229,7 +229,7 @@ const AdminJobs = () => {
                 <div className="detail-group">
                   <label>Email:</label>
                   <span>
-                    <a href={`mailto:${selectedApplication.email}`}>{selectedApplication.email}</a>
+                    <a href={`mailto:${selectedApplication.email} target="_blank`}>{selectedApplication.email}</a>
                   </span>
                 </div>
                 
@@ -237,7 +237,7 @@ const AdminJobs = () => {
                   <div className="detail-group">
                     <label>Phone:</label>
                     <span>
-                      <a href={`tel:${selectedApplication.phone}`}>
+                      <a href={`tel:${selectedApplication.phone} target="_blank`}>
                         +{selectedApplication.countryCode} {selectedApplication.phone}
                       </a>
                     </span>
@@ -269,7 +269,7 @@ const AdminJobs = () => {
                 )}
                 
                 {selectedApplication.message && (
-                  <div className="detail-group full-width">
+                  <div className="detail-group">
                     <label>Cover Message:</label>
                     <div className="message-content">
                       {selectedApplication.message}

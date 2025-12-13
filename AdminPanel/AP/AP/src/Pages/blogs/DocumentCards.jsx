@@ -176,7 +176,7 @@ export default function DocumentCards() {
 
                   {/* Content Section */}
                   <div className="p-6">
-                    <h2 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#02236e] transition-colors">
+                    <h2 className="h-[57px] text-xl font-bold text-[#222222] mb-3 line-clamp-2 group-hover:text-[#02236e] transition-colors">
                       {doc.Name || "Untitled Document"}
                     </h2>
                     
@@ -220,7 +220,7 @@ export default function DocumentCards() {
                       </button> */}
                       <button
                         onClick={() => handleUpdate(doc.id)}
-                        className="flex-1 bg-green-50 text-green-700 px-4 py-2 rounded-lg hover:bg-green-100 transition-all duration-200 font-medium text-sm flex items-center justify-center gap-2 group/edit"
+                        className="cursor-pointer flex-1 bg-green-50 text-green-700 px-4 py-2 rounded-lg hover:bg-green-100 transition-all duration-200 font-medium text-sm flex items-center justify-center gap-2 group/edit"
                       >
                         <svg className="w-4 h-4 group-hover/edit:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -230,7 +230,7 @@ export default function DocumentCards() {
                       <button
                         onClick={() => handleDelete(doc.id, doc.Name)}
                         disabled={deleteLoading === doc.id}
-                        className="flex-1 bg-red-50 text-red-700 px-4 py-2 rounded-lg hover:bg-red-100 transition-all duration-200 font-medium text-sm flex items-center justify-center gap-2 group/delete disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="cursor-pointer flex-1 bg-red-50 text-red-700 px-4 py-2 rounded-lg hover:bg-red-100 transition-all duration-200 font-medium text-sm flex items-center justify-center gap-2 group/delete disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {deleteLoading === doc.id ? (
                           <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-red-700"></div>

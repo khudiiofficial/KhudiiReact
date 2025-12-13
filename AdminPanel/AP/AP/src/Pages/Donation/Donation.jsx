@@ -146,7 +146,7 @@ const AdminDonations = () => {
         </div>
 
         {donations.length === 0 ? (
-          <div className="no-data">No donations found</div>
+          <div className="no-data">No Donations Found</div>
         ) : (
           <>
             <div className="donations-table">

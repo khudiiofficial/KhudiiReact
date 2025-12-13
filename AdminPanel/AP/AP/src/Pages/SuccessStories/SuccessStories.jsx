@@ -91,7 +91,7 @@ const SuccessStories = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Success Stories Management</h1>
+          <h1 className="text-3xl font-bold text-[#222222]">Success Stories Management</h1>
           <p className="mt-2 text-sm text-gray-600">
             Manage your success stories and inspirational content
           </p>
@@ -107,13 +107,13 @@ const SuccessStories = () => {
         {/* Action Bar */}
         <div className="mb-6 flex justify-between items-center">
           <div>
-            <span className="text-sm text-gray-500">
-              Total Stories: <span className="font-semibold">{stories.length}</span>
+            <span className="text-md text-[#02236e]">
+              Total Stories: <span className="text-lg font-semibold">{stories.length}</span>
             </span>
           </div>
           <button
             onClick={handleCreate}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center"
+            className="cursor-pointer bg-[#02236e] hover:bg-[#032f95] text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center"
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />

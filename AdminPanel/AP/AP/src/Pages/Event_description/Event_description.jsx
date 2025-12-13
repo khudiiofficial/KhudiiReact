@@ -205,13 +205,13 @@ setcap('')
             <textarea
               value={formData.description}
               onChange={(e) => handleChange('description', e.target.value)}
-              placeholder="Enter events section description"
+              placeholder="Enter Events Section Description"
               rows="6"
               required
               disabled={loading}
             />
           </div>
-
+          {/* Event Image Section */}
           <div className="images-section">
             <div className="image-group">
               <h3>Image 1</h3>
@@ -234,7 +234,7 @@ setcap('')
                   )}
                 </div>
               </div>
-
+                  {/* Image Preview Cards */}
               {(previewUrls.image1) && (
                 <div className="preview-section">
                   <label>Image 1 Preview:</label>
@@ -293,7 +293,7 @@ setcap('')
           </div>
 
           <div className="form-actions">
-            <button type="submit" disabled={saving || loading} className="btn btn-primary">
+            <button type="submit" disabled={saving || loading} className="bg-[#02236e] btn hover:bg-[#032f95] text-white">
               {saving ? 'Saving...' : 'Save Changes'}
             </button>
             
@@ -301,7 +301,7 @@ setcap('')
               type="button" 
               onClick={fetchEventData}
               disabled={loading}
-              className="btn btn-secondary"
+              className="bg-[#fbf137] btn border-[#fbf137] hover:bg-[#f7e029] text-[#222222] ml-3"
             >
               {loading ? 'Loading...' : 'Reload Data'}
             </button>

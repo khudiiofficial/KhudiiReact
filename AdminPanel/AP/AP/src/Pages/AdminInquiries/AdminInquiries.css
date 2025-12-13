@@ -44,7 +44,7 @@
   align-items: center;
   margin-bottom: 25px;
   padding-bottom: 15px;
-  border-bottom: 3px solid #e7001e;
+  border-bottom: 3px solid #02236e !important;
 }
 
 .section-header h2 {
@@ -68,7 +68,7 @@
 .form-group label {
   font-weight: 600;
   margin-bottom: 8px;
-  color: #2c3e50;
+  color: #222222;
   font-size: 0.95rem;
 }
 
@@ -110,12 +110,11 @@
 }
 
 .btn-edit {
-  background: #3498db;
+  background: #fcdd2d !important;
   color: white;
 }
 
 .btn-edit:hover {
-  background: #2980b9;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
 }
@@ -179,7 +178,7 @@
 }
 
 .owner-info small {
-  color: #7f8c8d;
+  color: #009dc8;
   font-style: italic;
   font-size: 0.9rem;
 }
@@ -201,7 +200,7 @@
 
 .search-box input:focus {
   outline: none;
-  border-color: #e7001e;
+  border-color: #02236e !important;
   background: white;
   box-shadow: 0 0 0 3px rgba(231, 0, 30, 0.1);
 }
@@ -320,7 +319,7 @@
 .no-data {
   text-align: center;
   padding: 60px 20px;
-  color: #7f8c8d;
+  color: #e7001e !important;
   font-size: 1.2rem;
   background: white;
   border-radius: 10px;

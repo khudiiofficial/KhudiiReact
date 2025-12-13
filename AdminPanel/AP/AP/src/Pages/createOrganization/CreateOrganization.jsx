@@ -1335,7 +1335,7 @@ console.log(form)
                 </label>
                 <input
                   type="text"
-                  placeholder="Enter organization name"
+                  placeholder="Enter Organization Name"
                   value={form.name}
                   onChange={(e) => setForm({ 
                     ...form, 
@@ -1356,7 +1356,7 @@ console.log(form)
                 </label>
                 <input
                   type="text"
-                  placeholder="organization-slug"
+                  placeholder="Organization Slug"
                   value={form.slug}
                   onChange={(e) => setForm({ ...form, slug: e.target.value })}
                   className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
@@ -1394,7 +1394,7 @@ console.log(form)
                 </label>
                 <input
                   type="text"
-                  placeholder="Enter search tags separated by commas (e.g., charity, donation, help)"
+                  placeholder="Enter Search Tags Separated by Commas (e.g., Charity, Donation, Help)"
                   value={form.search_tags}
                   onChange={(e) => setForm({ ...form, search_tags: e.target.value })}
                   className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
@@ -1413,7 +1413,7 @@ console.log(form)
                 </label>
                 <input
                   type="text"
-                  placeholder="Enter organization Video content (<iframe>...</iframe>)"
+                  placeholder="Enter Organization Video (<iframe>...</iframe>)"
                   value={form.youtube_video_url}
                   onChange={(e) => setForm({ ...form, youtube_video_url: e.target.value })}
                   className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
@@ -1439,7 +1439,7 @@ console.log(form)
                           type="checkbox"
                           checked={form.category.includes(cat.name)}
                           onChange={() => handleCategoryChange(cat.name)}
-                          className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                          className="h-4 w-4 text-[#02236e] focus:ring-blue-500 border-gray-300 rounded"
                         />
                         <span className="text-sm text-gray-700">{cat.name}</span>
                       </label>
@@ -1449,7 +1449,7 @@ console.log(form)
                   {/* Selected categories display */}
                   {form.category.length > 0 && (
                     <div className="mt-4 pt-3 border-t border-gray-200">
-                      <p className="text-sm font-medium text-gray-700 mb-2">Selected categories:</p>
+                      <p className="text-sm font-medium text-[#222222] mb-2">Selected Categories:</p>
                       <div className="flex flex-wrap gap-2">
                         {form.category.map((cat) => (
                           <span 
@@ -1472,7 +1472,7 @@ console.log(form)
                 </div>
                 {renderErrors(errors.category)}
                 <p className="text-xs text-gray-500 mt-1">
-                  You can select multiple categories for this organization
+                  You can Select Multiple Categories for this Organization
                 </p>
               </div>
             </div>
@@ -1488,7 +1488,7 @@ console.log(form)
                 </label>
                 <input
                   type="text"
-                  placeholder="Enter meta title for SEO"
+                  placeholder="Enter Meta Title for SEO"
                   value={form.meta_title}
                   onChange={(e) => setForm({ ...form, meta_title: e.target.value })}
                   className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
@@ -1503,7 +1503,7 @@ console.log(form)
                   Meta Description
                 </label>
                 <textarea
-                  placeholder="Enter meta description for SEO"
+                  placeholder="Enter Meta Description for SEO"
                   value={form.meta_description}
                   onChange={(e) => setForm({ ...form, meta_description: e.target.value })}
                   rows={3}
@@ -1543,7 +1543,7 @@ console.log(form)
                   type="file" 
                   onChange={handleIntroImageChange}
                   accept="image/*"
-                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                  className="cursor-pointer block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#02236e] hover:file:bg-blue-100"
                 />
                 <p className="text-xs text-gray-500 mt-1">Supported formats: JPEG, PNG, WebP. Max size: 5MB</p>
                 {renderErrors(errors.introductory_image_base64)}
@@ -1569,7 +1569,7 @@ console.log(form)
                   multiple 
                   onChange={handleImagesChange}
                   accept="image/*"
-                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                  className="cursor-pointer block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#02236e] hover:file:bg-blue-100"
                 />
                 <p className="text-xs text-gray-500 mt-1">You can upload up to 10 additional images</p>
                 {form.images_base64.length > 0 && (
@@ -1603,7 +1603,7 @@ console.log(form)
                       value={form.socials[key]}
                       onChange={handleSocialChange}
                       placeholder={`Enter ${key} ${key==='Googlemap'? "(<iframe>...</iframe>)":''}`}
-                      className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                      className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-[#02236e] focus:border-[#02236e] ${
                         errors.socials?.[key]?.length ? 'border-red-500' : 'border-gray-300'
                       }`}
                     />
@@ -1619,7 +1619,7 @@ console.log(form)
                 Icons ({form.icons.length}/10)
               </h2>
               {form.icons.map((icon, i) => (
-                <div key={i} className="bg-gray-50 p-4 rounded-lg space-y-3">
+                <div key={i} className="bg-gray-50 rounded-lg space-y-3">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Name*</label>
@@ -1678,7 +1678,7 @@ console.log(form)
                 <button
                   type="button"
                   onClick={addIconField}
-                  className="flex items-center gap-2 text-purple-600 hover:text-purple-800 font-medium text-sm"
+                  className="cursor-pointer flex items-center gap-2 text-[#e7001e] hover:text-[#e7001e] font-medium text-sm"
                 >
                   <span className="text-lg">+</span> Add Icon
                 </button>
