@@ -93,7 +93,7 @@ sethero([...arr])
             <section className={`${styles.homePage} ${styles.carouselSection}`}>
                 <div className={styles.carouselContainer}>
                     {hero.map((src, i) => (
-                       <img onClick={()=>{nav(`/organization/${src.description}`)}}
+                       <img onClick={()=>{nav(`/${src.description}`)}}
   key={i}
   src={src.image_path}
   alt={`Slide ${i}`}
