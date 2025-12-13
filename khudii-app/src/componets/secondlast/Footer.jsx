@@ -73,7 +73,7 @@ fetchFooterData();
     <footer className="khudii-footer">
       {/* Main Footer Section */}
       <div className="footer-main md:mx-5">
-        <div className="footer-container">
+        <div className="footer-containerr">
           
           {/* Logo and Description Section */}
           <div className="footer-section">
