@@ -83,3 +83,8 @@
 #main-content > div.vapi-widget-wrapper > div > div > div:nth-child(3) > div > button > svg > path {
   fill: white;
 }
+
+
+#main-content > div.vapi-widget-wrapper > div{
+  bottom: 4rem !important;
+}
