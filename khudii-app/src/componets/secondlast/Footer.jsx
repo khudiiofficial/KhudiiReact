@@ -118,7 +118,7 @@ fetchFooterData();
             </div>
           </div>
 
-<div className="flex justify-center gap-30 sm:gap-15 md:gap-15 footer_parent">
+<div className="flex justify-evenly gap-30 sm:gap-15 md:gap-15 footer_parent">
           {/* Links Section */}
           <div className="footer-section">
             <h4 className="footer-heading">Links</h4>
