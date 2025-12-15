@@ -117,20 +117,20 @@ const TestimonialAdmin = () => {
 
   const validateForm = () => {
     if (!formData.name.trim()) {
-      showMessage('Name is required', 'error');
+      showMessage('Name is Required', 'error');
       return false;
     }
     if (!formData.position.trim()) {
-      showMessage('Position is required', 'error');
+      showMessage('Position is Required', 'error');
       return false;
     }
     if (!formData.role.trim()) {
-      showMessage('Role is required', 'error');
+      showMessage('Role is Required', 'error');
       return false;
     }
     // For edit mode, we have existing video, so don't require new video
     if (!editingTestimonial && !formData.video_base64) {
-      showMessage('Video is required', 'error');
+      showMessage('Video is Required', 'error');
       return false;
     }
     return true;
@@ -170,15 +170,15 @@ setcap('')
       setUploadProgress(100);
       
       if (response.data.success) {
-        showMessage('Testimonial created successfully!');
+        showMessage('Testimonial Created Successfully!');
         resetForm();
         fetchTestimonials();
         
         setTimeout(() => setUploadProgress(0), 1000);
       }
     } catch (error) {
-      console.error('Error creating testimonial:', error);
-      showMessage('Error creating testimonial', 'error');
+      console.error('Error Creating Testimonial:', error);
+      showMessage('Error Creating Testimonial', 'error');
       setUploadProgress(0);
     }
   };
@@ -187,7 +187,7 @@ setcap('')
     e.preventDefault();
     
  if(cap){
-      console.log('bot detected')
+      console.log('Bot Detected')
 setcap('')
       return
     }
@@ -221,33 +221,33 @@ setcap('')
       setUploadProgress(100);
       
       if (response.data.success) {
-        showMessage('Testimonial updated successfully!');
+        showMessage('Testimonial Updated Successfully!');
         resetForm();
         fetchTestimonials();
         
         setTimeout(() => setUploadProgress(0), 1000);
       }
     } catch (error) {
-      console.error('Error updating testimonial:', error);
-      showMessage('Error updating testimonial', 'error');
+      console.error('Error Updating Testimonial:', error);
+      showMessage('Error Updating Testimonial', 'error');
       setUploadProgress(0);
     }
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this testimonial?')) {
+    if (!window.confirm('Are you sure you want to Delete this Testimonial?')) {
       return;
     }
 
     try {
       const response = await api.delete(`/testimonials/${id}`);
       if (response.data.success) {
-        showMessage('Testimonial deleted successfully!');
+        showMessage('Testimonial Deleted Successfully!');
         fetchTestimonials();
       }
     } catch (error) {
-      console.error('Error deleting testimonial:', error);
-      showMessage('Error deleting testimonial', 'error');
+      console.error('Error Deleting Testimonial:', error);
+      showMessage('Error Deleting Testimonial', 'error');
     }
   };
 
@@ -287,7 +287,7 @@ setcap('')
     <div className="testimonial-admin">
       <div className="admin-header">
         <h1 className="admin-title">Testimonial Management</h1>
-        <p className="admin-subtitle">Manage video testimonials for your platform</p>
+        <p className="admin-subtitle">Manage Video Testimonials for Your Platform</p>
       </div>
       
       {message && (
@@ -321,7 +321,7 @@ setcap('')
                 value={formData.name}
                 onChange={handleInputChange}
                 className="form-input"
-                placeholder="Enter person's name"
+                placeholder="Enter Person's Name"
                 required
               />
             </div>
@@ -335,7 +335,7 @@ setcap('')
                 value={formData.position}
                 onChange={handleInputChange}
                 className="form-input"
-                placeholder="Enter position/company"
+                placeholder="Enter Position/Company"
                 required
               />
             </div>
@@ -349,7 +349,7 @@ setcap('')
                 value={formData.role}
                 onChange={handleInputChange}
                 className="form-input"
-                placeholder="Enter role (e.g., Plant Manager)"
+                placeholder="Enter Role (e.g., Plant Manager)"
                 required
               />
             </div>
@@ -365,7 +365,7 @@ setcap('')
                      formData.existing_thumbnail_url ? 'Current Thumbnail (Click to change)' : 'Choose Thumbnail Image'}
                   </div>
                   <div className="file-input-subtitle">
-                    {formData.existing_thumbnail_url ? 'Click to upload new thumbnail' : 'PNG, JPG, JPEG up to 5MB'}
+                    {formData.existing_thumbnail_url ? 'Click to Upload New Thumbnail' : 'WEBP Only (up to 5MB)'}
                   </div>
                 </div>
               </div>
@@ -489,7 +489,7 @@ setcap('')
           <div className="form-actions">
             <button 
               type="submit" 
-              className="btn btn-primary"
+              className="cursor-pointer bg-[#02236e] hover:bg-[#2563eb] text-white p-2 rounded-lg btn-primary"
               disabled={uploadProgress > 0 || (!editingTestimonial && !formData.video_base64)}
             >
               {uploadProgress > 0 ? (
@@ -518,7 +518,7 @@ setcap('')
         <div className="section-header">
           <h2>Existing Testimonials</h2>
           <span className="testimonials-count">
-            {testimonials.length} testimonial{testimonials.length !== 1 ? 's' : ''}
+            {testimonials.length} Testimonial{testimonials.length !== 1 ? 's' : ''}
           </span>
         </div>
 
@@ -545,7 +545,7 @@ setcap('')
                     </span>
                   </div>
                   <div className="person-info">
-                    <h4 className="person-name">{testimonial.name}</h4>
+                    <h4 className="text-[#222222] person-name">{testimonial.name}</h4>
                     <p className="person-position">{testimonial.position}</p>
                     <p className="person-role">{testimonial.role}</p>
                   </div>
@@ -572,14 +572,14 @@ setcap('')
                 <div className="card-actions">
                   <button 
                     onClick={() => startEdit(testimonial)}
-                    className="btn btn-outline"
+                    className="cursor-pointer bg-[#1c5e20] text-white px-4 py-2 rounded-lg"
                   >
                     <span className="btn-icon">✏️</span>
                     Edit
                   </button>
                   <button 
                     onClick={() => handleDelete(testimonial.id)}
-                    className="btn btn-danger"
+                    className="cursor-pointer bg-[#e7001e] text-white px-4 py-2 rounded-lg"
                   >
                     <span className="btn-icon">🗑️</span>
                     Delete

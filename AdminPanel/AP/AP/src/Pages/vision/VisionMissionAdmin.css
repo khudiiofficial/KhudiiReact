@@ -1,5 +1,5 @@
 .vision-mission-admin {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
   padding: 20px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -16,7 +16,7 @@
 
 .admin-header h1 {
   margin-bottom: 8px;
-  color: #212529;
+  color: #222222;
   font-size: 2rem;
 }
 
@@ -42,10 +42,11 @@
 .message.error {
   background: #f8d7da;
   border-color: #f1aeb5;
-  color: #721c24;
+  color: #e7001e;
 }
 
 .form-section {
+  width: 100%;
   background: white;
   padding: 30px;
   border-radius: 8px;
@@ -61,7 +62,7 @@
 }
 
 .item-form {
-  max-width: 800px;
+  max-width: 100%;
 }
 
 .form-row {
@@ -189,21 +190,8 @@
   border-color: #545b62;
 }
 
-.btn-edit {
-  background: #ffc107;
-  border-color: #ffc107;
-  color: #212529;
-  padding: 6px 12px;
-  font-size: 12px;
-}
-
-.btn-edit:hover {
-  background: #e0a800;
-  border-color: #e0a800;
-}
-
 .btn-delete {
-  background: #dc3545;
+  background: #e7001e !important;
   border-color: #dc3545;
   color: white;
   padding: 6px 12px;
@@ -341,7 +329,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #e9ecef;
+  background: #cedcff;
   border-radius: 4px;
 }
 
@@ -401,7 +389,7 @@
   background: #f8f9fa;
   padding: 12px;
   border-radius: 4px;
-  border-left: 3px solid #007bff;
+  border-left: 3px solid #02236e;
 }
 
 .item-card.inactive .item-description {
@@ -481,8 +469,8 @@
   }
   
   .item-icon {
-    width: 36px;
-    height: 36px;
+    width: 30px;
+    height: 30px;
     font-size: 16px;
   }
 }

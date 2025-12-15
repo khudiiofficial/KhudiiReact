@@ -127,7 +127,7 @@
 }
 
 .btn-primary {
-  background: #3498db;
+  background: #02236e !important;
   color: white;
 }
 
@@ -136,39 +136,39 @@
 }
 
 .btn-secondary {
-  background: #95a5a6;
-  color: white;
+  background: #1c5e20;
+  color: #222222;
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: #7f8c8d;
+  background: #247b2a;
 }
 
 .btn-edit {
-  background: #f39c12;
+  background: #1c5e20;
   color: white;
   padding: 8px 16px;
   font-size: 12px;
 }
 
 .btn-edit:hover {
-  background: #e67e22;
+  background: #247c2a;
 }
 
 .btn-delete {
-  background: #e74c3c;
+  background: #e7001e;
   color: white;
   padding: 8px 16px;
   font-size: 12px;
 }
 
 .btn-delete:hover {
-  background: #c0392b;
+  background: #f80120;
 }
 
 .btn-refresh {
-  background: #27ae60;
-  color: white;
+  background: #fcdd2d;
+  color: #222222;
   padding: 8px 16px;
 }
 
@@ -273,9 +273,9 @@
 
 .filter-btn {
   padding: 8px 20px;
-  border: 2px solid #3498db;
-  background: white;
-  color: #3498db;
+  border: 2px solid #02236e;
+  color: #222222;
+  background: transparent;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
@@ -283,12 +283,13 @@
 }
 
 .filter-btn:hover {
-  background: #3498db;
+  border: 2px solid #009dc8;
+  background: #009dc8;
   color: white;
 }
 
 .filter-btn.active {
-  background: #3498db;
+  background: #02236e;
   color: white;
 }
 
@@ -334,6 +335,16 @@
   font-weight: 600;
 }
 
+.image-badge-mobile {
+  color: #222222;
+  background-color: #fcdd2d;
+}
+
+.image-badge-desktop {
+  color: #eeeeee;
+  background-color: #4a148c;
+}
+
 .image-meta {
   display: flex;
   justify-content: space-between;
@@ -341,9 +352,12 @@
   font-size: 12px;
 }
 
-.image-type {
-  color: #3498db;
-  font-weight: 600;
+.image-type-mobile {
+  color: #02236e; /* blue for mobile */
+}
+
+.image-type-desktop {
+  color: #4a148c; /* purple for desktop */
 }
 
 /* Responsive Design */

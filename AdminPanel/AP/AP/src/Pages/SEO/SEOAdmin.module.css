@@ -1,5 +1,5 @@
 .admin {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
   padding: 20px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -35,13 +35,13 @@
 
 .success {
   background: #d4edda;
-  color: #155724;
+  color: #1c5e20;
   border: 1px solid #c3e6cb;
 }
 
 .error {
   background: #f8d7da;
-  color: #721c24;
+  color: #e7001e;
   border: 1px solid #f5c6cb;
 }
 
@@ -109,13 +109,13 @@
 }
 
 .pageBtn:hover {
-  border-color: #007bff;
-  color: #007bff;
+  border-color: #02236e;
+  color: #02236e;
 }
 
 .pageBtn.active {
-  background: #007bff;
-  border-color: #007bff;
+  background: #02236e;
+  border-color: #02236e;
   color: white;
 }
 
@@ -183,7 +183,7 @@
 }
 
 .formGroup small {
-  color: #6c757d;
+  color: #009dc8;
   font-size: 12px;
   margin-top: 4px;
   display: block;
@@ -195,7 +195,7 @@
   padding: 25px;
   background: #f8f9fa;
   border-radius: 8px;
-  border-left: 4px solid #007bff;
+  border-left: 4px solid #02236e;
 }
 
 .preview h3 {
@@ -241,7 +241,7 @@
 
 .primaryBtn {
   padding: 12px 30px;
-  background: #007bff;
+  background: #02236e;
   color: white;
   border: none;
   border-radius: 6px;
@@ -262,8 +262,8 @@
 
 .secondaryBtn {
   padding: 12px 30px;
-  background: #6c757d;
-  color: white;
+  background: #fcdd2d;
+  color: #222222;
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -272,7 +272,7 @@
 }
 
 .secondaryBtn:hover:not(:disabled) {
-  background: #545b62;
+  background: #fcdd2d;
 }
 
 .secondaryBtn:disabled {

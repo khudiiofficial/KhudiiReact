@@ -35,13 +35,13 @@
 
 .success {
   background: #d4edda;
-  color: #155724;
+  color: #1c5e20;
   border: 1px solid #c3e6cb;
 }
 
 .error {
   background: #f8d7da;
-  color: #721c24;
+  color: #e7001e;
   border: 1px solid #f5c6cb;
 }
 
@@ -63,7 +63,7 @@
 
 .sidebar h3 {
   margin: 0 0 20px 0;
-  color: #2c3e50;
+  color: #222222;
   font-size: 1.2rem;
 }
 
@@ -81,7 +81,7 @@
   text-align: left;
   cursor: pointer;
   transition: all 0.2s;
-  color: #495057;
+  color: #222222;
   font-size: 14px;
 }
 
@@ -91,7 +91,7 @@
 }
 
 .navItem.active {
-  background: #007bff;
+  background: #009dc8;
   color: white;
 }
 
@@ -113,13 +113,13 @@
 
 .sectionHeader h2 {
   margin: 0;
-  color: #2c3e50;
+  color: #222222;
   font-size: 1.8rem;
 }
 
 .refreshBtn {
   padding: 8px 16px;
-  background: #6c757d;
+  background: #009dc8;
   color: white;
   border: none;
   border-radius: 6px;
@@ -129,7 +129,7 @@
 }
 
 .refreshBtn:hover:not(:disabled) {
-  background: #545b62;
+  background: #009dc8;
 }
 
 .refreshBtn:disabled {
@@ -181,7 +181,7 @@
 .formGroup input:focus,
 .formGroup textarea:focus {
   outline: none;
-  border-color: #007bff;
+  border-color: #02236e;
 }
 
 .formGroup textarea {
@@ -203,7 +203,7 @@
 
 .removeBtn {
   padding: 8px 12px;
-  background: #dc3545;
+  background: #e7001e;
   color: white;
   border: none;
   border-radius: 4px;
@@ -213,12 +213,12 @@
 }
 
 .removeBtn:hover {
-  background: #c82333;
+  background: #f80120;
 }
 
 .addBtn {
   padding: 10px 16px;
-  background: #28a745;
+  background: #1c5e20;
   color: white;
   border: none;
   border-radius: 6px;
@@ -228,13 +228,13 @@
 }
 
 .addBtn:hover {
-  background: #1e7e34;
+  background: #247b2a;
 }
 
 /* Buttons */
 .primaryBtn {
   padding: 12px 24px;
-  background: #007bff;
+  background: #02236e;
   color: white;
   border: none;
   border-radius: 6px;
@@ -255,7 +255,7 @@
 
 .secondaryBtn {
   padding: 12px 24px;
-  background: #6c757d;
+  background: #fcdd2d;
   color: white;
   border: none;
   border-radius: 6px;
@@ -265,7 +265,7 @@
 }
 
 .secondaryBtn:hover {
-  background: #545b62;
+  background: #fcdd2d;
 }
 
 .formActions {
@@ -300,8 +300,10 @@
 }
 
 .itemsList h3 {
-  margin: 0 0 20px 0;
-  color: #2c3e50;
+  margin: 0;
+  color: #222222;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 .itemCard {
@@ -326,19 +328,20 @@
 
 .itemContent h4 {
   margin: 0 0 8px 0;
-  color: #2c3e50;
-  font-size: 1.1rem;
+  color: #02236e;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 .position {
-  color: #6c757d;
+  color: #009dc8;
   font-size: 14px;
   margin: 0 0 12px 0;
   font-weight: 500;
 }
 
 .description {
-  color: #495057;
+  color: #222222;
   line-height: 1.5;
   margin: 0 0 12px 0;
   font-size: 14px;
@@ -351,8 +354,8 @@
 
 .editBtn {
   padding: 8px 16px;
-  background: #ffc107;
-  color: #212529;
+  background: #1c5e20;
+  color: #ffffff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -361,12 +364,12 @@
 }
 
 .editBtn:hover {
-  background: #e0a800;
+  background: #247b2a;
 }
 
 .deleteBtn {
   padding: 8px 16px;
-  background: #dc3545;
+  background: #e7001e;
   color: white;
   border: none;
   border-radius: 4px;
@@ -376,17 +379,19 @@
 }
 
 .deleteBtn:hover {
-  background: #c82333;
+  background: #f80120;
 }
 
 /* Image Preview */
 .imagePreview {
   margin-top: 12px;
-  max-width: 200px;
+  max-width: 100%;
 }
 
 .imagePreview img {
-  width: 100%;
+  display: flex;
+  margin: 0 auto;
+  width: 70%;
   height: auto;
   border-radius: 6px;
   border: 1px solid #e9ecef;

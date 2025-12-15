@@ -52,7 +52,7 @@ const CarouselAdmin = () => {
       }
 
       setFormData(prev => ({ ...prev, imageFile: file }));
-      
+
       // Create preview
       const reader = new FileReader();
       reader.onload = (e) => setPreviewUrl(e.target.result);
@@ -120,9 +120,9 @@ const CarouselAdmin = () => {
 
     try {
       setUploading(true);
-      let requestData = { 
+      let requestData = {
         description: formData.description,
-        isMobile: formData.isMobile 
+        isMobile: formData.isMobile
       };
 
       // Only include image if a new one was selected
@@ -232,7 +232,7 @@ const CarouselAdmin = () => {
     <div className="carousel-admin">
       <div className="admin-header">
         <h1>Carousel Images Admin</h1>
-        <p>Manage your website carousel images</p>
+        <p>Manage your Website Carousel Images</p>
       </div>
 
       {/* Add/Edit Form */}
@@ -240,7 +240,7 @@ const CarouselAdmin = () => {
         <h2>{editingId ? 'Edit Image' : 'Add New Image'}</h2>
         <form onSubmit={editingId ? handleUpdateImage : handleAddImage} className="image-form">
           <input type="hidden" onChange={(e) => { setcap(e.target.value) }} />
-          
+
           <div className="form-group">
             <label htmlFor="imageFile">Image File *</label>
             <input
@@ -251,7 +251,7 @@ const CarouselAdmin = () => {
               accept="image/*"
               className="file-input"
             />
-            <small>Supported formats: JPEG, PNG, WEBP. Max size: 5MB</small>
+            <small>Only <b>WEBP</b> (Max size: 5MB)</small>
           </div>
 
           {previewUrl && (
@@ -270,7 +270,7 @@ const CarouselAdmin = () => {
               id="description"
               value={formData.description}
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-              placeholder="Enter slug of organization of which you are uploading the image"
+              placeholder="Enter Slug of Organization of which you are Uploading the Image"
             />
           </div>
 
@@ -287,7 +287,7 @@ const CarouselAdmin = () => {
               <label htmlFor="isMobile" className="checkbox-label">
                 Mobile Image
                 <span className="checkbox-help">
-                  (Check this if this image is optimized for mobile devices)
+                  (Check this if this Image is Optimized for Mobile Devices)
                 </span>
               </label>
             </div>
@@ -296,15 +296,15 @@ const CarouselAdmin = () => {
           <div className="form-actions">
             {editingId ? (
               <>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   disabled={uploading}
                   className="btn btn-primary"
                 >
                   {uploading ? 'Updating...' : 'Update Image'}
                 </button>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={handleCancelEdit}
                   className="btn btn-secondary"
                 >
@@ -312,8 +312,8 @@ const CarouselAdmin = () => {
                 </button>
               </>
             ) : (
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={uploading || !formData.imageFile}
                 className="btn btn-primary"
               >
@@ -327,19 +327,19 @@ const CarouselAdmin = () => {
       {/* Filter Section */}
       <div className="filter-section">
         <div className="filter-buttons">
-          <button 
+          <button
             className={`filter-btn ${activeFilter === 'all' ? 'active' : ''}`}
             onClick={() => setActiveFilter('all')}
           >
             All ({images.length})
           </button>
-          <button 
+          <button
             className={`filter-btn ${activeFilter === 'desktop' ? 'active' : ''}`}
             onClick={() => setActiveFilter('desktop')}
           >
             Desktop ({desktopCount})
           </button>
-          <button 
+          <button
             className={`filter-btn ${activeFilter === 'mobile' ? 'active' : ''}`}
             onClick={() => setActiveFilter('mobile')}
           >
@@ -357,10 +357,10 @@ const CarouselAdmin = () => {
             {activeFilter === 'mobile' && 'Mobile Images'}
             ({filteredImages.length})
           </h2>
-          <button 
-            onClick={fetchImages} 
+          <button
+            onClick={fetchImages}
             disabled={loading}
-            className="btn btn-refresh"
+            className="btn cursor-pointer bg-[#fcdd2d] text-[#222222] rounded-lg"
           >
             {loading ? 'Refreshing...' : 'Refresh'}
           </button>
@@ -378,7 +378,8 @@ const CarouselAdmin = () => {
               <div key={image.id} className="image-card">
                 <div className="image-container">
                   <img src={image.image_path} alt={image.description || 'Carousel image'} />
-                  <div className="image-badge">
+                  <div className={`image-badge ${image.isMobile ? 'image-badge-mobile' : 'image-badge-desktop'}`}
+                  >
                     {image.isMobile ? '📱 Mobile' : '🖥️ Desktop'}
                   </div>
                 </div>
@@ -390,19 +391,21 @@ const CarouselAdmin = () => {
                     <p className="image-date">
                       Added: {formatDate(image.created_at)}
                     </p>
-                    <p className="image-type">
+                    <p
+                      className={`image-type ${image.isMobile ? 'image-type-mobile' : 'image-type-desktop'}`}
+                    >
                       Type: {image.isMobile ? 'Mobile' : 'Desktop'}
                     </p>
                   </div>
                 </div>
                 <div className="image-actions">
-                  <button 
+                  <button
                     onClick={() => handleEditImage(image)}
-                    className="btn btn-edit"
+                    className="btn cursor-pointer bg-[#1c5e20] text-white rounded-lg"
                   >
                     Edit
                   </button>
-                  <button 
+                  <button
                     onClick={() => handleDeleteImage(image.id)}
                     className="btn btn-delete"
                   >

@@ -79,8 +79,8 @@ return (
                 </button>
               </div>
               <div className="p-4 sm:p-4">
-                <h3 className={`${styles.title} h-[50px] text-xl font-semibold text-[#022279] mb-2`}>
-                  <button className="cursor-pointer text-left">{org.name}</button>
+                <h3 className={`${styles.title} h-[55px] text-xl font-semibold text-[#022279] mb-2`}>
+                  <p className="cursor-pointer text-left">{org.name}</p>
                 </h3>
                 {/* <div className="text-[#222222]-600 text-sm leading-relaxed mb-4 line-clamp-2">  <div dangerouslySetInnerHTML={{ __html: org.description }}></div></div> */}
                 <div className="text-[#222222]-600 text-sm leading-relaxed mb-4">

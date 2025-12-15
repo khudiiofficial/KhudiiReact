@@ -250,7 +250,7 @@ const AdminVolunteers = () => {
                   <div className="detail-group full-width">
                     <label>Message:</label>
                     <div className="message-content">
-                      {selectedVolunteer.message}
+                     <span>{selectedVolunteer.message}</span>
                     </div>
                   </div>
                 )}

@@ -314,7 +314,7 @@ const FAQManager = () => {
       fetchFAQs();
       alert(`${bulkActions.selectedIds.length} FAQ(s) ${status ? 'activated' : 'deactivated'} successfully!`);
     } catch (err) {
-      alert('Failed to update selected FAQs');
+      alert('Failed to Update Selected FAQs');
     }
   };
 
@@ -472,13 +472,13 @@ const FAQManager = () => {
             <div className="flex flex-wrap gap-3">
               <button
                 onClick={() => setPreviewMode(!previewMode)}
-                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                className="cursor-pointer px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 {previewMode ? 'Back to List' : 'Preview Mode'}
               </button>
               <button
                 onClick={exportFAQs}
-                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                className="cursor-pointer px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 Export FAQs
               </button>
@@ -487,7 +487,7 @@ const FAQManager = () => {
                   resetForm();
                   setShowForm(true);
                 }}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                className="cursor-pointer px-6 py-2 bg-[#02236e] text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -519,7 +519,7 @@ const FAQManager = () => {
               <select
                 value={filterActive}
                 onChange={(e) => setFilterActive(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="cursor-pointer px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="all">All Status</option>
                 <option value="active">Active Only</option>
@@ -528,7 +528,7 @@ const FAQManager = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="cursor-pointer px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="display_order">Sort by Order</option>
                 <option value="question">Sort by Question</option>
@@ -543,32 +543,32 @@ const FAQManager = () => {
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <span className="text-blue-700 font-medium">
-                  {bulkActions.selectedIds.length} FAQ(s) selected
+                <span className="text-[#02236e] text-lg font-medium">
+                  {bulkActions.selectedIds.length} FAQ(s) Selected
                 </span>
               </div>
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => handleBulkStatusToggle(true)}
-                  className="px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors text-sm"
+                  className="cursor-pointer px-4 py-2 bg-green-100 text-[#1c5e20] rounded-lg hover:bg-green-200 transition-colors text-sm"
                 >
                   Activate Selected
                 </button>
                 <button
                   onClick={() => handleBulkStatusToggle(false)}
-                  className="px-4 py-2 bg-yellow-100 text-yellow-700 rounded-lg hover:bg-yellow-200 transition-colors text-sm"
+                  className="cursor-pointer px-4 py-2 bg-yellow-100 text-yellow-600 rounded-lg hover:bg-yellow-200 transition-colors text-sm"
                 >
                   Deactivate Selected
                 </button>
                 <button
                   onClick={handleBulkDelete}
-                  className="px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm"
+                  className="cursor-pointer px-4 py-2 bg-red-100 text-[#e7001e] rounded-lg hover:bg-red-200 transition-colors text-sm"
                 >
                   Delete Selected
                 </button>
                 <button
                   onClick={() => setBulkActions({ selectedIds: [], allSelected: false })}
-                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm"
+                  className="cursor-pointer px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm"
                 >
                   Clear Selection
                 </button>
@@ -743,7 +743,7 @@ const FAQManager = () => {
           // List Mode
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
             {/* Table Header */}
-            <div className="px-6 py-3 bg-gray-50 border-b border-gray-200">
+            <div className="px-6 py-3 bg-[#cedcff] border-b border-[#cedcff]">
               <div className="flex items-center">
                 <div className="w-12">
                   <input
@@ -754,11 +754,11 @@ const FAQManager = () => {
                   />
                 </div>
                 <div className="flex-1 grid grid-cols-12 gap-4">
-                  <div className="col-span-1 font-medium text-gray-500 text-sm">Order</div>
-                  <div className="col-span-4 font-medium text-gray-500 text-sm">Question</div>
-                  <div className="col-span-3 font-medium text-gray-500 text-sm">Status</div>
-                  <div className="col-span-2 font-medium text-gray-500 text-sm">Created</div>
-                  <div className="col-span-2 font-medium text-gray-500 text-sm text-right">Actions</div>
+                  <div className="col-span-1 font-medium text-[#222222] text-sm">Order</div>
+                  <div className="col-span-4 font-medium text-[#222222] text-sm">Question</div>
+                  <div className="col-span-3 font-medium text-[#222222] text-sm">Status</div>
+                  <div className="col-span-2 font-medium text-[#222222] text-sm">Created</div>
+                  <div className="col-span-2 font-medium text-[#222222] text-sm text-right">Actions</div>
                 </div>
               </div>
             </div>
@@ -857,7 +857,7 @@ const FAQManager = () => {
                           <div className="flex justify-end space-x-2">
                             <button
                               onClick={() => handleEdit(faq)}
-                              className="p-1.5 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded transition-colors"
+                              className="p-1.5 text-[#02236e] hover:text-blue-900 hover:bg-blue-50 rounded transition-colors"
                               title="Edit"
                             >
                               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -866,7 +866,7 @@ const FAQManager = () => {
                             </button>
                             <button
                               onClick={() => handleToggleStatus(faq.id)}
-                              className="p-1.5 text-yellow-600 hover:text-yellow-900 hover:bg-yellow-50 rounded transition-colors"
+                              className="p-1.5 text-[#fcdd2d] hover:text-yellow-900 hover:bg-yellow-50 rounded transition-colors"
                               title={faq.is_active ? 'Deactivate' : 'Activate'}
                             >
                               {faq.is_active ? (
@@ -882,7 +882,7 @@ const FAQManager = () => {
                             </button>
                             <button
                               onClick={() => handleDelete(faq.id)}
-                              className="p-1.5 text-red-600 hover:text-red-900 hover:bg-red-50 rounded transition-colors"
+                              className="p-1.5 text-[#e7001e] hover:text-red-900 hover:bg-red-50 rounded transition-colors"
                               title="Delete"
                             >
                               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -920,7 +920,7 @@ const FAQManager = () => {
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-center">
                 <div className="flex-shrink-0 bg-blue-100 p-3 rounded-lg">
-                  <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-[#02236e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>
@@ -934,7 +934,7 @@ const FAQManager = () => {
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-center">
                 <div className="flex-shrink-0 bg-green-100 p-3 rounded-lg">
-                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-[#1c5e20]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
@@ -950,7 +950,7 @@ const FAQManager = () => {
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-center">
                 <div className="flex-shrink-0 bg-yellow-100 p-3 rounded-lg">
-                  <svg className="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-[#fcdd2d]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>

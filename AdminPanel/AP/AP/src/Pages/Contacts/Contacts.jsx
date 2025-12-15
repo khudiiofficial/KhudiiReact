@@ -143,8 +143,8 @@ const AdminContacts = () => {
                       </td>
                       <td>
                         <div className="contact-info">
-                          <div><a href={`mailto:${message.email}`}>{message.email}</a></div>
-                          <div><a href={`tel:${message.phone}`}>+{message.countryCode} {message.phone}</a></div>
+                          <div><a href={`mailto:${message.email} target="_blank"`}>{message.email}</a></div>
+                          <div><a href={`tel:${message.phone} target="_blank"`}>+{message.countryCode} {message.phone}</a></div>
                         </div>
                       </td>
                       <td>
@@ -249,7 +249,7 @@ const AdminContacts = () => {
                 <div className="detail-group full-width">
                   <label>Message:</label>
                   <div className="message-content">
-                    {selectedMessage.message}
+                    <span>{selectedMessage.message}</span>
                   </div>
                 </div>
                 

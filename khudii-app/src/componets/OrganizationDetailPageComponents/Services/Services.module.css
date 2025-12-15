@@ -55,14 +55,13 @@
 
 .icon {
   font-size: 2.5rem;
-  color: #02236e;
+  color: #e7001e;
   margin-bottom: 0.8rem;
-  transition: transform 0.3s ease, color 0.3s ease;
+  /* transition: transform 0.3s ease, color 0.3s ease; */
 }
 
 .card:hover .icon {
   transform: scale(1.2) rotate(8deg);
-  color: #e7001e;
 }
 
 .info {

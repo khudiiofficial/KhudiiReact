@@ -1,5 +1,5 @@
 .stories-admin {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -38,7 +38,7 @@
 .message.error {
   background: #f8d7da;
   border-color: #f1aeb5;
-  color: #721c24;
+  color: #e7001e;
 }
 
 .form-section {
@@ -56,7 +56,7 @@
 }
 
 .story-form {
-  max-width: 800px;
+  max-width: 100%;
 }
 
 .form-group {
@@ -149,7 +149,7 @@
 }
 
 .image-preview {
-  max-width: 400px;
+  max-width: 500px !important;
   border: 1px solid #dee2e6;
   border-radius: 4px;
   padding: 12px;
@@ -158,23 +158,12 @@
 }
 
 .image-preview img {
+  display: flex;
+  margin: 0 auto;
   width: 100%;
   height: auto;
   border-radius: 4px;
   margin-bottom: 10px;
-}
-
-.btn-remove {
-  background: #dc3545;
-  border-color: #dc3545;
-  color: white;
-  padding: 6px 12px;
-  font-size: 12px;
-}
-
-.btn-remove:hover {
-  background: #c82333;
-  border-color: #c82333;
 }
 
 .form-actions {

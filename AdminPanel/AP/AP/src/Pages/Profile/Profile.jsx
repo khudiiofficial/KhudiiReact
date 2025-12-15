@@ -131,8 +131,8 @@ const Profile = () => {
           {message && (
             <div className={`mb-6 p-4 rounded-lg ${
               messageType === 'success' 
-                ? 'bg-green-100 text-green-800 border border-green-200' 
-                : 'bg-red-100 text-red-800 border border-red-200'
+                ? 'bg-green-100 text-[#1c5e20] border border-green-200' 
+                : 'bg-red-100 text-[#e7001e] border border-red-200'
             }`}>
               {message}
             </div>
@@ -159,7 +159,7 @@ const Profile = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02236e] focus:border-[#02236e] transition-colors"
                   placeholder="Enter your email address"
                   required
                 />
@@ -181,7 +181,7 @@ const Profile = () => {
                   name="currentPassword"
                   value={formData.currentPassword}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02236e] focus:border-[#02236e] transition-colors"
                   placeholder="Enter current password"
                 />
               </div>
@@ -195,7 +195,7 @@ const Profile = () => {
                   name="newPassword"
                   value={formData.newPassword}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02236e] focus:border-[#02236e] transition-colors"
                   placeholder="Enter new password (min 6 characters)"
                 />
               </div>
@@ -209,7 +209,7 @@ const Profile = () => {
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#02236e] focus:border-[#02236e] transition-colors"
                   placeholder="Confirm new password"
                 />
               </div>
@@ -218,10 +218,10 @@ const Profile = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition-colors ${
+              className={`cursor-pointer w-full py-3 px-4 rounded-lg font-semibold text-white transition-colors ${
                 loading
                   ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+                  : 'bg-[#02236e] hover:bg-blue-600 focus:ring-2 focus:ring-[#02236e] focus:ring-offset-2'
               }`}
             >
               {loading ? 'Updating...' : 'Update Profile'}

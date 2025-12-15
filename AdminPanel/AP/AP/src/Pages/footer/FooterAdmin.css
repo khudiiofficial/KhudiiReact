@@ -1,16 +1,16 @@
 /* src/components/FooterAdmin.css */
 .footer-admin {
-  max-width: 800px;
+  max-width: 1240px;
   margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
 }
 
 .footer-admin h1 {
-  color: #333;
+  color: #222222;
   margin-bottom: 30px;
   text-align: center;
-  border-bottom: 2px solid #007bff;
+  border-bottom: 2px solid #02236e;
   padding-bottom: 10px;
 }
 
@@ -29,7 +29,7 @@
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
-  color: #333;
+  color: #222222;
 }
 
 .form-group input[type="text"],
@@ -71,18 +71,18 @@
 }
 
 .delete-btn {
-  background: #dc3545;
+  background: #e7001e;
   color: white;
   border: none;
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 12px;
   transition: background-color 0.3s;
 }
 
 .delete-btn:hover {
-  background: #c82333;
+  background: #f80120;
 }
 
 .image-preview,
@@ -93,27 +93,28 @@
 
 .image-preview img,
 .current-image img {
-  max-width: 200px;
+  max-width: 300px;
   max-height: 150px;
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 5px;
   background: white;
+  justify-self: center;
 }
 
 .current-image p {
   margin-bottom: 8px;
   font-weight: bold;
-  color: #666;
+  color: #222;
 }
 
 .submit-btn {
   width: 100%;
-  background: #007bff;
+  background: #02236e;
   color: white;
   border: none;
   padding: 15px;
-  border-radius: 4px;
+  border-radius: 10px;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;

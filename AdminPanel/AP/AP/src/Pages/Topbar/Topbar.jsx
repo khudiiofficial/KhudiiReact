@@ -549,13 +549,13 @@ const TopbarAdmin = () => {
     try {
       const response = await api.post('/api/topbar', formData);
       if (response.data.success) {
-        showMessage('Content created successfully!');
+        showMessage('Content Created Successfully!');
         setFormData({ text: '' });
         fetchContents();
       }
     } catch (error) {
-      console.error('Error creating content:', error);
-      showMessage('Error creating content', 'error');
+      console.error('Error Creating Content:', error);
+      showMessage('Error Creating Content', 'error');
     }
   };
 
@@ -563,39 +563,39 @@ const TopbarAdmin = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     if (!formData.text.trim()) {
-      showMessage('Text content is required', 'error');
+      showMessage('Text Content is Required', 'error');
       return;
     }
 
     try {
       const response = await api.put(`/api/topbar/${editingContent.id}`, formData);
       if (response.data.success) {
-        showMessage('Content updated successfully!');
+        showMessage('Content Updated Successfully!');
         setEditingContent(null);
         setFormData({ text: '' });
         fetchContents();
       }
     } catch (error) {
-      console.error('Error updating content:', error);
-      showMessage('Error updating content', 'error');
+      console.error('Error Updating Content:', error);
+      showMessage('Error Updating Content', 'error');
     }
   };
 
   // Delete content
   const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this content?')) {
+    if (!window.confirm('Are You Sure You Want to Delete This Content?')) {
       return;
     }
 
     try {
       const response = await api.delete(`/api/topbar/${id}`);
       if (response.data.success) {
-        showMessage('Content deleted successfully!');
+        showMessage('Content Deleted Successfully!');
         fetchContents();
       }
     } catch (error) {
-      console.error('Error deleting content:', error);
-      showMessage('Error deleting content', 'error');
+      console.error('Error Deleting Content:', error);
+      showMessage('Error Deleting Content', 'error');
     }
   };
 
@@ -614,10 +614,10 @@ const TopbarAdmin = () => {
   // Styles
   const styles = {
     admin: {
-      maxWidth: '1200px',
+      maxWidth: '1240px',
       margin: '0 auto',
       padding: '20px',
-      fontFamily: 'Arial, sans-serif',
+      fontFamily: 'Mulish, sans-serif',
     },
     message: {
       padding: '10px',
@@ -675,6 +675,8 @@ const TopbarAdmin = () => {
     },
     btn: {
       padding: '10px 20px',
+      backgroundColor: '#02236e',
+      color: 'white',
       border: 'none',
       borderRadius: '4px',
       cursor: 'pointer',
@@ -682,19 +684,19 @@ const TopbarAdmin = () => {
       transition: 'background-color 0.2s',
     },
     btnPrimary: {
-      backgroundColor: '#007bff',
+      backgroundColor: '#02236e',
       color: 'white',
     },
     btnSecondary: {
-      backgroundColor: '#6c757d',
-      color: 'white',
+      backgroundColor: '#fcdd2d',
+      color: '#222222',
     },
     btnEdit: {
-      backgroundColor: '#28a745',
+      backgroundColor: '#1c5e20',
       color: 'white',
     },
     btnDelete: {
-      backgroundColor: '#dc3545',
+      backgroundColor: '#e7001e',
       color: 'white',
     },
     contentList: {
@@ -725,8 +727,12 @@ const TopbarAdmin = () => {
       paddingTop: '15px',
       borderTop: '1px solid #e9ecef',
     },
-    metaText: {
-      color: '#6c757d',
+    metaCreated: {
+      color: '#02236e',
+      fontSize: '12px',
+    },
+    metaUpdated: {
+      color: '#009dc8',
       fontSize: '12px',
     },
     contentActions: {
@@ -756,14 +762,14 @@ const TopbarAdmin = () => {
     },
     telephoneIcon: {
       fontSize: '18px',
-      color: '#007bff',
+      color: '#02236e',
     },
   };
 
   // Hover effects
   const btnHover = {
     btnPrimaryHover: { backgroundColor: '#0056b3' },
-    btnSecondaryHover: { backgroundColor: '#545b62' },
+    btnSecondaryHover: { backgroundColor: '#fcdd2d' },
     btnEditHover: { backgroundColor: '#1e7e34' },
     btnDeleteHover: { backgroundColor: '#c82333' },
   };
@@ -793,7 +799,7 @@ const TopbarAdmin = () => {
             id="phone_number"
             value={telephoneData.phone_number}
             onChange={(e) => handleTelephoneChange('phone_number', e.target.value)}
-            placeholder="Enter phone number (e.g., +92 300 1234567)"
+            placeholder="Enter Phone Number (e.g., +92 300 1234567)"
             required
             style={styles.input}
             disabled={telephoneLoading}
@@ -808,12 +814,12 @@ const TopbarAdmin = () => {
             id="icon_name"
             value={telephoneData.icon_name}
             onChange={(e) => handleTelephoneChange('icon_name', e.target.value)}
-            placeholder="Enter Font Awesome icon class (e.g., fa-solid fa-phone)"
+            placeholder="Enter Font Awesome Icon Class (e.g., fa-solid fa-phone)"
             required
             style={styles.input}
             disabled={telephoneLoading}
           />
-          <small style={{ color: '#6c757d', fontSize: '12px' }}>
+          <small style={{ color: '#009dc8', fontSize: '12px' }}>
             Use Font Awesome icon classes like "fa-solid fa-phone"
           </small>
         </div>
@@ -829,7 +835,7 @@ const TopbarAdmin = () => {
         <div style={styles.formActions}>
           <button 
             type="submit" 
-            style={{ ...styles.btn, ...styles.btnPrimary }}
+            style={{ ...styles.btn  , ...styles.btnPrimary }}
             onMouseOver={(e) => e.target.style.backgroundColor = btnHover.btnPrimaryHover.backgroundColor}
             onMouseOut={(e) => e.target.style.backgroundColor = styles.btnPrimary.backgroundColor}
             disabled={telephoneSaving || telephoneLoading}
@@ -865,7 +871,7 @@ const TopbarAdmin = () => {
             name="text"
             value={formData.text}
             onChange={handleInputChange}
-            placeholder="Enter topbar content text..."
+            placeholder="Enter Topbar Content Text..."
             rows="3"
             required
             style={styles.textarea}
@@ -901,7 +907,7 @@ const TopbarAdmin = () => {
           <div style={styles.loading}>Loading...</div>
         ) : contents.length === 0 ? (
           <div style={styles.emptyState}>
-            No content found. Create your first topbar content!
+            No Content Found. Create your First Topbar Content!
           </div>
         ) : (
           <div style={styles.contentGrid}>
@@ -909,10 +915,10 @@ const TopbarAdmin = () => {
               <div key={content.id} style={styles.contentCard}>
                 <div style={styles.contentText}>{content.text}</div>
                 <div style={styles.contentMeta}>
-                  <small style={styles.metaText}>
+                  <small style={styles.metaCreated}>
                     Created: {new Date(content.created_at).toLocaleDateString()}
                   </small>
-                  <small style={styles.metaText}>
+                  <small style={styles.metaUpdated}>
                     Updated: {new Date(content.updated_at).toLocaleDateString()}
                   </small>
                 </div>

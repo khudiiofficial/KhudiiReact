@@ -171,7 +171,7 @@ setcap('')
               type="text"
               value={formData.title}
               onChange={(e) => handleChange('title', e.target.value)}
-              placeholder="Enter stories section title"
+              placeholder="Enter Stories Section Title"
               required
               disabled={loading}
             />
@@ -182,7 +182,7 @@ setcap('')
             <textarea
               value={formData.description}
               onChange={(e) => handleChange('description', e.target.value)}
-              placeholder="Enter stories section description"
+              placeholder="Enter Stories Section Description"
               rows="6"
               required
               disabled={loading}
@@ -208,9 +208,9 @@ setcap('')
                 <span className="file-name">{formData.imageFile.name}</span>
               )}
             </div>
-            <small>Supported formats: JPEG, PNG, WEBP. Max size: 5MB</small>
+            <small>Supported formats: <b>WebP</b> Only (Max size: 5MB)</small>
           </div>
-
+              {/* Image Preview Section */}
           {(previewUrl || storiesData.image_path) && (
             <div className="preview-section">
               <label>Image Preview:</label>
@@ -244,7 +244,7 @@ setcap('')
         </form>
       </div>
 
-      {/* Preview Section */}
+      {/* Live Preview Section */}
       <div className="preview-section">
         <h3>Live Preview</h3>
         <div className="preview-content">

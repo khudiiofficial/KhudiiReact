@@ -196,10 +196,10 @@ setcap('')
               <textarea
                 value={currentPage.meta_keywords || ''}
                 onChange={(e) => handlePageChange(selectedPage, 'meta_keywords', e.target.value)}
-                placeholder="Enter keywords separated by commas"
+                placeholder="Enter Keywords Separated by Commas"
                 rows="2"
               />
-              <small>Separate keywords with commas</small>
+              <small>Separate Keywords with Commas</small>
             </div>
 
             {/* Preview Section */}
@@ -223,18 +223,18 @@ setcap('')
         {/* Actions */}
         <div className={styles.actions}>
           <button
-            onClick={fetchSEOData}
-            disabled={loading}
-            className={styles.secondaryBtn}
-          >
-            {loading ? 'Loading...' : 'Reload Data'}
-          </button>
-          <button
             onClick={updateSEOData}
             disabled={saving || loading}
             className={styles.primaryBtn}
           >
             {saving ? 'Saving...' : 'Save All Changes'}
+          </button>
+          <button
+            onClick={fetchSEOData}
+            disabled={loading}
+            className={styles.secondaryBtn}
+          >
+            {loading ? 'Loading...' : 'Reload Data'}
           </button>
         </div>
       </div>

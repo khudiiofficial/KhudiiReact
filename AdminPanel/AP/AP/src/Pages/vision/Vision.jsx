@@ -191,7 +191,7 @@ setcap('')
   const moveDown = async (index) => {
     
  if(cap){
-      console.log('bot detected')
+      console.log('Bot Detected')
 setcap('')
       return
     }
@@ -304,7 +304,7 @@ setcap('')
             <textarea
               value={formData.description}
               onChange={(e) => handleChange('description', e.target.value)}
-              placeholder="Enter detailed description"
+              placeholder="Enter Detailed Description"
               rows="4"
               required
             />
@@ -403,7 +403,7 @@ setcap('')
                   >
                     {item.is_active ? 'Deactivate' : 'Activate'}
                   </button> */}
-                  <button onClick={() => handleEdit(item)} className="btn btn-edit">
+                  <button onClick={() => handleEdit(item)} className="btn cursor-pointer bg-[#1c5e20] text-white rounded-lg">
                     Edit
                   </button>
                   <button onClick={() => handleDelete(item.id)} className="btn btn-delete">

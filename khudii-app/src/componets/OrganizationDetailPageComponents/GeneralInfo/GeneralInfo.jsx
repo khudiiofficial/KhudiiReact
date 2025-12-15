@@ -297,7 +297,7 @@ fun()
   rel="noopener noreferrer"
 >
   <li className={`${styles.item}`}>
-    <div className="bg-gradient-to-r from-[#E3001C] to-[#FF6B6B] hover:from-[#FF6B6B] hover:to-[#E3001C]">
+    <div className="h-[auto] bg-gradient-to-r from-[#E3001C] to-[#FF6B6B] hover:from-[#FF6B6B] hover:to-[#E3001C]">
       <p className="text-white">Call Khudii:</p>
       <span className="text-white">{data?.phone_number || 'N/A'}</span>
     </div>

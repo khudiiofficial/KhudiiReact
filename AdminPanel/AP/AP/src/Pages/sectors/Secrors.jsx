@@ -4,8 +4,8 @@ import { generateSlug, validateSlug } from './utils.js';
 import './sectors.css';
 
 const SectorsList = () => {
-  
- const [cap,setcap]=useState('')
+
+  const [cap, setcap] = useState('')
 
   const [sectors, setSectors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -48,7 +48,7 @@ const SectorsList = () => {
     if (file) {
       setImageFile(file);
       setFileName(file.name);
-      
+
       // Create preview and base64
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -87,9 +87,9 @@ const SectorsList = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-     if(cap){
+    if (cap) {
       console.log('bot detected')
-setcap('')
+      setcap('')
       return
     }
 
@@ -105,7 +105,7 @@ setcap('')
 
     try {
       setUploading(true);
-      
+
       // Prepare form data
       const submitData = {
         ...formData,
@@ -121,12 +121,12 @@ setcap('')
       } else {
         await axios.post(`${API_URL}/sectors/admin`, submitData, { withCredentials: true });
       }
-      
+
       setShowForm(false);
       setEditingSector(null);
-      setFormData({ 
-        name: '', 
-        slug: '', 
+      setFormData({
+        name: '',
+        slug: '',
         description: '',
         meta_title: '',
         meta_description: '',
@@ -215,9 +215,9 @@ setcap('')
   };
 
   const clearForm = () => {
-    setFormData({ 
-      name: '', 
-      slug: '', 
+    setFormData({
+      name: '',
+      slug: '',
       description: '',
       meta_title: '',
       meta_description: '',
@@ -238,7 +238,7 @@ setcap('')
     <div className="sectors-admin">
       <div className="header">
         <h1>Sectors Management</h1>
-        <button 
+        <button
           className="btn btn-primary"
           onClick={() => {
             clearForm();
@@ -258,8 +258,8 @@ setcap('')
             <h2>{editingSector ? 'Edit Sector' : 'Add New Sector'}</h2>
             <form onSubmit={handleSubmit}>
 
-                <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
-                
+              <input type="hidden" onChange={(e) => { setcap(e.target.value) }} />
+
               <div className="form-group">
                 <label>Image:</label>
                 <div className="file-upload-container">
@@ -271,15 +271,15 @@ setcap('')
                     className="file-input"
                     disabled={uploading}
                   />
-                  <label 
-                    htmlFor="file-input" 
+                  <label
+                    htmlFor="file-input"
                     className={`file-upload-btn ${fileName ? 'has-file' : ''}`}
                   >
                     📁 {fileName ? 'Change Image' : 'Choose Image'}
                   </label>
                 </div>
                 {fileName && <div className="file-name">Selected: {fileName}</div>}
-                
+
                 {imagePreview && (
                   <div className="image-preview">
                     <img src={imagePreview} alt="Preview" />
@@ -292,7 +292,7 @@ setcap('')
                   </div>
                 )}
               </div>
-              
+
               <div className="form-group">
                 <label>Name:</label>
                 <input
@@ -304,7 +304,7 @@ setcap('')
                   disabled={uploading}
                 />
               </div>
-              
+
               <div className="form-group">
                 <label>Slug:</label>
                 <div className="slug-input-group">
@@ -317,8 +317,8 @@ setcap('')
                     className={slugError ? 'error' : ''}
                     disabled={uploading}
                   />
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     className="btn btn-secondary generate-slug-btn"
                     onClick={generateNewSlug}
                     disabled={!formData.name || uploading}
@@ -331,12 +331,12 @@ setcap('')
                   Slug will be used in URLs. Only lowercase letters, numbers, and hyphens allowed.
                 </div>
               </div>
-              
+
               <div className="form-group">
                 <label>Description:</label>
                 <textarea
                   value={formData.description}
-                  onChange={(e) => setFormData({...formData, description: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   placeholder="Sector description..."
                   required
                   rows="4"
@@ -350,7 +350,7 @@ setcap('')
                 <input
                   type="text"
                   value={formData.meta_title}
-                  onChange={(e) => setFormData({...formData, meta_title: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, meta_title: e.target.value })}
                   placeholder="Meta title for SEO"
                   disabled={uploading}
                   maxLength="255"
@@ -361,7 +361,7 @@ setcap('')
                 <label>Meta Description:</label>
                 <textarea
                   value={formData.meta_description}
-                  onChange={(e) => setFormData({...formData, meta_description: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, meta_description: e.target.value })}
                   placeholder="Meta description for SEO"
                   rows="3"
                   disabled={uploading}
@@ -373,25 +373,25 @@ setcap('')
                 <input
                   type="text"
                   value={formData.meta_keywords}
-                  onChange={(e) => setFormData({...formData, meta_keywords: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, meta_keywords: e.target.value })}
                   placeholder="Keyword1, Keyword2, Keyword3"
                   disabled={uploading}
                 />
                 <div className="slug-help">Separate keywords with commas</div>
               </div>
-              
+
               {uploading && <div className="upload-status">Uploading image to server...</div>}
-              
+
               <div className="form-actions">
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className="btn btn-primary"
                   disabled={!!slugError || !formData.slug || uploading}
                 >
                   {uploading ? 'Uploading...' : (editingSector ? 'Update' : 'Create')}
                 </button>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="btn btn-secondary"
                   onClick={clearForm}
                   disabled={uploading}
@@ -409,12 +409,17 @@ setcap('')
           <div key={sector.id} className={`sector-card ${sector.deletestatus ? 'deleted' : ''}`}>
             <div className="sector-image">
               <img src={sector.src} alt={sector.name} />
-              {sector.deletestatus && <div className="deleted-badge">Deleted</div>}
+              {sector.deletestatus === 1 && <div className="deleted-badge">Deleted</div>}
+
             </div>
             <div className="sector-info">
               <h3>{sector.name}</h3>
-              <p>{sector.description}</p>
-              
+              <p>
+                {sector.description.length > 125
+                  ? sector.description.slice(0, 125) + '…'
+                  : sector.description}
+              </p>
+
               {/* Display Meta Information */}
               {(sector.meta_title || sector.meta_description || sector.meta_keywords) && (
                 <div className="sector-meta-seo">
@@ -424,7 +429,7 @@ setcap('')
                   {sector.meta_keywords && <p><strong>Meta Keywords:</strong> {sector.meta_keywords}</p>}
                 </div>
               )}
-              
+
               <div className="sector-meta">
                 <span><strong>Slug:</strong> {sector.slug}</span>
                 <span><strong>ID:</strong> {sector.id}</span>
@@ -435,15 +440,15 @@ setcap('')
             <div className="sector-actions">
               {sector.deletestatus ? (
                 <>
-                  <button 
-                    className="btn btn-success"
+                  <button
+                    className="btn cursor-pointer bg-[#fcdd2d] text-[#222222] rounded-lg"
                     onClick={() => handleRestore(sector.id)}
                     disabled={uploading}
                   >
                     Restore
                   </button>
-                  <button 
-                    className="btn btn-danger"
+                  <button
+                    className="btn cursor-pointer bg-[#e7001e] text-white rounded-lg"
                     onClick={() => handlePermanentDelete(sector.id)}
                     disabled={uploading}
                   >
@@ -452,15 +457,15 @@ setcap('')
                 </>
               ) : (
                 <>
-                  <button 
-                    className="btn btn-warning"
+                  <button
+                    className="btn cursor-pointer bg-[#1c5e20] text-white rounded-lg"
                     onClick={() => handleEdit(sector)}
                     disabled={uploading}
                   >
                     Edit
                   </button>
-                  <button 
-                    className="btn btn-danger"
+                  <button
+                    className="btn cursor-pointer bg-[#e7001e] text-white rounded-lg"
                     onClick={() => handleDelete(sector.id)}
                     disabled={uploading}
                   >

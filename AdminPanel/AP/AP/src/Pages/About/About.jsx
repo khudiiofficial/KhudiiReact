@@ -522,7 +522,7 @@ setcap('')
                 type="text"
                 value={section.heading || ''}
                 onChange={(e) => handleSectionChange(activeSection, 'heading', e.target.value)}
-                placeholder="Enter heading"
+                placeholder="Enter Heading"
               />
             </div>
             <div className={styles.formGroup}>
@@ -1072,7 +1072,7 @@ setcap('')
     <div className={styles.admin}>
       <div className={styles.header}>
         <h1>Content Management</h1>
-        <p>Manage all website content sections</p>
+        <p>Manage All Website Content Sections</p>
       </div>
 
       {message && (

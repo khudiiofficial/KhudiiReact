@@ -72,13 +72,13 @@ const CertificationAdmin = () => {
     if (file) {
       // Validate file type
       if (!file.type.startsWith('image/')) {
-        showMessage('Please select an image file', 'error');
+        showMessage('Please Select an Image File', 'error');
         return;
       }
       
       // Validate file size (5MB)
       if (file.size > 5 * 1024 * 1024) {
-        showMessage('File size must be less than 5MB', 'error');
+        showMessage('File Size must be Less than 5MB', 'error');
         return;
       }
       
@@ -98,25 +98,25 @@ const CertificationAdmin = () => {
     e.preventDefault();
     
  if(cap){
-      console.log('bot detected')
+      console.log('Bot Detected')
       setcap('')
       return
     }
     if (!formData.title || !formData.image_base64) {
-      showMessage('Title and image are required', 'error');
+      showMessage('Title and Image are Required', 'error');
       return;
     }
 setloader(true)
     try {
       const response = await api.post('/certifications', formData);
       if (response.data.success) {
-        showMessage('Certification created successfully!');
+        showMessage('Certification Created Successfully!');
         resetForm();
         fetchCertifications();
       }
     } catch (error) {
-      console.error('Error creating certification:', error);
-      showMessage('Error creating certification', 'error');
+      console.error('Error Creating Certification:', error);
+      showMessage('Error Creating Certification', 'error');
     }
 setloader(false)
   };
@@ -125,46 +125,46 @@ setloader(false)
   const handleUpdate = async (e) => {
     
  if(cap){
-      console.log('bot detected')
+      console.log('Bot Detected')
       setcap('')
       return
     }
     e.preventDefault();
   
     if (!formData.title) {
-      showMessage('Title is required', 'error');
+      showMessage('Title is Required', 'error');
       return;
     }
   setloader(true)
     try {
       const response = await api.put(`/certifications/${editingCert.id}`, formData);
       if (response.data.success) {
-        showMessage('Certification updated successfully!');
+        showMessage('Certification Updated Successfully!');
         resetForm();
         fetchCertifications();
       }
     } catch (error) {
-      console.error('Error updating certification:', error);
-      showMessage('Error updating certification', 'error');
+      console.error('Error Updating Certification:', error);
+      showMessage('Error Updating Certification', 'error');
     }
     setloader(false)
   };
 
   // Delete certification
   const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this certification?')) {
+    if (!window.confirm('Are you Sure you Want to Delete this Certification?')) {
       return;
     }
 
     try {
       const response = await api.delete(`/certifications/${id}`);
       if (response.data.success) {
-        showMessage('Certification deleted successfully!');
+        showMessage('Certification Deleted Successfully!');
         fetchCertifications();
       }
     } catch (error) {
-      console.error('Error deleting certification:', error);
-      showMessage('Error deleting certification', 'error');
+      console.error('Error Deleting Certification:', error);
+      showMessage('Error Deleting Certification', 'error');
     }
   };
 
@@ -259,7 +259,8 @@ setloader(false)
       border: '1px solid #ced4da',
       borderRadius: '4px',
       fontSize: '14px',
-      background: 'white',
+      background: '#dddddd',
+      cursor: 'pointer',  
     },
     formActions: {
       display: 'flex',
@@ -275,19 +276,19 @@ setloader(false)
       transition: 'background-color 0.2s',
     },
     btnPrimary: {
-      backgroundColor: '#007bff',
+      backgroundColor: '#02236e',
       color: 'white',
     },
     btnSecondary: {
-      backgroundColor: '#6c757d',
-      color: 'white',
+      backgroundColor: '#fcdd2d',
+      color: '#222222',
     },
     btnEdit: {
-      backgroundColor: '#28a745',
+      backgroundColor: '#1c5e20',
       color: 'white',
     },
     btnDelete: {
-      backgroundColor: '#dc3545',
+      backgroundColor: '#e7001e',
       color: 'white',
     },
     contentList: {
@@ -316,11 +317,11 @@ setloader(false)
       fontSize: '18px',
       fontWeight: 'bold',
       marginBottom: '10px',
-      color: '#333',
+      color: '#222222',
     },
     certDescription: {
       fontSize: '14px',
-      color: '#666',
+      color: '#666666',
       marginBottom: '15px',
       lineHeight: '1.4',
     },
@@ -332,7 +333,7 @@ setloader(false)
       borderTop: '1px solid #e9ecef',
     },
     metaText: {
-      color: '#6c757d',
+      color: '#009dc8',
       fontSize: '12px',
     },
     contentActions: {
@@ -398,7 +399,7 @@ setloader(false)
             name="title"
             value={formData.title}
             onChange={handleInputChange}
-            placeholder="Enter certification title"
+            placeholder="Enter Certification Title"
             required
             style={styles.input}
           />
@@ -413,7 +414,7 @@ setloader(false)
             name="description"
             value={formData.description}
             onChange={handleInputChange}
-            placeholder="Enter certification description"
+            placeholder="Enter Certification Description"
             rows="3"
             style={styles.textarea}
           />
@@ -429,7 +430,7 @@ setloader(false)
             name="display_order"
             value={formData.display_order}
             onChange={handleInputChange}
-            placeholder="Display order"
+            placeholder="Display Order"
             style={styles.input}
           />
         </div>
@@ -485,7 +486,7 @@ setloader(false)
           <div style={styles.loading}>Loading...</div>
         ) : certifications.length === 0 ? (
           <div style={styles.emptyState}>
-            No certifications found. Create your first certification!
+            No Certifications Found. Create your First Certification!
           </div>
         ) : (
           <div style={styles.contentGrid}>

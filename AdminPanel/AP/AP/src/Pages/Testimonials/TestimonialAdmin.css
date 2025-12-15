@@ -40,7 +40,7 @@
 .message-error {
   background-color: #fed7d7;
   border-color: #feb2b2;
-  color: #c53030;
+  color: #e7001e;
 }
 
 .message-content {
@@ -146,13 +146,13 @@
 
 .file-input-title {
   font-weight: 500;
-  color: #374151;
+  color: #ffffff;
   margin-bottom: 4px;
 }
 
 .file-input-subtitle {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: #bbbbbb;
 }
 
 .file-input {
@@ -255,13 +255,8 @@
   text-decoration: none;
 }
 
-.btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
 .btn-primary {
-  background: #3b82f6;
+  background: #02236e !important;
   color: white;
 }
 
@@ -270,7 +265,7 @@
 }
 
 .btn-secondary {
-  background: #6b7280;
+  background: #fcdd2d;
   color: white;
 }
 
@@ -280,7 +275,7 @@
 
 .btn-outline {
   background: transparent;
-  color: #374151;
+  color: #02236e;
   border: 1px solid #d1d5db;
 }
 
@@ -290,7 +285,7 @@
 }
 
 .btn-danger {
-  background: #ef4444;
+  background: #e7001e;
   color: white;
 }
 
@@ -336,8 +331,8 @@
 }
 
 .testimonials-count {
-  background: #edf2f7;
-  color: #4a5568;
+  background: #009dc8;
+  color: #222222;
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 0.875rem;
@@ -429,7 +424,7 @@
 
 .upload-date {
   font-size: 0.75rem;
-  color: #9ca3af;
+  color: #009dc8;
 }
 
 .person-info h4 {
@@ -442,7 +437,7 @@
 .person-position {
   margin: 0 0 4px 0;
   font-size: 0.875rem;
-  color: #4a5568;
+  color: #02236e;
 }
 
 .person-role {

@@ -172,7 +172,7 @@ setcap('')
               type="button" 
               onClick={fetchWelcomeData}
               disabled={loading}
-              className="cursor-pointer  bg-[#fbf137] btn border-[#fbf137] hover:bg-[#f7e029] text-[#222222] ml-3"
+              className="cursor-pointer bg-[#fbf137] btn border-[#fbf137] hover:bg-[#f7e029] text-[#222222] ml-3"
             >
               {loading ? 'Loading...' : 'Reload Data'}
             </button>
