@@ -83,10 +83,10 @@
 //       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 //         {/* Header */}
 //         <div className="text-center mb-12">
-//           <h2 className="text-4xl font-bold text-gray-900 mb-4">
+//           <h2 className="text-4xl font-bold text-[#222222] mb-4">
 //             Our Client's Feedbacks
 //           </h2>
-//           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+//           <p className="text-lg text-[#222222] max-w-2xl mx-auto">
 //             Hear what our valued clients have to say about their experience
 //             working with Khudii.
 //           </p>
@@ -144,13 +144,13 @@
 //                   </div> */}
 
 //                   <div className="flex-1 min-w-0">
-//                     <h3 className="text-lg font-semibold text-gray-900 truncate">
+//                     <h3 className="text-lg font-semibold text-[#222222] truncate">
 //                       {feedback.name}
 //                     </h3>
 //                     <p className="text-sm text-blue-600 font-medium">
 //                       {feedback.position}
 //                     </p>
-//                     <p className="text-sm text-gray-500 mt-1">
+//                     <p className="text-sm text-[#222222] mt-1">
 //                       {feedback.role}
 //                     </p>
 //                   </div>
@@ -190,10 +190,10 @@
 //         {/* CTA */}
 //         <div className="text-center mt-12">
 //           <div className="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
-//             <h3 className="text-2xl font-bold text-gray-900 mb-4">
+//             <h3 className="text-2xl font-bold text-[#222222] mb-4">
 //               Share Your Experience
 //             </h3>
-//             <p className="text-gray-600 mb-6">
+//             <p className="text-[#222222] mb-6">
 //               Have you worked with Khudii? We'd love to hear about your
 //               experience and feature your feedback.
 //             </p>
@@ -293,8 +293,8 @@ const ClientFeedbacks = () => {
           const playPromise = videoElement.play();
           if (playPromise !== undefined) {
             playPromise.catch(error => {
-              console.error('Error playing video:', error);
-              showMessage('Error playing video', 'error');
+              console.error('Error Playing Video:', error);
+              showMessage('Error Playing Video', 'error');
             });
           }
         }
@@ -338,7 +338,7 @@ const ClientFeedbacks = () => {
 
   return (
     <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Message Display */}
         {message && (
           <div className={`fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg ${
@@ -357,12 +357,11 @@ const ClientFeedbacks = () => {
 
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl font-bold text-[#222222] mb-4">
             Our Client's Feedbacks
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Hear what our valued clients have to say about their experience
-            working with Khudii.
+          <p className="text-lg text-[#222222] max-w-3xl mx-auto">
+            Hear What Our Valued Clients Have To Say About Their Experience Working With Khudii.
           </p>
         </div>
 
@@ -370,7 +369,7 @@ const ClientFeedbacks = () => {
         {loading && (
           // <div className="flex justify-center items-center py-12">
           //   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-          //   <span className="ml-3 text-gray-600">Loading testimonials...</span>
+          //   <span className="ml-3 text-[#222222]">Loading testimonials...</span>
           // </div>
            <div className="flex items-center justify-center h-90 ">
      
@@ -411,9 +410,9 @@ const ClientFeedbacks = () => {
                       className="absolute inset-0  flex items-center justify-center cursor-pointer transition-opacity duration-300 hover:bg-opacity-20"
                       onClick={() => playVideo(index)}
                     >
-                      <div className="bg-white bg-opacity-90 rounded-full p-4 transform transition-transform group-hover:scale-110">
+                      <div className="hover:bg-blue-100 bg-white bg-opacity-90 rounded-full p-4 transform transition-transform group-hover:scale-110">
                         <svg
-                          className="w-12 h-12 text-blue-600"
+                          className="w-12 h-12 text-[#02236e]"
                           fill="currentColor"
                           viewBox="0 0 24 24"
                         >
@@ -425,7 +424,7 @@ const ClientFeedbacks = () => {
 
                   {/* Loading indicator for video */}
                   {activeVideo === index && (
-                    <div className="absolute top-2 right-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
+                    <div className="absolute top-2 right-2 bg-[#fcdd2d] text-[#222222] text-sm font-medium px-2 py-1 rounded">
                       Playing...
                     </div>
                   )}
@@ -435,13 +434,13 @@ const ClientFeedbacks = () => {
                 <div className="p-6">
                   <div className="flex items-start justify-between">
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-lg font-semibold text-gray-900 truncate">
+                      <h3 className="text-lg font-semibold text-[#222222] truncate">
                         {feedback.name || "Client Name"}
                       </h3>
-                      <p className="text-sm text-blue-600 font-medium">
+                      <p className="text-sm text-[#02236e] font-medium">
                         {feedback.position || "Position"}
                       </p>
-                      <p className="text-sm text-gray-500 mt-1">
+                      <p className="text-sm text-[#009dc8] mt-1">
                         {feedback.role || "Role"}
                       </p>
                     </div>
@@ -449,7 +448,7 @@ const ClientFeedbacks = () => {
                     {/* Play/Pause Button */}
                     <button
                       onClick={() => playVideo(index)}
-                      className="flex-shrink-0 bg-blue-100 hover:bg-blue-200 text-blue-600 rounded-full p-2 transition-colors duration-200 ml-4"
+                      className="cursor-pointer flex-shrink-0 bg-blue-100 hover:bg-blue-200 text-[#02236e] rounded-full p-2 transition-colors duration-200 ml-4"
                       aria-label={activeVideo === index ? "Pause video" : "Play video"}
                     >
                       {activeVideo === index ? (
@@ -485,10 +484,10 @@ const ClientFeedbacks = () => {
           <div className="text-center py-12">
             <div className="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
               <div className="text-6xl mb-4">🎬</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              <h3 className="text-2xl font-bold text-[#222222] mb-4">
                 No Testimonials Available
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-[#222222] mb-6">
                 There are no client testimonials to display at the moment.
               </p>
               <button
@@ -504,15 +503,15 @@ const ClientFeedbacks = () => {
         {/* CTA */}
         <div className="text-center mt-12">
           <div className="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+            <h3 className="text-2xl font-bold text-[#222222] mb-4">
               Share Your Experience
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-[#222222] mb-6">
               Have you worked with Khudii? We'd love to hear about your
               experience and feature your feedback.
             </p>
             <Link to="/contribute-your-story/">
-              <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+              <button className="cursor-pointer bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
                 Share Your Story
               </button>
             </Link>

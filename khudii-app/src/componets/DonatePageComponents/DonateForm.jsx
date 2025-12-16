@@ -112,7 +112,7 @@ const myDivRef = useRef(null);
     // Phone validation
     if (formData.phone && !validatePhone(formData.phone, formData.countryCode,formData.CountryName)) {
       const country = countryCodes.find(c => c.dialCode === formData.countryCode);
-      newErrors.phone = `Please enter a valid phone number for ${country?.name || 'selected country'}`;
+      newErrors.phone = `Please Enter a Valid Phone Number for ${country?.name || 'selected country'}`;
     }
 
     setErrors(newErrors);
@@ -125,13 +125,13 @@ const myDivRef = useRef(null);
       setCopied(prev => ({ ...prev, [type]: true }));
       setTimeout(() => setCopied(prev => ({ ...prev, [type]: false })), 2000);
     } catch (err) {
-      console.error('Failed to copy text: ', err);
+      console.error('Failed to Copy Text: ', err);
     }
   };
 
   const handleSubmit = async(e) => {
      if(val){
-    console.warn('bot detected')
+    console.warn('Bot Detected')
     return
    }
     e.preventDefault();
@@ -243,11 +243,11 @@ const myDivRef = useRef(null);
         <div className="loader"></div>
       </div>:
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-[1240px] mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Support Our Cause</h1>
-          <p className="text-xl text-gray-600">Your donation makes a difference. Together we can create positive change.</p>
+          <h1 className="text-4xl font-bold text-[#222222] mb-4">Support Our Cause</h1>
+          <p className="text-xl text-[#222222]">Your donation makes a difference. Together we can create positive change.</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -259,41 +259,41 @@ const myDivRef = useRef(null);
                 alt="Meezan Bank" 
                 className="mx-auto mb-4 w-32 h-24 object-contain"
               />
-              <h2 className="text-2xl font-bold text-gray-900">Bank Transfer Details</h2>
+              <h2 className="text-2xl font-bold text-[#222222] ">Bank Transfer Details</h2>
             </div>
 
             <div className="space-y-6">
               <div className="grid grid-cols-1 gap-4">
                 <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
-                  <span className="font-semibold text-gray-700">Bank Name:</span>
-                  <span className="text-gray-900">{data.name}</span>
+                  <span className="font-semibold text-[#222222]">Bank Name:</span>
+                  <span className="text-[#222222]">{data.name}</span>
                 </div>
                 
                 <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
-                  <span className="font-semibold text-gray-700">Account Title:</span>
-                  <span className="text-gray-900">{data.account_title}</span>
+                  <span className="font-semibold text-[#222222]">Account Title:</span>
+                  <span className="text-[#222222]">{data.account_title}</span>
                 </div>
                 
                 <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
-                  <span className="font-semibold text-gray-700">Branch:</span>
-                  <span className="text-gray-900 text-right">{data.branch}</span>
+                  <span className="font-semibold text-[#222222]">Branch:</span>
+                  <span className="text-[#222222] text-right">{data.branch}</span>
                 </div>
               </div>
 
               {/* IBAN Section */}
               <div className="border-t pt-6">
                 <div className="flex justify-between items-center mb-3">
-                  <span className="font-semibold text-gray-900">IBAN:</span>
+                  <span className="font-semibold text-[#222222]">IBAN:</span>
                   <button
                     onClick={() => copyToClipboard(data.iban.replace(/\s/g, ''), 'iban')}
-                    className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 transition-colors"
+                    className="cursor-pointer flex items-center space-x-2 text-[#02236e] hover:text-blue-800 transition-colors"
                   >
                     {copied.iban ? (
                       <>
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
+                        <svg className="w-4 h-4 text-[#009dc8]" fill="currentColor" viewBox="0 0 16 16">
                           <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/>
                         </svg>
-                        <span className="text-sm font-medium">Copied!</span>
+                        <span className="text-sm font-medium text-[#009dc8]">Copied!</span>
                       </>
                     ) : (
                       <>
@@ -306,25 +306,25 @@ const myDivRef = useRef(null);
                     )}
                   </button>
                 </div>
-                <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                  <code className="text-blue-900 font-mono text-lg">{data.iban}</code>
+                <div className="p-4 bg-blue-100 border border-blue-200 rounded-lg">
+                  <code className="text-[#02236e] font-mono text-lg">{data.iban}</code>
                 </div>
               </div>
 
               {/* Account Number Section */}
               <div className="border-t pt-6">
                 <div className="flex justify-between items-center mb-3">
-                  <span className="font-semibold text-gray-900">Account Number:</span>
+                  <span className="font-semibold text-[#222222]">Account Number:</span>
                   <button
                     onClick={() => copyToClipboard(data.accountNumber.replace(/\s/g, ''), 'account')}
-                    className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 transition-colors"
+                    className="cursor-pointer flex items-center space-x-2 text-[#02236e] hover:text-blue-800 transition-colors"
                   >
                     {copied.account ? (
                       <>
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
+                        <svg className="w-4 h-4 text-[#009dc8]" fill="currentColor" viewBox="0 0 16 16">
                           <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/>
                         </svg>
-                        <span className="text-sm font-medium">Copied!</span>
+                        <span className="text-sm font-medium text-[#009dc8]">Copied!</span>
                       </>
                     ) : (
                       <>
@@ -337,8 +337,8 @@ const myDivRef = useRef(null);
                     )}
                   </button>
                 </div>
-                <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                  <code className="text-green-900 font-mono text-lg">{data.accountNumber}</code>
+                <div className="p-4 bg-green-100 border border-green-200 rounded-lg">
+                  <code className="text-[#1c5e20] font-mono text-lg">{data.accountNumber}</code>
                 </div>
               </div>
             </div>
@@ -346,13 +346,13 @@ const myDivRef = useRef(null);
 
           {/* Donation Form Section */}
           <div className="bg-white rounded-2xl shadow-lg p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Donation Form</h2>
+            <h2 className="text-2xl font-bold text-[#222222] mb-6">Donation Form</h2>
             
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Name Field */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Name <span className="text-red-500">*</span>
+                <label className="block text-sm font-medium text-[#222222] mb-2">
+                  Name <span className="text-[red-500]">*</span>
                 </label>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -363,7 +363,7 @@ const myDivRef = useRef(null);
                       onChange={handleInputChange}
                       required
                       placeholder="First Name"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-[#02236e] focus:border-transparent transition-all"
                     />
                   </div>
                   <div>
@@ -374,7 +374,7 @@ const myDivRef = useRef(null);
                       onChange={handleInputChange}
                       required
                       placeholder="Last Name"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-[#02236e] focus:border-transparent transition-all"
                     />
                   </div>
                 </div>
@@ -383,7 +383,7 @@ const myDivRef = useRef(null);
               {/* Contact Info */}
               <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-[#222222] mb-2">
                     Email
                   </label>
                   <input
@@ -391,14 +391,14 @@ const myDivRef = useRef(null);
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    placeholder="your@email.com"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                    placeholder="Email Address"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-[#02236e] focus:border-transparent transition-all"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Phone <span className="text-red-500">*</span>
+                  <label className="block text-sm font-medium text-[#222222] mb-2">
+                    Phone <span className="text-[#e7001e]">*</span>
                   </label>
                   <div ref={myDivRef} className="relative">
                     <div className="flex">
@@ -409,7 +409,7 @@ const myDivRef = useRef(null);
                         className="flex items-center w-30 justify-center px-4 py-3 bg-gray-100 border border-r-0 border-gray-300 rounded-l-2xl hover:bg-gray-200 transition-colors"
                       >
                         <span className="text-lg">{selectedCountry?.flag}</span>
-                        <span className="text-gray-700">+{formData.countryCode}</span>
+                        <span className="text-[#222222]">+{formData.countryCode}</span>
                         <svg 
                           className={`w-4 h-4 transition-transform ${showCountryDropdown ? 'rotate-180' : ''}`}
                           fill="none" 
@@ -430,7 +430,7 @@ const myDivRef = useRef(null);
                         required
                         placeholder={formData.countryCode === '92' ? '301 2345678' : 'Enter phone number'}
                         maxLength="15"
-                        className={`flex-1 px-4 py-3 border border-gray-300 rounded-r-2xl w-20 focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all ${
+                        className={`flex-1 px-4 py-3 border border-gray-300 rounded-r-2xl w-20 focus:ring-2 focus:ring-[#02236e] focus:border-transparent transition-all ${
                           errors.phone ? 'border-red-500' : ''
                         }`}
                       />
@@ -451,12 +451,12 @@ const myDivRef = useRef(null);
                               type="button"
                               onClick={() => selectCountryCode(country.code, country.dialCode,country.name)}
                               className={`flex items-center space-x-3 w-full p-3 rounded-xl hover:bg-gray-100 transition-colors ${
-                                formData.countryCode === country.dialCode ? 'bg-red-50 text-red-700' : ''
+                                formData.countryCode === country.dialCode ? 'bg-red-50 text-[#e7001e]' : ''
                               }`}
                             >
                               <span className="text-xl">{country.flag}</span>
                               <span className="flex-1 text-left font-medium">{country.name}</span>
-                              <span className="text-gray-600">+{country.dialCode}</span>
+                              <span className="text-[#222222]">+{country.dialCode}</span>
                             </button>
                           ))}
                         </div>
@@ -468,8 +468,8 @@ const myDivRef = useRef(null);
 
               {/* Donation Amount */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Donation Amount <span className="text-red-500">*</span>
+                <label className="block text-sm font-medium text-[#222222] mb-2">
+                  Donation Amount <span className="text-[#e7001e]">*</span>
                 </label>
                 <input
                   type="text"
@@ -477,15 +477,15 @@ const myDivRef = useRef(null);
                   value={formData.donationAmount}
                   onChange={handleInputChange}
                   required
-                  placeholder="Enter amount in PKR"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                  placeholder="Enter Amount in PKR"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-[#02236e] focus:border-transparent transition-all"
                 />
               </div>
 
               {/* Donation Type */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">
-                  Donation Type <span className="text-red-500">*</span>
+                <label className="block text-sm font-medium text-[#222222] mb-3">
+                  Donation Type <span className="text-[#e7001e]">*</span>
                 </label>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {donationTypes.map((type) => (
@@ -500,8 +500,8 @@ const myDivRef = useRef(null);
                       />
                       <div className={`p-4 border-2 rounded-2xl text-center cursor-pointer transition-all ${
                         formData.donationType === type.value 
-                          ? 'border-red-500 bg-red-50 text-red-700' 
-                          : 'border-gray-300 hover:border-gray-400'
+                          ? 'border-blue-800 bg-blue-200 text-[#02236e]' 
+                          : 'border-[#cedcff] hover:border-[#247b2a]'
                       }`}>
                         <div className="text-2xl mb-2">{type.icon}</div>
                         <span className="font-medium">{type.label}</span>
@@ -513,8 +513,8 @@ const myDivRef = useRef(null);
 
               {/* Address */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Address <span className="text-red-500">*</span>
+                <label className="block text-sm font-medium text-[#222222] mb-2">
+                  Address <span className="text-[#e7001e]">*</span>
                 </label>
                 <div className="space-y-4">
                   <input
@@ -524,7 +524,7 @@ const myDivRef = useRef(null);
                     onChange={handleInputChange}
                     required
                     placeholder="Address Line 1"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-[#02236e] focus:border-transparent transition-all"
                   />
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -535,7 +535,7 @@ const myDivRef = useRef(null);
                       onChange={handleInputChange}
                       required
                       placeholder="City"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-[#02236e] focus:border-transparent transition-all"
                     />
                     
                     <input
@@ -545,7 +545,7 @@ const myDivRef = useRef(null);
                       onChange={handleInputChange}
                       required
                       placeholder="State / Province"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-[#02236e] focus:border-transparent transition-all"
                     />
                   </div>
                   
@@ -554,7 +554,7 @@ const myDivRef = useRef(null);
                     value={formData.country}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-[#02236e] focus:border-transparent transition-all"
                   >
                     {countries.map(country => (
                       <option key={country.value} value={country.value}>
@@ -567,7 +567,7 @@ const myDivRef = useRef(null);
 
               {/* Message */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-[#222222] mb-2">
                   Message
                 </label>
                 <textarea
@@ -575,15 +575,15 @@ const myDivRef = useRef(null);
                   value={formData.message}
                   onChange={handleInputChange}
                   rows="4"
-                  placeholder="Your message (optional)"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all resize-none"
+                  placeholder="Your Message (Optional)"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-[#02236e] focus:border-transparent transition-all resize-none"
                 />
               </div>
 
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-red-600 text-white py-4 px-6 rounded-2xl font-semibold text-lg hover:bg-red-700 focus:ring-4 focus:ring-red-300 transition-all duration-200"
+                className="cursor-pointer w-full bg-[#e7001e] text-white py-4 px-6 rounded-2xl font-semibold text-lg hover:bg-[#e7001e] focus:ring-4 focus:ring-red-300 transition-all duration-200"
                disabled={loader}
               >
                 {loader ? "Donating..." : "Donate Now"}
@@ -594,8 +594,8 @@ const myDivRef = useRef(null);
         </div>
 
         {/* Footer Note */}
-        <div className="text-center mt-8 text-gray-600">
-          <p>Your donation helps us continue our mission. Thank you for your support!</p>
+        <div className="text-center font-medium mt-8 text-[#222222]">
+          <p>Your Donation Helps Us Continue Our Mission. Thank You For Your Support!</p>
         </div>
       </div>
 
@@ -606,19 +606,19 @@ const myDivRef = useRef(null);
             <div className="text-center">
               {/* Success Icon */}
               <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
-                <svg className="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="h-8 w-8 text-[#1c5e20]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
               
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Thank You!</h3>
-              <p className="text-gray-600 mb-6">
-                Your donation information has been submitted successfully. We appreciate your generosity and support.
+              <h3 className="text-2xl font-bold text-[#222222] mb-2">Thank You!</h3>
+              <p className="text-[#222222] mb-6">
+                Your Donation Information Has Been Submitted Successfully. We Appreciate Your Generosity And Support.
               </p>
               
               <button
                 onClick={closeModal}
-                className="w-full bg-red-600 text-white py-3 px-6 rounded-2xl font-semibold hover:bg-red-700 transition-colors"
+                className="w-full bg-[#e7001e] text-white py-3 px-6 rounded-2xl font-semibold hover:bg-[#e7001e] transition-colors"
               >
                 Close
               </button>

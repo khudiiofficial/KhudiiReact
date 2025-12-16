@@ -159,14 +159,14 @@ if(res.status===200){
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6">
              {serverError && (
-              <div className="text-sm text-red-800 bg-red-50 border border-red-200 p-4 rounded-lg">
+              <div className="text-sm text-[#e7001e] bg-red-50 border border-[#e7001e] p-4 rounded-lg">
                 {serverError}
               </div>
             )}
             {/* Entity Type */}
             <div>
               <label className="block text-gray-700 font-medium mb-2">
-                Your Entity Type <span className="text-red-500">*</span>
+                Your Entity Type <span className="text-[#e7001e]">*</span>
               </label>
               <div className="flex gap-6">
                 <label className="flex items-center gap-2 cursor-pointer">
@@ -189,7 +189,7 @@ if(res.status===200){
                 </label>
               </div>
               {errors.entityType && (
-                <p className="text-red-500 text-sm mt-1">{errors.entityType.message}</p>
+                <p className="text-[#e7001e] text-sm mt-1">{errors.entityType.message}</p>
               )}
             </div>
 
@@ -197,28 +197,28 @@ if(res.status===200){
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-gray-700 font-medium mb-2">
-                  Name <span className="text-red-500">*</span>
+                  Name <span className="text-[#e7001e]">*</span>
                 </label>
                 <input
                   type="text"
-                  placeholder="Your Name"
+                  placeholder="Full Name"
                   {...register("name", { required: "Name is required" })}
                   className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:outline-none ${
-                    errors.name ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+                    errors.name ? "border-[#e7001e] focus:ring-[#e7001e]" : "border-gray-300 focus:ring-blue-500"
                   }`}
                 />
                 {errors.name && (
-                  <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+                  <p className="text-[#e7001e] text-sm mt-1">{errors.name.message}</p>
                 )}
               </div>
 
               <div>
                 <label className="block text-gray-700 font-medium mb-2">
-                  Email <span className="text-red-500">*</span>
+                  Email <span className="text-[#e7001e]">*</span>
                 </label>
                 <input
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder="Email"
                   {...register("email", {
                     required: "Email is required",
                     pattern: {
@@ -228,11 +228,11 @@ if(res.status===200){
                   })}
                     onInput={(e) => setValue("email", e.target.value, { shouldValidate: true })}
                   className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:outline-none ${
-                    errors.email ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+                    errors.email ? "border-[#e7001e] focus:ring-[#e7001e]" : "border-gray-300 focus:ring-blue-500"
                   }`}
                 />
                 {errors.email && (
-                  <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+                  <p className="text-[#e7001e] text-sm mt-1">{errors.email.message}</p>
                 )}
               </div>
             </div>
@@ -241,7 +241,7 @@ if(res.status===200){
             <div className={`grid ${entityType === "Organization" ? "md:grid-cols-2" : "grid-cols-1"} gap-6`}>
               <div>
                 <label className="block text-gray-700 font-medium mb-2">
-                  Mobile No. <span className="text-red-500">*</span>
+                  Mobile No. <span className="text-[#e7001e]">*</span>
                 </label>
                 <div ref={myDivRef} className="relative">
                   <div className="flex">
@@ -270,10 +270,10 @@ if(res.status===200){
                         validate: validatePhoneNumber
                       })}
                       onBlur={handlePhoneBlur}
-                      placeholder={watchCountryCode === '92' ? '301 2345678' : 'Enter phone number'}
+                      placeholder={watchCountryCode === '92' ? '301 2345678' : 'Enter Phone Number'}
                       maxLength={16}
                       className={`flex-1 px-4 w-1/2 py-3 border border-gray-300 rounded-r-lg focus:ring-2 focus:outline-none focus:ring-blue-500 ${
-                        errors.phone ? "border-red-500 focus:ring-red-500" : "border-gray-300"
+                        errors.phone ? "border-[#e7001e] focus:ring-[#e7001e]" : "border-gray-300"
                       }`}
                     />
                   </div>
@@ -301,7 +301,7 @@ if(res.status===200){
                   )}
                 </div>
                 {errors.phone && (
-                  <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
+                  <p className="text-[#e7001e] text-sm mt-1">{errors.phone.message}</p>
                 )}
                 
                 {/* Hidden fields for country data */}
@@ -313,7 +313,7 @@ if(res.status===200){
               {entityType === "Organization" && (
                 <div>
                   <label className="block text-gray-700 font-medium mb-2">
-                    Company <span className="text-red-500">*</span>
+                    Company <span className="text-[#e7001e]">*</span>
                   </label>
                   <input
                     type="text"
@@ -322,11 +322,11 @@ if(res.status===200){
                       required: "Company name is required for organizations",
                     })}
                     className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:outline-none ${
-                      errors.company ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+                      errors.company ? "border-[#e7001e] focus:ring-[#e7001e]" : "border-gray-300 focus:ring-blue-500"
                     }`}
                   />
                   {errors.company && (
-                    <p className="text-red-500 text-sm mt-1">{errors.company.message}</p>
+                    <p className="text-[#e7001e] text-sm mt-1">{errors.company.message}</p>
                   )}
                 </div>
               )}
@@ -335,18 +335,18 @@ if(res.status===200){
             {/* Story */}
             <div>
               <label className="block text-gray-700 font-medium mb-2">
-                Your Story <span className="text-red-500">*</span>
+                Your Story <span className="text-[#e7001e]">*</span>
               </label>
               <textarea
-                placeholder="Write your story here..."
+                placeholder="Write Your Story Here..."
                 rows="6"
                 {...register("story", { required: "Story is required" })}
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:outline-none ${
-                  errors.story ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+                  errors.story ? "border-[#e7001e] focus:ring-[#e7001e]" : "border-gray-300 focus:ring-blue-500"
                 }`}
               ></textarea>
               {errors.story && (
-                <p className="text-red-500 text-sm mt-1">{errors.story.message}</p>
+                <p className="text-[#e7001e] text-sm mt-1">{errors.story.message}</p>
               )}
             </div>
 
@@ -354,7 +354,7 @@ if(res.status===200){
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-[#022279] text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-900 transition disabled:opacity-50"
+              className="cursor-pointer w-full bg-[#e7001e]  text-white py-3 px-6 rounded-lg font-semibold hover:bg-[#e7001e] transition disabled:opacity-50"
             >
               {isSubmitting ? "Submitting..." : "Submit Story"}
             </button>
@@ -381,7 +381,7 @@ if(res.status===200){
               
               <button
                 onClick={()=>{setshowSuccessModal(false)}}
-                className="w-full bg-red-600 text-white py-3 px-6 rounded-2xl font-semibold hover:bg-red-700 transition-colors"
+                className="w-full bg-[#e7001e] text-white py-3 px-6 rounded-2xl font-semibold hover:bg-[#e7001e] transition-colors"
               >
                 Close
               </button>

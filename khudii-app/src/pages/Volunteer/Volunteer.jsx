@@ -182,21 +182,21 @@ const [val,setval]=useState('')
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Name Field */}
               <div className="flex flex-col">
-                <label className="text-sm font-semibold text-gray-700 mb-2">
+                <label className="text-sm font-semibold text-[#222222] mb-2">
                   Name <span className="text-[#e7001e]">*</span>
                 </label>
                 <input
                   {...register("name", { 
-                    required: "Name is required",
+                    required: "Name is Required",
                     minLength: {
-                      value: 2,
-                      message: "Name must be at least 2 characters"
+                      value: 6,
+                      message: "Name must be at least 6 characters"
                     }
                   })}
-                  className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                    errors.name ? "border-red-400 bg-red-50" : "border-gray-300"
+                  className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-1 focus:ring-[#02236e] transition-colors ${
+                    errors.name ? "border-red-400 bg-red-50" : "border-[#222222]"
                   }`}
-                  placeholder="Your full name"
+                  placeholder="Full name"
                 />
                 {errors.name && (
                   <span className="text-xs text-[#e7001e] mt-1">{errors.name.message}</span>
@@ -205,7 +205,7 @@ const [val,setval]=useState('')
 
               {/* Email Field */}
               <div className="flex flex-col">
-                <label className="text-sm font-semibold text-gray-700 mb-2">
+                <label className="text-sm font-semibold text-[#222222] mb-2">
                   Email <span className="text-[#e7001e]">*</span>
                 </label>
                 <input
@@ -219,10 +219,10 @@ const [val,setval]=useState('')
                   })}
 
                     onInput={(e) => setValue("email", e.target.value, { shouldValidate: true })}
-                  className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                    errors.email ? "border-red-400 bg-red-50" : "border-gray-300"
+                  className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-1 focus:ring-[#02236e] transition-colors ${
+                    errors.email ? "border-red-400 bg-red-50" : "border-[#222222]"
                   }`}
-                  placeholder="your.email@example.com"
+                  placeholder="Email"
                 />
                 {errors.email && (
                   <span className="text-xs text-[#e7001e] mt-1">{errors.email.message}</span>
@@ -234,7 +234,7 @@ const [val,setval]=useState('')
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Phone Field */}
               <div className="flex flex-col">
-                <label className="text-sm font-semibold text-gray-700 mb-2">
+                <label className="text-sm font-semibold text-[#222222] mb-2">
                   Phone <span className="text-[#e7001e]">*</span>
                 </label>
                 <div ref={phoneInputRef} className="relative">
@@ -243,14 +243,14 @@ const [val,setval]=useState('')
                     <button
                       type="button"
                       onClick={() => setShowCountryDropdown(!showCountryDropdown)}
-                      className="flex items-center w-28 justify-between px-3 py-3 bg-gray-50 border border-r-0 border-gray-300 rounded-l-xl hover:bg-gray-100 transition-colors"
+                      className="flex items-center w-28 justify-between px-3 py-3 bg-gray-50 border border-r-0 border-[#222222] rounded-l-xl hover:bg-[#222222] transition-colors"
                     >
                       <div className="flex items-center">
                         <span className="text-sm mr-2">{selectedCountry?.flag}</span>
-                        <span className="text-gray-700 text-sm">+{watchCountryCode}</span>
+                        <span className="text-[#222222] text-sm">+{watchCountryCode}</span>
                       </div>
                       <svg 
-                        className={`w-4 h-4 text-gray-500 transition-transform ${
+                        className={`w-4 h-4 text-[#222222] transition-transform ${
                           showCountryDropdown ? 'rotate-180' : ''
                         }`}
                         fill="none" 
@@ -264,21 +264,21 @@ const [val,setval]=useState('')
                     {/* Phone Input */}
                     <input
                       {...register("phone", {
-                        required: "Phone number is required",
+                        required: "Phone Number is Required",
                         validate: validatePhoneNumber
                       })}
                       onBlur={handlePhoneBlur}
-                      className={`flex-1 w-1/2 px-4 py-3 border border-gray-300 rounded-r-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                        errors.phone ? "border-red-400 bg-red-50" : "border-gray-300"
+                      className={`flex-1 w-1/2 px-4 py-3 border border-[#222222] rounded-r-xl focus:outline-none focus:ring-1 focus:ring-[#02236e] transition-colors ${
+                        errors.phone ? "border-red-400 bg-red-50" : "border-[#222222]"
                       }`}
-                      placeholder={watchCountryCode === '92' ? '0301 234567' : 'Enter phone number'}
+                      placeholder={watchCountryCode === '92' ? '301 234567' : 'Enter phone number'}
                       maxLength={16}
                     />
                   </div>
 
                   {/* Country Dropdown */}
                   {showCountryDropdown && (
-                    <div className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-300 rounded-xl shadow-lg z-10 max-h-60 overflow-y-auto">
+                    <div className="absolute top-full left-0 mt-1 w-64 bg-white border border-[#222222] rounded-xl shadow-lg z-10 max-h-60 overflow-y-auto">
                       <div className="p-2">
                         {countryCodes.map((country) => (
                           <button
@@ -291,7 +291,7 @@ const [val,setval]=useState('')
                           >
                             <span className="text-xl">{country.flag}</span>
                             <span className="flex-1 text-left font-medium text-sm">{country.name}</span>
-                            <span className="text-gray-600 text-sm">+{country.dialCode}</span>
+                            <span className="text-[#222222] text-sm">+{country.dialCode}</span>
                           </button>
                         ))}
                       </div>
@@ -310,40 +310,40 @@ const [val,setval]=useState('')
 
               {/* Contact Time Field */}
               <div className="flex flex-col">
-                <label className="text-sm font-semibold text-gray-700 mb-2">
+                <label className="text-sm font-semibold text-[#222222] mb-2">
                   Time To Contact You <span className="text-[#e7001e]">*</span>
                 </label>
                 <input
                   {...register("contactTime", {
                     required: "Preferred contact time is required"
                   })}
-                  className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                    errors.contactTime ? "border-red-400 bg-red-50" : "border-gray-300"
+                  className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-1 focus:ring-[#02236e] transition-colors ${
+                    errors.contactTime ? "border-red-400 bg-red-50" : "border-[#222222]"
                   }`}
-                  placeholder="e.g., Weekdays 2-5 PM, Saturday morning"
+                  placeholder="Date / Time"
                 />
                 {errors.contactTime && (
                   <span className="text-xs text-[#e7001e] mt-1">{errors.contactTime.message}</span>
                 )}
-                <div className="text-xs text-gray-500 mt-1">
-                  Let us know when you're available for a call
+                <div className="text-xs text-[#009dc8] mt-1">
+                  Let Us Know When You're Available For A Call
                 </div>
               </div>
             </div>
 
             {/* Message Field */}
             <div className="flex flex-col">
-              <label className="text-sm font-semibold text-gray-700 mb-2">
+              <label className="text-sm font-semibold text-[#222222] mb-2">
                 Message
               </label>
               <textarea
                 {...register("message")}
                 rows={4}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors resize-vertical"
-                placeholder="Tell us about your interests, skills, and why you'd like to volunteer with us..."
+                className="w-full px-4 py-3 border border-[#222222] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#02236e] transition-colors resize-vertical"
+                placeholder="Tell Us About Your Interests, Skills, And Why You'd Like To Volunteer With Us..."
               />
-              <div className="text-xs text-gray-500 mt-1">
-                Optional: Share your motivation, relevant experience, or specific areas you'd like to help with
+              <div className="text-xs text-[#009dc8] mt-1">
+                Optional: Share Your Motivation, Relevant Experience, Or Specific Areas You'd Like To Help With
               </div>
             </div>
 
@@ -352,7 +352,7 @@ const [val,setval]=useState('')
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-[#e7001e] hover:bg-[#02236e] text-white py-4 px-6 rounded-xl font-semibold text-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="cursor-pointer w-full bg-[#e7001e] hover:bg-red-700 text-white py-4 px-6 rounded-xl font-semibold text-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <>
@@ -384,8 +384,8 @@ const [val,setval]=useState('')
                 </svg>
               </div>
               
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Thank You for Your Interest!</h3>
-              <p className="text-gray-600 mb-6">
+              <h3 className="text-2xl font-bold text-[#222222] mb-2">Thank You for Your Interest!</h3>
+              <p className="text-[#222222] mb-6">
                 Your volunteer application has been received successfully. Our team will review your information and contact you soon to discuss how you can contribute to our mission.
               </p>
               
