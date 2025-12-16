@@ -76,9 +76,8 @@
     font-size: 14px;
   }
 
-  .last {
-    padding: 8px 12px;
-    font-size: 14px;
+  .buttonWrapper {
+    display: none !important;
   }
 }
 
