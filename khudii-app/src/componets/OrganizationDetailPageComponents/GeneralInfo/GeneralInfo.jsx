@@ -182,6 +182,35 @@ fun()
     <>
     <div className={styles.wrapper}>
       <ul className={styles.list}>
+       
+        {socials.website && (
+          <li className={styles.item}>
+            <a href={socials.website} target="_blank" rel="noopener noreferrer">
+              <i className="fas fa-globe"></i>
+              <span>{formatWebsite(socials.website)}</span>
+            </a>
+          </li>
+        )}
+
+    {socials.email && (
+          <li className={styles.item}>
+            <a href={`mailto:${socials.email}`} target="_blank" rel="noopener noreferrer">
+              <i className="fas fa-envelope"></i>
+              <span>Email</span>
+            </a>
+          </li>
+        )}
+       
+
+   {socials.Mobile_number && (
+          <li className={styles.item}>
+            <a href={socials.Mobile_number.slice(0,2)===`92`? `tel:+${socials.Mobile_number.split("-").join("").split(" ").join("")}`:socials.Mobile_number.slice(0,1)===`0`? `tel:+92${socials.Mobile_number.slice(1,socials.Mobile_number.length).split("-").join("").split(" ").join("")}`:`tel:${socials.Mobile_number.split("-").join("").split(" ").join("")}`} target="_blank" rel="noopener noreferrer">
+              <i className="fas fa-phone-alt"></i>
+              <span>{ socials.Mobile_number.slice(0,2) ==="92" ? `0`+`${socials.Mobile_number.slice(2,socials.Mobile_number.length).trim().replace(" ","-")}`:socials.Mobile_number.slice(0,3) ==="+92" ? `0`+`${socials.Mobile_number.slice(3,socials.Mobile_number.length).trim().split("-").join("")}`:socials.Mobile_number}</span>
+            </a>
+          </li>
+        )}
+
         {socials.phone && (
           <li className={styles.item}>
             <a href={socials.phone.slice(0,2)===`92`? `tel:+${socials.phone.split("-").join("").split(" ").join("")}`:socials.phone.slice(0,1)===`0`? `tel:+92${socials.phone.slice(1,socials.phone.length).split("-").join("").split(" ").join("")}`:`tel:${socials.phone.split("-").join("").split(" ").join("")}`} target="_blank" rel="noopener noreferrer">
@@ -191,23 +220,6 @@ fun()
           </li>
         )}
         
-        {socials.Mobile_number && (
-          <li className={styles.item}>
-            <a href={socials.Mobile_number.slice(0,2)===`92`? `tel:+${socials.Mobile_number.split("-").join("").split(" ").join("")}`:socials.Mobile_number.slice(0,1)===`0`? `tel:+92${socials.Mobile_number.slice(1,socials.Mobile_number.length).split("-").join("").split(" ").join("")}`:`tel:${socials.Mobile_number.split("-").join("").split(" ").join("")}`} target="_blank" rel="noopener noreferrer">
-              <i className="fas fa-phone-alt"></i>
-              <span>{ socials.Mobile_number.slice(0,2) ==="92" ? `0`+`${socials.Mobile_number.slice(2,socials.Mobile_number.length).trim().replace(" ","-")}`:socials.Mobile_number.slice(0,3) ==="+92" ? `0`+`${socials.Mobile_number.slice(3,socials.Mobile_number.length).trim().split("-").join("")}`:socials.Mobile_number}</span>
-            </a>
-          </li>
-        )}
-        
-        {socials.email && (
-          <li className={styles.item}>
-            <a href={`mailto:${socials.email}`} target="_blank" rel="noopener noreferrer">
-              <i className="fas fa-envelope"></i>
-              <span>{socials.email}</span>
-            </a>
-          </li>
-        )}
 
         {socials.location && (
           <li className={styles.item}>
@@ -218,16 +230,7 @@ fun()
           </li>
         )}
 
-        {socials.website && (
-          <li className={styles.item}>
-            <a href={socials.website} target="_blank" rel="noopener noreferrer">
-              <i className="fas fa-globe"></i>
-              <span>{formatWebsite(socials.website)}</span>
-            </a>
-          </li>
-        )}
-
-           {socials.youtubechannel && (
+    {socials.youtubechannel && (
           <li className={styles.item}>
             <a href={socials.youtubechannel} target="_blank" rel="noopener noreferrer">
               <i className="fab fa-youtube"></i>
@@ -235,15 +238,22 @@ fun()
             </a>
           </li>
         )}
-
-           {socials.email && (
+     
+        
+        {/* {socials.email && (
           <li className={styles.item}>
             <a href={`mailto:${socials.email}`} target="_blank" rel="noopener noreferrer">
               <i className="fas fa-envelope"></i>
-              <span>Email</span>
+              <span>{socials.email}</span>
             </a>
           </li>
-        )}
+        )} */}
+
+
+       
+       
+
+       
        
 
         {socials.facebook && (

@@ -52,6 +52,7 @@ return(  <div className="flex items-center justify-center h-90 ">
 }
   return (
     <>
+    
 {data.category==='organization' && <OrganizationDetail org={data.data} url={url}/>}
 {data.category==='blog' && <BlogDetails blog={data.data} url={url}/>}
 {data.category==='sectors' && <Categories cat={data.data} url={url}/>}
