@@ -79,7 +79,7 @@
 .applications-table table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 1240px;
+  min-width: 1100px;
 }
 
 .applications-table th {

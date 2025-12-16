@@ -1749,7 +1749,7 @@ async function createProcessSocials(conn, itemId, socials) {
 
   if (hasValidSocials) {
     await conn.query(
-      "INSERT INTO socials (item_id, phone, facebook, twitter, instagram, location, googlemap, Mobile_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO socials (item_id, phone, facebook, twitter, instagram, location, googlemap, Mobile_number,website,youtubechannel,email,linkedin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         itemId,
         socials.phone || null,
@@ -1759,6 +1759,10 @@ async function createProcessSocials(conn, itemId, socials) {
         socials.location || null,
         socials.googlemap || "",
         socials.mobile || null,
+        socials.website || null,
+        socials.youtubechannel || null,
+        socials.email || null,
+        socials.linkedin || null
       ]
     );
   }
@@ -1862,6 +1866,10 @@ export const getOrganizationById = (req, res) => {
                 location: socialResults[0].location,
                 googlemap: socialResults[0].googlemap,
                 mobile: socialResults[0].Mobile_number,
+                website:socialResults[0].website,
+                youtubechannel:socialResults[0].youtubechannel,
+                email:socialResults[0].email,
+                linkedin:socialResults[0].linkedin
               } : {},
               icons: iconResults.map((icon) => ({
                 name: icon.name,
@@ -2208,7 +2216,7 @@ async function processSocials(conn, itemId, socials) {
 
   if (hasValidSocials) {
     await conn.query(
-      "INSERT INTO socials (item_id, phone, facebook, twitter, instagram, location, googlemap, Mobile_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO socials (item_id, phone, facebook, twitter, instagram, location, googlemap, Mobile_number,website,youtubechannel,email,linkedin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         itemId,
         socials.phone || null,
@@ -2218,6 +2226,10 @@ async function processSocials(conn, itemId, socials) {
         socials.location || null,
         socials.googlemap || "",
         socials.mobile || null,
+        socials.website || null,
+        socials.youtubechannel || null,
+        socials.email || null,
+        socials.linkedin || null
       ]
     );
   }
