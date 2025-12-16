@@ -871,6 +871,10 @@ export default function CreateOrganizationPage() {
       location: "",
       googlemap: "",
       mobile: "",
+      website:"",
+      youtubechannel:"",
+      email:"",
+      linkedin:""
     },
     icons: [{ name: "", svg: "", qty: "" }],
   });

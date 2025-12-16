@@ -993,6 +993,10 @@ export default function EditOrganizationPage() {
       location: "",
       googlemap: "",
       mobile: "",
+      website:"",
+      youtubechannel:"",
+      email:"",
+      linkedin:""
     },
     icons: [{ name: "", svg: "", qty: "" }],
   });
@@ -1142,6 +1146,10 @@ func()
             location: org.socials?.location || "",
             googlemap: org.socials?.googlemap || "",
             mobile: org.socials?.mobile || "",
+            website:org.socials?.website || "",
+            youtubechannel:org.socials?.youtubechannel || "",
+            email:org.socials?.email || "",
+            linkedin:org.socials?.linkedin || ""
           },
           icons: org.icons && org.icons.length > 0 ? org.icons : [{ name: "", svg: "", qty: "" }],
         });
@@ -1501,7 +1509,7 @@ func()
             </div>
             <button
               onClick={() => navigate("/dashboard/OrganizationPage")}
-              className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
+              className="cursor-pointer bg-[#fcdd2d] text-[#222222] px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors hover:text-white"
             >
               ← Back
             </button>
@@ -1638,13 +1646,13 @@ func()
                         {form.category.map((cat) => (
                           <span 
                             key={cat} 
-                            className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+                            className="cursor-pointer inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
                           >
                             {cat}
                             <button
                               type="button"
                               onClick={() => handleCategoryChange(cat)}
-                              className="ml-2 text-blue-600 hover:text-blue-800 focus:outline-none"
+                              className="cursor-pointer ml-2 text-blue-600 hover:text-blue-800 focus:outline-none"
                             >
                               ×
                             </button>
@@ -1735,13 +1743,13 @@ func()
                   type="file" 
                   onChange={handleIntroImageChange}
                   accept="image/*"
-                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                  className="cursor-pointer block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                 />
-                <p className="text-xs text-gray-500 mt-1">Supported formats: JPEG, PNG, WebP. Max size: 5MB</p>
+                <p className="text-xs text-gray-500 mt-1">Supported formats: WebP Only Max size: 5MB</p>
                 {renderErrors(errors.introductory_image_base64)}
                 {form.introductory_image_base64 && (
                   <div className="mt-3">
-                    <p className="text-sm text-green-600 mb-1">✓ New image selected</p>
+                    <p className="text-sm text-[#1c5e20] mb-1">✓ New Image Selected</p>
                     <img
                       src={form.introductory_image_base64}
                       alt="Intro Preview"
@@ -1881,7 +1889,7 @@ func()
                           value={icon.qty}
                           onChange={(e) => handleIconChange(i, "qty", e.target.value)}
                           placeholder="Number"
-                          className={`w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                          className={`cursor-pointer w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                             errors.icons?.[i]?.qty?.length ? 'border-red-500' : 'border-gray-300'
                           }`}
                         />
@@ -1904,7 +1912,7 @@ func()
                 <button
                   type="button"
                   onClick={addIconField}
-                  className="flex items-center gap-2 text-purple-600 hover:text-purple-800 font-medium text-sm"
+                  className="cursor-pointer flex items-center gap-2 text-[#009dc8] font-medium text-sm"
                 >
                   <span className="text-lg">+</span> Add Icon
                 </button>
@@ -1915,10 +1923,10 @@ func()
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`px-8 py-3 rounded-lg font-semibold text-white transition-colors ${
+                className={`cursor-pointer px-8 py-3 rounded-lg font-semibold text-white transition-colors ${
                   isSubmitting 
                     ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-green-600 hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2'
+                    : 'bg-[#1c5e20] hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2'
                 }`}
               >
                 {isSubmitting ? (
@@ -1933,7 +1941,7 @@ func()
               <button
                 type="button"
                 onClick={() => navigate("/dashboard/OrganizationPage")}
-                className="px-8 py-3 rounded-lg font-semibold text-gray-700 bg-gray-200 hover:bg-gray-300 transition-colors"
+                className="cursor-pointer px-8 py-3 rounded-lg font-semibold bg-[#e7001e] hover:bg-red-700 text-white transition-colors"
               >
                 Cancel
               </button>
