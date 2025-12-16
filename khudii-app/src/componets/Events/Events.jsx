@@ -545,12 +545,12 @@ return (
               />
             </div>
         {/* CTA Section */}
-        <div className={`max-w-[1240px] mx-auto px-4 sm:px-2 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'} transition-opacity duration-700`}>
+        <div className={`max-w-[1240px] flex items-center justify-center px-4 sm:px-2 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'} transition-opacity duration-700`}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-4 items-center">
             {/* Text Content */}
             <div className="max-w-[100%] lg:col-span-1 order-2 lg:order-1">
               <div className="bg-gradient-to-r from-gray-50 to-white p-5 sm:p-6 md:p-4 rounded-xl border-l-5 border-[#E3001C] shadow-sm hover:shadow-md transition-shadow duration-300">
-                <p className="sm:text-xl md:text-2xl lg:text-3xl font-light text-[#222222] leading-relaxed mb-3 break-words text-justify">
+                <p className="sm:text-xl md:text-2xl lg:text-xl font-light text-[#222222] leading-relaxed mb-3 break-words text-justify">
                   {/* We empower communities by providing essential services in health, education, disability support, water access, thalassemia care, and food security. */}
              {items.description}
                 </p>
@@ -586,7 +586,7 @@ return (
               <img 
                 src={items.imagepath2}
                 alt="Community members receiving support from EHDI Foundation" 
-                className="w-full max-w-[450px] h-auto rounded-xl shadow-md transform hover:scale-105 transition-transform duration-500"
+                className="w-full max-w-[350px] h-auto rounded-xl shadow-md transform hover:scale-105 transition-transform duration-500"
                 loading="lazy"
               />
             </div>
