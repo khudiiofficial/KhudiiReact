@@ -3,7 +3,7 @@ import React from 'react';
 import { useEffect,useState } from 'react';
 import SEO from '../../componets/Helmet/Helmet';
 import axios from 'axios';
-import Styles from './successStory.module.css'
+import Styles from './SuccessStory.module.css'
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 import { useParams } from 'react-router-dom';
 const SuccessStoryDetail = () => {
@@ -24,7 +24,6 @@ const SuccessStoryDetail = () => {
     </div>
   );
 }
-
 
 
 useEffect(()=>{
