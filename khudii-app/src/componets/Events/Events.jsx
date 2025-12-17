@@ -513,9 +513,7 @@ return (
               <div className="relative pb-[57%] h-0 overflow-hidden">
               
                   
-                  // Video View
                   <iframe
-
                     className="absolute top-0 left-0 w-full h-full"
                     src={`${evt.url}?autoplay=1&rel=0&modestbranding=1`}
                     title={evt.title}
