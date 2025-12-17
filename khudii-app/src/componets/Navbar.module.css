@@ -186,9 +186,9 @@ display: none;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.4);
+  width: 100dvw;
+  height: 100dvh;
+  background: rgba(0, 0, 0, 0.75);
   z-index: 1000;
 }
 
@@ -212,34 +212,36 @@ display: none;
   gap: 12px;
   background: white;
   border-radius: 30px;
-  padding: 12px 20px;
+  padding: 10px 30px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  width: 90%;
+  margin: auto;
 }
 
 .popupIcon {
-  color: #777;
-  font-size: 1.1rem;
+  color: #e7001e;
+  font-size: 1.3rem;
 }
 
 .popupInput {
   flex: 1;
   border: none;
   outline: none;
-  font-size: 1rem;
-  padding: 6px 0;
+  font-size: 1.3rem;
+  padding: 6px 10px;
+  color: #222222;
   background: transparent;
 }
 
 .popupClose {
   color: #999;
-  font-size: 1.1rem;
+  font-size: 1rem;
   cursor: pointer;
   padding: 4px;
+  padding: 8px 10.5px;
 }
 
 .popupClose:hover {
-  color: #222222;
+  background-color: #02236e;
 }
 
 /* Mobile Search Results Container */
@@ -450,21 +452,21 @@ display: none;
     gap: 12px;
     background: white;
     border-radius: 30px;
-    padding: 12px 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    width: 100%;
+    padding: 10px 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    margin: auto;
   }
 
   .popupIcon {
     color: #e7001e;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
   }
 
   .popupInput {
     flex: 1;
     border: none;
     outline: none;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     /* padding: 5px 0; */
     background: transparent;
   }
@@ -473,13 +475,13 @@ display: none;
     color: #ffffff;
     background-color: #e7001e;
     border-radius: 30px;
-    font-size: 1.1rem;
+    font-size: 1rem;
     cursor: pointer;
-    padding: 10px 12.5px;
+    padding: 8px 10.5px;
   }
 
   .popupClose:hover {
-    color: #222;
+    background-color: #02236e;
   }
 
   /* Mobile Search Results Container */

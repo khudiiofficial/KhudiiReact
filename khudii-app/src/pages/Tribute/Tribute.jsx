@@ -22,16 +22,16 @@ const Tribute = ({con,url}) => {
               />
     
     
-         <section className=" h-100 max-h-1000 bg-[#6881e4]/60 grid place-items-center px-6 py-0 ">
+         <section className=" h-100 max-h-1000 bg-[#cedcff] grid place-items-center px-6 py-0 ">
           <div className="grid md:grid-cols-2 items-center gap-10 text-center md:text-left">
             {/* Left: Heading + Text */}
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              <h2 className="text-4xl md:text-5xl font-bold text-[#222222] mb-6">
                 Coming Soon!!!
               </h2>
-              <p className="text-white/90 text-lg max-w-lg mx-auto md:mx-0">
+              <p className="text-[#222222] text-lg max-w-lg mx-auto md:mx-0">
                 We&rsquo;re working hard behind the scenes to bring something amazing. 
-                Stay tuned!
+                Stay Tuned!
               </p>
             </div>
     

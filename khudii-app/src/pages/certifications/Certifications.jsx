@@ -61,19 +61,19 @@ get()
     <section className="w-[1240px] mx-auto flex justify-center py-10 bg-white">
       <div className="w-full flex flex-col items-center gap-8 text-center">
         {/* Heading */}
-        <h2 className="text-2xl md:text-3xl font-semibold text-gray-800">
+        <h2 className="text-2xl md:text-3xl font-semibold text-[#222222]">
           Securities and Exchange Commission of Pakistan
         </h2>
 
         {/* Icon List */}
         <ul className="space-y-4 text-gray-700 text-base md:text-lg font-medium">
           <li className="flex items-center gap-3">
-            <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0" />
-            <span>UNDER SECTION 42 of the Companies Act (XIX), 2017</span>
+            <CheckCircle className="w-6 h-6 text-[#009dc8] flex-shrink-0" />
+            <span className="text-[#222222]">UNDER SECTION 42 of the Companies Act (XIX), 2017</span>
           </li>
           <li className="flex items-center gap-3">
-            <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0" />
-            <span>License No. 2020</span>
+            <CheckCircle className="w-6 h-6 text-[#009dc8] flex-shrink-0" />
+            <span className="text-[#222222]">License No. 2020</span>
           </li>
         </ul>
 

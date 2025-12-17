@@ -131,7 +131,7 @@ getStories();
   // ];
 
   const VideoCard = ({ video }) => (
-    <div key={video.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+    <div key={video.id} className="bg-gray-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
       <div className="relative pb-[56.25%] h-0 overflow-hidden"> {/* 16:9 aspect ratio */}
         <iframe
           className="absolute top-0 left-0 w-full h-full"
@@ -143,8 +143,8 @@ getStories();
         />
       </div>
       
-      <div className="p-6">
-        <h3 className="h-[60px] text-lg font-semibold text-gray-900 mb-3 leading-tight">
+      <div className="p-4">
+        <h3 className="text-xl font-semibold text-[#222222] mb-3 leading-tight line-clamp-2">
           {video.link ? (
             <a 
               href={video.link} 
@@ -158,12 +158,12 @@ getStories();
         </h3>
         
         {video.urduTitle && (
-          <p className="text-lg text-gray-700 mb-3 font-urdu" dir="rtl">
+          <p className="text-lg text-[#222222] mb-3 font-urdu" dir="rtl">
             {video.urdu_title}
           </p>
         )}
         
-        <p className="text-gray-600 leading-relaxed">
+        <p className="text-[#222222] text-md leading-relaxed text-justify">
           {video.description}
         </p>
         
@@ -229,17 +229,17 @@ getStories();
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl font-bold text-[#222222] mb-4">
             Khudii Success Stories
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-[#222222] max-w-3xl mx-auto">
             Inspiring stories of hope, compassion, and community impact. 
             Discover how Khudii and its partners are making a difference across Pakistan.
           </p>
         </div>
 
         {/* Video Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
           {videoData && videoData.map((video) => (
             <VideoCard key={video.id} video={video} />
           ))}

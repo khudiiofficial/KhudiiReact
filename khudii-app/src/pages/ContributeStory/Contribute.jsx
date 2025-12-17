@@ -21,7 +21,8 @@ export default function ContributeStory({con,url}) {
     defaultValues: {
       countryCode: "92",
       CountryName: "Pakistan",
-      country:"PK"
+      country:"PK",
+      entityType:"Individual"
     }
   });
 const [val,setval]=useState('')
