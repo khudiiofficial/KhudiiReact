@@ -219,7 +219,7 @@ display: none;
   gap: 12px;
   background: white;
   border-radius: 30px;
-  padding: 10px 30px;
+  padding: 10px 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   margin: auto;
 }
@@ -459,7 +459,7 @@ display: none;
     gap: 12px;
     background: white;
     border-radius: 30px;
-    padding: 10px 30px;
+    padding: 10px 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     margin: auto;
   }
