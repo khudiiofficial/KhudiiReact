@@ -41,7 +41,7 @@ return (
           <h2 className={`errorTitle`}>Unable to Load Content</h2>
           <p className={`errorMessage`}>{err}</p>
           <button 
-            className={`retryButton`}
+            className={`bg-[#e7001e] retryButton`}
             onClick={() => window.location.reload()}
           >
             Retry

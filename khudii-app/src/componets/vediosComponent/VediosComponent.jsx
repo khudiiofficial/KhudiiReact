@@ -186,9 +186,9 @@ if(loader){
       <div className={`errorContainer`}>
         <div className={`errorIcon`}>⚠️</div>
         <h2 className={`errorTitle`}>Unable to Load Content</h2>
-        <p className={`errorMessage`}>{Error}</p>
+        <p className={`errorMessage`}>{error}</p>
         <button 
-          className={`retryButton`}
+          className={`bg-[#e7001e] retryButton`}
           onClick={() => window.location.reload()}
         >
           Retry

@@ -138,9 +138,8 @@
 }
 
 .errorTitle {
-  font-size: 1.8rem;
-  color: #2d3748;
-  margin-bottom: 1rem;
+  font-size: 2rem;
+  color: #222222;
 }
 
 .errorMessage {
@@ -150,7 +149,7 @@
 }
 
 .retryButton {
-  background: #667eea;
+  background: #e7001e;
   color: white;
   border: none;
   padding: 1rem 2rem;
