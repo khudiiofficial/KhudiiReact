@@ -2,11 +2,13 @@ import React from 'react';
 // import styles from './Success.module.css'
 import { useEffect,useState } from 'react';
 import SEO from '../../componets/Helmet/Helmet';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Styles from './SuccessStory.module.css'
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 import { useParams } from 'react-router-dom';
 const SuccessStoryDetail = () => {
+  const nav=useNavigate()
   let {slug}=useParams();
   const [videoData,setvideodata]=useState([])
   const [Error,setError]=useState(null)
@@ -66,16 +68,16 @@ if(loader){
 }
       if (Error) return (
       <div className={`errorContainer`}>
-        <div className={`errorIcon`}>⚠️</div>
-        <h2 className={`errorTitle`}>Unable to Load Content</h2>
-        <p className={`errorMessage`}>{error}</p>
-        <button 
-          className={`bg-[#e7001e] retryButton`}
-          onClick={() => window.location.reload()}
-        >
-          Retry
-        </button>
-      </div>
+      <div className={`errorIcon`}>⚠️</div>
+      <h2 className={`errorTitle`}>Unable to Load Content</h2>
+      <p className={`errorMessage`}>{Error}</p>
+      <button 
+        className={`retryButton`}
+        onClick={() =>nav("/")}
+      >
+        Back to Home
+      </button>
+    </div>
     );
 
   return (

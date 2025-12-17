@@ -6,7 +6,9 @@ const APIPath = import.meta.env.VITE_BACKEND_PATH;
 import OrganizationDetail from '../OrganizationDetail/Organization_Detail';
 import BlogDetails from '../SpecificBlog/SpecificBlog';
 import Categories from '../Categories/Categories';
+import { useNavigate } from 'react-router-dom';
 const Detailforall = ({url}) => {
+  const nav=useNavigate()
 const [data,setdata]=useState("")
 const [loader,setLoading]=useState(false)
 const {slug}=useParams()
@@ -34,10 +36,10 @@ if (error) return (
       <h2 className={`errorTitle`}>Unable to Load Content</h2>
       <p className={`errorMessage`}>{error}</p>
       <button 
-        className={`bg-[#e7001e] retryButton`}
-        onClick={() => window.location.reload()}
+        className={`retryButton`}
+        onClick={() =>nav("/")}
       >
-        Retry
+        Back to Home
       </button>
     </div>
   );

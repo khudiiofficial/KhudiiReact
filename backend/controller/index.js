@@ -1741,7 +1741,7 @@ export const DetailForAll = async (req, res) => {
 
     // If not found in documents, try sectors/categories
     const [sectorRows] = await db.promise().query(
-      "SELECT * FROM sectors WHERE slug = ?",
+      "SELECT * FROM sectors WHERE  deletestatus = 0 AND slug = ?",
       [slug]
     );
 
@@ -1753,7 +1753,8 @@ export const DetailForAll = async (req, res) => {
       });
     }
 
-    // If nothing found
+ 
+   // If nothing found
     return res.status(404).json({ 
       success: false, 
       message: "Not found" 

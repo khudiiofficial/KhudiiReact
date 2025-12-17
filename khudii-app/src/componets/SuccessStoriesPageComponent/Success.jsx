@@ -136,7 +136,7 @@ getStories();
   const VideoCard = ({ video }) => {
     
     return(
-    <div key={video.id} onClick={()=>{nav(`/success-stories/detail/${video.slug}`)}} className="bg-gray-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer">
+    <div key={video.id} onClick={()=>{nav(`/success-stories/${video.slug}`)}} className="bg-gray-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer">
       <div className="relative pb-[56.25%] h-0 overflow-hidden"> {/* 16:9 aspect ratio */}
         {/* <iframe
           className="absolute top-0 left-0 w-full h-full"
