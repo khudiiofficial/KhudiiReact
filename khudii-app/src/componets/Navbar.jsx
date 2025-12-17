@@ -20,19 +20,19 @@
 
 //   const fetchFooterData = async () => {
 //     try {
-     
+
 //       const response = await axios.get(`${APIPath}/api/footer`, {
 //         withCredentials: true
 //       });
-      
+
 //       if (response.data.success) {
 //         setFooterData(response.data.data);
-     
+
 //       }
 //     } catch (error) {
 //       console.error('Error fetching footer data:', error);
 //     } finally {
-      
+
 //     }
 //   };
 //   useEffect(()=>{
@@ -45,13 +45,13 @@
 //      const checkScreenSize = () => {
 //        setIsMobile(window.innerWidth < 600)
 //      }
-     
+
 //      // Check initially
 //      checkScreenSize()
-     
+
 //      // Add event listener
 //      window.addEventListener('resize', checkScreenSize)
-     
+
 //      // Cleanup
 //      return () => window.removeEventListener('resize', checkScreenSize)
 //    }, [])
@@ -124,7 +124,7 @@
 //                 />
 //                 <div>
 //                   <b>{org.name}</b>
-           
+
 //                  <p dangerouslySetInnerHTML={{ __html: org.description.slice(0, 95) + "..." }} />
 
 //                   {/* <Link
@@ -289,7 +289,7 @@
 //             </Link>}
 
 
-            
+
 //             <button
 //               className={`${styles.buttonclass} p-2 rounded-md border`}
 //               onClick={() => setOpen(!open)}
@@ -460,7 +460,7 @@ const Navbar = () => {
       console.error("Error fetching footer data:", error);
     }
   };
-  
+
   useEffect(() => {
     fetchFooterData();
   }, []);
@@ -828,7 +828,7 @@ const Navbar = () => {
               onClick={() => setOpen(!open)}
               aria-label="Toggle menu"
             >
-              <i class="fa-solid fa-bars fa-2xl" style={{color: "#222222"}}></i>
+              <i class="fa-solid fa-bars fa-2xl" style={{ color: "#222222" }}></i>
               {/* <svg
                 className="w-5 h-5"
                 viewBox="0 0 24 24"
@@ -946,21 +946,23 @@ const Navbar = () => {
                       Tribute
                     </Link>
                   </li>
-                  <li className="mobile-menu-nested">
-                    <span className="mobile-menu-nested-title">Registration</span>
-                    <ul className="mobile-menu-nested-list">
-                      <li>
-                        <Link
-                          onClick={() => {
-                            setOpen(!open);
-                          }}
-                          to="/certifications/"
-                          className="mobile-menu-nested-link"
-                        >
-                          Certifications
-                        </Link>
-                      </li>
-                    </ul>
+                </ul>
+              </div>
+
+              {/* Registration */}
+              <div className="mobile-menu-dropdown">
+                <span className="mobile-menu-dropdown-title">Registration</span>
+                <ul className="mobile-menu-dropdown-list">
+                  <li>
+                    <Link
+                      onClick={() => {
+                        setOpen(!open);
+                      }}
+                      to="/certifications/"
+                      className="mobile-menu-dropdown-link"
+                    >
+                      Certifications
+                    </Link>
                   </li>
                 </ul>
               </div>

@@ -71,6 +71,7 @@
 /* Nested List */
 .mobile-menu-nested-title {
   font-weight: 500;
+  f
   color: #222222;
   padding-top: 0.5rem;
 }
@@ -82,7 +83,8 @@
 
 .mobile-menu-nested-link {
   display: block;
-  padding: 0.4rem 0;
+  padding: 0rem 0;
+  font-size: 14px;
   color: #222222;
   font-weight: 500;
   border-radius: 4px;
