@@ -16,7 +16,8 @@
 /* Links */
 .mobile-menu-link {
   display: block;
-  padding: 0.4rem 0.5rem;
+  font-size: 14px;
+  padding: 0rem 0.5rem;
   color: #222222;
   text-decoration: none;
   border-radius: 6px;
@@ -36,7 +37,7 @@
 
 .mobile-menu-dropdown-title {
   display: block;
-  padding: 0.8rem 0.5rem;
+  padding: 0.3rem 0.5rem;
   font-weight: 600;
   color: #02236e;
   background: #ebf8ff;
@@ -53,7 +54,8 @@
 
 .mobile-menu-dropdown-link {
   display: block;
-  padding: 0.4rem 0.5rem;
+  font-size: 14px;
+  padding: 0rem 0.5rem;
   color: #222222;
   font-weight: 500;
   text-decoration: none;
