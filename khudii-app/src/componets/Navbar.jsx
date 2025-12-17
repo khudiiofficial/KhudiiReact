@@ -606,7 +606,7 @@ const Navbar = () => {
           </div>
 
           {/* Right side (search + donate + mobile menu) */}
-          <div className="flex items-center gap-3 relative">
+          <div className="flex items-center gap-3 relative mb-[-15px]">
             {/* Desktop Search */}
             <div className={styles.pos}>
               <i className={`fas fa-search ${styles.ss}`}></i>
@@ -824,11 +824,12 @@ const Navbar = () => {
 
             {/* Mobile Hamburger Icon */}
             <button
-              className={`${styles.buttonclass} p-2 rounded-md border`}
+              className={`${styles.buttonclass} cursor-pointer`}
               onClick={() => setOpen(!open)}
               aria-label="Toggle menu"
             >
-              <svg
+              <i class="fa-solid fa-bars fa-2xl" style={{color: "#222222"}}></i>
+              {/* <svg
                 className="w-5 h-5"
                 viewBox="0 0 24 24"
                 fill="none"
@@ -840,7 +841,7 @@ const Navbar = () => {
                   strokeLinejoin="round"
                   d="M4 6h16M4 12h16M4 18h16"
                 />
-              </svg>
+              </svg> */}
             </button>
           </div>
         </div>
