@@ -33,6 +33,7 @@ import axios from 'axios'
 import './cache.js'
 import { useGoogleAnalytics } from './Hooks/GoogleAnalytics.jsx'
 import Detailforall from './pages/DetailforAll/Detailforall.jsx'
+import SuccessStoryDetail from './pages/Success-Stories-detail/SuccessStoryDetail.jsx'
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 // import TranslationWidget from './componets/translate/Translate'
 function App() {
@@ -104,6 +105,7 @@ useEffect(()=>{
 <Route path='/blogs' element={<Blogss  con={findobj('/blogs')} url={url}/>}/>
 <Route path='/jobs' element={<JobApplicationForm  con={findobj('/jobs')} url={url}/>}/>
 <Route path='/volunteer' element={<VolunteerForm  con={findobj('/volunteer')} url={url}/>}/>
+<Route path='/success-stories/detail/:slug' element={<SuccessStoryDetail url={url}/>}/>
 {/* <Route path='Categories/:slug' element={<Categories url={url}/>}/> */}
 <Route path='/:slug' element={<Detailforall url={url}/>}/>
 </Routes>

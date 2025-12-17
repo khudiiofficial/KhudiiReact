@@ -33,6 +33,9 @@ const SuccessStoryList = ({ stories, onEdit, onDelete }) => {
               <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-[#222222] uppercase tracking-wider">
                 Description
               </th>
+                  <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-[#222222] uppercase tracking-wider">
+                slug
+              </th>
               <th scope="col" className="px-6 py-3 text-right text-sm font-medium text-[#222222] uppercase tracking-wider">
                 Actions
               </th>
@@ -62,6 +65,12 @@ const SuccessStoryList = ({ stories, onEdit, onDelete }) => {
                 <td className="px-6 py-4">
                   <div className="text-sm text-gray-600 line-clamp-2">
                     {story.description || 'No description'}
+                  </div>
+                </td>
+
+                  <td className="px-6 py-4">
+                  <div className="text-sm text-gray-600 line-clamp-2">
+                    {story.slug ?<i class="fa-solid fa-circle-check text-2xl" style={{ color: "#1c5e20" }}></i>:<i class="fa-solid fa-circle-xmark text-2xl" style={{ color: "#ff0000" }}></i>}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

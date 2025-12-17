@@ -126,7 +126,7 @@ call();
     {arr.map((ele, index) => (
       <Link 
         key={index} 
-        to="/success-stories" 
+        to={`/success-stories/detail/${ele.slug}`} 
         className="block group"
       >
         <div className="relative pb-[55.63%]"> {/* 380:200 = 19:10 ≈ 52.63% padding-bottom */}

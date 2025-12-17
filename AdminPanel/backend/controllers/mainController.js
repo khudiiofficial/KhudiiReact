@@ -2868,15 +2868,15 @@ export const getAllSuccessStories = (req, res) => {
 };
 
 export const createSuccessStory = (req, res) => {
-  const { title, urdu_title, link, youtube_id, description } = req.body;
+  const { title, urdu_title, link, youtube_id, description,slug } = req.body;
   
   if (!title || !youtube_id) {
     return res.status(400).json({ error: "Title and YouTube ID are required" });
   }
   
-  const query = `INSERT INTO successstories (title, urdu_title, link, youtube_id, description, deletestatus) VALUES (?, ?, ?, ?, ?, 0)`;
+  const query = `INSERT INTO successstories (title, urdu_title, link, youtube_id, description, deletestatus,slug) VALUES (?, ?, ?, ?, ?, 0, ?)`;
   
-  db1.query(query, [title, urdu_title || null, link || null, youtube_id, description || null], (err, results) => {
+  db1.query(query, [title, urdu_title || null, link || null, youtube_id, description || null,slug || null], (err, results) => {
     if (err) {
       console.error("Error creating success story:", err);
       return res.status(500).json({ error: "Failed to create success story" });
@@ -2891,15 +2891,15 @@ export const createSuccessStory = (req, res) => {
 
 export const updateSuccessStory = (req, res) => {
   const { id } = req.params;
-  const { title, urdu_title, link, youtube_id, description } = req.body;
+  const { title, urdu_title, link, youtube_id, description,slug } = req.body;
   
   if (!title || !youtube_id) {
     return res.status(400).json({ error: "Title and YouTube ID are required" });
   }
   
-  const query = `UPDATE successstories SET title = ?, urdu_title = ?, link = ?, youtube_id = ?, description = ? WHERE id = ? AND deletestatus = 0`;
+  const query = `UPDATE successstories SET title = ?, urdu_title = ?, link = ?, youtube_id = ?, description = ?, slug =? WHERE id = ? AND deletestatus = 0`;
   
-  db1.query(query, [title, urdu_title || null, link || null, youtube_id, description || null, id], (err, results) => {
+  db1.query(query, [title, urdu_title || null, link || null, youtube_id, description || null,slug || null, id], (err, results) => {
     if (err) {
       console.error("Error updating success story:", err);
       return res.status(500).json({ error: "Failed to update success story" });

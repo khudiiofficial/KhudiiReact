@@ -6,7 +6,8 @@ const SuccessStoryForm = ({ story, onSubmit, onCancel }) => {
     urdu_title: '',
     link: '',
     youtube_id: '',
-    description: ''
+    description: '',
+    slug:null
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -19,17 +20,30 @@ const SuccessStoryForm = ({ story, onSubmit, onCancel }) => {
         urdu_title: story.urdu_title || '',
         link: story.link || '',
         youtube_id: story.youtube_id || '',
-        description: story.description || ''
+        description: story.description || '',
+        slug:story.slug || null
       });
     }
   }, [story]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData(prev =>{
+      if(name==="title"){
+        return {
+          ...prev,
+        title:value,
+        slug:value.toLowerCase().trim().replace(/[^a-z0-9\s-]/g, '') .replace(/\s+/g, '-')      
+
+ 
+
+        }
+      }
+
+     return  {
       ...prev,
       [name]: value
-    }));
+    }});
     
     // Clear error when user starts typing
     if (errors[name]) {
@@ -121,6 +135,7 @@ const SuccessStoryForm = ({ story, onSubmit, onCancel }) => {
             type="text"
             id="title"
             name="title"
+            required
             value={formData.title}
             onChange={handleChange}
             className={`w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#02236e] focus:border-transparent ${
@@ -146,6 +161,22 @@ const SuccessStoryForm = ({ story, onSubmit, onCancel }) => {
             placeholder="Enter Title in Urdu (Optional)"
           />
         </div>
+{/* slug */}
+   <div>
+          <label htmlFor="slug" className="block text-sm font-medium text-gray-700 mb-2">
+            Slug
+          </label>
+          <input
+            id="slug"
+            name="slug"
+            required
+            value={formData.slug}
+            onChange={handleChange}
+            rows={4}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#02236e] focus:border-transparent"
+            placeholder="Enter slug"
+          />
+        </div>
 
         {/* YouTube ID */}
         <div>
@@ -156,6 +187,7 @@ const SuccessStoryForm = ({ story, onSubmit, onCancel }) => {
             type="text"
             id="youtube_id"
             name="youtube_id"
+            required
             value={formData.youtube_id}
             onChange={handleChange}
             className={`w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#02236e] focus:border-transparent ${
@@ -178,6 +210,7 @@ const SuccessStoryForm = ({ story, onSubmit, onCancel }) => {
             type="text"
             id="link"
             name="link"
+         
             value={formData.link}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#02236e] focus:border-transparent"
@@ -193,6 +226,7 @@ const SuccessStoryForm = ({ story, onSubmit, onCancel }) => {
           <textarea
             id="description"
             name="description"
+            required
             value={formData.description}
             onChange={handleChange}
             rows={4}
@@ -200,6 +234,7 @@ const SuccessStoryForm = ({ story, onSubmit, onCancel }) => {
             placeholder="Enter Story Description (Optional)"
           />
         </div>
+
 
         {/* Preview */}
         {formData.youtube_id && (

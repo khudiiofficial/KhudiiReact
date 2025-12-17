@@ -71,6 +71,32 @@ const dispatch=useDispatch()
     return () => clearInterval(interval); // cleanup on unmount
   }, [dispatch,location.pathname]);
 
+
+
+ useEffect(() => {
+    const call=async()=>{
+   try {
+        const res = await axios.post(`${APIPath}/authlogin`, {}, { withCredentials: true });
+        if (res.status === 200) {
+          console.log("logged in");
+        }
+      } catch (err) {
+          // console.log(location.pathname)
+        if (err.response && err.response.status === 401 && location.pathname!=='/Login') {
+          alert("Your session has timed out. Please login again.");
+          dispatch(resetUser());
+        } else {
+        
+          console.error("Auth check error:", err);
+        }
+      }
+    }
+   
+call()
+    
+  }, [dispatch,location.pathname]);
+
+
   return (
     <>
 

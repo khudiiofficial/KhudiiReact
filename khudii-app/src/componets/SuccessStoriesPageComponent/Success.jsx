@@ -4,8 +4,11 @@ import PageHeader from '../PageHeader/PageHeader';
 import { useEffect,useState } from 'react';
 import SEO from '../Helmet/Helmet';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Vedios from '../../pages/Vedios/Vedios';
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 const VideoGallery = ({con,url}) => {
+  const nav=useNavigate()
   const [videoData,setvideodata]=useState(null)
   const[error,setError]=useState(null)
   const[loader,setloader]=useState(false)
@@ -130,17 +133,29 @@ getStories();
   //   }
   // ];
 
-  const VideoCard = ({ video }) => (
-    <div key={video.id} className="bg-gray-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+  const VideoCard = ({ video }) => {
+    
+    return(
+    <div key={video.id} onClick={()=>{nav(`/success-stories/detail/${video.slug}`)}} className="bg-gray-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer">
       <div className="relative pb-[56.25%] h-0 overflow-hidden"> {/* 16:9 aspect ratio */}
-        <iframe
+        {/* <iframe
           className="absolute top-0 left-0 w-full h-full"
           src={`https://www.youtube.com/embed/${video.youtube_id}?rel=0`}
           title={video.title}
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
-        />
+        /> */}
+       <img 
+  src={`https://img.youtube.com/vi/${video.youtube_id}/hqdefault.jpg`}
+  alt={`${video.title} thumbnail`}
+  className="absolute top-0 left-0 w-full h-full object-cover"
+  loading="lazy"
+  onError={(e) => {
+    e.target.onerror = null;
+    e.target.src = 'https://img.youtube.com/vi/0/hqdefault.jpg';
+  }}
+/>
       </div>
       
       <div className="p-4">
@@ -172,7 +187,7 @@ getStories();
         </div> */}
       </div>
     </div>
-  );
+  )};
     
    
     

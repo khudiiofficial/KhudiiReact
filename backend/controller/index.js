@@ -961,7 +961,6 @@ export const itemByCategory = (req, res) => {
 };
 
 
-
 export const getsuccessstories=(req,res)=>{
 db.query('SELECT * FROM successstories WHERE deletestatus = 0 ORDER BY id DESC',(err,results)=>{
 if(err){
@@ -972,6 +971,20 @@ if(results.length===0){
 }
 
 res.status(200).json(results)
+
+})
+}
+
+export const getStoryBySlug=async(req,res)=>{
+const {slug}=req.params
+db.query('SELECT * FROM successstories WHERE deletestatus = 0 AND slug = ?',[slug],(err,results)=>{
+if(err){
+  return res.status(500).json({message:"could not get"})
+}
+if(results[0].length===0){
+  return res.status(500).json({message:"could not get"})
+}
+res.status(200).json(results[0])
 
 })
 }
