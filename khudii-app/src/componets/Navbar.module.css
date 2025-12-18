@@ -45,7 +45,7 @@
         /* width: 600px; */
         display: flex;
         align-items: center;
-        gap: 40px;
+        gap: 25px;
     }
     .searchIconOnly {
     display: none !important;

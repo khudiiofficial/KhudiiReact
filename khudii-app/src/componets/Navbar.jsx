@@ -110,7 +110,7 @@
 //         {/* Results Dropdown for top search desktop */}
 //         {err ?<>{search && <div className={`${styles.searchResults} ${styles.helper_class}`}>Netwrok Error</div>}</>:<>
 //         {load ? <div className={`${styles.searchResults} ${styles.helper_class}`}>  <div className="flex items-center justify-center w-full h-full py-1">
-//       <div className="w-5 h-5 sm:w-8 sm:h-8 md:w-5 md:h-5 border-4 border-red-500 border-t-transparent rounded-full animate-spin" />
+//       <div className="w-5 h-5 sm:w-8 sm:h-8 md:w-5 md:h-5 border-4 border-[#e7001e] border-t-transparent rounded-full animate-spin" />
 //     </div></div>: results.length===0 &&  search && <div className={`${styles.searchResults} ${styles.helper_class}`}>No Results</div> }
 
 //         {results.length > 0 && search && (
@@ -248,7 +248,7 @@
 //             {/* Results for desktop search */}
 //           {err ?<>{search&& counter &&<div className={`${styles.searchResults} ${styles.helper_class}`}>Netwrok Error</div> }</>:<>
 //            { load && !isMobile? <div className={`${styles.searchResults} ${styles.helper_class}`}> <div className="flex items-center justify-center w-full h-full py-1">
-//       <div className="w-3 h-3 sm:w-5 sm:h-5 md:w-5 md:h-5 border-4 border-red-500 border-t-transparent rounded-full animate-spin" />
+//       <div className="w-3 h-3 sm:w-5 sm:h-5 md:w-5 md:h-5 border-4 border-[#e7001e] border-t-transparent rounded-full animate-spin" />
 //     </div></div>: results.length===0 && counter && search  &&<div className={`${styles.searchResults} ${styles.helper_class}`}>No Results</div> }
 //         {results.length > 0 && counter && search && (
 //           <div className={styles.searchResults}>
@@ -606,7 +606,7 @@ const Navbar = () => {
           </div>
 
           {/* Right side (search + donate + mobile menu) */}
-          <div className="flex items-center gap-3 relative mb-[-15px]">
+          <div className="flex items-center gap-3 relative">
             {/* Desktop Search */}
             <div className={styles.pos}>
               <i className={`fas fa-search ${styles.ss}`}></i>
@@ -647,7 +647,7 @@ const Navbar = () => {
                   <div className={`${styles.searchResults} ${styles.helper_class}`}>
                     {" "}
                     <div className="flex items-center justify-center w-full h-full py-1">
-                      <div className="w-3 h-3 sm:w-5 sm:h-5 md:w-5 md:h-5 border-4 border-red-500 border-t-transparent rounded-full animate-spin" />
+                      <div className="w-3 h-3 sm:w-5 sm:h-5 md:w-5 md:h-5 border-4 border-[#e7001e] border-t-transparent rounded-full animate-spin" />
                     </div>
                   </div>
                 ) : (
@@ -776,7 +776,7 @@ const Navbar = () => {
                             {load ? (
                               <div className={`${styles.searchResults} ${styles.mobileResults}`}>
                                 <div className="flex items-center justify-center w-full h-full py-3">
-                                  <div className="w-6 h-6 border-4 border-red-500 border-t-transparent rounded-full animate-spin" />
+                                  <div className="w-6 h-6 border-4 border-[#e7001e] border-t-transparent rounded-full animate-spin" />
                                 </div>
                               </div>
                             ) : results.length === 0 ? (
