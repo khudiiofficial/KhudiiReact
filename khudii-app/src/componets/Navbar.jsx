@@ -828,7 +828,7 @@ const Navbar = () => {
               onClick={() => setOpen(!open)}
               aria-label="Toggle menu"
             >
-              <i class="fa-solid fa-bars fa-2xl" style={{ color: "#222222" }}></i>
+              <i class="fa-solid fa-bars fa-2xl" style={{ color: "#02236e" }}></i>
               {/* <svg
                 className="w-5 h-5"
                 viewBox="0 0 24 24"
