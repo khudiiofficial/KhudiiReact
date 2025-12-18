@@ -89,7 +89,17 @@ if(loader){
         url={`${url}/videos`}
         type="website"
       /> */}
+      
    <section className={Styles.section}>
+     <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-[#222222] mb-4">
+            Khudii Success Stories
+          </h1>
+          <p className="text-xl text-[#222222] max-w-3xl mx-auto">
+            Inspiring stories of hope, compassion, and community impact. 
+            Discover how Khudii and its partners are making a difference across Pakistan.
+          </p>
+        </div>
       <div className="video-gallery-container">
         {/* Main Featured Video */}
     
