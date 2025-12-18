@@ -1,8 +1,8 @@
 
-
 // import React, { useState, useEffect } from "react";
 // import axios from "axios";
 // import { useParams, useNavigate } from "react-router-dom";
+// import RichTextEditor from "../../components/editor/TextEditor";
 // const APIPath = import.meta.env.VITE_BACKEND_PATH;
 
 // export default function EditOrganizationPage() {
@@ -12,6 +12,7 @@
 //     name: "",
 //     description: "",
 //     category: [], // Changed to array
+//     search_tags: "", // ADDED: New search_tags field
 //     youtube_video_url: "",
 //     introductory_image_base64: "",
 //     slug: "",
@@ -28,6 +29,10 @@
 //       location: "",
 //       googlemap: "",
 //       mobile: "",
+//       website:"",
+//       youtubechannel:"",
+//       email:"",
+//       linkedin:""
 //     },
 //     icons: [{ name: "", svg: "", qty: "" }],
 //   });
@@ -37,17 +42,7 @@
 //   const [isLoading, setIsLoading] = useState(true);
 //   const [cap,setcap]=useState('');
 //   const [availableCategories ,setcat]=useState([])
-//   // Available categories
-//   // const availableCategories = [
-//   //   "Health",
-//   //   "Education",
-//   //   "Autism",
-//   //   "Orphanage",
-//   //   "Thalassemia",
-//   //   "Visually impaired",
-//   //   "Differently Abled",
-//   //   "Water And Food"
-//   // ];
+
 //   useEffect(()=>{
 // const func=async()=>{
 //   try {
@@ -63,7 +58,7 @@
 // func()
 // },[])
 
-//   // Validation rules
+//   // Validation rules - ADDED search_tags validation
 //   const validationRules = {
 //     name: {
 //       required: true,
@@ -82,6 +77,9 @@
 //     category: {
 //       required: true,
 //       minLength: 1 // At least one category selected
+//     },
+//     search_tags: { // ADDED: Validation for search_tags
+//       maxLength: 500
 //     },
 //     introductory_image_base64: {
 //       required: false // Not required for edit
@@ -167,6 +165,7 @@
 //           name: org.name || "",
 //           description: org.description || "",
 //           category: categoryArray, // Set as array
+//           search_tags: org.search_tags || "", // ADDED: Set search_tags from API
 //           youtube_video_url: org.youtube_video_url || "",
 //           introductory_image_base64: org.introductory_image_path,
 //           slug: org.slug || "",
@@ -183,6 +182,10 @@
 //             location: org.socials?.location || "",
 //             googlemap: org.socials?.googlemap || "",
 //             mobile: org.socials?.mobile || "",
+//             website:org.socials?.website || "",
+//             youtubechannel:org.socials?.youtubechannel || "",
+//             email:org.socials?.email || "",
+//             linkedin:org.socials?.linkedin || ""
 //           },
 //           icons: org.icons && org.icons.length > 0 ? org.icons : [{ name: "", svg: "", qty: "" }],
 //         });
@@ -228,13 +231,14 @@
 //     return fieldErrors;
 //   };
 
-//   // Validate entire form
+//   // Validate entire form - ADDED search_tags validation
 //   const validateForm = () => {
 //     const newErrors = {};
 
 //     // Basic fields validation
 //     newErrors.name = validateField("name", form.name, validationRules.name);
 //     newErrors.category = validateField("category", form.category, validationRules.category);
+//     newErrors.search_tags = validateField("search_tags", form.search_tags, validationRules.search_tags); // ADDED
 //     newErrors.youtube_video_url = validateField('youtube_video_url', form.youtube_video_url, validationRules.youtube_video_url);
     
 //     // Socials validation
@@ -541,7 +545,7 @@
 //             </div>
 //             <button
 //               onClick={() => navigate("/dashboard/OrganizationPage")}
-//               className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
+//               className="cursor-pointer bg-[#fcdd2d] text-[#222222] px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors hover:text-white"
 //             >
 //               ← Back
 //             </button>
@@ -598,7 +602,7 @@
 //                 <label className="block text-sm font-medium text-gray-700 mb-1">
 //                   Description *
 //                 </label>
-//                 <textarea
+//                 {/* <textarea
 //                   placeholder="Provide a detailed description of the organization"
 //                   value={form.description}
 //                   onChange={(e) => setForm({ ...form, description: e.target.value })}
@@ -606,8 +610,29 @@
 //                   className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
 //                     errors.description?.length ? 'border-red-500' : 'border-gray-300'
 //                   }`}
-//                 />
+//                 /> */}
+//                 <RichTextEditor form={form} setForm={setForm}/>
 //                 {renderErrors(errors.description)}
+//               </div>
+
+//               {/* ADDED: Search Tags Field */}
+//               <div>
+//                 <label className="block text-sm font-medium text-gray-700 mb-1">
+//                   Search Tags
+//                 </label>
+//                 <input
+//                   type="text"
+//                   placeholder="Enter search tags separated by commas (e.g., charity, donation, help)"
+//                   value={form.search_tags}
+//                   onChange={(e) => setForm({ ...form, search_tags: e.target.value })}
+//                   className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+//                     errors.search_tags?.length ? 'border-red-500' : 'border-gray-300'
+//                   }`}
+//                 />
+//                 <p className="text-xs text-gray-500 mt-1">
+//                   Add relevant keywords to help users find this organization. Separate with commas.
+//                 </p>
+//                 {renderErrors(errors.search_tags)}
 //               </div>
 
 //               <div>
@@ -657,13 +682,13 @@
 //                         {form.category.map((cat) => (
 //                           <span 
 //                             key={cat} 
-//                             className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+//                             className="cursor-pointer inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
 //                           >
 //                             {cat}
 //                             <button
 //                               type="button"
 //                               onClick={() => handleCategoryChange(cat)}
-//                               className="ml-2 text-blue-600 hover:text-blue-800 focus:outline-none"
+//                               className="cursor-pointer ml-2 text-blue-600 hover:text-blue-800 focus:outline-none"
 //                             >
 //                               ×
 //                             </button>
@@ -680,6 +705,7 @@
 //               </div>
 //             </div>
 
+//             {/* Rest of the form remains the same */}
 //             {/* SEO Fields */}
 //             <div className="space-y-4">
 //               <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">SEO Information</h2>
@@ -740,7 +766,7 @@
 //               </div>
 //             </div>
 
-//             {/* Rest of the form remains the same */}
+//             {/* Rest of your existing code remains exactly the same... */}
 //             {/* Intro Image */}
 //             <div className="space-y-4">
 //               <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Images</h2>
@@ -753,13 +779,13 @@
 //                   type="file" 
 //                   onChange={handleIntroImageChange}
 //                   accept="image/*"
-//                   className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+//                   className="cursor-pointer block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
 //                 />
-//                 <p className="text-xs text-gray-500 mt-1">Supported formats: JPEG, PNG, WebP. Max size: 5MB</p>
+//                 <p className="text-xs text-gray-500 mt-1">Supported formats: WebP Only Max size: 5MB</p>
 //                 {renderErrors(errors.introductory_image_base64)}
 //                 {form.introductory_image_base64 && (
 //                   <div className="mt-3">
-//                     <p className="text-sm text-green-600 mb-1">✓ New image selected</p>
+//                     <p className="text-sm text-[#1c5e20] mb-1">✓ New Image Selected</p>
 //                     <img
 //                       src={form.introductory_image_base64}
 //                       alt="Intro Preview"
@@ -899,7 +925,7 @@
 //                           value={icon.qty}
 //                           onChange={(e) => handleIconChange(i, "qty", e.target.value)}
 //                           placeholder="Number"
-//                           className={`w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+//                           className={`cursor-pointer w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
 //                             errors.icons?.[i]?.qty?.length ? 'border-red-500' : 'border-gray-300'
 //                           }`}
 //                         />
@@ -922,7 +948,7 @@
 //                 <button
 //                   type="button"
 //                   onClick={addIconField}
-//                   className="flex items-center gap-2 text-purple-600 hover:text-purple-800 font-medium text-sm"
+//                   className="cursor-pointer flex items-center gap-2 text-[#009dc8] font-medium text-sm"
 //                 >
 //                   <span className="text-lg">+</span> Add Icon
 //                 </button>
@@ -933,10 +959,10 @@
 //               <button
 //                 type="submit"
 //                 disabled={isSubmitting}
-//                 className={`px-8 py-3 rounded-lg font-semibold text-white transition-colors ${
+//                 className={`cursor-pointer px-8 py-3 rounded-lg font-semibold text-white transition-colors ${
 //                   isSubmitting 
 //                     ? 'bg-gray-400 cursor-not-allowed' 
-//                     : 'bg-green-600 hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2'
+//                     : 'bg-[#1c5e20] hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2'
 //                 }`}
 //               >
 //                 {isSubmitting ? (
@@ -951,7 +977,7 @@
 //               <button
 //                 type="button"
 //                 onClick={() => navigate("/dashboard/OrganizationPage")}
-//                 className="px-8 py-3 rounded-lg font-semibold text-gray-700 bg-gray-200 hover:bg-gray-300 transition-colors"
+//                 className="cursor-pointer px-8 py-3 rounded-lg font-semibold bg-[#e7001e] hover:bg-red-700 text-white transition-colors"
 //               >
 //                 Cancel
 //               </button>
@@ -962,6 +988,14 @@
 //     </div>
 //   );
 // }
+
+
+
+
+
+
+
+
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -975,10 +1009,11 @@ export default function EditOrganizationPage() {
   const [form, setForm] = useState({
     name: "",
     description: "",
-    category: [], // Changed to array
-    search_tags: "", // ADDED: New search_tags field
+    category: [],
+    search_tags: "",
     youtube_video_url: "",
     introductory_image_base64: "",
+    partner_image: "",
     slug: "",
     meta_title: "",
     meta_description: "",
@@ -1004,25 +1039,26 @@ export default function EditOrganizationPage() {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [cap,setcap]=useState('');
-  const [availableCategories ,setcat]=useState([])
+  const [cap, setcap] = useState('');
+  const [availableCategories, setcat] = useState([]);
+  const [existingIntroImage, setExistingIntroImage] = useState("");
+  const [existingPartnerImage, setExistingPartnerImage] = useState("");
 
-  useEffect(()=>{
-const func=async()=>{
-  try {
-    const res=await axios.get(`${APIPath}/sectors/admin`,{withCredentials:true})
-    if(res.status===200){
-      setcat(res.data.data)
+  useEffect(() => {
+    const func = async () => {
+      try {
+        const res = await axios.get(`${APIPath}/sectors/admin`, { withCredentials: true })
+        if (res.status === 200) {
+          setcat(res.data.data)
+        }
+      } catch (error) {
+        console.log(error)
+      }
     }
-    
-  } catch (error) {
-    console.log(error)
-  }
-}
-func()
-},[])
+    func()
+  }, [])
 
-  // Validation rules - ADDED search_tags validation
+  // Validation rules - ADDED partner_image validation
   const validationRules = {
     name: {
       required: true,
@@ -1040,13 +1076,16 @@ func()
     },
     category: {
       required: true,
-      minLength: 1 // At least one category selected
+      minLength: 1
     },
-    search_tags: { // ADDED: Validation for search_tags
+    search_tags: {
       maxLength: 500
     },
     introductory_image_base64: {
-      required: false // Not required for edit
+      required: true // REQUIRED for edit too
+    },
+    partner_image: {
+      dimensions: { width: 300, height: 300 }
     },
     slug: {
       required: true,
@@ -1105,33 +1144,46 @@ func()
     const fetchOrganization = async () => {
       try {
         setIsLoading(true);
-        const res = await axios.get(`${APIPath}/api/organizations/${id}`,{withCredentials:true});
+        const res = await axios.get(`${APIPath}/api/organizations/${id}`, { withCredentials: true });
         const org = res.data;
         
         // Parse category from JSON string to array
         let categoryArray = [];
         if (org.category) {
           try {
-            // If category is stored as JSON array, parse it
             if (typeof org.category === 'string' && org.category.startsWith('[')) {
               categoryArray = JSON.parse(org.category);
             } else {
-              // If it's a single string, convert to array
               categoryArray = [org.category];
             }
           } catch (e) {
-            // If parsing fails, use as single item array
             categoryArray = [org.category];
           }
+        }
+
+        // IMPORTANT: Convert existing image paths to base64 data URLs for display
+        // This is needed because the backend returns file paths, not base64
+        let introImageBase64 = "";
+        let partnerImageBase64 = "";
+        
+        if (org.introductory_image_path) {
+          // This is a file path, not base64. We'll keep it as is for display
+          // The backend will handle the file path vs base64 conversion
+          introImageBase64 = org.introductory_image_path;
+        }
+        
+        if (org.partner_image) {
+          partnerImageBase64 = org.partner_image;
         }
 
         setForm({
           name: org.name || "",
           description: org.description || "",
-          category: categoryArray, // Set as array
-          search_tags: org.search_tags || "", // ADDED: Set search_tags from API
+          category: categoryArray,
+          search_tags: org.search_tags || "",
           youtube_video_url: org.youtube_video_url || "",
-          introductory_image_base64: org.introductory_image_path,
+          introductory_image_base64: introImageBase64, // Use the existing image
+          partner_image: partnerImageBase64, // Use the existing partner image
           slug: org.slug || "",
           meta_title: org.meta_title || "",
           meta_description: org.meta_description || "",
@@ -1146,15 +1198,17 @@ func()
             location: org.socials?.location || "",
             googlemap: org.socials?.googlemap || "",
             mobile: org.socials?.mobile || "",
-            website:org.socials?.website || "",
-            youtubechannel:org.socials?.youtubechannel || "",
-            email:org.socials?.email || "",
-            linkedin:org.socials?.linkedin || ""
+            website: org.socials?.website || "",
+            youtubechannel: org.socials?.youtubechannel || "",
+            email: org.socials?.email || "",
+            linkedin: org.socials?.linkedin || ""
           },
           icons: org.icons && org.icons.length > 0 ? org.icons : [{ name: "", svg: "", qty: "" }],
         });
 
         setExistingImages(org.images || []);
+        setExistingIntroImage(org.introductory_image_path || "");
+        setExistingPartnerImage(org.partner_image || "");
         
       } catch (err) {
         console.error("Error fetching organization:", err);
@@ -1170,6 +1224,66 @@ func()
     }
   }, [id, navigate]);
 
+  // Function to check image dimensions (only for partner_image)
+  const checkImageDimensions = (base64Image) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = function() {
+        resolve({
+          width: this.width,
+          height: this.height
+        });
+      };
+      img.onerror = function() {
+        reject(new Error('Failed to load image'));
+      };
+      img.src = base64Image;
+    });
+  };
+
+  // Convert file to Base64 (regular function without dimension check)
+  const handleFileToBase64 = (file, callback) => {
+    const reader = new FileReader();
+    reader.onloadend = () => callback(reader.result);
+    reader.readAsDataURL(file);
+  };
+
+  // Convert file to Base64 with dimension validation (only for partner_image)
+  const handleFileToBase64WithDimensions = (file, callback, fieldName) => {
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+      const base64Result = reader.result;
+      
+      // Only check dimensions for partner_image
+      if (fieldName === 'partner_image') {
+        try {
+          // Check image dimensions
+          const dimensions = await checkImageDimensions(base64Result);
+          
+          if (dimensions.width !== 300 || dimensions.height !== 300) {
+            throw new Error(`Partner image must be exactly 300x300 pixels. Current dimensions: ${dimensions.width}x${dimensions.height}px`);
+          }
+          
+          // If dimensions are correct, call the callback
+          callback(base64Result);
+        } catch (error) {
+          // Set error state
+          setErrors(prev => ({
+            ...prev,
+            [fieldName]: [error.message]
+          }));
+          // Clear the image from form
+          setForm(prev => ({ ...prev, [fieldName]: "" }));
+          return;
+        }
+      } else {
+        // For other images, just call the callback
+        callback(base64Result);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
   // Validate individual field
   const validateField = (name, value, rules) => {
     const fieldErrors = [];
@@ -1179,7 +1293,8 @@ func()
         if (value.length === 0) {
           fieldErrors.push("This field is required");
         }
-      } else if (!value.trim()) {
+      } else if (!value.trim() && !(name === 'introductory_image_base64' && existingIntroImage)) {
+        // For intro image, check if we have existing image
         fieldErrors.push("This field is required");
       }
     }
@@ -1195,15 +1310,20 @@ func()
     return fieldErrors;
   };
 
-  // Validate entire form - ADDED search_tags validation
+  // Validate entire form
   const validateForm = () => {
     const newErrors = {};
 
     // Basic fields validation
     newErrors.name = validateField("name", form.name, validationRules.name);
     newErrors.category = validateField("category", form.category, validationRules.category);
-    newErrors.search_tags = validateField("search_tags", form.search_tags, validationRules.search_tags); // ADDED
+    newErrors.search_tags = validateField("search_tags", form.search_tags, validationRules.search_tags);
     newErrors.youtube_video_url = validateField('youtube_video_url', form.youtube_video_url, validationRules.youtube_video_url);
+    
+    // Intro image validation - check if we have either existing or new image
+    if (!form.introductory_image_base64 && !existingIntroImage) {
+      newErrors.introductory_image_base64 = ["Introductory image is required"];
+    }
     
     // Socials validation
     newErrors.socials = {};
@@ -1242,13 +1362,11 @@ func()
     setForm(prev => {
       const currentCategories = [...prev.category];
       if (currentCategories.includes(category)) {
-        // Remove category if already selected
         return {
           ...prev,
           category: currentCategories.filter(cat => cat !== category)
         };
       } else {
-        // Add category if not selected
         return {
           ...prev,
           category: [...currentCategories, category]
@@ -1256,7 +1374,6 @@ func()
       }
     });
 
-    // Clear error when user selects a category
     if (errors.category?.length) {
       setErrors(prev => ({
         ...prev,
@@ -1265,14 +1382,7 @@ func()
     }
   };
 
-  // Convert file to Base64
-  const handleFileToBase64 = (file, callback) => {
-    const reader = new FileReader();
-    reader.onloadend = () => callback(reader.result);
-    reader.readAsDataURL(file);
-  };
-
-  // Handle slug generation from name
+  // Generate slug
   const generateSlug = (name) => {
     return name
       .toLowerCase()
@@ -1286,11 +1396,11 @@ func()
   const handleIntroImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Validate file type
-      if (!file.type.startsWith('image/')) {
+      // Validate file type (only WebP)
+      if (!file.type.startsWith('image/') || file.type !== 'image/webp') {
         setErrors(prev => ({
           ...prev,
-          introductory_image_base64: ["Please select a valid image file"]
+          introductory_image_base64: ["Please select a valid WebP image file (.webp)"]
         }));
         return;
       }
@@ -1311,19 +1421,64 @@ func()
     }
   };
 
+  // Partner image upload with dimension validation
+  const handlePartnerImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Validate file type (only WebP)
+      if (!file.type.startsWith('image/') || file.type !== 'image/webp') {
+        setErrors(prev => ({
+          ...prev,
+          partner_image: ["Please select a valid WebP image file (.webp)"]
+        }));
+        return;
+      }
+
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        setErrors(prev => ({
+          ...prev,
+          partner_image: ["Image size must be less than 5MB"]
+        }));
+        return;
+      }
+
+      // Use the dimension-checking function for partner_image
+      handleFileToBase64WithDimensions(file, (base64) => {
+        setForm({ ...form, partner_image: base64 });
+        setErrors(prev => ({ ...prev, partner_image: [] }));
+      }, 'partner_image');
+    }
+  };
+
+  // Remove existing intro image
+  const removeIntroImage = () => {
+    if (window.confirm("Are you sure you want to remove the introductory image?")) {
+      setForm(prev => ({ ...prev, introductory_image_base64: "" }));
+      setExistingIntroImage("");
+    }
+  };
+
+  // Remove partner image
+  const removePartnerImage = () => {
+    if (window.confirm("Are you sure you want to remove the partner image?")) {
+      setForm(prev => ({ ...prev, partner_image: "" }));
+      setExistingPartnerImage("");
+    }
+  };
+
   // Multiple images upload
   const handleImagesChange = (e) => {
     const files = Array.from(e.target.files);
     
-    // Validate total files
     if (form.images_base64.length + files.length > 10) {
       alert("Maximum 10 images allowed");
       return;
     }
 
     files.forEach((file) => {
-      if (!file.type.startsWith('image/')) {
-        alert("Please select valid image files only");
+      if (!file.type.startsWith('image/') || file.type !== 'image/webp') {
+        alert("Please select valid WebP files only");
         return;
       }
 
@@ -1447,7 +1602,7 @@ func()
       alert("Please fix the validation errors before submitting.");
       return;
     }
-    if(cap){
+    if (cap) {
       console.log('bot detected')
       setcap('')
       return
@@ -1497,7 +1652,7 @@ func()
       </div>
     );
   }
-
+console.log(form)
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
@@ -1517,7 +1672,7 @@ func()
           
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Basic Fields */}
-            <input type="hidden" onChange={(e)=>{setcap(e.target.value)}} />
+            <input type="hidden" onChange={(e) => { setcap(e.target.value) }} />
             <div className="space-y-4">
               <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Basic Information</h2>
               
@@ -1566,20 +1721,10 @@ func()
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Description *
                 </label>
-                {/* <textarea
-                  placeholder="Provide a detailed description of the organization"
-                  value={form.description}
-                  onChange={(e) => setForm({ ...form, description: e.target.value })}
-                  rows={4}
-                  className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                    errors.description?.length ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                /> */}
                 <RichTextEditor form={form} setForm={setForm}/>
                 {renderErrors(errors.description)}
               </div>
 
-              {/* ADDED: Search Tags Field */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Search Tags
@@ -1638,7 +1783,6 @@ func()
                     ))}
                   </div>
                   
-                  {/* Selected categories display */}
                   {form.category.length > 0 && (
                     <div className="mt-4 pt-3 border-t border-gray-200">
                       <p className="text-sm font-medium text-gray-700 mb-2">Selected categories:</p>
@@ -1669,7 +1813,6 @@ func()
               </div>
             </div>
 
-            {/* Rest of the form remains the same */}
             {/* SEO Fields */}
             <div className="space-y-4">
               <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">SEO Information</h2>
@@ -1687,10 +1830,6 @@ func()
                     errors.meta_title?.length ? 'border-red-500' : 'border-gray-300'
                   }`}
                 />
-                <div className="flex justify-between text-xs text-gray-500 mt-1">
-                  {/* <span>{form.meta_title.length}/60 characters</span>
-                  <span>Recommended for search engines</span> */}
-                </div>
                 {renderErrors(errors.meta_title)}
               </div>
 
@@ -1723,36 +1862,107 @@ func()
                     errors.meta_keywords?.length ? 'border-red-500' : 'border-gray-300'
                   }`}
                 />
-                {/* <p className="text-xs text-gray-500 mt-1">
-                  Separate keywords with commas. Maximum 255 characters.
-                </p> */}
                 {renderErrors(errors.meta_keywords)}
               </div>
             </div>
 
-            {/* Rest of your existing code remains exactly the same... */}
-            {/* Intro Image */}
+            {/* Images Section */}
             <div className="space-y-4">
               <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Images</h2>
               
+              {/* Introductory Image */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Introductory Image
+                  Introductory Image *
                 </label>
                 <input 
                   type="file" 
                   onChange={handleIntroImageChange}
-                  accept="image/*"
+                  accept=".webp,image/webp"
                   className="cursor-pointer block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                 />
-                <p className="text-xs text-gray-500 mt-1">Supported formats: WebP Only Max size: 5MB</p>
+                <p className="text-xs text-gray-500 mt-1">Supported format: WebP only. Max size: 5MB</p>
                 {renderErrors(errors.introductory_image_base64)}
-                {form.introductory_image_base64 && (
+                
+                {/* Existing Intro Image */}
+                {existingIntroImage && !form.introductory_image_base64?.startsWith('data:image') && (
+                  <div className="mt-3">
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm text-gray-600 mb-1">Current Introductory Image:</p>
+                      {/* <button
+                        type="button"
+                        onClick={removeIntroImage}
+                        className="text-sm text-red-600 hover:text-red-800"
+                      >
+                        Remove
+                      </button> */}
+                    </div>
+                    <img
+                      src={`${existingIntroImage}`}
+                      alt="Existing Intro"
+                      className="h-32 rounded-lg shadow-md border"
+                    />
+                  </div>
+                )}
+                
+                {/* New Intro Image Preview */}
+                {form.introductory_image_base64 && form.introductory_image_base64.startsWith('data:image') && (
                   <div className="mt-3">
                     <p className="text-sm text-[#1c5e20] mb-1">✓ New Image Selected</p>
                     <img
                       src={form.introductory_image_base64}
                       alt="Intro Preview"
+                      className="h-32 rounded-lg shadow-md border"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Partner Image */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Partner Image (must be 300x300 pixels)
+                </label>
+                <input 
+                  type="file" 
+                  onChange={handlePartnerImageChange}
+                  accept=".webp,image/webp"
+                  className="cursor-pointer block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Must be exactly 300x300 pixels. Supported format: WebP only. Max size: 5MB
+                </p>
+                {renderErrors(errors.partner_image)}
+                
+                {/* Existing Partner Image */}
+                {existingPartnerImage && !form.partner_image?.startsWith('data:image') && (
+                  <div className="mt-3">
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm text-gray-600 mb-1">Current Partner Image:</p>
+                      {/* <button
+                        type="button"
+                        onClick={removePartnerImage}
+                        className="text-sm text-red-600 hover:text-red-800"
+                      >
+                        Remove
+                      </button> */}
+                    
+                    </div>
+                    <img
+                      src={`${existingPartnerImage}`}
+                      alt="Existing Partner"
+                      className="h-32 rounded-lg shadow-md border"
+                    />
+                  </div>
+                )}
+                
+                {/* New Partner Image Preview */}
+                {form.partner_image && form.partner_image.startsWith('data:image') && (
+                  <div className="mt-3">
+                    <p className="text-sm text-[#1c5e20] mb-1">✓ New Partner Image Selected</p>
+                    <img
+                      src={form.partner_image}
+                      alt="Partner Preview"
                       className="h-32 rounded-lg shadow-md border"
                     />
                   </div>
@@ -1776,7 +1986,7 @@ func()
                         <button
                           type="button"
                           onClick={() => removeExistingImage(img)}
-                          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                          className="cursor-pointer absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                         >
                           ✖
                         </button>
@@ -1795,10 +2005,10 @@ func()
                   type="file" 
                   multiple 
                   onChange={handleImagesChange}
-                  accept="image/*"
+                  accept=".webp,image/webp"
                   className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                 />
-                <p className="text-xs text-gray-500 mt-1">You can upload up to 10 additional images</p>
+                <p className="text-xs text-gray-500 mt-1">You can upload up to 10 additional WebP images</p>
                 {form.images_base64.length > 0 && (
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-3">
                     {form.images_base64.map((img, i) => (
@@ -1811,7 +2021,7 @@ func()
                         <button
                           type="button"
                           onClick={() => removeNewImage(i)}
-                          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                          className="cursor-pointer absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                         >
                           ✖
                         </button>
@@ -1899,7 +2109,7 @@ func()
                         <button
                           type="button"
                           onClick={() => removeIconField(i)}
-                          className="text-red-600 hover:text-red-800 font-bold p-2 rounded hover:bg-red-50 transition-colors self-end mb-1"
+                          className="cursor-pointer text-red-600 hover:text-red-800 font-bold p-2 rounded hover:bg-red-50 transition-colors self-end mb-1"
                         >
                           ✖
                         </button>
@@ -1952,3 +2162,7 @@ func()
     </div>
   );
 }
+
+
+
+

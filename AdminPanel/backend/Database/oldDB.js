@@ -51,75 +51,26 @@ export default db1;
 
 
 
-// async function addIsMobileColumn() {
+// async function addPartnerImageColumn() {
 //   try {
-//     console.log('🔄 Adding isMobile column to crousel_images table...');
+//     // Using promise-based query (mysql2/promise)
+//     const promisePool = db1.promise();
     
-//     // Check if column already exists
-//     const [existingColumns] = await db1.promise().query(`
-//       SELECT COLUMN_NAME 
-//       FROM INFORMATION_SCHEMA.COLUMNS 
-//       WHERE TABLE_SCHEMA = ? 
-//       AND TABLE_NAME = 'crousel_images' 
-//       AND COLUMN_NAME = 'isMobile'
-//     `, [process.env.DB_NAME]);
+//     const sql = `
+//       ALTER TABLE items 
+//       ADD COLUMN partner_image TEXT 
+//     `;
     
-//     if (existingColumns.length > 0) {
-//       console.log('✅ isMobile column already exists');
-//     } else {
-//       // Add the new column
-//       await db1.promise().query(`
-//         ALTER TABLE crousel_images 
-//         ADD COLUMN isMobile BOOLEAN DEFAULT FALSE 
-//         COMMENT 'Flag to identify if image is for mobile devices'
-//       `);
-      
-//       console.log('✅ isMobile column added successfully');
-//     }
+//     // Or without specifying position:
+//     // const sql = `ALTER TABLE items ADD COLUMN partner_image VARCHAR(255)`;
     
-//     // Display table structure
-//     const [tableStructure] = await db1.promise().query(`
-//       SHOW COLUMNS FROM crousel_images
-//     `);
-    
-//     console.log('\n📊 Updated table structure:');
-//     console.table(tableStructure.map(col => ({
-//       Field: col.Field,
-//       Type: col.Type,
-//       Null: col.Null,
-//       Default: col.Default,
-//       Extra: col.Extra
-//     })));
-    
-//     // Show current data count by isMobile
-//     const [dataStats] = await db1.promise().query(`
-//       SELECT 
-//         isMobile,
-//         COUNT(*) as count
-//       FROM crousel_images 
-//       GROUP BY isMobile
-//     `);
-    
-//     console.log('\n📈 Data Statistics:');
-//     dataStats.forEach(stat => {
-//       console.log(`   isMobile = ${stat.isMobile}: ${stat.count} images`);
-//     });
-    
-//     return true;
+//     await promisePool.query(sql);
+//     console.log("✅ Successfully added 'partner_image' column to 'items' table");
     
 //   } catch (error) {
-//     console.error('❌ Error adding column:', error);
-//     throw error;
+//     console.error("❌ Error adding column:", error.message);
 //   }
 // }
 
-// // Run the migration
-// addIsMobileColumn()
-//   .then(() => {
-//     console.log('\n✨ Migration completed successfully!');
-//     process.exit(0);
-//   })
-//   .catch(error => {
-//     console.error('💥 Migration failed:', error);
-//     process.exit(1);
-//   });
+// // Execute the function
+// addPartnerImageColumn();

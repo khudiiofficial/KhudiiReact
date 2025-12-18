@@ -1439,126 +1439,19 @@ export const getAllOrganizations = (req, res) => {
 };
 
 
-export const createOrganization = async (req, res) => {
-  const {
-    name,
-    description,
-    category, // This is now an array
-    introductory_image_base64,
-    youtube_video_url,
-    slug,
-    search_tags,
-    meta_title,
-    meta_description,
-    meta_keywords,
-    images_base64,
-    socials,
-    icons,
-  } = req.body;
-
-  const conn = await db1.promise().getConnection();
-
-  try {
-    await conn.beginTransaction();
-
-    // Validate required fields - category is now an array
-    if (!name || !description || !category || category.length === 0 || !introductory_image_base64 || !slug) {
-      await conn.rollback();
-      conn.release();
-      return res.status(400).json({
-        message: "Missing required fields: name, description, at least one category, introductory_image_base64, and Slug are required"
-      });
-    }
-
-    // Check if slug already exists
-    const [existingSlug] = await conn.query(
-      `SELECT id FROM items WHERE slug = ? AND deletestatus = 0`,
-      [slug]
-    );
-
-    if (existingSlug.length > 0) {
-      await conn.rollback();
-      conn.release();
-      return res.status(400).json({
-        message: "Slug already exists. Please choose a different one."
-      });
-    }
-
-    // 1. Process introductory image first (if exists)
-    const introImagePath = await createProcessIntroImage(introductory_image_base64);
-
-    // 2. Convert category array to JSON string for database storage
-    const categoryJson = JSON.stringify(category);
-
-    // 3. Insert main organization record with SEO fields
-    const [result] = await conn.query(
-      `INSERT INTO items 
-       (name, description, category, introductory_image_path, youtube_video_url, slug, meta_title, meta_description, meta_keywords,search_tags) 
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [
-        name, 
-        description, 
-        categoryJson, // Store as JSON string
-        introImagePath, 
-        youtube_video_url,
-        slug,
-        meta_title || null,
-        meta_description || null,
-        meta_keywords || null,
-        search_tags ||null
-      ]
-    );
-
-    const itemId = result.insertId;
-
-    // 4. Process all related data in parallel
-    await Promise.all([
-      createProcessAdditionalImages(conn, itemId, images_base64),
-      createProcessSocials(conn, itemId, socials),
-      createProcessIcons(conn, itemId, icons)
-    ]);
-
-    await conn.commit();
-    conn.release();
-    
-    res.status(201).json({ 
-      message: "✅ Organization created successfully", 
-      id: itemId,
-      slug: slug
-    });
-  } catch (error) {
-    console.error("❌ Organization creation error:", error);
-    await conn.rollback();
-    conn.release();
-    
-    // Handle duplicate slug error (if unique constraint exists in database)
-    if (error.code === 'ER_DUP_ENTRY' || error.message.includes('Duplicate entry')) {
-      return res.status(400).json({ 
-        message: "Slug already exists. Please choose a different one.",
-        error: "DUPLICATE_SLUG"
-      });
-    }
-    
-    res.status(500).json({ 
-      message: "Failed to create organization", 
-      error: error.message 
-    });
-  }
-};
-
 // export const createOrganization = async (req, res) => {
 //   const {
 //     name,
 //     description,
-//     category,
+//     category, // This is now an array
 //     introductory_image_base64,
 //     youtube_video_url,
 //     slug,
+//     search_tags,
 //     meta_title,
 //     meta_description,
 //     meta_keywords,
 //     images_base64,
-   
 //     socials,
 //     icons,
 //   } = req.body;
@@ -1568,18 +1461,18 @@ export const createOrganization = async (req, res) => {
 //   try {
 //     await conn.beginTransaction();
 
-//     // Validate required fields
-//     if (!name || !description || !category || !introductory_image_base64 || !slug) {
+//     // Validate required fields - category is now an array
+//     if (!name || !description || !category || category.length === 0 || !introductory_image_base64 || !slug) {
 //       await conn.rollback();
 //       conn.release();
 //       return res.status(400).json({
-//         message: "Missing required fields: name, description, category, introductory_image_base64, and Slug are required"
+//         message: "Missing required fields: name, description, at least one category, introductory_image_base64, and Slug are required"
 //       });
 //     }
 
 //     // Check if slug already exists
 //     const [existingSlug] = await conn.query(
-//       `SELECT id FROM items WHERE slug = ?`,
+//       `SELECT id FROM items WHERE slug = ? AND deletestatus = 0`,
 //       [slug]
 //     );
 
@@ -1594,27 +1487,31 @@ export const createOrganization = async (req, res) => {
 //     // 1. Process introductory image first (if exists)
 //     const introImagePath = await createProcessIntroImage(introductory_image_base64);
 
-//     // 2. Insert main organization record with SEO fields
+//     // 2. Convert category array to JSON string for database storage
+//     const categoryJson = JSON.stringify(category);
+
+//     // 3. Insert main organization record with SEO fields
 //     const [result] = await conn.query(
 //       `INSERT INTO items 
-//        (name, description, category, introductory_image_path, youtube_video_url, slug, meta_title, meta_description, meta_keywords) 
-//        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+//        (name, description, category, introductory_image_path, youtube_video_url, slug, meta_title, meta_description, meta_keywords,search_tags) 
+//        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
 //       [
 //         name, 
 //         description, 
-//         category, 
+//         categoryJson, // Store as JSON string
 //         introImagePath, 
 //         youtube_video_url,
 //         slug,
 //         meta_title || null,
 //         meta_description || null,
-//         meta_keywords || null
+//         meta_keywords || null,
+//         search_tags ||null
 //       ]
 //     );
 
 //     const itemId = result.insertId;
 
-//     // 3. Process all related data in parallel
+//     // 4. Process all related data in parallel
 //     await Promise.all([
 //       createProcessAdditionalImages(conn, itemId, images_base64),
 //       createProcessSocials(conn, itemId, socials),
@@ -1649,7 +1546,123 @@ export const createOrganization = async (req, res) => {
 //   }
 // };
 
+export const createOrganization = async (req, res) => {
+  const {
+    name,
+    description,
+    category,
+    introductory_image_base64,
+    partner_image, // ADDED: partner_image
+    youtube_video_url,
+    slug,
+    search_tags,
+    meta_title,
+    meta_description,
+    meta_keywords,
+    images_base64,
+    socials,
+    icons,
+    urls // ADDED: urls array if needed
+  } = req.body;
 
+  const conn = await db1.promise().getConnection();
+
+  try {
+    await conn.beginTransaction();
+
+    // Validate required fields
+    if (!name || !description || !category || category.length === 0 || !introductory_image_base64 || !slug) {
+      await conn.rollback();
+      conn.release();
+      return res.status(400).json({
+        message: "Missing required fields: name, description, at least one category, introductory_image_base64, and Slug are required"
+      });
+    }
+
+    // Check if slug already exists
+    const [existingSlug] = await conn.query(
+      `SELECT id FROM items WHERE slug = ? AND deletestatus = 0`,
+      [slug]
+    );
+
+    if (existingSlug.length > 0) {
+      await conn.rollback();
+      conn.release();
+      return res.status(400).json({
+        message: "Slug already exists. Please choose a different one."
+      });
+    }
+
+    // 1. Process introductory image
+    const introImagePath = await createProcessIntroImage(introductory_image_base64);
+
+    // 2. Process partner image if provided
+    let partnerImagePath = null;
+    if (partner_image) {
+      // Validate partner image dimensions (300x300)
+      // You should add this validation in the createProcessIntroImage function or create a separate one
+      partnerImagePath = await createProcessIntroImage(partner_image); // You need to create this function
+    }
+
+    // 3. Convert category array to JSON string
+    const categoryJson = JSON.stringify(category);
+
+    // 4. Insert main organization record with partner_image
+    const [result] = await conn.query(
+      `INSERT INTO items 
+       (name, description, category, introductory_image_path, partner_image, youtube_video_url, slug, meta_title, meta_description, meta_keywords, search_tags) 
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        name, 
+        description, 
+        categoryJson,
+        introImagePath, 
+        partnerImagePath, // ADDED: partner_image
+        youtube_video_url,
+        slug,
+        meta_title || null,
+        meta_description || null,
+        meta_keywords || null,
+        search_tags || null
+      ]
+    );
+
+    const itemId = result.insertId;
+
+    // 5. Process all related data in parallel
+    await Promise.all([
+      createProcessAdditionalImages(conn, itemId, images_base64),
+      createProcessSocials(conn, itemId, socials),
+      createProcessIcons(conn, itemId, icons),
+      createProcessUrls(conn, itemId, urls) // ADDED: process URLs if you have this function
+    ]);
+
+    await conn.commit();
+    conn.release();
+    
+    res.status(201).json({ 
+      message: "✅ Organization created successfully", 
+      id: itemId,
+      slug: slug
+    });
+  } catch (error) {
+    console.error("❌ Organization creation error:", error);
+    await conn.rollback();
+    conn.release();
+    
+    if (error.code === 'ER_DUP_ENTRY' || error.message.includes('Duplicate entry')) {
+      return res.status(400).json({ 
+        message: "Slug already exists. Please choose a different one.",
+        error: "DUPLICATE_SLUG"
+      });
+    }
+    
+    res.status(500).json({ 
+      message: "Failed to create organization", 
+      error: error.message 
+    });
+  }
+};
 
 // Helper Functions for Create Organization (Unique names)
 async function createProcessIntroImage(introductory_image_base64) {
@@ -1657,10 +1670,10 @@ async function createProcessIntroImage(introductory_image_base64) {
 
   const matches = introductory_image_base64.match(/^data:(.+);base64,(.+)$/);
   if (!matches) {
-    throw new Error('Invalid introductory image format');
+    throw new Error('Invalid  image format');
   }
 
-  const ext = matches[1].split("/")[1] || "png";
+  const ext = matches[1].split("/")[1] || "webp";
   const fileName = uniqueImageName(ext);
   const fileBuffer = Buffer.from(matches[2], "base64");
   
@@ -1891,15 +1904,18 @@ export const getOrganizationById = (req, res) => {
 
 
 
+
+
 // export const updateOrganization = async (req, res) => {
 //   const { id } = req.params;
 //   const {
 //     name,
 //     description,
-//     category,
+//     category, // This is now an array
 //     introductory_image_base64,
 //     youtube_video_url,
 //     slug,
+//     search_tags,
 //     meta_title,
 //     meta_description,
 //     meta_keywords,
@@ -1922,11 +1938,12 @@ export const getOrganizationById = (req, res) => {
 //     }
 
 //     // 2. Check if slug is being changed and if new slug already exists (excluding current organization)
-//     if (slug && slug !== rows[0].slug) {
-//       const [existingSlug] = await conn.query(
-//         "SELECT id FROM items WHERE slug = ? AND id != ?",
-//         [slug, id]
-//       );
+//   if (slug && slug !== rows[0].slug) {
+//   const [existingSlug] = await conn.query(
+//     "SELECT id FROM items WHERE slug = ? AND id != ? AND deletestatus = 0",
+//     [slug, id]
+//   );
+
 
 //       if (existingSlug.length > 0) {
 //         await conn.rollback();
@@ -1945,7 +1962,10 @@ export const getOrganizationById = (req, res) => {
 //       introImagePath = await processSingleImage(introductory_image_base64, introImagePath);
 //     }
 
-//     // 4. Update main item with SEO fields in single query
+//     // 4. Convert category array to JSON string for database storage
+//     const categoryJson = JSON.stringify(category);
+
+//     // 5. Update main item with SEO fields in single query
 //     await conn.query(
 //       `UPDATE items SET 
 //         name = ?, 
@@ -1956,23 +1976,25 @@ export const getOrganizationById = (req, res) => {
 //         slug = ?,
 //         meta_title = ?,
 //         meta_description = ?,
-//         meta_keywords = ?
+//         meta_keywords = ?,
+//         search_tags = ?
 //        WHERE id = ?`,
 //       [
 //         name, 
 //         description, 
-//         category, 
+//         categoryJson, // Store as JSON string
 //         introImagePath, 
 //         youtube_video_url,
 //         slug || null,
 //         meta_title || null,
 //         meta_description || null,
 //         meta_keywords || null,
+//         search_tags || null,
 //         id
 //       ]
 //     );
 
-//     // 5. Process all operations in parallel where possible
+//     // 6. Process all operations in parallel where possible
 //     await Promise.all([
 //       processAdditionalImages(conn, id, images_base64),
 //       processUrls(conn, id, urls),
@@ -2008,13 +2030,16 @@ export const getOrganizationById = (req, res) => {
 //   }
 // };
 
+
+
 export const updateOrganization = async (req, res) => {
   const { id } = req.params;
   const {
     name,
     description,
-    category, // This is now an array
+    category,
     introductory_image_base64,
+    partner_image, // ADDED: partner_image field
     youtube_video_url,
     slug,
     search_tags,
@@ -2032,20 +2057,19 @@ export const updateOrganization = async (req, res) => {
   try {
     await conn.beginTransaction();
 
-    // 1. Check if organization exists first and get current slug
-    const [rows] = await conn.query("SELECT id, introductory_image_path, slug FROM items WHERE id = ?", [id]);
+    // 1. Check if organization exists first and get current slug and partner_image
+    const [rows] = await conn.query("SELECT id, introductory_image_path, partner_image, slug FROM items WHERE id = ?", [id]);
     if (rows.length === 0) {
       conn.release();
       return res.status(404).json({ message: "Organization not found" });
     }
 
     // 2. Check if slug is being changed and if new slug already exists (excluding current organization)
-  if (slug && slug !== rows[0].slug) {
-  const [existingSlug] = await conn.query(
-    "SELECT id FROM items WHERE slug = ? AND id != ? AND deletestatus = 0",
-    [slug, id]
-  );
-
+    if (slug && slug !== rows[0].slug) {
+      const [existingSlug] = await conn.query(
+        "SELECT id FROM items WHERE slug = ? AND id != ? AND deletestatus = 0",
+        [slug, id]
+      );
 
       if (existingSlug.length > 0) {
         await conn.rollback();
@@ -2058,22 +2082,37 @@ export const updateOrganization = async (req, res) => {
     }
 
     let introImagePath = rows[0].introductory_image_path;
+    let partnerImagePath = rows[0].partner_image; // Get current partner image
 
     // 3. Process introductory image only if provided and valid
     if (introductory_image_base64) {
       introImagePath = await processSingleImage(introductory_image_base64, introImagePath);
     }
 
-    // 4. Convert category array to JSON string for database storage
+    // 4. Process partner image if provided
+    if (partner_image !== undefined) { // Check if partner_image field is sent (could be empty string to remove)
+      if (partner_image) {
+        // New partner image provided - process it
+        partnerImagePath = await processSingleImage(partner_image, partnerImagePath);
+      } else if (partner_image === "" && partnerImagePath) {
+        // Empty string means remove existing partner image
+        await deleteImageFile(partnerImagePath); // Helper function to delete file
+        partnerImagePath = null;
+      }
+      // If partner_image is undefined, keep the existing one
+    }
+
+    // 5. Convert category array to JSON string for database storage
     const categoryJson = JSON.stringify(category);
 
-    // 5. Update main item with SEO fields in single query
+    // 6. Update main item with partner_image and SEO fields
     await conn.query(
       `UPDATE items SET 
         name = ?, 
         description = ?, 
         category = ?, 
         introductory_image_path = ?, 
+        partner_image = ?, 
         youtube_video_url = ?,
         slug = ?,
         meta_title = ?,
@@ -2084,8 +2123,9 @@ export const updateOrganization = async (req, res) => {
       [
         name, 
         description, 
-        categoryJson, // Store as JSON string
+        categoryJson,
         introImagePath, 
+        partnerImagePath, // ADDED: partner_image
         youtube_video_url,
         slug || null,
         meta_title || null,
@@ -2096,7 +2136,7 @@ export const updateOrganization = async (req, res) => {
       ]
     );
 
-    // 6. Process all operations in parallel where possible
+    // 7. Process all operations in parallel where possible
     await Promise.all([
       processAdditionalImages(conn, id, images_base64),
       processUrls(conn, id, urls),
@@ -2117,7 +2157,6 @@ export const updateOrganization = async (req, res) => {
     await conn.rollback();
     conn.release();
     
-    // Handle duplicate slug error (if unique constraint exists in database)
     if (error.code === 'ER_DUP_ENTRY' || error.message.includes('Duplicate entry')) {
       return res.status(400).json({ 
         message: "Slug already exists. Please choose a different one.",
