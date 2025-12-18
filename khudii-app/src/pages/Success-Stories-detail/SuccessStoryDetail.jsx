@@ -7,7 +7,7 @@ import axios from 'axios';
 import Styles from './SuccessStory.module.css'
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 import { useParams } from 'react-router-dom';
-const SuccessStoryDetail = () => {
+const SuccessStoryDetail = ({url}) => {
   const nav=useNavigate()
   let {slug}=useParams();
   const [videoData,setvideodata]=useState([])
@@ -26,6 +26,19 @@ const SuccessStoryDetail = () => {
     </div>
   );
 }
+
+  const seoTitle = videoData.title 
+    ? `${videoData.title} - Khudii Success Story | Pakistan Welfare Initiatives`
+    : "Khudii Success Story | Inspiring Stories from Pakistan";
+
+  const seoDescription = videoData.description 
+    ? `${videoData.description.substring(0, 160)}... Watch this inspiring success story from Khudii's welfare initiatives across Pakistan.`
+    : "Watch inspiring success stories from Khudii's welfare initiatives across Pakistan. Discover real impact stories of hope, compassion, and community transformation.";
+
+  const seoKeywords = videoData.title 
+    ? `khudii success story, ${videoData.title}, pakistan welfare, community impact, humanitarian work, social welfare pakistan, khudii stories, inspirational videos`
+    : "khudii success stories, pakistan welfare initiatives, community impact stories, humanitarian work pakistan, social welfare success";
+
 
 
 useEffect(()=>{
@@ -90,6 +103,15 @@ if(loader){
         type="website"
       /> */}
       
+
+  <SEO 
+        title={seoTitle}
+        description={seoDescription}
+        keywords={seoKeywords}
+        url={url}
+        type="article" // Changed to article for story content
+      />
+
    <section className={Styles.section}>
      <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-[#222222] mb-4">
