@@ -205,15 +205,17 @@ display: none;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 90%;
-  max-width: 500px;
+  width: 95dvw;
+  max-width: 95dvw;
   z-index: 1001;
   display: flex;
+  margin: auto;
   flex-direction: column;
   gap: 10px;
 }
 
 .popupContent {
+  width: 95dvw;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -227,16 +229,20 @@ display: none;
 .popupIcon {
   color: #e7001e;
   font-size: 1.3rem;
+  width: auto;
 }
 
 .popupInput {
   flex: 1;
+  width: 90%;
+  /* display: block; */
   border: none;
   outline: none;
   font-size: 1.3rem;
   padding: 6px 10px;
   color: #222222;
   background: transparent;
+  margin: auto;
 }
 
 .popupClose {
@@ -245,6 +251,7 @@ display: none;
   cursor: pointer;
   padding: 4px;
   padding: 8px 10.5px;
+  width: auto;
 }
 
 .popupClose:hover {
@@ -253,7 +260,8 @@ display: none;
 
 /* Mobile Search Results Container */
 .mobileResultsContainer {
-  width: 100%;
+  width: 92vw;
+  margin: auto;
   max-height: 400px;
   overflow-y: auto;
   background: white;
@@ -442,11 +450,11 @@ display: none;
   /* Popup */
   .searchPopup {
     position: fixed;
+    overflow: hidden;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%;
-    max-width: 500px;
+    max-width: 100dvw;
     z-index: 1001;
     display: flex;
     flex-direction: column;
@@ -454,6 +462,7 @@ display: none;
   }
 
   .popupContent {
+    width: 95dvw;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -467,10 +476,13 @@ display: none;
   .popupIcon {
     color: #e7001e;
     font-size: 1.3rem;
+    width: auto;
   }
 
   .popupInput {
     flex: 1;
+    width: 90%;
+    margin: auto;
     border: none;
     outline: none;
     font-size: 1.3rem;
@@ -479,6 +491,7 @@ display: none;
   }
 
   .popupClose {
+    width: auto;
     color: #ffffff;
     background-color: #e7001e;
     border-radius: 30px;
@@ -493,7 +506,8 @@ display: none;
 
   /* Mobile Search Results Container */
   .mobileResultsContainer {
-    width: 100%;
+    width: 92vw;
+    margin: auto;
     max-height: 500px;
     overflow-y: auto;
     background: white;
