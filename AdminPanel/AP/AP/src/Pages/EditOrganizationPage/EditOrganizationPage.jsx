@@ -1599,7 +1599,7 @@ export default function EditOrganizationPage() {
     e.preventDefault();
     
     if (!validateForm()) {
-      alert("Please fix the validation errors before submitting.");
+      alert("Please Fix The Validation Errors Before Submitting.");
       return;
     }
     if (cap) {
@@ -1612,14 +1612,14 @@ export default function EditOrganizationPage() {
       await axios.put(`${APIPath}/api/organizations/${id}`, form, {
         withCredentials: true,
       });
-      alert("✅ Organization updated successfully!");
+      alert("✅ Organization Updated Successfully!");
       navigate("/dashboard/OrganizationPage");
     } catch (err) {
       console.error(err);
       if (err.response?.data?.error === "DUPLICATE_SLUG") {
-        alert("❌ Slug already exists. Please choose a different one.");
+        alert("❌ Slug Already Exists. Please Choose A Different One.");
       } else {
-        alert("❌ Error updating organization");
+        alert("❌ Error Updating Organization");
       }
     } finally {
       setIsSubmitting(false);
@@ -1633,8 +1633,8 @@ export default function EditOrganizationPage() {
     return (
       <div className="mt-1 space-y-1">
         {errorArray.map((error, index) => (
-          <p key={index} className="text-sm text-red-600 flex items-center">
-            <span className="w-1.5 h-1.5 bg-red-600 rounded-full mr-2"></span>
+          <p key={index} className="text-sm text-[#e7001e] flex items-center">
+            <span className="w-1.5 h-1.5 bg-[#e7001e] rounded-full mr-2"></span>
             {error}
           </p>
         ))}
@@ -1647,7 +1647,7 @@ export default function EditOrganizationPage() {
       <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading organization data...</p>
+          <p className="mt-4 text-[#222222] font-medium">Loading Organization Data...</p>
         </div>
       </div>
     );
@@ -1659,8 +1659,8 @@ console.log(form)
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Edit Organization</h1>
-              <p className="text-gray-600">Update the details of your organization</p>
+              <h1 className="text-3xl font-bold text-[#222222] mb-2">Edit Organization</h1>
+              <p className="text-[#222222] font-medium">Update the Details of Your Organization</p>
             </div>
             <button
               onClick={() => navigate("/dashboard/OrganizationPage")}

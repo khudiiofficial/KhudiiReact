@@ -90,8 +90,8 @@ export default function OrganizationsPage() {
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Organizations</h1>
-          <p className="text-gray-600 mt-2">
-            Manage and edit your organization profiles
+          <p className="text-[#222222] mt-2">
+            Manage And Edit Your Organization Profiles
           </p>
         </div>
 
