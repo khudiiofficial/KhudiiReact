@@ -1,7 +1,7 @@
 import { useState ,useEffect} from 'react'
 import { useLocation } from 'react-router-dom'
 import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import Navbar from './componets/Navbar'
 import './App.css'
 import { Routes,Route } from 'react-router-dom'
