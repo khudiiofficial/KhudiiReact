@@ -3,7 +3,7 @@ import { DtoArr } from "../Dto/Dto.js";
 const getAllorganization = (req,res) => {
   const sql = `
     SELECT i.id, i.name, i.deletestatus, i.description, i.youtube_video_url, i.introductory_image_path,
-           i.slug, i.meta_title, i.meta_description, i.meta_keywords,
+        i.partner_image,i.slug, i.meta_title, i.meta_description, i.meta_keywords,
            GROUP_CONCAT(DISTINCT img.image_path) AS images
     FROM items i
     LEFT JOIN item_images img ON i.id = img.item_id WHERE i.deletestatus = 0

@@ -87,7 +87,7 @@ call()
           >
             {/* Image with fade-in animation on view */}
             <img
-              src={ele.introductory_image_path}
+              src={ele.partner_image}
               alt={`Partner ${index + 1} logo`}
               className={`w-full h-full object-contain transition-all duration-300 p-0 ${
                 animatedIndices.has(index)
