@@ -1002,7 +1002,8 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import RichTextEditor from "../../components/editor/TextEditor";
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
-
+import { showError } from "../../SwalPopupAlert/SwalPopupAlert";
+import { showSuccessAlert } from "../../SwalPopupAlert/SwalPopupAlert";
 export default function EditOrganizationPage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -1211,8 +1212,8 @@ export default function EditOrganizationPage() {
         setExistingPartnerImage(org.partner_image || "");
         
       } catch (err) {
-        console.error("Error fetching organization:", err);
-        alert("Failed to load organization data");
+        console.error("Error Fetching Organization:", err);
+        alert("Failed to Load Organization Data");
         navigate("/dashboard/OrganizationPage");
       } finally {
         setIsLoading(false);
@@ -1240,6 +1241,8 @@ export default function EditOrganizationPage() {
       img.src = base64Image;
     });
   };
+  
+
 
   // Convert file to Base64 (regular function without dimension check)
   const handleFileToBase64 = (file, callback) => {
@@ -1609,17 +1612,21 @@ export default function EditOrganizationPage() {
     }
     setIsSubmitting(true);
     try {
+      // throw new Error("Testing alerts");
       await axios.put(`${APIPath}/api/organizations/${id}`, form, {
         withCredentials: true,
       });
-      alert("✅ Organization Updated Successfully!");
+      // alert("✅ Organization Updated Successfully!");
+      showSuccessAlert();
       navigate("/dashboard/OrganizationPage");
     } catch (err) {
       console.error(err);
       if (err.response?.data?.error === "DUPLICATE_SLUG") {
-        alert("❌ Slug Already Exists. Please Choose A Different One.");
+        // alert("❌ Slug Already Exists. Please Choose A Different One.");
+        showError ("Slug Already Exists. Please Choose A Different One.");
       } else {
-        alert("❌ Error Updating Organization");
+        // alert("❌ Error Updating Organization");
+        showError ("Error Updating Organization");
       }
     } finally {
       setIsSubmitting(false);
@@ -2124,7 +2131,7 @@ console.log(form)
                   onClick={addIconField}
                   className="cursor-pointer flex items-center gap-2 text-[#009dc8] font-medium text-sm"
                 >
-                  <span className="text-lg">+</span> Add Icon
+                  <span className="text-lg text-[#009dc8]">+</span> Add Icon
                 </button>
               )}
             </div>
@@ -2136,7 +2143,7 @@ console.log(form)
                 className={`cursor-pointer px-8 py-3 rounded-lg font-semibold text-white transition-colors ${
                   isSubmitting 
                     ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-[#1c5e20] hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2'
+                    : 'bg-[#1c5e20] hover:bg-[#247b2a] focus:ring-2 focus:ring-[#247b2a] focus:ring-offset-2'
                 }`}
               >
                 {isSubmitting ? (

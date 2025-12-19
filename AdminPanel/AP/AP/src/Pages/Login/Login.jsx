@@ -35,12 +35,12 @@ export default function AdminLogin() {
 
   return (
     <div style={{backgroundImage:'url(/Khudii_login_bg_logo.webp)',
-      backgroundSize:'cover',
+      backgroundSize:'contain',
       backgroundRepeat:'no-repeat',
       backgroundPosition:'center'
     }} className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-100 to-gray-300">
-      <div className=" opacity-90 hover:opacity-100 w-full max-w-md bg-white shadow-lg rounded-2xl p-8">
-        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
+      <div className="w-full max-w-md bg-[#cedcff]/90 hover:bg-[#cedcff]/100 shadow-lg rounded-2xl p-8">
+        <h1 className="text-2xl font-bold text-center text-[#222222] mb-6">
           Admin Panel Login
         </h1>
 
@@ -48,7 +48,7 @@ export default function AdminLogin() {
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="block text-sm font-medium text-[#222222] mb-1"
             >
               Email
             </label>
@@ -65,7 +65,7 @@ export default function AdminLogin() {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="block text-sm font-medium text-[#222222] mb-1"
             >
               Password
             </label>
@@ -86,7 +86,7 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md disabled:opacity-70"
+            className="cursor-pointer w-full py-2 px-4 bg-[#02236e] hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md disabled:opacity-70"
           >
             {loading ? "Logging in..." : "Login"}
           </button>

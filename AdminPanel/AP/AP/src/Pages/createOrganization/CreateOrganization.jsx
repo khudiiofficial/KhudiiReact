@@ -1431,7 +1431,7 @@ export default function CreateOrganizationPage() {
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Organization</h1>
-          <p className="text-gray-600 mb-6">Fill in the details below to create a new organization</p>
+          <p className="text-gray-600 mb-6">Fill In The Details Below To Create A New Organization</p>
           
           <form onSubmit={handleSubmit} className="space-y-8">
             <input type="hidden" onChange={(e)=>{setcaptch(e.target.value)}} />
@@ -1475,8 +1475,8 @@ export default function CreateOrganizationPage() {
                   }`}
                   required
                 />
-                <p className="text-xs text-gray-500 mt-1">
-                  URL-friendly version of the name. Use lowercase letters, numbers, and hyphens only.
+                <p className="text-xs text-[#009dc8] mt-1">
+                  Url-friendly Version Of The Name. Use Lowercase Letters, Numbers, And Hyphens Only. <b>(Auto-Generated from Organization Name)</b>
                 </p>
                 {renderErrors(errors.slug)}
               </div>
@@ -1632,11 +1632,11 @@ export default function CreateOrganizationPage() {
 
             {/* Images Section - ADDED Partner Image */}
             <div className="space-y-4">
-              <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Images</h2>
+              <h2 className="text-xl font-semibold text-[#222222] border-b pb-2">Images</h2>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Introductory Image *
+                <label className="block text-md font-medium [#222222] mb-2">
+                  Org. Grid Image *
                 </label>
                 <input 
                   type="file" 
@@ -1644,11 +1644,11 @@ export default function CreateOrganizationPage() {
                   accept="image/*"
                   className="cursor-pointer block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#02236e] hover:file:bg-blue-100"
                 />
-                <p className="text-xs text-gray-500 mt-1">Supported formats: JPEG, PNG, WebP. Max size: 5MB</p>
+                <p className="text-xs text-[#009dc8] mt-1">Supported formats: <b>(WebP Only)</b> Max size: 5MB</p>
                 {renderErrors(errors.introductory_image_base64)}
                 {form.introductory_image_base64 && (
                   <div className="mt-3">
-                    <p className="text-sm text-green-600 mb-1">✓ Image uploaded successfully</p>
+                    <p className="text-sm text-[#1c5e20] mb-1">✓ Image Uploaded Successfully</p>
                     <img
                       src={form.introductory_image_base64}
                       alt="Intro Preview"
@@ -1659,8 +1659,8 @@ export default function CreateOrganizationPage() {
               </div>
 
               {/* ADDED: Partner Image Field */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="py-3">
+                <label className="block text-md font-medium text-[#222222] mb-2">
                   Partner Image 
                 </label>
                 <input 
@@ -1670,13 +1670,13 @@ export default function CreateOrganizationPage() {
                   accept=".webp,image/webp"
                   className="cursor-pointer block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#02236e] hover:file:bg-blue-100"
                 />
-                <p className="text-xs text-gray-500 mt-1">
-                  Must be exactly 300x300 px.Supported formats: WebP. 
+                <p className="text-xs text-[#009dc8] mt-1">
+                  Must Be Exactly 300x300px, Supported Formats: <b>(WebP Only)</b> 
                 </p>
                 {renderErrors(errors.partner_image)}
                 {form.partner_image && (
                   <div className="mt-3">
-                    <p className="text-sm text-green-600 mb-1">✓ Partner image uploaded successfully</p>
+                    <p className="text-sm text-[#1c5e20] mb-1">✓ Partner Image Uploaded Successfully</p>
                     <img
                       src={form.partner_image}
                       alt="Partner Preview"
@@ -1687,9 +1687,9 @@ export default function CreateOrganizationPage() {
               </div>
 
               {/* Extra Images */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Additional Images ({form.images_base64.length}/10)
+              <div className="py-3">
+                <label className="block text-md font-medium text-[#222222] mb-2">
+                  Org. Detail Page Slider Images ({form.images_base64.length}/10)
                 </label>
                 <input 
                   type="file" 
@@ -1698,7 +1698,7 @@ export default function CreateOrganizationPage() {
                   accept="image/*"
                   className="cursor-pointer block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#02236e] hover:file:bg-blue-100"
                 />
-                <p className="text-xs text-gray-500 mt-1">You can upload up to 10 additional images</p>
+                <p className="text-xs text-[#009dc8] mt-1">You Can Upload Upto 10 Additional Images</p>
                 {form.images_base64.length > 0 && (
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-3">
                     {form.images_base64.map((img, i) => (
@@ -1718,11 +1718,11 @@ export default function CreateOrganizationPage() {
             {/* Rest of your code remains exactly the same... */}
             {/* Socials */}
             <div className="space-y-4">
-              <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Social Media & Contact</h2>
+              <h2 className="text-xl font-semibold text-[#222222] border-b pb-2">Social Media & Contact</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {Object.keys(form.socials).map((key) => (
                   <div key={key}>
-                    <label className="block text-sm font-medium text-gray-700 mb-1 capitalize">
+                    <label className="block text-sm font-medium text-[#222222] mb-1 capitalize">
                       {key}
                     </label>
                     <input
@@ -1817,10 +1817,10 @@ export default function CreateOrganizationPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full sm:w-auto px-8 py-3 rounded-lg font-semibold text-white transition-colors ${
+                className={`cursor-pointer w-full sm:w-auto px-8 py-3 rounded-lg font-semibold text-white transition-colors ${
                   isSubmitting 
                     ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-green-600 hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2'
+                    : 'bg-[#1c5e20] hover:bg-[#247b2a] focus:ring-2 focus:ring-green-500 focus:ring-offset-2'
                 }`}
               >
                 {isSubmitting ? (

@@ -365,24 +365,24 @@ if(res.status===200){
 
 
           {showSuccessModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8 transform transition-all">
             <div className="text-center">
               {/* Success Icon */}
               <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
-                <svg className="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="h-8 w-8 text-[#1c5e20]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
               
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Thank You!</h3>
-              <p className="text-gray-600 mb-6">
+              <h3 className="text-2xl font-bold text-[#1c5e20] mb-2">Thank You!</h3>
+              <p className="text-[#222222] mb-6">
                 Your story information has been submitted successfully. We appreciate your support.
               </p>
               
               <button
                 onClick={()=>{setshowSuccessModal(false)}}
-                className="w-full bg-[#e7001e] text-white py-3 px-6 rounded-2xl font-semibold hover:bg-[#e7001e] transition-colors"
+                className="cursor-pointer w-full bg-[#1c5e20] text-white py-3 px-6 rounded-2xl font-semibold transition-colors"
               >
                 Close
               </button>
