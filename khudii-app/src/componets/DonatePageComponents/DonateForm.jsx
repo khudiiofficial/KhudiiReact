@@ -3,6 +3,7 @@ import countryCodes from './countries_full.json'
 import phonePatterns from './countryPatternsByName.json'
 import countries from './countries_list.json'
 import axios from 'axios'
+import { showError } from '../../SwalPopUp/swal';
 const API_URL = import.meta.env.VITE_BACKEND_PATH;
 const DonationForm = () => {
   const [loader,setloader]=useState(false)
@@ -172,11 +173,13 @@ const myDivRef = useRef(null);
     // Clear errors
     setErrors({});
       } else {
-        setServerError("Unexpected response from server.");
+        // setServerError("Unexpected response from server.");
+        showError("Unexpected response from server.")
       }
     } catch (err) {
       console.error("Volunteer application submit error:", err);
-      setServerError(err?.response?.data?.error || "Failed to submit application. Please try again.");
+      // setServerError(err?.response?.data?.error || "Failed to submit application. Please try again.");
+       showError(err?.response?.data?.error || "Failed to submit application. Please try again.")
     }
 
    setloader(false)
@@ -601,7 +604,7 @@ const myDivRef = useRef(null);
 
       {/* Success Modal */}
       {showSuccessModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/50  flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8 transform transition-all">
             <div className="text-center">
               {/* Success Icon */}
@@ -618,7 +621,7 @@ const myDivRef = useRef(null);
               
               <button
                 onClick={closeModal}
-                className="w-full bg-[#e7001e] text-white py-3 px-6 rounded-2xl font-semibold hover:bg-[#e7001e] transition-colors"
+                className="w-full bg-[#1c5e20] cursor-pointer text-lg text-white py-3 px-6 rounded-2xl font-semibold  transition-colors"
               >
                 Close
               </button>

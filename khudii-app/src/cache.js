@@ -25,7 +25,7 @@ const setCache = (key, data) => {
 axios.interceptors.request.use((config) => {
   const key = config.url + JSON.stringify(config.params || {});
   const cachedData = getCache(key);
-  if (cachedData) {
+  if (cachedData && config.method === "get") {
     config.adapter = () => {
       return Promise.resolve({
         data: cachedData,

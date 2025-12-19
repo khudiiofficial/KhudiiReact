@@ -6,7 +6,7 @@ import phonePatterns from './countryPatternsByName.json';
 import axios from "axios";
 import SEO from "../../componets/Helmet/Helmet";
 const API_URL = import.meta.env.VITE_BACKEND_PATH;
-
+import { showError } from "../../SwalPopUp/swal";
 export default function ContributeStory({con,url}) {
   const {
     register,
@@ -124,7 +124,8 @@ if(res.status===200){
   }
    
 } catch (error) {
-   setServerError(err?.response?.data?.error || "Failed to submit application. Please try again.");
+  //  setServerError(err?.response?.data?.error || "Failed to submit application. Please try again.");
+  showError(err?.response?.data?.error || "Failed to submit application. Please try again.")
 }
 
   };
@@ -365,7 +366,7 @@ if(res.status===200){
 
 
           {showSuccessModal && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8 transform transition-all">
             <div className="text-center">
               {/* Success Icon */}
@@ -382,7 +383,7 @@ if(res.status===200){
               
               <button
                 onClick={()=>{setshowSuccessModal(false)}}
-                className="cursor-pointer w-full bg-[#1c5e20] text-white py-3 px-6 rounded-2xl font-semibold transition-colors"
+                className="cursor-pointer w-full bg-[#1c5e20] text-lg text-white py-3 px-6 rounded-2xl font-semibold transition-colors"
               >
                 Close
               </button>

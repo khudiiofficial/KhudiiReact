@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import countryCodes from './countries_full.json';
 import phonePatterns from './countryPatternsByName.json';
-
+import { showError } from "../../SwalPopUp/swal";
 /**
  * Set API URL via Vite env: VITE_API_URL=http://localhost:5000
  * Falls back to http://localhost:5000 if not set.
@@ -168,7 +168,6 @@ const myDivRef = useRef(null);
 
     try {
       const res = await axios.post(`${API_URL}/api/contact`, data,{withCredentials:true});
-
       if (res.status === 200) {
         setServerMessage("Thanks — your message has been sent. We'll get back to you soon.");
             setshowSuccessModal(true)
@@ -180,7 +179,8 @@ const myDivRef = useRef(null);
       }
     } catch (err) {
       console.error("Contact submit error:", err);
-      setServerError(err?.response?.data?.error || "Failed to send message. Try again later.");
+      // setServerError(err?.response?.data?.error || "Failed to send message. Try again later.");
+      showError(err?.response?.data?.error || "Failed to send message. Try again later.")
     }
   };
 
@@ -456,7 +456,7 @@ const myDivRef = useRef(null);
       </div>
 
       {showSuccessModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8 transform transition-all">
             <div className="text-center">
               {/* Success Icon */}
@@ -473,7 +473,7 @@ const myDivRef = useRef(null);
               
               <button
                 onClick={()=>{setshowSuccessModal(false)}}
-                className="w-full bg-red-600 text-white py-3 px-6 rounded-2xl font-semibold hover:bg-red-700 transition-colors"
+                className="w-full bg-[#1c5e20] text-white py-3 text-lg px-6 rounded-2xl font-semibold cursor-pointer transition-colors"
               >
                 Close
               </button>

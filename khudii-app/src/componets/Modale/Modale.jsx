@@ -3,7 +3,8 @@ import styles from "./Modale.module.css";
 import axios from 'axios';
 import countryCodes from './countries_full.json';
 import phonePatterns from './countryPatternsByName.json';
-
+import { showError } from "../../SwalPopUp/swal";
+import { showSuccessAlert } from "../../SwalPopUp/swal";
 const ContactModal = ({ OrgId, isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -107,9 +108,10 @@ const ContactModal = ({ OrgId, isOpen, onClose }) => {
     
     try {
       const response = await axios.post(`${import.meta.env.VITE_BACKEND_PATH}/contact-inquiry`, formData, { withCredentials: true });
-
+console.log("hey",response)
       if (response.status === 201) {
-        alert("Thank you for your inquiry! We'll get back to you soon.");
+        // alert("Thank you for your inquiry! We'll get back to you soon.");
+        showSuccessAlert("Thank you for your inquiry! We'll get back to you soon.")
         setFormData({ 
           name: "", 
           phone: "", 
@@ -126,8 +128,10 @@ const ContactModal = ({ OrgId, isOpen, onClose }) => {
         throw new Error("Failed to submit form");
       }
     } catch (error) {
+       onClose();
       console.error("Error submitting form:", error);
-      alert("There was an error submitting your form. Please try again.");
+      // alert();
+      showError("There was an error submitting your form. Please try again.")
     } finally {
       setIsSubmitting(false);
     }

@@ -6,7 +6,7 @@ import phonePatterns from './countryPatternsByName.json';
 import PageHeader from "../../componets/PageHeader/PageHeader";
 import SEO from "../../componets/Helmet/Helmet";
 const API_URL = import.meta.env.VITE_BACKEND_PATH;
-
+import { showError } from "../../SwalPopUp/swal";
 export default function VolunteerForm({con,url}) {
   const {
     register,
@@ -123,11 +123,13 @@ const [val,setval]=useState('')
         setShowSuccessModal(true);
         reset();
       } else {
-        setServerError("Unexpected response from server.");
+        // setServerError("Unexpected response from server.");
+        showError("Unexpected response from server.")
       }
     } catch (err) {
       console.error("Volunteer application submit error:", err);
-      setServerError(err?.response?.data?.error || "Failed to submit application. Please try again.");
+      // setServerError(err?.response?.data?.error || "Failed to submit application. Please try again.");
+        showError(err?.response?.data?.error || "Failed to submit application. Please try again.")
     }
   };
 
@@ -374,12 +376,12 @@ const [val,setval]=useState('')
 
       {/* Success Modal */}
       {showSuccessModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8 transform transition-all">
             <div className="text-center">
               {/* Success Icon */}
               <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
-                <svg className="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="h-8 w-8 text-[#1c5e20]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
@@ -391,7 +393,7 @@ const [val,setval]=useState('')
               
               <button
                 onClick={() => setShowSuccessModal(false)}
-                className="w-full bg-[#e7001e] text-white py-3 px-6 rounded-xl font-semibold hover:bg-[#02236e] transition-colors"
+                className="w-full bg-[#1c5e20] cursor-pointer text-lg text-white py-3 px-6 rounded-xl font-semibold  transition-colors"
               >
                 Close
               </button>
