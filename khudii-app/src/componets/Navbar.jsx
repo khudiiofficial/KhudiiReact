@@ -609,7 +609,7 @@ const Navbar = () => {
           <div className="flex items-center gap-3 relative">
             {/* Desktop Search */}
             <div className={styles.pos}>
-              <i className={`fas fa-search ${styles.ss}`}></i>
+              <i className={`fas fa-search cursor-pointer ${styles.ss}`}></i>
               <input
                 type="text"
                 value={search}
@@ -627,7 +627,7 @@ const Navbar = () => {
                     setSearch("");
                     setload(false);
                   }}
-                  className={`fa-solid fa-x ${styles.cross}`}
+                  className={`fa-solid fa-x cursor-pointer ${styles.cross}`}
                 ></i>
               )}
             </div>

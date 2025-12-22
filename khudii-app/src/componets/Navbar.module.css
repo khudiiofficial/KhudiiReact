@@ -15,10 +15,11 @@
 
 .bgcolor::placeholder{
     color: #02236E;
+    opacity: 80%;
 }
 
 .ss{
-    color: red;
+    color: #e7001e;
     position: absolute;
     top: 13px;
     left:7px
@@ -293,9 +294,8 @@ display: none;
 }
 }
 
-
 .ss1{
-    color: red;
+    color: #e7001e;
     position: absolute;
    top: 14px;
     left: 10px;
@@ -346,14 +346,13 @@ display: none;
     justify-content: center;
     background-color: #e6e6e8;
     font-weight: 500;
-    color: red;
+    color: #e7001e;
 }
 
 .cross{
     position: absolute;
     border-radius: 100px;
-    color: red;
-    background-color: rgb(211, 204, 204);
+    color: #e7001e;
     padding: 7px;
     top: 5px;
     right: 3px;
