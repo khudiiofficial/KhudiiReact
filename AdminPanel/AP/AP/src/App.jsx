@@ -45,9 +45,11 @@ import SEOAdmin from './Pages/SEO/Seo'
 import FooterAdmin from './Pages/footer/Footer'
 import FAQManager from './Pages/faqs/Faqs'
 import BankDataManager from './Pages/contactbank/Bank'
+import { useSelector } from 'react-redux'
 function App() {
 const location=useLocation()  
 const dispatch=useDispatch()
+const auth=useSelector((state)=>state.users.auth)
 // dispatch(resetUser());
  useEffect(() => {
     const interval = setInterval(async () => {
@@ -82,7 +84,7 @@ const dispatch=useDispatch()
         }
       } catch (err) {
           // console.log(location.pathname)
-        if (err.response && err.response.status === 401 && location.pathname!=='/Login') {
+        if (err.response && err.response.status === 401 && auth && location.pathname!=='/Login') {
           alert("Your session has timed out. Please login again.");
           dispatch(resetUser());
         } else {
