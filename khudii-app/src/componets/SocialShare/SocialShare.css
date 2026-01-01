@@ -172,3 +172,8 @@
         box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
     }
 }
+
+
+.youtube { background: #ff0000; }
+.instagram { background: #e1306c; }
+.tiktok { background: #010101; color: #fff; }
