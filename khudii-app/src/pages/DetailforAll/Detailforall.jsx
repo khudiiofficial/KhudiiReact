@@ -7,12 +7,14 @@ import OrganizationDetail from '../OrganizationDetail/Organization_Detail';
 import BlogDetails from '../SpecificBlog/SpecificBlog';
 import Categories from '../Categories/Categories';
 import { useNavigate } from 'react-router-dom';
+import Error from '../../pages/Error/Error.jsx'
 const Detailforall = ({url}) => {
   const nav=useNavigate()
 const [data,setdata]=useState("")
 const [loader,setLoading]=useState(false)
 const {slug}=useParams()
  const [error,seterror]=useState(false)
+ const [BError,setBError]=useState("")
 useEffect(()=>{
     const call=async()=>{
         setLoading(true)
@@ -22,6 +24,9 @@ useEffect(()=>{
             setdata(res.data)
         } catch (error) {
             console.log(error)
+            if(error && error.status===404){
+              setBError("Error")
+}
              seterror(true)
         }
         setLoading(false)
@@ -29,8 +34,13 @@ useEffect(()=>{
     call()
 },[slug])
 
+if(BError){
+  return (<Error/>)
+}
 
-if (error) return (
+
+if (error){
+  return (
     <div className={`errorContainer`}>
       <div className={`errorIcon`}>⚠️</div>
       <h2 className={`errorTitle`}>Unable to Load Content</h2>
@@ -43,7 +53,7 @@ if (error) return (
       </button>
     </div>
   );
-
+}
 if(loader){
 return(  <div className="flex items-center justify-center h-90 ">
      
