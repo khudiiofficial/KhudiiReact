@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import reactLogo from './assets/react.svg'
-
 import Navbar from './componets/Navbar'
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
@@ -35,6 +34,7 @@ import './cache.js'
 import { useGoogleAnalytics } from './Hooks/GoogleAnalytics.jsx'
 import Detailforall from './pages/DetailforAll/Detailforall.jsx'
 import SuccessStoryDetail from './pages/Success-Stories-detail/SuccessStoryDetail.jsx'
+import Error from "./pages/Error/Error.jsx"
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 // import TranslationWidget from './componets/translate/Translate'
 function App() {
@@ -109,6 +109,7 @@ function App() {
           <Route path='/success-stories/:slug' element={<SuccessStoryDetail url={url} />} />
           {/* <Route path='Categories/:slug' element={<Categories url={url}/>}/> */}
           <Route path='/:slug' element={<Detailforall url={url} />} />
+          <Route path='/*' element={<Error url={url}/>}/>
         </Routes>
         <Footer />
         <VapiAssistant />
