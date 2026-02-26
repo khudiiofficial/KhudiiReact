@@ -78,9 +78,9 @@ if (error) return (
   <>
   {id && <YouTubeAndGoogle_map key={org.slug}  id={id}/>}
   </>
-  <>
+  {/* <>
   <Blogs loader1={loader} key={org.slug}/>
-  </>
+  </> */}
   </>
   );
 };
