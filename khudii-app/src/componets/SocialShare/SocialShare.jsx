@@ -138,9 +138,9 @@ const SocialShare = () => {
     // Check screen size on resize
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth <= 768);
+            setIsMobile(window.innerWidth <= 1300);
         };
-
+        handleResize()
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);

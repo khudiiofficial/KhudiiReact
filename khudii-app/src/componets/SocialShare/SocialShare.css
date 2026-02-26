@@ -312,8 +312,8 @@
     top: 50%;
     left: 0;
     transform: translateY(-50%);
-    width: 56px;
-    height: 56px;
+    width: 50px;
+    height: 50px;
     border-radius: 0 12px 12px 0;  /* Rounded on right side only */
     background: white !important;  /* Force white background */
     border: none;
@@ -330,9 +330,14 @@
 }
 
 .mobile-share-button:hover {
-    transform: translateY(-50%) translateX(5px);
+    /* transform: translateY(-50%) translateX(5px); */
     box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.2);
-    background: white !important;  /* Keep white on hover */
+    background-color: red !important;  /* Keep white on hover */
+    border-left: 3px solid #010101 !important;
+  
+}
+.mobile-share-button:hover svg {
+    color: white;
 }
 
 .mobile-share-button:active {
@@ -342,6 +347,7 @@
 
 .mobile-share-button svg {
     color: #ff0000;  /* Red icon color */
+   
 }
 
 /* Mobile Popup Overlay */
@@ -438,16 +444,39 @@
 }
 
 /* Platform Specific Colors for Mobile */
-.mobile-share-icon.facebook svg { color: #1877f2; }
-.mobile-share-icon.whatsapp svg { color: #25d366; }
-.mobile-share-icon.email svg { color: #ea4335; }
-.mobile-share-icon.youtube svg { color: #ff0000; }
-.mobile-share-icon.instagram svg { color: #e1306c; }
-.mobile-share-icon.tiktok svg { color: #010101; }
-.mobile-share-icon.copy-link svg { color: #667eea; }
+.mobile-share-icon.facebook svg { color: #1877f2;
+ width: 17px;
+ height: 17px;
+}
+.mobile-share-icon.whatsapp svg { color: #25d366;
+ width: 17px;
+ height: 17px;
+}
+.mobile-share-icon.email svg { color: #ea4335;
+ width: 17px;
+ height: 17px;
+}
+.mobile-share-icon.youtube svg { color: #ff0000;
+ width: 17px;
+ height: 17px;
+}
+.mobile-share-icon.instagram svg { color: #e1306c;
+ width: 17px;
+ height: 17px;
+}
+.mobile-share-icon.tiktok svg { color: #010101;
+ width: 17px;
+ height: 17px;
+}
+.mobile-share-icon.copy-link svg { color: #667eea; 
+ width: 17px;
+ height: 17px;
+}
 
 .mobile-share-icon.copy-link.copied svg {
     color: #10b981;
+     width: 17px;
+ height: 17px;
 }
 
 /* Mobile Popup Close Button */
@@ -473,7 +502,7 @@
 }
 
 /* Responsive Design - Updated breakpoint to 800px */
-@media (max-width: 768px) {
+@media (max-width: 1300px) {
     .social-share-sidebar {
         display: none; /* Hide sidebar on mobile/tablet */
     }
@@ -483,7 +512,7 @@
     }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1301px) {
     .mobile-share-button {
         display: none;
     }
