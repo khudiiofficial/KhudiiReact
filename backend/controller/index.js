@@ -1768,3 +1768,192 @@ export const DetailForAll = async (req, res) => {
     });
   }
 };
+
+
+import { uploadToFTP, deleteFromFTP } from '../utils/ftpUpload.js';
+import { sendOrganizationSubmissionEmail } from '../utils/emailService.js';
+
+// Generate unique filename
+const generateFileName = (fileType) => {
+  const timestamp = Date.now();
+  const randomString = Math.random().toString(36).substring(2, 8);
+  const extension = fileType.split('/')[1] || 'png';
+  return `${timestamp}-${randomString}.${extension}`;
+};
+
+// Convert base64 to buffer
+const base64ToBuffer = (base64String) => {
+  const matches = base64String.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+  if (!matches || matches.length !== 3) {
+    throw new Error('Invalid base64 string');
+  }
+  return {
+    type: matches[1],
+    buffer: Buffer.from(matches[2], 'base64')
+  };
+};
+
+export const submitOrganizationForm = async (req, res) => {
+  const connection = await new Promise((resolve, reject) => {
+    db.getConnection((err, conn) => {
+      if (err) reject(err);
+      else resolve(conn);
+    });
+  });
+
+  try {
+    // Start transaction
+    await new Promise((resolve, reject) => {
+      connection.beginTransaction((err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+
+    const formData = req.body;
+    
+    // Parse form data (if sent as JSON string)
+    const parsedData = typeof formData === 'string' ? JSON.parse(formData) : formData;
+
+    // Upload organization logo if present (base64)
+    let logoPath = null;
+    if (parsedData.organizationLogo) {
+      try {
+        const { type, buffer } = base64ToBuffer(parsedData.organizationLogo);
+        const fileName = generateFileName(type);
+        logoPath = await uploadToFTP(fileName, buffer);
+      } catch (logoError) {
+        console.error('Logo upload error:', logoError);
+        // Continue without logo if upload fails? Or throw error?
+        // Throwing error will rollback transaction
+        throw new Error('Failed to upload organization logo');
+      }
+    }
+
+    // Insert main submission data
+    const insertSubmissionQuery = `
+      INSERT INTO organization_submissions (
+        organization_name, contact_person_name, contact_person_mobile,
+        landline_uan, website_url, email_address,
+        facebook_link, instagram_link, youtube_link,
+        linkedin_link, twitter_link,
+        year_established,
+        total_beneficiaries_served, total_projects_completed, active_projects,
+        organization_logo_path
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    const submissionValues = [
+      parsedData.organizationName,
+      parsedData.contactPersonName,
+      parsedData.contactPersonMobile,
+      parsedData.landlineUan || null,
+      parsedData.websiteUrl || null,
+      parsedData.emailAddress || null,
+      parsedData.facebookLink || null,
+      parsedData.instagramLink || null,
+      parsedData.youtubeLink || null,
+      parsedData.linkedinLink || null,
+      parsedData.twitterLink || null,
+      parsedData.yearEstablished,
+      parsedData.totalBeneficiariesServed || null,
+      parsedData.totalProjectsCompleted || null,
+      parsedData.activeProjects || null,
+      logoPath
+    ];
+
+    const submissionResult = await new Promise((resolve, reject) => {
+      connection.query(insertSubmissionQuery, submissionValues, (err, result) => {
+        if (err) reject(err);
+        else resolve(result);
+      });
+    });
+
+    const submissionId = submissionResult.insertId;
+
+    // Upload and insert supporting documents (base64 array)
+    const supportingDocsPaths = [];
+    if (parsedData.supportingDocuments && Array.isArray(parsedData.supportingDocuments)) {
+      for (const doc of parsedData.supportingDocuments) {
+        try {
+          const { type, buffer } = base64ToBuffer(doc);
+          const fileName = generateFileName(type);
+          const filePath = await uploadToFTP(fileName, buffer);
+          supportingDocsPaths.push(filePath);
+
+          const insertDocQuery = `
+            INSERT INTO supporting_documents (submission_id, file_path, file_name, file_type)
+            VALUES (?, ?, ?, ?)
+          `;
+
+          await new Promise((resolve, reject) => {
+            connection.query(
+              insertDocQuery,
+              [submissionId, filePath, fileName, type],
+              (err, result) => {
+                if (err) reject(err);
+                else resolve(result);
+              }
+            );
+          });
+        } catch (docError) {
+          console.error('Supporting document upload error:', docError);
+          // If one document fails, rollback entire transaction
+          throw new Error('Failed to upload supporting document');
+        }
+      }
+    }
+
+    // Commit transaction
+    await new Promise((resolve, reject) => {
+      connection.commit((err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+
+    // Send email notification (don't rollback if email fails)
+    try {
+      await sendOrganizationSubmissionEmail({
+        ...parsedData,
+        organizationLogoPath: logoPath,
+        supportingDocumentsCount: supportingDocsPaths.length
+      });
+    } catch (emailError) {
+      console.error('Email sending failed but form submission succeeded:', emailError);
+    }
+
+    res.status(201).json({
+      success: true,
+      message: 'Organization registered successfully',
+      submissionId: submissionId,
+      logoPath: logoPath,
+      supportingDocs: supportingDocsPaths
+    });
+
+  } catch (error) {
+    // Rollback transaction on error
+    await new Promise((resolve) => {
+      connection.rollback(() => resolve());
+    });
+
+    // Clean up uploaded files if any were uploaded before error
+    if (req.body.organizationLogo && logoPath) {
+      await deleteFromFTP(logoPath);
+    }
+    if (req.body.supportingDocuments && supportingDocsPaths) {
+      for (const path of supportingDocsPaths) {
+        await deleteFromFTP(path);
+      }
+    }
+
+    console.error('Organization form submission error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to submit organization form',
+      error: error.message
+    });
+  } finally {
+    connection.release();
+  }
+};

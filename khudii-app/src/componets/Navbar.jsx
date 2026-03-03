@@ -597,6 +597,10 @@ const Navbar = () => {
                 <li>
                   <Link to={"/jobs/"}>Jobs</Link>
                 </li>
+                <hr />
+                <li>
+                  <Link to={"/organization/registration"}>Organization Registration</Link>
+                </li>
               </div>
             </span>
 

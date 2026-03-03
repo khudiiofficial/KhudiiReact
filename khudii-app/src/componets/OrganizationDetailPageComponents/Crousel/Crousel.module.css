@@ -96,9 +96,9 @@
 /* Org Details */
 .org-details {
 display: flex;
-align-items: center;
+align-items: start;
 /* padding: 0 30px; */
-justify-content: center;
+justify-content:center;
 gap: 30px;
 /* width: 1240px; */
 margin: auto;

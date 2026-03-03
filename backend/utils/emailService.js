@@ -536,3 +536,103 @@ export const sendDonationEmail = async (obj) => {
     }
   });
 };
+
+
+// Add this to your existing emailService.js file
+export const sendOrganizationSubmissionEmail = async (submissionData) => {
+  return new Promise((resolve, reject) => {
+    const getOwnerQuery = `SELECT * FROM owners LIMIT 1`;
+    
+    db.query(getOwnerQuery, async (ownerError, ownerResults) => {
+      if (ownerError || ownerResults.length === 0) {
+        console.error("Error fetching owner:", ownerError);
+        reject(new Error("Owner configuration not found"));
+        return;
+      }
+      
+      const senderemail = ownerResults[0].sender_email;
+      const appPassword = ownerResults[0].sender_app_password;
+      const ownerEmail = ownerResults[0].email;
+
+      try {
+        const transporter = createTransporter(senderemail, appPassword);
+
+        const mailOptions = {
+          from: senderemail,
+          to: ownerEmail,
+          subject: `New Organization Registration - ${submissionData.organizationName}`,
+          html: `
+            <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto;">
+              <div style="text-align: center; background: #02246e; padding: 30px; border-radius: 10px 10px 0 0;">
+                <h1 style="color: white; margin: 0;">New Organization Registration</h1>
+                <p style="color: rgba(255,255,255,0.9);">${submissionData.organizationName}</p>
+              </div>
+              <div style="padding: 30px; background: #f9f9f9;">
+                <!-- Basic Information -->
+                <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px;">
+                  <h2 style="color: #4a5568; border-bottom: 2px solid #667eea; padding-bottom: 10px;">📋 Basic Information</h2>
+                  <p><strong>Organization:</strong> ${submissionData.organizationName}</p>
+                  <p><strong>Contact Person:</strong> ${submissionData.contactPersonName}</p>
+                  <p><strong>Mobile:</strong> ${submissionData.contactPersonMobile}</p>
+                  <p><strong>Landline:</strong> ${submissionData.landlineUan || 'Not provided'}</p>
+                  <p><strong>Website:</strong> ${submissionData.websiteUrl || 'Not provided'}</p>
+                  <p><strong>Email:</strong> ${submissionData.emailAddress || 'Not provided'}</p>
+                </div>
+
+                <!-- Social Media -->
+                <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px;">
+                  <h2 style="color: #4a5568; border-bottom: 2px solid #48bb78; padding-bottom: 10px;">🌐 Social Media</h2>
+                  <p><strong>Facebook:</strong> ${submissionData.facebookLink || 'Not provided'}</p>
+                  <p><strong>Instagram:</strong> ${submissionData.instagramLink || 'Not provided'}</p>
+                  <p><strong>YouTube:</strong> ${submissionData.youtubeLink || 'Not provided'}</p>
+                  <p><strong>LinkedIn:</strong> ${submissionData.linkedinLink || 'Not provided'}</p>
+                  <p><strong>Twitter/X:</strong> ${submissionData.twitterLink || 'Not provided'}</p>
+                </div>
+
+                <!-- Organization Profile -->
+                <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px;">
+                  <h2 style="color: #4a5568; border-bottom: 2px solid #f6ad55; padding-bottom: 10px;">🏢 Organization Profile</h2>
+                  <p><strong>Year Established:</strong> ${submissionData.yearEstablished}</p>
+                </div>
+
+                <!-- KPIs -->
+                <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px;">
+                  <h2 style="color: #4a5568; border-bottom: 2px solid #9f7aea; padding-bottom: 10px;">📊 Key Performance Indicators</h2>
+                  <p><strong>Total Beneficiaries Served:</strong> ${submissionData.totalBeneficiariesServed || 'Not provided'}</p>
+                  <p><strong>Total Projects Completed:</strong> ${submissionData.totalProjectsCompleted || 'Not provided'}</p>
+                  <p><strong>Active Projects:</strong> ${submissionData.activeProjects || 'Not provided'}</p>
+                </div>
+
+                <!-- Uploads -->
+                <div style="background: white; padding: 20px; border-radius: 8px;">
+                  <h2 style="color: #4a5568; border-bottom: 2px solid #fc8181; padding-bottom: 10px;">📎 Uploads</h2>
+                  <p><strong>Organization Logo:</strong> ${submissionData.organizationLogoPath ? 'Uploaded' : 'Not uploaded'}</p>
+                  <p><strong>Supporting Documents:</strong> ${submissionData.supportingDocumentsCount || 0} file(s) uploaded</p>
+                </div>
+
+                <div style="margin-top: 30px; padding: 20px; background: #ebf8ff; border-radius: 8px; text-align: center;">
+                  <p style="margin: 0; color: #2c5282; font-weight: bold;">
+                    ✓ Submission received on ${new Date().toLocaleString()}
+                  </p>
+                </div>
+              </div>
+            </div>
+          `
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.error('❌ Error sending email:', error);
+            reject(error);
+          } else {
+            console.log('✅ Organization submission email sent successfully!');
+            resolve(info);
+          }
+        });
+      } catch (error) {
+        console.error('❌ Error in email service:', error);
+        reject(error);
+      }
+    });
+  });
+};

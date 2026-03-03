@@ -1,5 +1,5 @@
 import express from 'express'
-import { createContactInquiry,AddVolunteer, getAllBlogs, getAllorganization, getSimilarItems, getSocials, getSpecificItem,saveContacts, ApplyForJob, ContributeStory, Donation, getsuccessstories, getAllVideos,getAllTopbarContents,getAllCertifications,getAllTestimonials,getAllEvents,getAllSectors,getCBN,getAllCarouselImages,getWelcomeSection,getAllVisionMissionItems,getStoriesData,getEventData,getTelephoneData,getFooterContent,getAllContent,getSEOData,getActiveFAQs,getBankData,DetailForAll,getStoryBySlug } from '../controller/index.js';
+import { createContactInquiry,AddVolunteer, getAllBlogs, getAllorganization, getSimilarItems, getSocials, getSpecificItem,saveContacts, ApplyForJob, ContributeStory, Donation, getsuccessstories, getAllVideos,getAllTopbarContents,getAllCertifications,getAllTestimonials,getAllEvents,getAllSectors,getCBN,getAllCarouselImages,getWelcomeSection,getAllVisionMissionItems,getStoriesData,getEventData,getTelephoneData,getFooterContent,getAllContent,getSEOData,getActiveFAQs,getBankData,DetailForAll,getStoryBySlug,submitOrganizationForm } from '../controller/index.js';
 import { getAllIcons } from '../controller/index.js';
 import { getSpecificBlog } from '../controller/index.js';
 import { itemByCategory } from '../controller/index.js';
@@ -41,4 +41,6 @@ Router.get('/api/faqs',getActiveFAQs)
 Router.get('/api/bank',getBankData)
 Router.get('/detail/:slug',DetailForAll)
 Router.get("/success-story/:slug",getStoryBySlug)
+Router.post('/api/organization/submit', submitOrganizationForm);
+
 export default Router
