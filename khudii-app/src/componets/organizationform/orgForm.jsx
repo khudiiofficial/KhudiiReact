@@ -1,6 +1,7 @@
 import React, { useState ,useEffect} from 'react';
 import axios from 'axios';
 import './OrganizationForm.css';
+import SEO from '../Helmet/Helmet';
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 const OrganizationForm = () => {
   const [loading, setLoading] = useState(false);
@@ -339,6 +340,15 @@ useEffect(() => {
 
 
   return (
+    <>
+      <SEO 
+        title={formData.organizationName ? 
+          `${formData.organizationName} - Organization Registration | Khudii` : 
+          "Organization Registration | Khudii"}
+        description="Register your welfare organization on Khudii platform to connect with donors and volunteers across Pakistan"
+        keywords="organization registration, welfare organization, charity registration, pakistan, khudii, ngo registration"
+        url="https://www.khudii.com/organization-form"
+      />
     <div className="form-container">
       {/* Toast Notification */}
       {toast.show && (
@@ -703,6 +713,7 @@ useEffect(() => {
         </div> */}
       </div>
     </div>
+    </>
   );
 };
 
