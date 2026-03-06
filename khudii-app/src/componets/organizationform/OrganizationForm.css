@@ -396,6 +396,7 @@ input.error {
 /* Form Footer */
 .form-footer {
   margin-top: 20px;
+  margin-bottom: 20px;
   padding: 15px;
   background-color: #f0f9ff;
   border-radius: 6px;
@@ -521,4 +522,15 @@ input.error {
   .submit-btn {
     width: 100%;
   }
+}
+
+.accountClass{
+  background-color: #02246e;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+
+.accountClass:hover{
+  background-color:#5a67d8 ;
 }

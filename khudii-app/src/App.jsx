@@ -36,6 +36,7 @@ import Detailforall from './pages/DetailforAll/Detailforall.jsx'
 import SuccessStoryDetail from './pages/Success-Stories-detail/SuccessStoryDetail.jsx'
 import Error from "./pages/Error/Error.jsx"
 import OrganizationForm from './componets/organizationform/orgForm.jsx'
+import AuthCallback from './pages/AuthCalBack/AuthCallBack.jsx'
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 // import TranslationWidget from './componets/translate/Translate'
 function App() {
@@ -110,6 +111,7 @@ function App() {
           <Route path='/success-stories/:slug' element={<SuccessStoryDetail url={url} />} />
           {/* <Route path='Categories/:slug' element={<Categories url={url}/>}/> */}
           <Route path="/organization/registration" element={<OrganizationForm/>}/>
+          {/* <Route path="/auth-callback" element={<AuthCallback/>}/> */}
           <Route path='/:slug' element={<Detailforall url={url} />} />
           <Route path='/*' element={<Error url={url}/>}/>
         </Routes>

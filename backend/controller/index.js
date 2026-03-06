@@ -1801,6 +1801,8 @@ export const submitOrganizationForm = async (req, res) => {
     });
   });
 
+
+
   try {
     // Start transaction
     await new Promise((resolve, reject) => {
@@ -1811,7 +1813,6 @@ export const submitOrganizationForm = async (req, res) => {
     });
 
     const formData = req.body;
-    
     // Parse form data (if sent as JSON string)
     const parsedData = typeof formData === 'string' ? JSON.parse(formData) : formData;
 
@@ -1839,8 +1840,8 @@ export const submitOrganizationForm = async (req, res) => {
         linkedin_link, twitter_link,
         year_established,
         total_beneficiaries_served, total_projects_completed, active_projects,
-        organization_logo_path
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        organization_logo_path,user_google_email,user_google_name
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     const submissionValues = [
@@ -1859,7 +1860,9 @@ export const submitOrganizationForm = async (req, res) => {
       parsedData.totalBeneficiariesServed || null,
       parsedData.totalProjectsCompleted || null,
       parsedData.activeProjects || null,
-      logoPath
+      logoPath,
+      parsedData.user_google_email,
+      parsedData.user_google_name
     ];
 
     const submissionResult = await new Promise((resolve, reject) => {

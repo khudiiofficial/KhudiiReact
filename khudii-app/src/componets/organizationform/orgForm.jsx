@@ -2,6 +2,9 @@ import React, { useState ,useEffect} from 'react';
 import axios from 'axios';
 import './OrganizationForm.css';
 import SEO from '../Helmet/Helmet';
+import { useGoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from 'react-router-dom';
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
 const OrganizationForm = () => {
   const [loading, setLoading] = useState(false);
@@ -9,9 +12,9 @@ const OrganizationForm = () => {
   const [logoFile, setLogoFile] = useState(null);
   const [supportingDocs, setSupportingDocs] = useState([]);
   const [toast, setToast] = useState({ show: false, message: '', type: '' });
+   const [user, setUser] = useState(null);
+
   // Add to form state (with other useState declarations)
-const [userEmail, setUserEmail] = useState('');
-const [isAuthenticated, setIsAuthenticated] = useState(false);
   // Form state
   const [formData, setFormData] = useState({
     // Section 1: Basic Information
@@ -181,6 +184,8 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
     setLoading(true);
 
     try {
+      formData.user_google_email=user.email
+      formData.user_google_name=user.name
       const submissionData = { ...formData };
 
       if (logoPreview) {
@@ -265,78 +270,111 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
     }
   };
 
-// Add after your useState declarations
 
-useEffect(() => {
-  // Check if user is logged in with Google
-  const checkGoogleAccount = () => {
-    // Method 1: If using Google Sign-In with data attribute
-    const userEmailFromMeta = document.querySelector('meta[name="user-email"]')?.content;
-    if (userEmailFromMeta) {
-      setUserEmail(userEmailFromMeta);
-      setIsAuthenticated(true);
-      alert('method 1 worked')
-      return;
-    }
+  
+// const login = useGoogleLogin({
+//   flow: "implicit",
+//   scope: "openid email profile",
+//   redirect_uri: window.location.origin + "/auth-callback",
+// });
+const nav=useNavigate()
+const login = useGoogleLogin({
+  //  flow: "auth-code",
+  flow:"implicit",
+  // redirect_uri: window.location.origin + "/auth-callback",
+  scope: "openid email profile",
+  // ux_mode: "redirect", // This forces redirect instead of popup
+  onSuccess: async (codeResponse) => {
+    // In production, send the code to your backend
+  console.log("Auth code:", codeResponse);
+    const res = await fetch(
+      "https://www.googleapis.com/oauth2/v3/userinfo",
+      {
+        headers: {
+          Authorization: `Bearer ${codeResponse.access_token}`,
+        },
+      }
+    );
 
-    // Method 2: If using Google Identity Services (GSI)
-    if (window.google?.accounts?.id) {
-      // Google Identity Services doesn't have a direct getUser method
-      // The user info is typically stored in the ID token
-      console.log("Google Identity Services available");
-      
-      // You need to decode the JWT token to get email
-      // This assumes you have the token stored somewhere
-      const token = localStorage.getItem('google_token');
-      if (token) {
-        try {
-          // Simple JWT decode (just for email, not verification)
-          const base64Url = token.split('.')[1];
-          const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-          const payload = JSON.parse(window.atob(base64));
-          if (payload.email) {
-            setUserEmail(payload.email);
-            setIsAuthenticated(true);
-               alert('method 2 worked')
-          }
-        } catch (e) {
-          console.error("Error decoding token:", e);
-        }
+    const user = await res.json();
+    console.log("User info:", user);
+    localStorage.setItem("accesstoken",codeResponse.access_token)
+    localStorage.setItem("googleUser",JSON.stringify(user))
+    setUser(user)
+    // For testing without backend, you can decode the token from URL
+    // The actual token will be in the URL after redirect
+  },
+  onError: (error) => {
+    console.error("Login Failed:", error);
+    nav('/')
+    showToast("Google login failed", "error");
+  }
+});
+const accountChange=async()=>{
+  login()
+}
+const [load,setload]=useState(false)
+  useEffect(() => {
+    const call=async()=>{
+    const storedUser = localStorage.getItem("googleUser");
+    const token = localStorage.getItem("accesstoken")
+ 
+    setload(true)
+
+const res = await fetch(
+      "https://www.googleapis.com/oauth2/v3/userinfo",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const user = await res.json();
+
+setload(false)
+
+    if (storedUser && user && (storedUser===JSON.stringify(user))) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      try {
+        login(); // 🔥 AUTO REDIRECT TO GOOGLE   
+      } catch (error) {
+        console.log("error is",error)
       }
     }
-
-    // Method 3: If using OAuth2 implicit flow
-    const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    const accessToken = hashParams.get('access_token');
-    if (accessToken) {
-      // Fetch user info from Google
-      fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.email) {
-          setUserEmail(data.email);
-          setIsAuthenticated(true);
-             alert('method 3 worked')
-        }
-      })
-      .catch(err => console.error("Error fetching user info:", err));
     }
+    call()
+    
+  }, []);
 
-    // Method 4: If using Google's one-tap sign-in
-    if (window.google?.accounts?.oauth2) {
-      // You need to have initialized the token client
-      console.log("Google OAuth2 available");
-      // The token client would have a callback with user info
-         alert('method 4 available')
-    }
-  };
-  
-  checkGoogleAccount();
-}, []);
+
+if(load){
+  return(
+      <div className="flex items-center justify-center h-90 ">
+     
+      {/* <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"> */}
+        <img src="/siteicon.png" alt="" width={200} height={200}/>
+      {/* </div> */}
+    </div>
+  )
+}
+
+  if (!user) return( 
+    <>
+
+  {/* <div className='h-25'>Redirecting to Google...</div> */}
+  <div className=" h-25 flex items-center justify-center bg-gray-50">
+    <div className="text-center">
+      <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-blue-600 border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
+        <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+      </div>
+      <p className="mt-4 text-lg font-medium text-gray-700">Redirecting to Google...</p>
+    </div>
+  </div>
+  </>
+)
+
 
 
   return (
@@ -359,7 +397,23 @@ useEffect(() => {
 
       <div className="form-card">
         <h1 className="form-title">Organization Registration Form</h1>
-        
+        <div>
+          <div className='font-bold'>User Google Account Info</div>
+          <div><span className='font-medium'>Name : </span><span className='font-normal'>{user.name}</span></div>
+          <div className='flex justify-between items-center flex-wrap'>
+            <div>
+            <span className='font-medium'>Email : </span><span className='font-normal'>{user.email}</span>
+            </div>
+            <div>
+              <button className='cursor-pointer accountClass' onClick={()=>{accountChange()}}>Choose different Account</button>
+            </div>
+            </div>
+          <div className="form-footer">
+          <p>
+            <strong>Note:</strong> The name and email associated with your Google Account will be recorded when you submit this form.
+          </p>
+        </div>
+        </div>
         <form onSubmit={handleSubmit}>
           {/* Section 1: Basic Information */}
           <div className="form-section">
@@ -706,11 +760,7 @@ useEffect(() => {
           </div>
         </form>
 
-        {/* <div className="form-footer">
-          <p>
-            <strong>Note:</strong> The name and email associated with your Google Account will be recorded when you submit this form.
-          </p>
-        </div> */}
+        
       </div>
     </div>
     </>
