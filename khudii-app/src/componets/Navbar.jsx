@@ -997,6 +997,17 @@ const Navbar = () => {
                       Jobs
                     </Link>
                   </li>
+                    <li>
+                    <Link
+                      onClick={() => {
+                        setOpen(!open);
+                      }}
+                      to="/organization/registration/"
+                      className="mobile-menu-dropdown-link"
+                    >
+                Organization Registration
+                    </Link>
+                  </li>
                 </ul>
               </div>
 
