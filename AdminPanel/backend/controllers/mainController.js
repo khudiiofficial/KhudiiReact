@@ -8622,3 +8622,177 @@ export const removeBankLogo = async (req, res) => {
 };
 
 
+
+
+
+// Get all submissions with their supporting documents
+export const getAllSubmissions = (req, res) => {
+  const query = `
+    SELECT 
+      os.*,
+      COUNT(sd.id) as documents_count
+    FROM organization_submissions os
+    LEFT JOIN supporting_documents sd ON os.id = sd.submission_id
+    GROUP BY os.id
+    ORDER BY os.created_at DESC
+  `;
+
+  db1.query(query, (err, results) => {
+    if (err) {
+      console.error("Error fetching submissions:", err);
+      return res.status(500).json({ success: false, message: "Database error" });
+    }
+    res.json({ success: true, data: results });
+  });
+};
+
+// Get single submission with all details
+export const getSubmissionById = (req, res) => {
+  const { id } = req.params;
+  
+  const submissionQuery = "SELECT * FROM organization_submissions WHERE id = ?";
+  
+  db1.query(submissionQuery, [id], (err, submissionResults) => {
+    if (err) {
+      console.error("Error fetching submission:", err);
+      return res.status(500).json({ success: false, message: "Database error" });
+    }
+    
+    if (submissionResults.length === 0) {
+      return res.status(404).json({ success: false, message: "Submission not found" });
+    }
+    
+    const documentsQuery = "SELECT * FROM supporting_documents WHERE submission_id = ?";
+    
+    db1.query(documentsQuery, [id], (err, documentsResults) => {
+      if (err) {
+        console.error("Error fetching documents:", err);
+        return res.status(500).json({ success: false, message: "Database error" });
+      }
+      
+      res.json({
+        success: true,
+        data: {
+          ...submissionResults[0],
+          documents: documentsResults
+        }
+      });
+    });
+  });
+};
+
+
+
+
+// Delete submission and associated files from FTP
+export const deleteSubmission = (req, res) => {
+  const { id } = req.params;
+  
+  db1.getConnection((err, connection) => {
+    if (err) {
+      console.error("Error getting connection:", err);
+      return res.status(500).json({ success: false, message: "Database error" });
+    }
+    
+    connection.beginTransaction((err) => {
+      if (err) {
+        connection.release();
+        return res.status(500).json({ success: false, message: "Transaction error" });
+      }
+      
+      // First get all file paths to delete from FTP
+      const getFilesQuery = "SELECT file_path FROM supporting_documents WHERE submission_id = ?";
+      
+      connection.query(getFilesQuery, [id], (err, fileResults) => {
+        if (err) {
+          return connection.rollback(() => {
+            connection.release();
+            res.status(500).json({ success: false, message: "Error fetching files" });
+          });
+        }
+        
+        // Get logo path
+        const getLogoQuery = "SELECT organization_logo_path FROM organization_submissions WHERE id = ?";
+        
+        connection.query(getLogoQuery, [id], (err, logoResults) => {
+          if (err) {
+            return connection.rollback(() => {
+              connection.release();
+              res.status(500).json({ success: false, message: "Error fetching logo" });
+            });
+          }
+          
+          const logoPath = logoResults[0]?.organization_logo_path;
+          const documentPaths = fileResults.map(f => f.file_path);
+          
+          // Delete supporting documents from database
+          const deleteDocsQuery = "DELETE FROM supporting_documents WHERE submission_id = ?";
+          
+          connection.query(deleteDocsQuery, [id], (err) => {
+            if (err) {
+              return connection.rollback(() => {
+                connection.release();
+                res.status(500).json({ success: false, message: "Error deleting documents" });
+              });
+            }
+            
+            // Delete main submission
+            const deleteSubmissionQuery = "DELETE FROM organization_submissions WHERE id = ?";
+            
+            connection.query(deleteSubmissionQuery, [id], (err) => {
+              if (err) {
+                return connection.rollback(() => {
+                  connection.release();
+                  res.status(500).json({ success: false, message: "Error deleting submission" });
+                });
+              }
+              
+              // Commit transaction first
+              connection.commit(async (err) => {
+                if (err) {
+                  return connection.rollback(() => {
+                    connection.release();
+                    res.status(500).json({ success: false, message: "Commit error" });
+                  });
+                }
+                
+                connection.release();
+                
+                // Now delete files from FTP (after successful DB deletion)
+                const ftpDeletePromises = [];
+                
+                // Delete logo if exists
+                if (logoPath) {
+                  ftpDeletePromises.push(deleteFromFTP(logoPath));
+                }
+                
+                // Delete all supporting documents
+                documentPaths.forEach(path => {
+                  ftpDeletePromises.push(deleteFromFTP(path));
+                });
+                
+                // Wait for all FTP deletions to complete (don't wait if you don't want to)
+                try {
+                  await Promise.all(ftpDeletePromises);
+                  console.log(`✅ Deleted ${ftpDeletePromises.length} files from FTP`);
+                } catch (ftpError) {
+                  console.error("❌ Error deleting some files from FTP:", ftpError);
+                  // Don't fail the request if FTP delete fails
+                }
+                
+                res.json({
+                  success: true,
+                  message: "Submission deleted successfully",
+                  filesDeleted: {
+                    logo: !!logoPath,
+                    documents: documentPaths.length
+                  }
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+};

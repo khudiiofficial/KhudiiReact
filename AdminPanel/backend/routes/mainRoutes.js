@@ -177,7 +177,12 @@ getMobileImages,
 getCarouselImageById,
 createCarouselImage,
 updateCarouselImage,
-deleteCarouselImage
+deleteCarouselImage,
+
+//org registartion
+deleteSubmission,
+getSubmissionById,
+getAllSubmissions
 } from "../controllers/mainController.js";
 
 const router = express.Router();
@@ -404,6 +409,15 @@ router.put('/api/faqs/display-order/update',auth, updateDisplayOrder); // Bulk u
 router.get('/api/bank',auth, getBankData); // Get bank data (returns imagepath URL)
 router.put('/api/bank',auth, updateBankData); // Update bank details with base64 image
 router.delete('api/bank/logo',auth, removeBankLogo); // Remove logo
+
+// organization registration request
+router.get('/api/admin/submissions', getAllSubmissions);
+
+// Get single submission
+router.get('/api/admin/submissions/:id', getSubmissionById);
+
+// Delete submission
+router.delete('/api/admin/submissions/:id', deleteSubmission);
 
 
 

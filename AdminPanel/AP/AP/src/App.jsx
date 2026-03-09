@@ -46,6 +46,7 @@ import FooterAdmin from './Pages/footer/Footer'
 import FAQManager from './Pages/faqs/Faqs'
 import BankDataManager from './Pages/contactbank/Bank'
 import { useSelector } from 'react-redux'
+import OrgRegistration from './Pages/OrgRegistration/OrgRegistration'
 function App() {
 const location=useLocation()  
 const dispatch=useDispatch()
@@ -137,7 +138,7 @@ call()
           <Route path='faqs' element={<FAQManager/>}/>
           <Route path='footer' element={<FooterAdmin/>}/>
           <Route path='bank' element={<BankDataManager/>}/>
-          
+          <Route path='OrgRegistration' element={<OrgRegistration/>}/>
           {/* <Route path="change-password" element={<ChangePassword />} /> */}
           <Route index element={<DashboardIndex/>} />
           

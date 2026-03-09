@@ -62,7 +62,10 @@ export default function Sidebar() {
     { path: "/dashboard/seo", label: "SEO Management" },
     { path: "/dashboard/footer", label: "Footer and other images" },
     { path: "/dashboard/faqs", label: "FAQS" },
-    { path: "/dashboard/bank", label: "Conatct Bank Details" }
+    { path: "/dashboard/bank", label: "Conatct Bank Details" },
+    { path: "/dashboard/OrgRegistration", label: "Organization Registartion Request" },
+    
+
   ];
 
   // const moreLinks = [
