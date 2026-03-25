@@ -102,6 +102,7 @@ height: 400px;
 .indicator {
   width: 2.5rem; 
   height: 0.5rem; 
+
   border-radius: 0.25rem; 
   border: none;
   cursor: pointer;

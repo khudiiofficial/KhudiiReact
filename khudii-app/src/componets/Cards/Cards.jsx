@@ -103,27 +103,54 @@ call()
     return (
     
         <div className={styles.parent}>
-            {arr.map((ele, index) => (
-                  <div key={index} >
-                <div className={styles.class1} onClick={()=>{nav(`/${ele.slug}`)}} >
-                    <img 
-                        src={ele.src} 
-                        className={styles.class2} 
-                        alt={`${ele.Name} sector`}
-                        loading="lazy"
-                        width="280"
-                        height="160"
-                    />
-                    <h2 className={styles.class4}>{ele.name}</h2>
-                    <p className={styles.class3}>{ele.description}</p>
-                    <Link>
-                        <button className={styles.class5}>
-                            More About {ele.name}
-                        </button>
-                    </Link>
-                </div>
-                  </div>
-            ))}
+            {/* {arr.map((ele, index) => (
+                //   <div key={index} >
+                // <div className={styles.class1} onClick={()=>{nav(`/${ele.slug}`)}} >
+                //     <img 
+                //         src={ele.src} 
+                //         className={styles.class2} 
+                //         alt={`${ele.Name} sector`}
+                //         loading="lazy"
+                //         width="280"
+                //         height="160"
+                //     />
+                //     <h2 className={styles.class4}>{ele.name}</h2>
+                //     <p className={styles.class3}>{ele.description}</p>
+                //     <Link>
+                //         <button className={styles.class5}>
+                //             More About {ele.name}
+                //         </button>
+                //     </Link>
+                // </div>
+                //   </div>
+                 ))} */}
+                <ul className={styles.parent}>
+  {arr.map((ele, index) => (
+    <li key={index}>
+      <Link 
+        to={`/${ele.slug}`} 
+        className={styles.class1}
+        aria-label={`View ${ele.name} sector`}
+      >
+        <img 
+          src={ele.src} 
+          className={styles.class2} 
+          alt={`${ele.name} sector illustration`}
+          loading="lazy"
+          width="280"
+          height="160"
+        />
+        <h2 className={styles.class4}>{ele.name}</h2>
+        <p className={styles.class3}>{ele.description}</p>
+
+        <span className={styles.class5}>
+          More About {ele.name}
+        </span>
+      </Link>
+    </li>
+  ))}
+</ul>
+           
         </div>
     )
 }

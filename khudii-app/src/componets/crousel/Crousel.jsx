@@ -90,27 +90,42 @@ sethero([...arr])
 
     return (
         <>
-            <section className={`${styles.homePage} ${styles.carouselSection}`}>
+            <section aria-roledescription="carousel" aria-label="Homepage banners" className={`${styles.homePage} ${styles.carouselSection}`}>
                 <div className={styles.carouselContainer}>
                     {hero.map((src, i) => (
-                       <img onClick={()=>{nav(`/${src.description}`)}}
-  key={i}
-  src={src.image_path}
-  alt={`Slide ${i}`}
-  className={`${styles.slide} ${i === index ? styles.slideActive : styles.slideInactive}`}
-  fetchPriority="high"
-  decoding="async"
-/>
+//                        <img onClick={()=>{nav(`/${src.description}`)}}
+//   key={i}
+//   src={src.image_path}
+//   alt={`Slide ${i}`}
+//   className={`${styles.slide} ${i === index ? styles.slideActive : styles.slideInactive}`}
+//   fetchPriority="high"
+//   decoding="async"
+// />
+<button
+  onClick={() => nav(`/${src.description}`)}
+  className={styles.imageButton}
+  aria-label={`Open ${src.description}`}
+>
+  <img
+    src={src.image_path}
+    alt={src.description || `Slide ${i + 1}`}
+    className={`${styles.slide} ${i === index ? styles.slideActive : styles.slideInactive}`}
+    fetchPriority="high"
+    decoding="async"
+  />
+</button>
                     ))}
                     <div className={styles.overlay}></div>
                 </div>
                 <div id='star' className={styles.controls}>
                     {hero.map((_, i) => (
-                        <button  
-                            key={i} 
-                            onClick={() => setIndex(i)} 
-                            className={`${styles.indicator} ${i === index ? styles.indicatorActive : styles.indicatorInactive}`}
-                        ></button>
+                    <button  
+  key={i} 
+  onClick={() => setIndex(i)} 
+  className={`${styles.indicator} ${i === index ? styles.indicatorActive : styles.indicatorInactive}`}
+  aria-label={`Go to slide ${i + 1}`}
+aria-current={i === index}
+></button>
                     ))}
                 </div>
             </section>
