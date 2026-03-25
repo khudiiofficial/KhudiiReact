@@ -1,4 +1,4 @@
-/* Event.module.css */
+
 .class1 {
     color: #02236e;
     position: relative;
@@ -122,7 +122,7 @@
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
 
-/* Animation classes */
+
 .fade-in {
     opacity: 0;
     animation: fadeIn 0.8s ease-out forwards;
@@ -171,7 +171,7 @@
     }
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 768px) {
     .class1 {
         width: 100%;
@@ -206,7 +206,7 @@ button>span{
 }
 }
 
-/* Mobile Screens */
+
 @media (max-width: 576px) {
     .event_btn1, .event_btn2 {
         padding: 5px 10px;
@@ -222,7 +222,7 @@ button>span{
     }
 }
 
-/* Extra Small Mobile */
+
 @media (max-width: 360px) {
     .class1 {
         padding: 0 15px;
@@ -232,7 +232,7 @@ button>span{
 
 .newclass{
     word-wrap: break-word;
-  text-align: justify;     /*  looks more symmetrical */
+  text-align: justify;     
   overflow-wrap: break-word;
   hyphens: auto;
 }
