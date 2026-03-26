@@ -530,3 +530,24 @@ display: none;
 
 
 /* additional for accessibility */
+
+/* Ensure all buttons have proper touch targets */
+
+.searchIconOnly,
+.iconBtn {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile touch targets */
+@media (max-width: 768px) {
+ 
+  .searchIconOnly,
+  .iconBtn {
+    min-height: 48px;
+    min-width: 48px;
+  }
+}
