@@ -427,6 +427,7 @@
 // };
 
 // export default Navbar;
+
 import React, { useState, useEffect } from "react";
 import styles from "./Navbar.module.css";
 import "./Navbar.css";
@@ -694,14 +695,23 @@ const Navbar = () => {
               </>
             )}
 
-            {!isMobile && (
+            {/* {!isMobile && (
               <Link
                 to="/donate-now/"
                 className="bg-[#e7001e] text-white px-4 py-2 rounded-md shadow hover:opacity-95"
               >
                 Donate Now
               </Link>
-            )}
+            )} */}
+            {!isMobile && (
+  <Link
+    to="/donate-now/"
+    className="bg-[#CC0000] text-white px-4 py-2 rounded-md shadow hover:opacity-95 min-h-[44px] min-w-[44px] inline-flex items-center justify-center"
+    aria-label="Donate Now"
+  >
+    Donate Now
+  </Link>
+)}
 
             {/* Contribute Story and Donate Now Mobile Buttons */}
             <p className={`${styles.mobileBtns} flex`}>
@@ -722,7 +732,7 @@ const Navbar = () => {
             {/* Search Icon For Mobile Only */}
             <>
               {/* Search Icon (always visible) */}
-              <button
+              {/* <button
                 onClick={() => {
                   setIsSearchOpen(true);
                   setcounter(false); // Important for mobile search
@@ -731,8 +741,17 @@ const Navbar = () => {
                 aria-label="Search"
               >
                 <i className={`fas fa-search ${styles.mobs2}`}></i>
-              </button>
-
+              </button> */}
+<button
+  onClick={() => {
+    setIsSearchOpen(true);
+    setcounter(false);
+  }}
+  className={`${styles.searchIconOnly} min-h-[44px] min-w-[44px] flex items-center justify-center`}
+  aria-label="Search"
+>
+  <i className={`fas fa-search ${styles.mobs2}`} aria-hidden="true"></i>
+</button>
               {/* Overlay + Popup (only when open) */}
               {isSearchOpen && (
                 <>
@@ -827,26 +846,22 @@ const Navbar = () => {
             </>
 
             {/* Mobile Hamburger Icon */}
-            <button
+            {/* <button
               className={`${styles.buttonclass} cursor-pointer`}
               onClick={() => setOpen(!open)}
               aria-label="Toggle menu"
             >
               <i class="fa-solid fa-bars fa-2xl" style={{ color: "#02236e" }}></i>
-              {/* <svg
-                className="w-5 h-5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg> */}
-            </button>
+            
+            </button> */}
+            <button
+  className={`${styles.buttonclass} cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center`}
+  onClick={() => setOpen(!open)}
+  aria-label={open ? "Close menu" : "Open menu"}
+  aria-expanded={open}
+>
+  <i className="fa-solid fa-bars fa-2xl" style={{ color: "#02236e" }} aria-hidden="true"></i>
+</button>
           </div>
         </div>
 
