@@ -45,58 +45,10 @@
 
 
 
-// import React, { useState, useEffect } from "react";
-// import { VapiWidget } from "@vapi-ai/client-sdk-react";
-// const VAPI_PUBLIC_KEY = import.meta.env.VITE_VAPI_PUBLIC_KEY;
-// const VAPI_ASSISTANT_ID = import.meta.env.VITE_VAPI_ASSISTANT_ID;
-// const VapiAssistant = () => {
-//   const [widgetSize, setWidgetSize] = useState("compact");
-
-//   useEffect(() => {
-//     const handleResize = () => {
-//       if (window.innerWidth < 640) {
-//         setWidgetSize("tiny"); // 📱 mobile
-//       } else if (window.innerWidth < 1024) {
-//         setWidgetSize("compact"); // 💻 tablet
-//       } else {
-//         setWidgetSize("full"); // 🖥️ desktop
-//       }
-//     };
-
-//     handleResize(); // Run on mount
-//     window.addEventListener("resize", handleResize);
-//     return () => window.removeEventListener("resize", handleResize);
-//   }, []);
-
-//   return (
-//     <VapiWidget
-//       publicKey={VAPI_PUBLIC_KEY}
-//       assistantId={VAPI_ASSISTANT_ID}
-//       mode="chat"
-//       theme="light"
-//       position="bottom-right"
-//       size={widgetSize} // 👈 dynamic
-//       accentColor="#02236e"
-//       ctaButtonColor="#009dc8"
-//       ctaButtonTextColor="#ffffff"
-//       title="AI Assistant"
-//       ctaTitle="Ask Khudii"
-//       ctaSubtitle="24/7 Support"
-//       chatPlaceholder="How can I help you today?"
-//       hideCtaButton
-//     />
-//   );
-// };
-
-// export default VapiAssistant;
-
-
 import React, { useState, useEffect } from "react";
 import { VapiWidget } from "@vapi-ai/client-sdk-react";
-
 const VAPI_PUBLIC_KEY = import.meta.env.VITE_VAPI_PUBLIC_KEY;
 const VAPI_ASSISTANT_ID = import.meta.env.VITE_VAPI_ASSISTANT_ID;
-
 const VapiAssistant = () => {
   const [widgetSize, setWidgetSize] = useState("compact");
 
@@ -111,7 +63,7 @@ const VapiAssistant = () => {
       }
     };
 
-    handleResize();
+    handleResize(); // Run on mount
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -123,10 +75,10 @@ const VapiAssistant = () => {
       mode="chat"
       theme="light"
       position="bottom-right"
-      size={widgetSize}
-      accentColor="#0033A0" // Changed from #02236e for better contrast
-      ctaButtonColor="#CC0000" // Changed from #009dc8 for better contrast
-      ctaButtonTextColor="#FFFFFF"
+      size={widgetSize} // 👈 dynamic
+      accentColor="#02236e"
+      ctaButtonColor="#009dc8"
+      ctaButtonTextColor="#ffffff"
       title="AI Assistant"
       ctaTitle="Ask Khudii"
       ctaSubtitle="24/7 Support"
