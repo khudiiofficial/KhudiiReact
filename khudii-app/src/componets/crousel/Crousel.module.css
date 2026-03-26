@@ -1,5 +1,4 @@
- /* Home Page CSS Protection against Vapi Widget */
- /* 2nd Code */
+/* 
 .carouselSection {
   width: 100%;
    
@@ -53,7 +52,7 @@ height: 10rem;
   .slide{
     width: 100%;
 height: 400px;
-/* height: auto; */
+
 object-fit: cover;
 right: 50%;
 object-position: center;
@@ -61,7 +60,7 @@ object-position: center;
  
   .carouselContainer{
 height: 400px;
-/* height: auto; */
+
   }
 }
 
@@ -121,4 +120,209 @@ height: 400px;
 .indicatorInactive {
   background-color: #cccccc; 
 }
- 
+  */
+
+  /* Home Page CSS Protection against Vapi Widget */
+.carouselSection {
+  width: 100%;
+}
+
+.carouselContainer {
+  height: 19rem;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  /* Critical for mobile performance */
+  contain: strict;
+  will-change: transform;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  height: 19rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: opacity 0.7s ease-in-out;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  cursor: pointer;
+  /* Prevent layout shift on mobile */
+  object-fit: cover;
+  aspect-ratio: 16 / 9;
+  /* Optimize rendering */
+  will-change: opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Mobile specific optimizations */
+@media (max-width: 800px) {
+  .slide {
+    height: 12rem;
+    width: 100%;
+  }
+  .carouselContainer {
+    height: 12rem;
+  }
+}
+
+@media (max-width: 1057px) and (min-width: 601px) {
+  .slide {
+    height: 10rem;
+  }
+  .carouselContainer {
+    height: 10rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .slide {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    right: 50%;
+    object-position: center;
+    /* Mobile performance */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+  .carouselContainer {
+    height: 400px;
+    /* Critical for mobile LCP */
+    content-visibility: auto;
+    contain-intrinsic-size: 400px;
+  }
+}
+
+.slideActive {
+  opacity: 1;
+  z-index: 10;
+  display: block;
+  visibility: visible;
+}
+
+.slideInactive {
+  opacity: 0;
+  z-index: 0;
+  display: none;
+  visibility: hidden;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.controls {
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.indicator {
+  width: 2.5rem;
+  height: 0.5rem;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 0 !important;
+  margin: 0 !important;
+  /* Touch target optimization for mobile */
+  /* min-height: 44px; */
+  /* min-width: 44px; */
+  background-color: transparent;
+  position: relative;
+}
+
+.indicator::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2.5rem;
+  height: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: inherit;
+  transition: background-color 0.3s ease;
+}
+
+.indicatorActive {
+  background-color: #e7001e;
+}
+
+.indicatorInactive {
+  background-color: #cccccc;
+}
+
+.imageButton {
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  width: 100%;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+/* Mobile touch optimization */
+@media (max-width: 768px) {
+  .indicator {
+    /* min-height: 48px; */
+    /* min-width: 48px; */
+  }
+  
+  .indicator::after {
+    width: 2rem;
+    height: 0.4rem;
+  }
+  
+  .imageButton {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Focus states */
+.imageButton:focus-visible,
+.indicator:focus-visible {
+  outline: 2px solid #0066FF;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .slide {
+    transition: none;
+  }
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .indicatorActive {
+    background-color: Highlight;
+  }
+  
+  .indicatorInactive {
+    background-color: ButtonText;
+  }
+}
