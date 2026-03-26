@@ -1,4 +1,4 @@
-/* 
+
 .carouselSection {
   width: 100%;
    
@@ -120,13 +120,13 @@ height: 400px;
 .indicatorInactive {
   background-color: #cccccc; 
 }
-  */
+  
 
   /* Home Page CSS Protection against Vapi Widget */
 
 
 
-
+/* 
 .carouselSection {
   width: 100%;
 }
@@ -324,7 +324,7 @@ height: 400px;
   .indicatorInactive {
     background-color: ButtonText;
   }
-} 
+}  */
 
 
 
