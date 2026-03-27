@@ -72,87 +72,131 @@
 // export default Cards
 
 
-import React, { useState,useEffect } from 'react'
-import styles from './Cards.module.css'
-import { Link } from 'react-router-dom'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-import { div } from 'framer-motion/client'
-const APIPath = import.meta.env.VITE_BACKEND_PATH;
-const Cards = () => {
-    const nav=useNavigate()
-    const [arr, setArr] = useState([
+// import React, { useState,useEffect } from 'react'
+// import styles from './Cards.module.css'
+// import { Link } from 'react-router-dom'
+// import axios from 'axios'
+// import { useNavigate } from 'react-router-dom'
+// import { div } from 'framer-motion/client'
+// const APIPath = import.meta.env.VITE_BACKEND_PATH;
+// const Cards = () => {
+//     const nav=useNavigate()
+//     const [arr, setArr] = useState([
  
-    ])
+//     ])
 
-    useEffect(()=>{
-const call=async()=>{
-    try {
-        const res=await axios.get(`${APIPath}/getAllSectors`)
-        if(res.status===200){
-            setArr(res.data.data)
-            // console.log(res.data.data)
-        }
-    } catch (error) {
-        console.log(error)
-    }
-}
-call()
-    },[])
+//     useEffect(()=>{
+// const call=async()=>{
+//     try {
+//         const res=await axios.get(`${APIPath}/getAllSectors`)
+//         if(res.status===200){
+//             setArr(res.data.data)
+//             // console.log(res.data.data)
+//         }
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+// call()
+//     },[])
 
-    return (
+//     return (
     
-        <div className={styles.parent}>
-            {/* {arr.map((ele, index) => (
-                //   <div key={index} >
-                // <div className={styles.class1} onClick={()=>{nav(`/${ele.slug}`)}} >
-                //     <img 
-                //         src={ele.src} 
-                //         className={styles.class2} 
-                //         alt={`${ele.Name} sector`}
-                //         loading="lazy"
-                //         width="280"
-                //         height="160"
-                //     />
-                //     <h2 className={styles.class4}>{ele.name}</h2>
-                //     <p className={styles.class3}>{ele.description}</p>
-                //     <Link>
-                //         <button className={styles.class5}>
-                //             More About {ele.name}
-                //         </button>
-                //     </Link>
-                // </div>
-                //   </div>
-                 ))} */}
-                <ul className={styles.parent}>
-  {arr.map((ele, index) => (
-    <li key={index}>
-      <Link 
-        to={`/${ele.slug}`} 
-        className={styles.class1}
-        aria-label={`View ${ele.name} sector`}
-      >
-        <img 
-          src={ele.src} 
-          className={styles.class2} 
-          alt={`${ele.name} sector illustration`}
-          loading="lazy"
-          width="280"
-          height="160"
-        />
-        <h2 className={styles.class4}>{ele.name}</h2>
-        <p className={styles.class3}>{ele.description}</p>
+//         <div className={styles.parent}>
+//             {/* {arr.map((ele, index) => (
+//                 //   <div key={index} >
+//                 // <div className={styles.class1} onClick={()=>{nav(`/${ele.slug}`)}} >
+//                 //     <img 
+//                 //         src={ele.src} 
+//                 //         className={styles.class2} 
+//                 //         alt={`${ele.Name} sector`}
+//                 //         loading="lazy"
+//                 //         width="280"
+//                 //         height="160"
+//                 //     />
+//                 //     <h2 className={styles.class4}>{ele.name}</h2>
+//                 //     <p className={styles.class3}>{ele.description}</p>
+//                 //     <Link>
+//                 //         <button className={styles.class5}>
+//                 //             More About {ele.name}
+//                 //         </button>
+//                 //     </Link>
+//                 // </div>
+//                 //   </div>
+//                  ))} */}
+//                 <ul className={styles.parent}>
+//   {arr.map((ele, index) => (
+//     <li key={index}>
+//       <Link 
+//         to={`/${ele.slug}`} 
+//         className={styles.class1}
+//         aria-label={`View ${ele.name} sector`}
+//       >
+//         <img 
+//           src={ele.src} 
+//           className={styles.class2} 
+//           alt={`${ele.name} sector illustration`}
+//           loading="lazy"
+//           width="280"
+//           height="160"
+//         />
+//         <h2 className={styles.class4}>{ele.name}</h2>
+//         <p className={styles.class3}>{ele.description}</p>
 
-        <span className={styles.class5}>
-          More About {ele.name}
-        </span>
-      </Link>
-    </li>
-  ))}
-</ul>
+//         <span className={styles.class5}>
+//           More About {ele.name}
+//         </span>
+//       </Link>
+//     </li>
+//   ))}
+// </ul>
            
-        </div>
-    )
+//         </div>
+//     )
+// }
+
+// export default Cards
+import React, { useState, useEffect } from 'react'
+import styles from './Cards.module.css'
+import { Link, useNavigate } from 'react-router-dom'
+
+const Cards = ({ data = [] }) => {
+  const nav = useNavigate()
+  const [arr, setArr] = useState([])
+
+  useEffect(() => {
+    setArr(data)
+  }, [data])
+
+  return (
+    <div className={styles.parent}>
+      <ul className={styles.parent}>
+        {arr.map((ele, index) => (
+          <li key={index}>
+            <Link 
+              to={`/${ele.slug}`} 
+              className={styles.class1}
+              aria-label={`View ${ele.name} sector`}
+            >
+              <img 
+                src={ele.src} 
+                className={styles.class2} 
+                alt={`${ele.name} sector illustration`}
+                loading="lazy"
+                width="280"
+                height="160"
+              />
+              <h2 className={styles.class4}>{ele.name}</h2>
+              <p className={styles.class3}>{ele.description}</p>
+              <span className={styles.class5}>
+                More About {ele.name}
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
 }
 
 export default Cards
