@@ -620,7 +620,6 @@
 // };
 
 // export default Events;
-
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './Event.module.css';
 import { Link } from 'react-router-dom';
