@@ -288,7 +288,7 @@ display: none;
     display: none;
 }
 
-@media (max-width:1143px){
+@media (max-width:1144px){
 .buttonclass{
     display: block;
 }
@@ -525,5 +525,12 @@ display: none;
     overflow-y: auto;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
+  }
+}
+
+
+@media (min-width:601px){
+  .searchIconOnly{
+    display:none !important ;
   }
 }

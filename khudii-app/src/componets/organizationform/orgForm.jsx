@@ -364,14 +364,26 @@ if(load){
     <>
 
   {/* <div className='h-25'>Redirecting to Google...</div> */}
-  <div className=" h-25 flex items-center justify-center bg-gray-50">
+  {/* <div className=" h-25 flex items-center justify-center bg-gray-50">
     <div className="text-center">
       <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-blue-600 border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
         <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
       </div>
       <p className="mt-4 text-lg font-medium text-gray-700">Redirecting to Google...</p>
     </div>
+  </div> */}
+<div className="h-35 flex items-center justify-center bg-gray-50">
+  <div className="text-center">
+    <div 
+      className="inline-block h-12 w-12 rounded-full border-4 border-solid border-blue-600 border-t-transparent" 
+      style={{ animation: 'spin 1s linear infinite' }}
+      role="status"
+    >
+      <span className="sr-only">Loading...</span>
+    </div>
+    <p className="mt-4 text-lg font-medium text-gray-700">Redirecting to Google...</p>
   </div>
+</div>
   </>
 )
 
