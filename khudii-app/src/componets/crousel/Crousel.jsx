@@ -614,7 +614,7 @@ const Crousel = () => {
                                     transition: 'opacity 0.7s ease-in-out'
                                 }}
                             >
-                                <img
+                                {/* <img
                                     src={src.image_path}
                                     alt={src.description || `Slide ${i + 1}`}
                                     className={styles.slide}
@@ -628,7 +628,28 @@ const Crousel = () => {
                                         height: '100%',
                                         objectFit: 'cover'
                                     }}
-                                />
+                                /> */}
+                                // In your Crousel component, modify the image rendering:
+<img
+  src={src.image_path}
+  srcSet={`
+    ${src.mobile_image_path || src.image_path} 600w,
+    ${src.image_path} 1200w
+  `}
+  sizes={isMobile ? "100vw" : "1200px"}
+  alt={src.description || `Slide ${i + 1}`}
+  className={styles.slide}
+  fetchPriority={i === 0 ? "high" : "low"}
+  decoding={i === 0 ? "sync" : "async"}
+  loading={i === 0 ? "eager" : "lazy"}
+  width={isMobile ? "600" : "1200"}
+  height={isMobile ? "400" : "600"}
+  style={{
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover'
+  }}
+/>
                             </button>
                         );
                     })}

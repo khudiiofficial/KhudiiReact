@@ -8,21 +8,34 @@
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 />
 <link href="https://rsms.me/inter/inter.css" rel="stylesheet" />
-<link rel="preconnect" href="https://media.khudii.com" crossorigin>
+
+
+<!-- Preconnect to critical domains -->
+<link rel="preconnect" href="https://media.khudii.com" crossorigin />
+<link rel="dns-prefetch" href="https://media.khudii.com" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+<!-- Preload critical assets -->
+<link rel="preload" as="image" href="/Khudii.webp" fetchpriority="high" />
+<link rel="preload" as="style" href="/src/index.css" />
+<!-- In your index.html, add this to force first image priority -->
+<style>
+  [fetchpriority="high"] {
+    content-visibility: visible !important;
+  }
+</style>
  <meta name="description" content="Pakistan's largest digital platform for welfare organizations" />
     <meta name="keywords" content="khudii, pakistan, welfare, charity, community support" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Khudii</title>
   
   </head>
+  
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx" defer></script>
     
   </body>
-
-
-
-
 
 </html>
