@@ -24,7 +24,7 @@ const HomePage = ({con,url}) => {
         url={ url||"https://khudii.com"}
         image="/Khudii.webp"
       />
-    {/* <Crousel/> */}
+    <Crousel/>
     <Cards/>
     <WelcomeSection/>
     <Vision/>
