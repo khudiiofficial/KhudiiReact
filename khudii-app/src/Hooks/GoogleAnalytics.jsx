@@ -26,17 +26,26 @@ export const useGoogleAnalytics = () => {
       window.dataLayer.push(arguments);
     };
 
-    // Load GA script
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
-    document.head.appendChild(script);
+    // Load GA script with a delay to improve TBT & Page Load metrics
+    const loadGA = () => {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
+      document.head.appendChild(script);
 
-    // Initial config
-    window.gtag('js', new Date());
-    window.gtag('config', GA_TRACKING_ID, {
-      page_path: location.pathname + location.search,
-    });
+      // Initial config
+      window.gtag('js', new Date());
+      window.gtag('config', GA_TRACKING_ID, {
+        page_path: location.pathname + location.search,
+      });
+    };
+
+    // Delay execution until main thread is idle or after 4s
+    if (window.requestIdleCallback) {
+      window.requestIdleCallback(loadGA, { timeout: 4000 });
+    } else {
+      setTimeout(loadGA, 4000);
+    }
   }, []); // Only run once on mount
 
   // Track page views on route change

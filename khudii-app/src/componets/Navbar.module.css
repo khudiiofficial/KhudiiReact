@@ -136,6 +136,7 @@ display: none;
 .khudii_logo {
     width: 125px;
     height: auto;
+    aspect-ratio: 223 / 79;
 }
 
 .resultImage {
@@ -378,6 +379,7 @@ display: none;
   .khudii_logo {
     width: 125px;
     height: auto;
+    aspect-ratio: 223 / 79;
   }
   
   .org-btn {

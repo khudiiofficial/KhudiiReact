@@ -50,7 +50,7 @@
 
 //   return (
 //     <>
-      
+
 //       <div className={styles.parent}>
 //       <div className={`${styles.pad} grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6`}>
 //         <div className={`${styles.newclass} min-h-[270px] max-h-[1000px]`}> 
@@ -95,7 +95,7 @@
 //         </div>
 //       </div>
 //       </div>
-      
+
 //     </>
 //   )
 // }
@@ -116,7 +116,7 @@
 //     const res=await axios.get(`${APIPath}/api/welcome`)
 //     if(res.status===200){
 //     setdata(res.data.data)
-    
+
 //     }
 //   } catch (error) {
 //     console.log(error)
@@ -181,7 +181,7 @@
 //         }
 
 //         .videoPlaceholder {
-          
+
 //           background-size: cover;
 //           background-position: center;
 //           cursor: pointer;
@@ -282,17 +282,17 @@
 //             width: 60px;
 //             height: 60px;
 //           }
-          
+
 //           .playText {
 //             font-size: 0.9rem;
 //           }
 //         }
-        
+
 //         @media (max-width: 576px) {
 //         .parent {
 //         padding: 0;
 //         }
-        
+
 //         .size {
 //             font-size: 1.6rem;
 //             text-align: center;
@@ -325,7 +325,7 @@
 //             width: 50px;
 //             height: 50px;
 //           }
-          
+
 //           .playText {
 //             font-size: 0.8rem;
 //           }
@@ -340,7 +340,7 @@
 //           }
 //         }
 //       `}</style>
-      
+
 //       <div className="parent">
 //         <div className="pad">
 //           <div className="newclass"> 
@@ -447,17 +447,17 @@ const WelcomeSection = () => {
                 backgroundImage: `url(https://img.youtube.com/vi/${data.youtube_video_id}/hqdefault.jpg)`
               }}
             >
-          <div className={styles.playButtonContainer}>
-  <div className={styles.playButton}>
-    <svg width="80" height="80" viewBox="0 0 100 100" aria-hidden="true">
-      <circle cx="50" cy="50" r="45" fill="red" opacity="0.9" />
-      <polygon points="40,30 40,70 70,50" fill="white" />
-    </svg>
-  </div>
-  <div className={styles.playText}>
-    Click to play video
-  </div>
-</div>
+              <div className={styles.playButtonContainer}>
+                <div className={styles.playButton}>
+                  <svg width="80" height="80" viewBox="0 0 100 100" aria-hidden="true">
+                    <circle cx="50" cy="50" r="45" fill="red" opacity="0.9" />
+                    <polygon points="40,30 40,70 70,50" fill="white" />
+                  </svg>
+                </div>
+                <div className={styles.playText}>
+                  Click to play video
+                </div>
+              </div>
             </button>
           ) : (
             <iframe

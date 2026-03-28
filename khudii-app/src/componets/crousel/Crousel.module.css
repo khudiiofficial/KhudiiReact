@@ -10,7 +10,13 @@
   overflow: hidden;
   cursor: pointer;
 }
-
+/* CHANGE 12: Added to prevent layout shift and ensure LCP image renders */
+/* .carouselContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #f5f5f5;
+} */
 
 .slide {
   position: absolute;
