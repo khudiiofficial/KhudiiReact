@@ -4,6 +4,7 @@ import reactLogo from './assets/react.svg'
 import Navbar from './componets/Navbar'
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
+import HomePage from './pages/Home/Home'
 import Topbar from './componets/Topbar/Topbar'
 import Footer from './componets/secondlast/Footer'
 import VapiAssistant from './componets/VAPI.AI/Vapi'
@@ -14,7 +15,6 @@ import './cache.js'
 import { useGoogleAnalytics } from './Hooks/GoogleAnalytics.jsx'
 
 // Lazy loaded routes to improve performance and code-split the massive bundle
-const HomePage = lazy(() => import('./pages/Home/Home'));
 const Organizations = lazy(() => import('./pages/Organizations/Organizations'));
 const Organization_Detail = lazy(() => import('./pages/OrganizationDetail/Organization_Detail'));
 const About = lazy(() => import('./pages/About/About'));
