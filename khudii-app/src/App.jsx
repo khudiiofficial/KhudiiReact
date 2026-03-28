@@ -7,9 +7,9 @@ import { Routes, Route } from 'react-router-dom'
 import HomePage from './pages/Home/Home'
 import Topbar from './componets/Topbar/Topbar'
 import Footer from './componets/secondlast/Footer'
-const VapiAssistant = lazy(() => import('./componets/VAPI.AI/Vapi'));
-const BackToTopButton = lazy(() => import('./componets/backToTopButton/BackToTopButton.jsx'));
-const SocialShare = lazy(() => import('./componets/SocialShare/SocialShare.jsx'));
+import VapiAssistant from './componets/VAPI.AI/Vapi'
+import BackToTopButton from './componets/backToTopButton/BackToTopButton.jsx'
+import SocialShare from './componets/SocialShare/SocialShare.jsx'
 import axios from 'axios'
 import './cache.js'
 import { useGoogleAnalytics } from './Hooks/GoogleAnalytics.jsx'
@@ -44,14 +44,6 @@ const APIPath = import.meta.env.VITE_BACKEND_PATH;
 // import TranslationWidget from './componets/translate/Translate'
 function App() {
   useGoogleAnalytics()
-  
-  // Defer heavy UI widgets totally out of the initial DOM network waterfall
-  const [showHeavyWidgets, setShowHeavyWidgets] = useState(false);
-  useEffect(() => {
-    const timer = setTimeout(() => setShowHeavyWidgets(true), 4000);
-    return () => clearTimeout(timer);
-  }, []);
-
   const location = useLocation()
   const [data, setSeoData] = useState([])
   const [url, seturl] = useState('')
@@ -134,13 +126,9 @@ function App() {
           </Routes>
         </Suspense>
         <Footer />
-        {showHeavyWidgets && (
-          <Suspense fallback={null}>
-            <VapiAssistant />
-            <BackToTopButton />
-            <SocialShare />
-          </Suspense>
-        )}
+        <VapiAssistant />
+        <BackToTopButton />
+        <SocialShare />
         {/* <TranslationWidget/> */}
       </main>
     </>
