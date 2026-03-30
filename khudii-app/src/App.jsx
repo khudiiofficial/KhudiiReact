@@ -37,7 +37,8 @@ const Categories = lazy(() => import('./pages/Categories/Categories'));
 const Detailforall = lazy(() => import('./pages/DetailforAll/Detailforall.jsx'));
 const SuccessStoryDetail = lazy(() => import('./pages/Success-Stories-detail/SuccessStoryDetail.jsx'));
 const Error = lazy(() => import("./pages/Error/Error.jsx"));
-const OrganizationForm = lazy(() => import('./componets/organizationform/orgForm.jsx'));
+// const OrganizationForm = lazy(() => import('./componets/organizationform/orgForm.jsx'));
+const OrganizationFormWithProvider =lazy(()=> import('./componets/organizationform/orgForm.jsx'))
 const AuthCallback = lazy(() => import('./pages/AuthCalBack/AuthCallBack.jsx'));
 
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
@@ -143,7 +144,7 @@ function App() {
             <Route path='/volunteer' element={<VolunteerForm con={findobj('/volunteer')} url={url} />} />
             <Route path='/success-stories/:slug' element={<SuccessStoryDetail url={url} />} />
             {/* <Route path='Categories/:slug' element={<Categories url={url}/>}/> */}
-            <Route path="/organization/registration" element={<OrganizationForm/>}/>
+            <Route path="/organization/registration" element={<OrganizationFormWithProvider/>}/>
             {/* <Route path="/auth-callback" element={<AuthCallback/>}/> */}
             <Route path='/:slug' element={<Detailforall url={url} />} />
             <Route path='/*' element={<Error url={url}/>}/>
