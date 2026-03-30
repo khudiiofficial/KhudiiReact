@@ -7,9 +7,9 @@ import { Routes, Route } from 'react-router-dom'
 import HomePage from './pages/Home/Home'
 import Topbar from './componets/Topbar/Topbar'
 import Footer from './componets/secondlast/Footer'
-import VapiAssistant from './componets/VAPI.AI/Vapi'
-import BackToTopButton from './componets/backToTopButton/BackToTopButton.jsx'
-import SocialShare from './componets/SocialShare/SocialShare.jsx'
+const VapiAssistant = lazy(() => import('./componets/VAPI.AI/Vapi'));
+const BackToTopButton = lazy(() => import('./componets/backToTopButton/BackToTopButton.jsx'));
+const SocialShare = lazy(() => import('./componets/SocialShare/SocialShare.jsx'));
 import axios from 'axios'
 import './cache.js'
 import { useGoogleAnalytics } from './Hooks/GoogleAnalytics.jsx'
@@ -44,6 +44,30 @@ const APIPath = import.meta.env.VITE_BACKEND_PATH;
 // import TranslationWidget from './componets/translate/Translate'
 function App() {
   useGoogleAnalytics()
+  // Interaction-Based Deferred Loading for Heavy Widgets
+  const [isInteracted, setIsInteracted] = useState(false);
+  useEffect(() => {
+    const handleInteraction = () => {
+      setIsInteracted(true);
+      ['scroll', 'mousemove', 'touchstart', 'keydown', 'click'].forEach(event =>
+        window.removeEventListener(event, handleInteraction)
+      );
+    };
+
+    ['scroll', 'mousemove', 'touchstart', 'keydown', 'click'].forEach(event =>
+      window.addEventListener(event, handleInteraction, { passive: true, once: true })
+    );
+
+    const timeout = setTimeout(() => setIsInteracted(true), 15000);
+
+    return () => {
+      ['scroll', 'mousemove', 'touchstart', 'keydown', 'click'].forEach(event =>
+        window.removeEventListener(event, handleInteraction)
+      );
+      clearTimeout(timeout);
+    };
+  }, []);
+
   const location = useLocation()
   const [data, setSeoData] = useState([])
   const [url, seturl] = useState('')
@@ -126,9 +150,13 @@ function App() {
           </Routes>
         </Suspense>
         <Footer />
-        <VapiAssistant />
-        <BackToTopButton />
-        <SocialShare />
+        {isInteracted && (
+          <Suspense fallback={null}>
+            <VapiAssistant />
+            <BackToTopButton />
+            <SocialShare />
+          </Suspense>
+        )}
         {/* <TranslationWidget/> */}
       </main>
     </>
