@@ -2,10 +2,11 @@ import React, { useState ,useEffect} from 'react';
 import axios from 'axios';
 import './OrganizationForm.css';
 import SEO from '../Helmet/Helmet';
-import { useGoogleLogin} from "@react-oauth/google";
+import { useGoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
 const APIPath = import.meta.env.VITE_BACKEND_PATH;
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 const OrganizationForm = () => {
   const [loading, setLoading] = useState(false);
   const [logoPreview, setLogoPreview] = useState(null);
@@ -781,6 +782,8 @@ if(load){
 
 export default function OrganizationFormWithProvider() {
   return (
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <OrganizationForm />
+    </GoogleOAuthProvider>
   );
 }
