@@ -6,21 +6,31 @@ const API_URL = import.meta.env.VITE_BACKEND_PATH;
 
 const AdminInquiries = () => {
   const [inquiries, setInquiries] = useState([]);
-  const [owner, setOwner] = useState({ 
-    name: '', 
-    email: '', 
-    sender_email: '', 
-    sender_app_password: '' 
+  const [owner, setOwner] = useState({
+    name: '',
+    email: '',
+    sender_email: '',
+    smtp_host: '',
+    smtp_port: 587,
+    smtp_secure: 0,
+    smtp_username: '',
+    smtp_password: '',
+    smtp_password_set: 0
   });
   const [loading, setLoading] = useState(true);
   
  const [cap,setcap]=useState('')
   const [editingOwner, setEditingOwner] = useState(false);
-  const [ownerForm, setOwnerForm] = useState({ 
-    name: '', 
-    email: '', 
-    sender_email: '', 
-    sender_app_password: '' 
+  const [ownerForm, setOwnerForm] = useState({
+    name: '',
+    email: '',
+    sender_email: '',
+    smtp_host: '',
+    smtp_port: 587,
+    smtp_secure: 0,
+    smtp_username: '',
+    smtp_password: '',
+    smtp_password_set: 0
   });
   const [selectedInquiry, setSelectedInquiry] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -79,7 +89,14 @@ const AdminInquiries = () => {
         withCredentials: true
       });
       setOwner(response.data);
-      setOwnerForm(response.data);
+
+      setOwnerForm({
+        ...response.data,
+
+        // Never receive or display stored password.
+        // Empty means "keep current password".
+        smtp_password: ''
+      });
     } catch (error) {
       console.error('Error fetching owner:', error);
       alert('Failed to load owner information');
@@ -98,8 +115,9 @@ const AdminInquiries = () => {
       await axios.put(`${API_URL}/admin/owner`, ownerForm, {
         withCredentials: true
       });
-      setOwner(ownerForm);
-      setEditingOwner(false);
+      await fetchOwner();
+
+setEditingOwner(false);
       alert('Owner Iformation Updated Successfully!');
     } catch (error) {
       console.error('Error updating owner:', error);
@@ -189,15 +207,107 @@ const AdminInquiries = () => {
               />
             </div>
             <div className="form-group">
-              <label>Sender App Password:</label>
-              <input
-                type="password"
-                value={ownerForm.sender_app_password}
-                onChange={(e) => setOwnerForm(prev => ({ ...prev, sender_app_password: e.target.value }))}
-                required
-                placeholder="Gmail App Password"
-              />
-            </div>
+  <label>SMTP Host:</label>
+
+  <input
+    type="text"
+    value={ownerForm.smtp_host || ''}
+    onChange={(e) =>
+      setOwnerForm(prev => ({
+        ...prev,
+        smtp_host: e.target.value
+      }))
+    }
+    required
+    placeholder="mail.example.com"
+  />
+</div>
+<div className="form-group">
+  <label>SMTP Port:</label>
+
+  <input
+    type="number"
+    value={ownerForm.smtp_port || 587}
+    onChange={(e) =>
+      setOwnerForm(prev => ({
+        ...prev,
+        smtp_port: e.target.value
+      }))
+    }
+    required
+    placeholder="587"
+  />
+</div>
+<div className="form-group">
+  <label>SMTP Security:</label>
+
+  <select
+    value={String(ownerForm.smtp_secure ?? 0)}
+    onChange={(e) =>
+      setOwnerForm(prev => ({
+        ...prev,
+        smtp_secure: Number(e.target.value)
+      }))
+    }
+    required
+  >
+    <option value="0">
+      STARTTLS / TLS (usually port 587)
+    </option>
+
+    <option value="1">
+      SSL/TLS (usually port 465)
+    </option>
+  </select>
+</div>
+<div className="form-group">
+  <label>SMTP Username:</label>
+
+  <input
+    type="text"
+    value={ownerForm.smtp_username || ''}
+    onChange={(e) =>
+      setOwnerForm(prev => ({
+        ...prev,
+        smtp_username: e.target.value
+      }))
+    }
+    required
+    placeholder="no-reply@example.com"
+    autoComplete="off"
+  />
+</div>
+<div className="form-group">
+  <label>SMTP Password:</label>
+
+  <input
+    type="password"
+    value={ownerForm.smtp_password || ''}
+    onChange={(e) =>
+      setOwnerForm(prev => ({
+        ...prev,
+        smtp_password: e.target.value
+      }))
+    }
+    placeholder={
+      owner.smtp_password_set
+        ? "Leave blank to keep current password"
+        : "Enter SMTP password"
+    }
+    autoComplete="new-password"
+  />
+
+  {owner.smtp_password_set ? (
+    <small>
+      SMTP password is already configured.
+      Leave this blank to keep it unchanged.
+    </small>
+  ) : (
+    <small>
+      No SMTP password is currently configured.
+    </small>
+  )}
+</div>
             <div className="form-actions">
               <button type="submit" className="btn-save">Save Changes</button>
               <button 
@@ -214,11 +324,56 @@ const AdminInquiries = () => {
           </form>
         ) : (
           <div className="owner-info">
-            <p><strong>Name:</strong> {owner.name}</p>
-            <p><strong>Notification Email:</strong> {owner.email}</p>
-            <p><strong>Sender Email:</strong> {owner.sender_email}</p>
-            <p><strong>App Password:</strong> {owner.sender_app_password ? '••••••••' : 'Not set'}</p>
-            <p><small>Contact inquiry notifications will be sent from {owner.sender_email} to {owner.email}</small></p>
+            <p>
+  <strong>Name:</strong> {owner.name}
+</p>
+
+<p>
+  <strong>Notification Email:</strong>{' '}
+  {owner.email}
+</p>
+
+<p>
+  <strong>Sender Email:</strong>{' '}
+  {owner.sender_email}
+</p>
+
+<p>
+  <strong>SMTP Host:</strong>{' '}
+  {owner.smtp_host || 'Not set'}
+</p>
+
+<p>
+  <strong>SMTP Port:</strong>{' '}
+  {owner.smtp_port || 'Not set'}
+</p>
+
+<p>
+  <strong>SMTP Security:</strong>{' '}
+  {Number(owner.smtp_secure) === 1
+    ? 'SSL/TLS'
+    : 'STARTTLS/TLS'}
+</p>
+
+<p>
+  <strong>SMTP Username:</strong>{' '}
+  {owner.smtp_username || 'Not set'}
+</p>
+
+<p>
+  <strong>SMTP Password:</strong>{' '}
+  {owner.smtp_password_set
+    ? '••••••••'
+    : 'Not set'}
+</p>
+
+<p>
+  <small>
+    Emails will be sent through{' '}
+    {owner.smtp_host || 'the configured SMTP server'}{' '}
+    from {owner.sender_email} to {owner.email}
+  </small>
+</p>
           </div>
         )}
       </div>

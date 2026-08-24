@@ -1,12 +1,19 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { City } from "country-state-city";
 import countryCodes from './countries_full.json';
 import phonePatterns from './countryPatternsByName.json';
 import PageHeader from "../../componets/PageHeader/PageHeader";
 import SEO from "../../componets/Helmet/Helmet";
 const API_URL = import.meta.env.VITE_BACKEND_PATH;
 import { showError } from "../../SwalPopUp/swal";
+
+const pakistanCities = [
+  ...new Set(
+    (City.getCitiesOfCountry("PK") || []).map((city) => city.name)
+  ),
+].sort((a, b) => a.localeCompare(b));
 export default function VolunteerForm({con,url}) {
   const {
     register,
@@ -233,52 +240,67 @@ const [val,setval]=useState('')
             </div>
 
             {/* Phone and Contact Time Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
               {/* Phone Field */}
-              <div className="flex flex-col">
+              <div className="flex flex-col lg:col-span-6">
                 <label className="text-sm font-semibold text-[#222222] mb-2">
                   Phone <span className="text-[#e7001e]">*</span>
                 </label>
+
                 <div ref={phoneInputRef} className="relative">
                   <div className="flex">
-                    {/* Country Code Selector */}
                     <button
                       type="button"
                       onClick={() => setShowCountryDropdown(!showCountryDropdown)}
                       className="flex items-center w-28 justify-between px-3 py-3 bg-gray-50 border border-r-0 border-[#222222] rounded-l-xl hover:bg-[#222222] transition-colors"
                     >
                       <div className="flex items-center">
-                        <span className="text-sm mr-2">{selectedCountry?.flag}</span>
-                        <span className="text-[#222222] text-sm">+{watchCountryCode}</span>
+                        <span className="text-sm mr-2">
+                          {selectedCountry?.flag}
+                        </span>
+
+                        <span className="text-[#222222] text-sm">
+                          +{watchCountryCode}
+                        </span>
                       </div>
-                      <svg 
+
+                      <svg
                         className={`w-4 h-4 text-[#222222] transition-transform ${
-                          showCountryDropdown ? 'rotate-180' : ''
+                          showCountryDropdown ? "rotate-180" : ""
                         }`}
-                        fill="none" 
-                        stroke="currentColor" 
+                        fill="none"
+                        stroke="currentColor"
                         viewBox="0 0 24 24"
                       >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
                       </svg>
                     </button>
-                    
-                    {/* Phone Input */}
+
                     <input
                       {...register("phone", {
                         required: "Phone Number is Required",
-                        validate: validatePhoneNumber
+                        validate: validatePhoneNumber,
                       })}
                       onBlur={handlePhoneBlur}
-                      className={`flex-1 w-1/2 px-4 py-3 border border-[#222222] rounded-r-xl focus:outline-none focus:ring-1 focus:ring-[#02236e] transition-colors ${
-                        errors.phone ? "border-red-400 bg-red-50" : "border-[#222222]"
+                      className={`flex-1 min-w-0 px-4 py-3 border border-[#222222] rounded-r-xl focus:outline-none focus:ring-1 focus:ring-[#02236e] transition-colors ${
+                        errors.phone
+                          ? "border-red-400 bg-red-50"
+                          : "border-[#222222]"
                       }`}
-                      placeholder={watchCountryCode === '92' ? '301 234567' : 'Enter phone number'}
+                      placeholder={
+                        watchCountryCode === "92"
+                          ? "301 234567"
+                          : "Enter phone number"
+                      }
                       maxLength={16}
                     />
                   </div>
 
-                  {/* Country Dropdown */}
                   {showCountryDropdown && (
                     <div className="absolute top-full left-0 mt-1 w-64 bg-white border border-[#222222] rounded-xl shadow-lg z-10 max-h-60 overflow-y-auto">
                       <div className="p-2">
@@ -286,50 +308,106 @@ const [val,setval]=useState('')
                           <button
                             key={country.code}
                             type="button"
-                            onClick={() => selectCountryCode(country.dialCode, country.name, country.code)}
+                            onClick={() =>
+                              selectCountryCode(
+                                country.dialCode,
+                                country.name,
+                                country.code
+                              )
+                            }
                             className={`flex items-center space-x-3 w-full p-3 rounded-lg hover:bg-gray-50 transition-colors ${
-                              watchCountryCode === country.dialCode ? 'bg-blue-50 text-blue-700' : ''
+                              watchCountryCode === country.dialCode
+                                ? "bg-blue-50 text-blue-700"
+                                : ""
                             }`}
                           >
                             <span className="text-xl">{country.flag}</span>
-                            <span className="flex-1 text-left font-medium text-sm">{country.name}</span>
-                            <span className="text-[#222222] text-sm">+{country.dialCode}</span>
+
+                            <span className="flex-1 text-left font-medium text-sm">
+                              {country.name}
+                            </span>
+
+                            <span className="text-[#222222] text-sm">
+                              +{country.dialCode}
+                            </span>
                           </button>
                         ))}
                       </div>
                     </div>
                   )}
                 </div>
+
                 {errors.phone && (
-                  <span className="text-xs text-[#e7001e] mt-1">{errors.phone.message}</span>
+                  <span className="text-xs text-[#e7001e] mt-1">
+                    {errors.phone.message}
+                  </span>
                 )}
-                
-                {/* Hidden fields for country data */}
+
                 <input type="hidden" {...register("countryCode")} />
                 <input type="hidden" {...register("CountryName")} />
                 <input type="hidden" {...register("country")} />
               </div>
 
-              {/* Contact Time Field */}
-              <div className="flex flex-col">
+              {/* City Field */}
+              <div className="flex flex-col lg:col-span-3">
                 <label className="text-sm font-semibold text-[#222222] mb-2">
-                  Time To Contact You <span className="text-[#e7001e]">*</span>
+                  City <span className="text-[#e7001e]">*</span>
                 </label>
-                <input
-                  {...register("contactTime", {
-                    required: "Preferred contact time is required"
+
+                <select
+                  {...register("city", {
+                    required: "City is required",
                   })}
-                  className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-1 focus:ring-[#02236e] transition-colors ${
-                    errors.contactTime ? "border-red-400 bg-red-50" : "border-[#222222]"
+                  defaultValue=""
+                  className={`w-full px-4 py-3 border rounded-xl bg-white focus:outline-none focus:ring-1 focus:ring-[#02236e] transition-colors ${
+                    errors.city
+                      ? "border-red-400 bg-red-50"
+                      : "border-[#222222]"
                   }`}
-                  placeholder="Date / Time"
-                />
-                {errors.contactTime && (
-                  <span className="text-xs text-[#e7001e] mt-1">{errors.contactTime.message}</span>
+                >
+                  <option value="" disabled>
+                    Select City
+                  </option>
+
+                  {pakistanCities.map((city) => (
+                    <option key={city} value={city}>
+                      {city}
+                    </option>
+                  ))}
+                </select>
+
+                {errors.city && (
+                  <span className="text-xs text-[#e7001e] mt-1">
+                    {errors.city.message}
+                  </span>
                 )}
-                <div className="text-xs text-[#009dc8] mt-1">
-                  Let Us Know When You're Available For A Call
-                </div>
+              </div>
+
+              {/* Preferred Contact Date & Time Field */}
+              <div className="flex flex-col lg:col-span-3">
+                <label className="text-sm font-semibold text-[#222222] mb-2">
+                  Preferred Contact Date{" "}
+                  <span className="text-[#e7001e]">*</span>
+                </label>
+
+                <input
+                  type="date"
+                  min={new Date().toISOString().split("T")[0]}
+                  {...register("contactTime", {
+                    required: "Preferred contact date is required",
+                  })}
+                  className={`w-full px-4 py-3 border rounded-xl bg-white focus:outline-none focus:ring-1 focus:ring-[#02236e] transition-colors ${
+                    errors.contactTime
+                      ? "border-red-400 bg-red-50"
+                      : "border-[#222222]"
+                  }`}
+                />
+
+                {errors.contactTime && (
+                  <span className="text-xs text-[#e7001e] mt-1">
+                    {errors.contactTime.message}
+                  </span>
+                )}
               </div>
             </div>
 

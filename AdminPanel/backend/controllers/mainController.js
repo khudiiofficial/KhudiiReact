@@ -505,7 +505,7 @@
 
 //       sectionsResults.forEach((section, index) => {
 //         const bulletsQuery = `SELECT dab.bullet FROM documentarrbullets dab WHERE dab.arr_id = ? ORDER BY dab.id`;
-        
+
 //         db1.query(bulletsQuery, [section.id], (err, bulletsResults) => {
 //           if (err) {
 //             console.error("❌ Error fetching bullets:", err);
@@ -556,7 +556,7 @@
 
 //                 categoriesResults.forEach((category, index) => {
 //                   const ngoValuesQuery = `SELECT naf.value FROM ngosarrof naf WHERE naf.ngos_arr_id = ? ORDER BY naf.id`;
-                  
+
 //                   db1.query(ngoValuesQuery, [category.id], (err, valuesResults) => {
 //                     if (err) {
 //                       console.error("❌ Error fetching NGO values:", err);
@@ -753,7 +753,7 @@
 
 //     try {
 //       let imagePath = null;
-      
+
 //       if (image_base64) {
 //         const matches = image_base64.match(/^data:(.+);base64,(.+)$/);
 //         if (matches) {
@@ -867,7 +867,7 @@
 //       if (ngos) {
 //         if (ngoResults.length > 0) {
 //           const ngoId = ngoResults[0].id;
-          
+
 //           const updateNgoQuery = "UPDATE ngos SET intro = ? WHERE id = ?";
 //           await new Promise((resolve, reject) => {
 //             db1.query(updateNgoQuery, [ngos.intro || null, ngoId], (err) => {
@@ -956,7 +956,7 @@
 //       } else {
 //         if (ngoResults.length > 0) {
 //           const ngoId = ngoResults[0].id;
-          
+
 //           await new Promise((resolve, reject) => {
 //             const deleteNgoValuesQuery = `DELETE naf FROM ngosarrof naf INNER JOIN ngosarr na ON naf.ngos_arr_id = na.id WHERE na.ngos_id = ?`;
 //             db1.query(deleteNgoValuesQuery, [ngoId], (err) => {
@@ -1037,7 +1037,7 @@
 // // Success Story Controllers
 // export const getAllSuccessStories = (req, res) => {
 //   const query = "SELECT * FROM successstories WHERE deletestatus = 0 ORDER BY id DESC";
-  
+
 //   db1.query(query, (err, results) => {
 //     if (err) {
 //       console.error("Error fetching success stories:", err);
@@ -1049,19 +1049,19 @@
 
 // export const createSuccessStory = (req, res) => {
 //   const { title, urdu_title, link, youtube_id, description } = req.body;
-  
+
 //   if (!title || !youtube_id) {
 //     return res.status(400).json({ error: "Title and YouTube ID are required" });
 //   }
-  
+
 //   const query = `INSERT INTO successstories (title, urdu_title, link, youtube_id, description, deletestatus) VALUES (?, ?, ?, ?, ?, 0)`;
-  
+
 //   db1.query(query, [title, urdu_title || null, link || null, youtube_id, description || null], (err, results) => {
 //     if (err) {
 //       console.error("Error creating success story:", err);
 //       return res.status(500).json({ error: "Failed to create success story" });
 //     }
-    
+
 //     res.status(201).json({
 //       id: results.insertId,
 //       message: "Success story created successfully"
@@ -1072,23 +1072,23 @@
 // export const updateSuccessStory = (req, res) => {
 //   const { id } = req.params;
 //   const { title, urdu_title, link, youtube_id, description } = req.body;
-  
+
 //   if (!title || !youtube_id) {
 //     return res.status(400).json({ error: "Title and YouTube ID are required" });
 //   }
-  
+
 //   const query = `UPDATE successstories SET title = ?, urdu_title = ?, link = ?, youtube_id = ?, description = ? WHERE id = ? AND deletestatus = 0`;
-  
+
 //   db1.query(query, [title, urdu_title || null, link || null, youtube_id, description || null, id], (err, results) => {
 //     if (err) {
 //       console.error("Error updating success story:", err);
 //       return res.status(500).json({ error: "Failed to update success story" });
 //     }
-    
+
 //     if (results.affectedRows === 0) {
 //       return res.status(404).json({ error: "Success story not found" });
 //     }
-    
+
 //     res.json({ message: "Success story updated successfully" });
 //   });
 // };
@@ -1096,17 +1096,17 @@
 // export const deleteSuccessStory = (req, res) => {
 //   const { id } = req.params;
 //   const query = "UPDATE successstories SET deletestatus = 1 WHERE id = ?";
-  
+
 //   db1.query(query, [id], (err, results) => {
 //     if (err) {
 //       console.error("Error deleting success story:", err);
 //       return res.status(500).json({ error: "Failed to delete success story" });
 //     }
-    
+
 //     if (results.affectedRows === 0) {
 //       return res.status(404).json({ error: "Success story not found" });
 //     }
-    
+
 //     res.json({ message: "Success story deleted successfully" });
 //   });
 // };
@@ -1114,7 +1114,7 @@
 // // Video Controllers
 // const saveBase64Image = async (image_base64) => {
 //   let imagePath = null;
-  
+
 //   if (image_base64) {
 //     const matches = image_base64.match(/^data:(.+);base64,(.+)$/);
 //     if (matches) {
@@ -1124,13 +1124,13 @@
 //       imagePath = await uploadToFTP(fileName, fileBuffer);
 //     }
 //   }
-  
+
 //   return imagePath;
 // };
 
 // export const getAllVideos = (req, res) => {
 //   const query = "SELECT * FROM videos WHERE deletestatus = 0 ORDER BY id DESC";
-  
+
 //   db1.query(query, (err, results) => {
 //     if (err) {
 //       console.error("Error fetching videos:", err);
@@ -1142,16 +1142,16 @@
 
 // export const createVideo = async (req, res) => {
 //   const { title, youtube_id, thumbnail, description } = req.body;
-  
+
 //   if (!title || !youtube_id || !thumbnail) {
 //     return res.status(400).json({ error: "Title, YouTube ID, and thumbnail are required" });
 //   }
 
 //   let imagePath = null;
-  
+
 //   try {
 //     imagePath = await saveBase64Image(thumbnail);
-    
+
 //     if (!imagePath) {
 //       return res.status(400).json({ error: "Failed to process thumbnail image" });
 //     }
@@ -1159,15 +1159,15 @@
 //     console.error("Error saving image:", error);
 //     return res.status(500).json({ error: "Failed to save thumbnail image" });
 //   }
-  
+
 //   const query = `INSERT INTO videos (title, youtube_id, thumbnail, description, deletestatus) VALUES (?, ?, ?, ?, 0)`;
-  
+
 //   db1.query(query, [title, youtube_id, imagePath, description || null], (err, results) => {
 //     if (err) {
 //       console.error("Error creating video:", err);
 //       return res.status(500).json({ error: "Failed to create video" });
 //     }
-    
+
 //     res.status(201).json({
 //       id: results.insertId,
 //       message: "Video created successfully",
@@ -1179,19 +1179,19 @@
 // export const updateVideo = (req, res) => {
 //   const { id } = req.params;
 //   const { title, youtube_id, thumbnail, description } = req.body;
-  
+
 //   if (!title || !youtube_id) {
 //     return res.status(400).json({ error: "Title and YouTube ID are required" });
 //   }
 
 //   const getQuery = "SELECT thumbnail FROM videos WHERE id = ? AND deletestatus = 0";
-  
+
 //   db1.query(getQuery, [id], async (err, results) => {
 //     if (err) {
 //       console.error("Error fetching video for update:", err);
 //       return res.status(500).json({ error: "Failed to fetch video" });
 //     }
-    
+
 //     if (results.length === 0) {
 //       return res.status(404).json({ error: "Video not found" });
 //     }
@@ -1204,9 +1204,9 @@
 //         if (currentVideo.thumbnail) {
 //           await deleteImageFile(currentVideo.thumbnail);
 //         }
-        
+
 //         imagePath = await saveBase64Image(thumbnail);
-        
+
 //         if (!imagePath) {
 //           return res.status(400).json({ error: "Failed to process thumbnail image" });
 //         }
@@ -1215,19 +1215,19 @@
 //         return res.status(500).json({ error: "Failed to save thumbnail image" });
 //       }
 //     }
-    
+
 //     const updateQuery = `UPDATE videos SET title = ?, youtube_id = ?, thumbnail = ?, description = ? WHERE id = ? AND deletestatus = 0`;
-    
+
 //     db1.query(updateQuery, [title, youtube_id, imagePath, description || null, id], (err, results) => {
 //       if (err) {
 //         console.error("Error updating video:", err);
 //         return res.status(500).json({ error: "Failed to update video" });
 //       }
-      
+
 //       if (results.affectedRows === 0) {
 //         return res.status(404).json({ error: "Video not found" });
 //       }
-      
+
 //       res.json({ 
 //         message: "Video updated successfully",
 //         thumbnail: imagePath
@@ -1238,15 +1238,15 @@
 
 // export const deleteVideo = (req, res) => {
 //   const { id } = req.params;
-  
+
 //   const getQuery = "SELECT thumbnail FROM videos WHERE id = ? AND deletestatus = 0";
-  
+
 //   db1.query(getQuery, [id], async (err, results) => {
 //     if (err) {
 //       console.error("Error fetching video for deletion:", err);
 //       return res.status(500).json({ error: "Failed to fetch video" });
 //     }
-    
+
 //     if (results.length === 0) {
 //       return res.status(404).json({ error: "Video not found" });
 //     }
@@ -1257,17 +1257,17 @@
 //     }
 
 //     const deleteQuery = "UPDATE videos SET deletestatus = 1 WHERE id = ?";
-    
+
 //     db1.query(deleteQuery, [id], (err, results) => {
 //       if (err) {
 //         console.error("Error deleting video:", err);
 //         return res.status(500).json({ error: "Failed to delete video" });
 //       }
-      
+
 //       if (results.affectedRows === 0) {
 //         return res.status(404).json({ error: "Video not found" });
 //       }
-      
+
 //       res.json({ message: "Video deleted successfully" });
 //     });
 //   });
@@ -1292,7 +1292,7 @@
 //   try {
 //     // Get user current password from database
 //     const getUserQuery = "SELECT password FROM users WHERE id = ?";
-    
+
 //     db.query(getUserQuery, [userId], async (err, results) => {
 //       if (err) {
 //         console.error("Error fetching user:", err);
@@ -1317,7 +1317,7 @@
 
 //       // Update password in database
 //       const updatePasswordQuery = "UPDATE users SET password = ? WHERE id = ?";
-      
+
 //       db.query(updatePasswordQuery, [hashedNewPassword, userId], (updateErr, updateResults) => {
 //         if (updateErr) {
 //           console.error("Error updating password:", updateErr);
@@ -1338,7 +1338,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import db1 from '../Database/oldDB.js'
-import { uploadToFTP, deleteFromFTP,uploadVideoToFTP,deleteVideoFromFTP } from "../utils/ftpUpload.js";
+import { uploadToFTP, deleteFromFTP, uploadVideoToFTP, deleteVideoFromFTP } from "../utils/ftpUpload.js";
 import { DtoArr } from "../Dto/objectDto.js";
 
 // Utility Functions
@@ -1520,7 +1520,7 @@ export const getAllOrganizations = (req, res) => {
 
 //     await conn.commit();
 //     conn.release();
-    
+
 //     res.status(201).json({ 
 //       message: "✅ Organization created successfully", 
 //       id: itemId,
@@ -1530,7 +1530,7 @@ export const getAllOrganizations = (req, res) => {
 //     console.error("❌ Organization creation error:", error);
 //     await conn.rollback();
 //     conn.release();
-    
+
 //     // Handle duplicate slug error (if unique constraint exists in database)
 //     if (error.code === 'ER_DUP_ENTRY' || error.message.includes('Duplicate entry')) {
 //       return res.status(400).json({ 
@@ -1538,7 +1538,7 @@ export const getAllOrganizations = (req, res) => {
 //         error: "DUPLICATE_SLUG"
 //       });
 //     }
-    
+
 //     res.status(500).json({ 
 //       message: "Failed to create organization", 
 //       error: error.message 
@@ -1613,10 +1613,10 @@ export const createOrganization = async (req, res) => {
        (name, description, category, introductory_image_path, partner_image, youtube_video_url, slug, meta_title, meta_description, meta_keywords, search_tags) 
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
-        name, 
-        description, 
+        name,
+        description,
         categoryJson,
-        introImagePath, 
+        introImagePath,
         partnerImagePath, // ADDED: partner_image
         youtube_video_url,
         slug,
@@ -1639,9 +1639,9 @@ export const createOrganization = async (req, res) => {
 
     await conn.commit();
     conn.release();
-    
-    res.status(201).json({ 
-      message: "✅ Organization created successfully", 
+
+    res.status(201).json({
+      message: "✅ Organization created successfully",
       id: itemId,
       slug: slug
     });
@@ -1649,17 +1649,17 @@ export const createOrganization = async (req, res) => {
     console.error("❌ Organization creation error:", error);
     await conn.rollback();
     conn.release();
-    
+
     if (error.code === 'ER_DUP_ENTRY' || error.message.includes('Duplicate entry')) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         message: "Slug already exists. Please choose a different one.",
         error: "DUPLICATE_SLUG"
       });
     }
-    
-    res.status(500).json({ 
-      message: "Failed to create organization", 
-      error: error.message 
+
+    res.status(500).json({
+      message: "Failed to create organization",
+      error: error.message
     });
   }
 };
@@ -1676,7 +1676,7 @@ async function createProcessIntroImage(introductory_image_base64) {
   const ext = matches[1].split("/")[1] || "webp";
   const fileName = uniqueImageName(ext);
   const fileBuffer = Buffer.from(matches[2], "base64");
-  
+
   return await uploadToFTP(fileName, fileBuffer);
 }
 
@@ -1686,7 +1686,7 @@ async function createProcessAdditionalImages(conn, itemId, images_base64) {
   }
 
   // Filter and validate base64 images
-  const validImages = images_base64.filter(img => 
+  const validImages = images_base64.filter(img =>
     typeof img === 'string' && img.match(/^data:(.+);base64,(.+)$/)
   );
 
@@ -1695,18 +1695,18 @@ async function createProcessAdditionalImages(conn, itemId, images_base64) {
   // Process images in parallel with concurrency control
   const BATCH_SIZE = 3;
   const imageBatches = [];
-  
+
   for (let i = 0; i < validImages.length; i += BATCH_SIZE) {
     imageBatches.push(validImages.slice(i, i + BATCH_SIZE));
   }
 
   for (const batch of imageBatches) {
-    const imageUploadPromises = batch.map(imgBase64 => 
+    const imageUploadPromises = batch.map(imgBase64 =>
       createUploadSingleImage(imgBase64)
     );
 
     const uploadedUrls = await Promise.all(imageUploadPromises);
-    
+
     // Batch insert all images from this batch
     if (uploadedUrls.length > 0) {
       const values = uploadedUrls.map(url => [itemId, url]);
@@ -1727,7 +1727,7 @@ async function createUploadSingleImage(imageBase64) {
   const ext = matches[1].split("/")[1] || "png";
   const fileName = uniqueImageName(ext);
   const fileBuffer = Buffer.from(matches[2], "base64");
-  
+
   return await uploadToFTP(fileName, fileBuffer);
 }
 
@@ -1756,7 +1756,7 @@ async function createProcessSocials(conn, itemId, socials) {
   }
 
   // Check if we have at least one non-empty social value
-  const hasValidSocials = Object.values(socials).some(val => 
+  const hasValidSocials = Object.values(socials).some(val =>
     val !== null && val !== undefined && val !== ''
   );
 
@@ -1786,8 +1786,8 @@ async function createProcessIcons(conn, itemId, icons) {
     return;
   }
 
-  const validIcons = icons.filter(icon => 
-    icon && 
+  const validIcons = icons.filter(icon =>
+    icon &&
     icon.name && typeof icon.name === 'string' && icon.name.trim() &&
     icon.svg && typeof icon.svg === 'string' && icon.svg.trim()
   );
@@ -1796,9 +1796,9 @@ async function createProcessIcons(conn, itemId, icons) {
 
   // Batch insert all icons
   const values = validIcons.map(icon => [
-    itemId, 
-    icon.name.trim(), 
-    icon.svg.trim(), 
+    itemId,
+    icon.name.trim(),
+    icon.svg.trim(),
     icon.qty || 0
   ]);
 
@@ -1845,9 +1845,9 @@ export const getOrganizationById = (req, res) => {
         // for (let i = 0; i < urlResults.length; i++) {
         //   urls1 = [...urls1, ...urlResults[i].urls];
         // }
-    
+
         const urls = []
-        
+
         const getSocialsQuery = "SELECT * FROM socials WHERE item_id = ?";
         db1.query(getSocialsQuery, [id], (err, socialResults) => {
           if (err) {
@@ -1879,10 +1879,10 @@ export const getOrganizationById = (req, res) => {
                 location: socialResults[0].location,
                 googlemap: socialResults[0].googlemap,
                 mobile: socialResults[0].Mobile_number,
-                website:socialResults[0].website,
-                youtubechannel:socialResults[0].youtubechannel,
-                email:socialResults[0].email,
-                linkedin:socialResults[0].linkedin
+                website: socialResults[0].website,
+                youtubechannel: socialResults[0].youtubechannel,
+                email: socialResults[0].email,
+                linkedin: socialResults[0].linkedin
               } : {},
               icons: iconResults.map((icon) => ({
                 name: icon.name,
@@ -2004,7 +2004,7 @@ export const getOrganizationById = (req, res) => {
 
 //     await conn.commit();
 //     conn.release();
-    
+
 //     res.json({ 
 //       message: "✅ Organization updated successfully", 
 //       id,
@@ -2014,7 +2014,7 @@ export const getOrganizationById = (req, res) => {
 //     console.error("❌ Transaction error:", error);
 //     await conn.rollback();
 //     conn.release();
-    
+
 //     // Handle duplicate slug error (if unique constraint exists in database)
 //     if (error.code === 'ER_DUP_ENTRY' || error.message.includes('Duplicate entry')) {
 //       return res.status(400).json({ 
@@ -2022,7 +2022,7 @@ export const getOrganizationById = (req, res) => {
 //         error: "DUPLICATE_SLUG"
 //       });
 //     }
-    
+
 //     res.status(500).json({ 
 //       message: "Failed to update organization", 
 //       error: error.message 
@@ -2121,10 +2121,10 @@ export const updateOrganization = async (req, res) => {
         search_tags = ?
        WHERE id = ?`,
       [
-        name, 
-        description, 
+        name,
+        description,
         categoryJson,
-        introImagePath, 
+        introImagePath,
         partnerImagePath, // ADDED: partner_image
         youtube_video_url,
         slug || null,
@@ -2146,27 +2146,27 @@ export const updateOrganization = async (req, res) => {
 
     await conn.commit();
     conn.release();
-    
-    res.json({ 
-      message: "✅ Organization updated successfully", 
+
+    res.json({
+      message: "✅ Organization updated successfully",
       id,
-      slug: slug 
+      slug: slug
     });
   } catch (error) {
     console.error("❌ Transaction error:", error);
     await conn.rollback();
     conn.release();
-    
+
     if (error.code === 'ER_DUP_ENTRY' || error.message.includes('Duplicate entry')) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         message: "Slug already exists. Please choose a different one.",
         error: "DUPLICATE_SLUG"
       });
     }
-    
-    res.status(500).json({ 
-      message: "Failed to update organization", 
-      error: error.message 
+
+    res.status(500).json({
+      message: "Failed to update organization",
+      error: error.message
     });
   }
 };
@@ -2180,10 +2180,10 @@ async function processSingleImage(imageBase64, existingImagePath) {
   const ext = matches[1].split("/")[1] || "png";
   const fileName = uniqueImageName(ext);
   const fileBuffer = Buffer.from(matches[2], "base64");
-  
+
   // Delete old image only after successful upload
   const uploadedUrl = await uploadToFTP(fileName, fileBuffer);
-  
+
   if (existingImagePath) {
     try {
       await deleteImageFile(existingImagePath);
@@ -2191,7 +2191,7 @@ async function processSingleImage(imageBase64, existingImagePath) {
       console.warn("Failed to delete old image:", deleteError);
     }
   }
-  
+
   return uploadedUrl;
 }
 
@@ -2201,14 +2201,14 @@ async function processAdditionalImages(conn, itemId, imagesBase64) {
   }
 
   // Filter valid base64 images first
-  const validImages = imagesBase64.filter(img => 
+  const validImages = imagesBase64.filter(img =>
     typeof img === 'string' && img.match(/^data:(.+);base64,(.+)$/)
   );
 
   if (validImages.length === 0) return;
 
   // Process images in parallel with limit to avoid overloading
-  const imageUploadPromises = validImages.map(imgBase64 => 
+  const imageUploadPromises = validImages.map(imgBase64 =>
     processSingleImage(imgBase64, null)
   );
 
@@ -2226,7 +2226,7 @@ async function processAdditionalImages(conn, itemId, imagesBase64) {
 
 async function processUrls(conn, itemId, urls) {
   await conn.query("DELETE FROM item_urls WHERE item_id = ?", [itemId]);
-  
+
   if (!urls || !Array.isArray(urls) || urls.length === 0) {
     return;
   }
@@ -2243,13 +2243,13 @@ async function processUrls(conn, itemId, urls) {
 
 async function processSocials(conn, itemId, socials) {
   await conn.query("DELETE FROM socials WHERE item_id = ?", [itemId]);
-  
+
   if (!socials || typeof socials !== 'object') {
     return;
   }
 
   // Validate socials has at least one non-null value
-  const hasValidSocials = Object.values(socials).some(val => 
+  const hasValidSocials = Object.values(socials).some(val =>
     val !== null && val !== undefined && val !== ''
   );
 
@@ -2276,13 +2276,13 @@ async function processSocials(conn, itemId, socials) {
 
 async function processIcons(conn, itemId, icons) {
   await conn.query("DELETE FROM icons WHERE item_id = ?", [itemId]);
-  
+
   if (!icons || !Array.isArray(icons) || icons.length === 0) {
     return;
   }
 
-  const validIcons = icons.filter(icon => 
-    icon && 
+  const validIcons = icons.filter(icon =>
+    icon &&
     icon.name && typeof icon.name === 'string' && icon.name.trim() &&
     icon.svg && typeof icon.svg === 'string' && icon.svg.trim()
   );
@@ -2290,9 +2290,9 @@ async function processIcons(conn, itemId, icons) {
   if (validIcons.length === 0) return;
 
   const values = validIcons.map(icon => [
-    itemId, 
-    icon.name.trim(), 
-    icon.svg.trim(), 
+    itemId,
+    icon.name.trim(),
+    icon.svg.trim(),
     icon.qty || 0
   ]);
 
@@ -2387,7 +2387,7 @@ export const getBlogById = (req, res) => {
 
       sectionsResults.forEach((section, index) => {
         const bulletsQuery = `SELECT dab.bullet FROM documentarrbullets dab WHERE dab.arr_id = ? ORDER BY dab.id ASC`;
-        
+
         db1.query(bulletsQuery, [section.id], (err, bulletsResults) => {
           if (err) {
             console.error("❌ Error fetching bullets:", err);
@@ -2438,7 +2438,7 @@ export const getBlogById = (req, res) => {
 
                 categoriesResults.forEach((category, index) => {
                   const ngoValuesQuery = `SELECT naf.value FROM ngosarrof naf WHERE naf.ngos_arr_id = ? ORDER BY naf.id ASC`;
-                  
+
                   db1.query(ngoValuesQuery, [category.id], (err, valuesResults) => {
                     if (err) {
                       console.error("❌ Error fetching NGO values:", err);
@@ -2532,9 +2532,9 @@ export const createBlog = async (req, res) => {
        (Name, intro, conclusion, image_path, slug, meta_title, meta_description, meta_keywords) 
        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
       [
-        Name, 
-        intro, 
-        conclusion, 
+        Name,
+        intro,
+        conclusion,
         imagePath,
         slug,
         meta_title || null,
@@ -2609,8 +2609,8 @@ export const createBlog = async (req, res) => {
 
     await conn.commit();
     conn.release();
-    
-    res.status(201).json({ 
+
+    res.status(201).json({
       message: "✅ Blog created successfully",
       id: documentId,
       slug: slug
@@ -2619,19 +2619,19 @@ export const createBlog = async (req, res) => {
   } catch (error) {
     await conn.rollback();
     conn.release();
-    
+
     // Handle duplicate slug error
     if (error.code === 'ER_DUP_ENTRY' || error.message.includes('Duplicate entry')) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         message: "Slug already exists. Please choose a different one.",
         error: "DUPLICATE_SLUG"
       });
     }
-    
+
     console.error("❌ Transaction rolled back:", error.message);
-    res.status(500).json({ 
+    res.status(500).json({
       message: "Failed to create blog",
-      error: error.message 
+      error: error.message
     });
   }
 };
@@ -2658,7 +2658,7 @@ export const updateBlog = async (req, res) => {
 
     // Get current document to check for existing image and slug
     const [currentDoc] = await conn.query('SELECT * FROM document WHERE id = ?', [id]);
-    
+
     if (currentDoc.length === 0) {
       await conn.rollback();
       conn.release();
@@ -2683,7 +2683,7 @@ export const updateBlog = async (req, res) => {
     }
 
     let imagePath = currentDoc[0].image_path;
-    
+
     if (image_base64) {
       const matches = image_base64.match(/^data:(.+);base64,(.+)$/);
       if (matches) {
@@ -2691,12 +2691,12 @@ export const updateBlog = async (req, res) => {
         const fileName = `blog_${Date.now()}_${Math.random().toString(36).substr(2, 9)}.${ext}`;
         const fileBuffer = Buffer.from(matches[2], "base64");
         const uploadedUrl = await uploadToFTP(fileName, fileBuffer);
-        
+
         // Delete old image if exists
         if (imagePath) {
           await deleteImageFile(imagePath);
         }
-        
+
         imagePath = uploadedUrl;
       }
     }
@@ -2709,9 +2709,9 @@ export const updateBlog = async (req, res) => {
          slug = ?, meta_title = ?, meta_description = ?, meta_keywords = ? 
          WHERE id = ?`,
         [
-          Name, 
-          intro, 
-          conclusion, 
+          Name,
+          intro,
+          conclusion,
           imagePath,
           slug || null,
           meta_title || null,
@@ -2727,8 +2727,8 @@ export const updateBlog = async (req, res) => {
          slug = ?, meta_title = ?, meta_description = ?, meta_keywords = ? 
          WHERE id = ?`,
         [
-          Name, 
-          intro, 
+          Name,
+          intro,
           conclusion,
           slug || null,
           meta_title || null,
@@ -2776,7 +2776,7 @@ export const updateBlog = async (req, res) => {
     if (ngos) {
       if (ngoResults.length > 0) {
         const ngoId = ngoResults[0].id;
-        
+
         await conn.query("UPDATE ngos SET intro = ? WHERE id = ?", [ngos.intro || null, ngoId]);
 
         // Delete existing NGO categories and values
@@ -2836,7 +2836,7 @@ export const updateBlog = async (req, res) => {
       // If no NGO data provided, delete existing NGO data
       if (ngoResults.length > 0) {
         const ngoId = ngoResults[0].id;
-        
+
         await conn.query(`DELETE naf FROM ngosarrof naf INNER JOIN ngosarr na ON naf.ngos_arr_id = na.id WHERE na.ngos_id = ?`, [ngoId]);
         await conn.query("DELETE FROM ngosarr WHERE ngos_id = ?", [ngoId]);
         await conn.query("DELETE FROM ngos WHERE id = ?", [ngoId]);
@@ -2846,7 +2846,7 @@ export const updateBlog = async (req, res) => {
     await conn.commit();
     conn.release();
 
-    res.status(200).json({ 
+    res.status(200).json({
       message: "✅ Blog updated successfully",
       id: id,
       slug: slug
@@ -2855,19 +2855,19 @@ export const updateBlog = async (req, res) => {
   } catch (error) {
     await conn.rollback();
     conn.release();
-    
+
     // Handle duplicate slug error
     if (error.code === 'ER_DUP_ENTRY' || error.message.includes('Duplicate entry')) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         message: "Slug already exists. Please choose a different one.",
         error: "DUPLICATE_SLUG"
       });
     }
-    
+
     console.error("❌ Transaction rolled back:", error.message);
-    res.status(500).json({ 
+    res.status(500).json({
       message: "Failed to update blog",
-      error: error.message 
+      error: error.message
     });
   }
 };
@@ -2896,7 +2896,7 @@ export const deleteBlog = (req, res) => {
 // Success Story Controllers
 export const getAllSuccessStories = (req, res) => {
   const query = "SELECT * FROM successstories WHERE deletestatus = 0 ORDER BY id DESC";
-  
+
   db1.query(query, (err, results) => {
     if (err) {
       console.error("Error fetching success stories:", err);
@@ -2907,20 +2907,20 @@ export const getAllSuccessStories = (req, res) => {
 };
 
 export const createSuccessStory = (req, res) => {
-  const { title, urdu_title, link, youtube_id, description,slug } = req.body;
-  
+  const { title, urdu_title, link, youtube_id, description, slug } = req.body;
+
   if (!title || !youtube_id) {
     return res.status(400).json({ error: "Title and YouTube ID are required" });
   }
-  
+
   const query = `INSERT INTO successstories (title, urdu_title, link, youtube_id, description, deletestatus,slug) VALUES (?, ?, ?, ?, ?, 0, ?)`;
-  
-  db1.query(query, [title, urdu_title || null, link || null, youtube_id, description || null,slug || null], (err, results) => {
+
+  db1.query(query, [title, urdu_title || null, link || null, youtube_id, description || null, slug || null], (err, results) => {
     if (err) {
       console.error("Error creating success story:", err);
       return res.status(500).json({ error: "Failed to create success story" });
     }
-    
+
     res.status(201).json({
       id: results.insertId,
       message: "Success story created successfully"
@@ -2930,24 +2930,24 @@ export const createSuccessStory = (req, res) => {
 
 export const updateSuccessStory = (req, res) => {
   const { id } = req.params;
-  const { title, urdu_title, link, youtube_id, description,slug } = req.body;
-  
+  const { title, urdu_title, link, youtube_id, description, slug } = req.body;
+
   if (!title || !youtube_id) {
     return res.status(400).json({ error: "Title and YouTube ID are required" });
   }
-  
+
   const query = `UPDATE successstories SET title = ?, urdu_title = ?, link = ?, youtube_id = ?, description = ?, slug =? WHERE id = ? AND deletestatus = 0`;
-  
-  db1.query(query, [title, urdu_title || null, link || null, youtube_id, description || null,slug || null, id], (err, results) => {
+
+  db1.query(query, [title, urdu_title || null, link || null, youtube_id, description || null, slug || null, id], (err, results) => {
     if (err) {
       console.error("Error updating success story:", err);
       return res.status(500).json({ error: "Failed to update success story" });
     }
-    
+
     if (results.affectedRows === 0) {
       return res.status(404).json({ error: "Success story not found" });
     }
-    
+
     res.json({ message: "Success story updated successfully" });
   });
 };
@@ -2955,17 +2955,17 @@ export const updateSuccessStory = (req, res) => {
 export const deleteSuccessStory = (req, res) => {
   const { id } = req.params;
   const query = "UPDATE successstories SET deletestatus = 1 WHERE id = ?";
-  
+
   db1.query(query, [id], (err, results) => {
     if (err) {
       console.error("Error deleting success story:", err);
       return res.status(500).json({ error: "Failed to delete success story" });
     }
-    
+
     if (results.affectedRows === 0) {
       return res.status(404).json({ error: "Success story not found" });
     }
-    
+
     res.json({ message: "Success story deleted successfully" });
   });
 };
@@ -2973,7 +2973,7 @@ export const deleteSuccessStory = (req, res) => {
 // Video Controllers
 const saveBase64Image = async (image_base64) => {
   let imagePath = null;
-  
+
   if (image_base64) {
     const matches = image_base64.match(/^data:(.+);base64,(.+)$/);
     if (matches) {
@@ -2983,13 +2983,13 @@ const saveBase64Image = async (image_base64) => {
       imagePath = await uploadToFTP(fileName, fileBuffer);
     }
   }
-  
+
   return imagePath;
 };
 
 export const getAllVideos = (req, res) => {
   const query = "SELECT * FROM videos WHERE deletestatus = 0 ORDER BY id DESC";
-  
+
   db1.query(query, (err, results) => {
     if (err) {
       console.error("Error fetching videos:", err);
@@ -3001,16 +3001,16 @@ export const getAllVideos = (req, res) => {
 
 export const createVideo = async (req, res) => {
   const { title, youtube_id, thumbnail, description } = req.body;
-  
+
   if (!title || !youtube_id || !thumbnail) {
     return res.status(400).json({ error: "Title, YouTube ID, and thumbnail are required" });
   }
 
   let imagePath = null;
-  
+
   try {
     imagePath = await saveBase64Image(thumbnail);
-    
+
     if (!imagePath) {
       return res.status(400).json({ error: "Failed to process thumbnail image" });
     }
@@ -3018,15 +3018,15 @@ export const createVideo = async (req, res) => {
     console.error("Error saving image:", error);
     return res.status(500).json({ error: "Failed to save thumbnail image" });
   }
-  
+
   const query = `INSERT INTO videos (title, youtube_id, thumbnail, description, deletestatus) VALUES (?, ?, ?, ?, 0)`;
-  
+
   db1.query(query, [title, youtube_id, imagePath, description || null], (err, results) => {
     if (err) {
       console.error("Error creating video:", err);
       return res.status(500).json({ error: "Failed to create video" });
     }
-    
+
     res.status(201).json({
       id: results.insertId,
       message: "Video created successfully",
@@ -3038,19 +3038,19 @@ export const createVideo = async (req, res) => {
 export const updateVideo = (req, res) => {
   const { id } = req.params;
   const { title, youtube_id, thumbnail, description } = req.body;
-  
+
   if (!title || !youtube_id) {
     return res.status(400).json({ error: "Title and YouTube ID are required" });
   }
 
   const getQuery = "SELECT thumbnail FROM videos WHERE id = ? AND deletestatus = 0";
-  
+
   db1.query(getQuery, [id], async (err, results) => {
     if (err) {
       console.error("Error fetching video for update:", err);
       return res.status(500).json({ error: "Failed to fetch video" });
     }
-    
+
     if (results.length === 0) {
       return res.status(404).json({ error: "Video not found" });
     }
@@ -3063,9 +3063,9 @@ export const updateVideo = (req, res) => {
         if (currentVideo.thumbnail) {
           await deleteImageFile(currentVideo.thumbnail);
         }
-        
+
         imagePath = await saveBase64Image(thumbnail);
-        
+
         if (!imagePath) {
           return res.status(400).json({ error: "Failed to process thumbnail image" });
         }
@@ -3074,20 +3074,20 @@ export const updateVideo = (req, res) => {
         return res.status(500).json({ error: "Failed to save thumbnail image" });
       }
     }
-    
+
     const updateQuery = `UPDATE videos SET title = ?, youtube_id = ?, thumbnail = ?, description = ? WHERE id = ? AND deletestatus = 0`;
-    
+
     db1.query(updateQuery, [title, youtube_id, imagePath, description || null, id], (err, results) => {
       if (err) {
         console.error("Error updating video:", err);
         return res.status(500).json({ error: "Failed to update video" });
       }
-      
+
       if (results.affectedRows === 0) {
         return res.status(404).json({ error: "Video not found" });
       }
-      
-      res.json({ 
+
+      res.json({
         message: "Video updated successfully",
         thumbnail: imagePath
       });
@@ -3097,15 +3097,15 @@ export const updateVideo = (req, res) => {
 
 export const deleteVideo = (req, res) => {
   const { id } = req.params;
-  
+
   const getQuery = "SELECT thumbnail FROM videos WHERE id = ? AND deletestatus = 0";
-  
+
   db1.query(getQuery, [id], async (err, results) => {
     if (err) {
       console.error("Error fetching video for deletion:", err);
       return res.status(500).json({ error: "Failed to fetch video" });
     }
-    
+
     if (results.length === 0) {
       return res.status(404).json({ error: "Video not found" });
     }
@@ -3116,17 +3116,17 @@ export const deleteVideo = (req, res) => {
     }
 
     const deleteQuery = "UPDATE videos SET deletestatus = 1 WHERE id = ?";
-    
+
     db1.query(deleteQuery, [id], (err, results) => {
       if (err) {
         console.error("Error deleting video:", err);
         return res.status(500).json({ error: "Failed to delete video" });
       }
-      
+
       if (results.affectedRows === 0) {
         return res.status(404).json({ error: "Video not found" });
       }
-      
+
       res.json({ message: "Video deleted successfully" });
     });
   });
@@ -3138,7 +3138,7 @@ export const deleteVideo = (req, res) => {
 export const getProfile = async (req, res) => {
   try {
     const userId = req.user.id; // Assuming you have user info from auth middleware
-    
+
     const [users] = await db1.promise().query(
       'SELECT id, email FROM users WHERE id = ?',
       [userId]
@@ -3154,9 +3154,9 @@ export const getProfile = async (req, res) => {
     });
   } catch (error) {
     console.error('Get profile error:', error);
-    res.status(500).json({ 
-      success: false, 
-      message: 'Server error while fetching profile' 
+    res.status(500).json({
+      success: false,
+      message: 'Server error while fetching profile'
     });
   }
 };
@@ -3173,9 +3173,9 @@ export const updateProfile = async (req, res) => {
     );
 
     if (users.length === 0) {
-      return res.status(404).json({ 
-        success: false, 
-        message: 'User not found' 
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
       });
     }
 
@@ -3228,7 +3228,7 @@ export const updateProfile = async (req, res) => {
       // Hash new password
       const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
-      
+
       updateFields.push('password = ?');
       updateValues.push(hashedPassword);
     }
@@ -3236,9 +3236,9 @@ export const updateProfile = async (req, res) => {
     // If there are fields to update
     if (updateFields.length > 0) {
       updateValues.push(userId);
-      
+
       const query = `UPDATE users SET ${updateFields.join(', ')} WHERE id = ?`;
-      
+
       await db1.promise().query(query, updateValues);
 
       // Get updated user data
@@ -3246,14 +3246,14 @@ export const updateProfile = async (req, res) => {
         'SELECT id, email  FROM users WHERE id = ?',
         [userId]
       );
-console.log(updatedUsers[0])
+      console.log(updatedUsers[0])
       res.status(200).json({
         success: true,
         message: 'Profile updated successfully',
         user: {
-          id:updatedUsers[0].id,
-          email:updatedUsers[0].email,
-          auth:true
+          id: updatedUsers[0].id,
+          email: updatedUsers[0].email,
+          auth: true
         }
       });
     } else {
@@ -3271,9 +3271,9 @@ console.log(updatedUsers[0])
 
   } catch (error) {
     console.error('Update profile error:', error);
-    res.status(500).json({ 
-      success: false, 
-      message: 'Server error while updating profile' 
+    res.status(500).json({
+      success: false,
+      message: 'Server error while updating profile'
     });
   }
 };
@@ -3294,7 +3294,7 @@ export const getInquiries = (req, res) => {
     ORDER BY created_at DESC 
     LIMIT ? OFFSET ?
   `;
-  
+
   let countQuery = `
     SELECT COUNT(*) as total FROM contact_inquiries 
     WHERE name LIKE ? OR email LIKE ? OR phone LIKE ? OR org_id LIKE ?
@@ -3337,7 +3337,7 @@ export const getInquiryById = (req, res) => {
   const { id } = req.params;
 
   const query = `SELECT * FROM contact_inquiries WHERE id = ?`;
-  
+
   db1.query(query, [id], (error, results) => {
     if (error) {
       console.error("Inquiry query error:", error);
@@ -3355,16 +3355,41 @@ export const getInquiryById = (req, res) => {
 
 // Get owner information
 export const getOwner = (req, res) => {
-  const query = `SELECT id, name, email, sender_email, sender_app_password FROM owners LIMIT 1`;
-  
+
+  const query = `
+    SELECT
+      id,
+      name,
+      email,
+      sender_email,
+      smtp_host,
+      smtp_port,
+      smtp_secure,
+      smtp_username,
+      CASE
+        WHEN smtp_password IS NOT NULL
+        AND smtp_password != ''
+        THEN 1
+        ELSE 0
+      END AS smtp_password_set
+    FROM owners
+    LIMIT 1
+  `;
+
   db1.query(query, (error, results) => {
+
     if (error) {
       console.error("Owner query error:", error);
-      return res.status(500).json({ error: "Database error" });
+
+      return res.status(500).json({
+        error: "Database error"
+      });
     }
 
     if (results.length === 0) {
-      return res.status(404).json({ error: "Owner not found" });
+      return res.status(404).json({
+        error: "Owner not found"
+      });
     }
 
     res.json(results[0]);
@@ -3373,34 +3398,160 @@ export const getOwner = (req, res) => {
 
 // Update owner information
 export const updateOwner = (req, res) => {
-  const { name, email, sender_email, sender_app_password } = req.body;
 
-  if (!name || !email || !sender_email || !sender_app_password) {
-    return res.status(400).json({ error: "All fields are required" });
+  const {
+    name,
+    email,
+    sender_email,
+    smtp_host,
+    smtp_port,
+    smtp_secure,
+    smtp_username,
+    smtp_password
+  } = req.body;
+
+
+  if (
+    !name ||
+    !email ||
+    !sender_email ||
+    !smtp_host ||
+    !smtp_port ||
+    !smtp_username
+  ) {
+    return res.status(400).json({
+      error: "All SMTP fields except password are required"
+    });
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email) || !emailRegex.test(sender_email)) {
-    return res.status(400).json({ error: "Invalid email address" });
+
+  const emailRegex =
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+  if (
+    !emailRegex.test(email) ||
+    !emailRegex.test(sender_email)
+  ) {
+    return res.status(400).json({
+      error: "Invalid email address"
+    });
   }
 
+
+  const port = Number(smtp_port);
+
+  if (![465, 587, 25, 2525].includes(port)) {
+    return res.status(400).json({
+      error: "Invalid SMTP port"
+    });
+  }
+
+
+  // If a new SMTP password was entered,
+  // update it as well.
+  if (smtp_password && smtp_password.trim() !== "") {
+
+    const query = `
+      UPDATE owners
+      SET
+        name = ?,
+        email = ?,
+        sender_email = ?,
+        smtp_host = ?,
+        smtp_port = ?,
+        smtp_secure = ?,
+        smtp_username = ?,
+        smtp_password = ?
+      WHERE id = 1
+    `;
+
+    const values = [
+      name.trim(),
+      email.trim().toLowerCase(),
+      sender_email.trim().toLowerCase(),
+      smtp_host.trim(),
+      port,
+      Number(smtp_secure) === 1 ? 1 : 0,
+      smtp_username.trim(),
+      smtp_password
+    ];
+
+
+    db1.query(query, values, (error) => {
+
+      if (error) {
+        console.error(
+          "Update owner SMTP error:",
+          error
+        );
+
+        return res.status(500).json({
+          error:
+            "Failed to update SMTP configuration"
+        });
+      }
+
+      return res.json({
+        message:
+          "SMTP configuration updated successfully",
+        success: true
+      });
+    });
+
+    return;
+  }
+
+
+  // No new password entered:
+  // keep existing smtp_password.
   const query = `
-    UPDATE owners 
-    SET name = ?, email = ?, sender_email = ?, sender_app_password = ?
+    UPDATE owners
+    SET
+      name = ?,
+      email = ?,
+      sender_email = ?,
+      smtp_host = ?,
+      smtp_port = ?,
+      smtp_secure = ?,
+      smtp_username = ?
     WHERE id = 1
   `;
 
-  db1.query(query, [name.trim(), email.trim().toLowerCase(), sender_email.trim().toLowerCase(), sender_app_password], (error, results) => {
+
+  const values = [
+    name.trim(),
+    email.trim().toLowerCase(),
+    sender_email.trim().toLowerCase(),
+    smtp_host.trim(),
+    port,
+    Number(smtp_secure) === 1 ? 1 : 0,
+    smtp_username.trim()
+  ];
+
+
+  db1.query(query, values, (error) => {
+
     if (error) {
-      console.error("Update owner error:", error);
-      return res.status(500).json({ error: "Failed to update owner" });
+      console.error(
+        "Update owner SMTP error:",
+        error
+      );
+
+      return res.status(500).json({
+        error:
+          "Failed to update SMTP configuration"
+      });
     }
 
-    res.json({
-      message: "Owner information updated successfully",
+
+    return res.json({
+      message:
+        "SMTP configuration updated successfully",
       success: true
     });
   });
+
 };
 
 // Delete an inquiry
@@ -3408,7 +3559,7 @@ export const deleteInquiry = (req, res) => {
   const { id } = req.params;
 
   const query = `DELETE FROM contact_inquiries WHERE id = ?`;
-  
+
   db1.query(query, [id], (error, results) => {
     if (error) {
       console.error("Delete inquiry error:", error);
@@ -3440,7 +3591,7 @@ export const getDonations = (req, res) => {
     ORDER BY created_at DESC 
     LIMIT ? OFFSET ?
   `;
-  
+
   let countQuery = `
     SELECT COUNT(*) as total FROM donations 
     WHERE firstName LIKE ? OR lastName LIKE ? OR email LIKE ? OR phone LIKE ? OR donationType LIKE ?
@@ -3482,7 +3633,7 @@ export const getDonationById = (req, res) => {
   const { id } = req.params;
 
   const query = `SELECT * FROM donations WHERE id = ?`;
-  
+
   db1.query(query, [id], (error, results) => {
     if (error) {
       console.error("Donation query error:", error);
@@ -3502,7 +3653,7 @@ export const deleteDonation = (req, res) => {
   const { id } = req.params;
 
   const query = `DELETE FROM donations WHERE id = ?`;
-  
+
   db1.query(query, [id], (error, results) => {
     if (error) {
       console.error("Delete donation error:", error);
@@ -3531,7 +3682,7 @@ export const updateDonationStatus = (req, res) => {
   }
 
   const query = `UPDATE donations SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`;
-  
+
   db1.query(query, [status, id], (error, results) => {
     if (error) {
       console.error("Update donation status error:", error);
@@ -3563,7 +3714,7 @@ export const getStories = (req, res) => {
     ORDER BY created_at DESC 
     LIMIT ? OFFSET ?
   `;
-  
+
   let countQuery = `
     SELECT COUNT(*) as total FROM contribute_stories 
     WHERE name LIKE ? OR email LIKE ? OR phone LIKE ? OR entityType LIKE ? OR company LIKE ?
@@ -3605,7 +3756,7 @@ export const getStoryById = (req, res) => {
   const { id } = req.params;
 
   const query = `SELECT * FROM contribute_stories WHERE id = ?`;
-  
+
   db1.query(query, [id], (error, results) => {
     if (error) {
       console.error("Story query error:", error);
@@ -3625,7 +3776,7 @@ export const deleteStory = (req, res) => {
   const { id } = req.params;
 
   const query = `DELETE FROM contribute_stories WHERE id = ?`;
-  
+
   db1.query(query, [id], (error, results) => {
     if (error) {
       console.error("Delete story error:", error);
@@ -3657,7 +3808,7 @@ export const getJobApplications = (req, res) => {
     ORDER BY created_at DESC 
     LIMIT ? OFFSET ?
   `;
-  
+
   let countQuery = `
     SELECT COUNT(*) as total FROM job_applications 
     WHERE name LIKE ? OR email LIKE ? OR phone LIKE ? OR interestedPost LIKE ? OR qualification LIKE ?
@@ -3699,7 +3850,7 @@ export const getJobApplicationById = (req, res) => {
   const { id } = req.params;
 
   const query = `SELECT * FROM job_applications WHERE id = ?`;
-  
+
   db1.query(query, [id], (error, results) => {
     if (error) {
       console.error("Job application query error:", error);
@@ -3719,7 +3870,7 @@ export const deleteJobApplication = (req, res) => {
   const { id } = req.params;
 
   const query = `DELETE FROM job_applications WHERE id = ?`;
-  
+
   db1.query(query, [id], (error, results) => {
     if (error) {
       console.error("Delete job application error:", error);
@@ -3752,7 +3903,7 @@ export const getVolunteers = (req, res) => {
     ORDER BY created_at DESC 
     LIMIT ? OFFSET ?
   `;
-  
+
   let countQuery = `
     SELECT COUNT(*) as total FROM volunteers 
     WHERE name LIKE ? OR email LIKE ? OR phone LIKE ? OR country LIKE ?
@@ -3794,7 +3945,7 @@ export const getVolunteerById = (req, res) => {
   const { id } = req.params;
 
   const query = `SELECT * FROM volunteers WHERE id = ?`;
-  
+
   db1.query(query, [id], (error, results) => {
     if (error) {
       console.error("Volunteer query error:", error);
@@ -3814,7 +3965,7 @@ export const deleteVolunteer = (req, res) => {
   const { id } = req.params;
 
   const query = `DELETE FROM volunteers WHERE id = ?`;
-  
+
   db1.query(query, [id], (error, results) => {
     if (error) {
       console.error("Delete volunteer error:", error);
@@ -3847,7 +3998,7 @@ export const getContactMessages = (req, res) => {
     ORDER BY created_at DESC 
     LIMIT ? OFFSET ?
   `;
-  
+
   let countQuery = `
     SELECT COUNT(*) as total FROM contact_messages 
     WHERE name LIKE ? OR email LIKE ? OR phone LIKE ? OR subject LIKE ?
@@ -3889,7 +4040,7 @@ export const getContactMessageById = (req, res) => {
   const { id } = req.params;
 
   const query = `SELECT * FROM contact_messages WHERE id = ?`;
-  
+
   db1.query(query, [id], (error, results) => {
     if (error) {
       console.error("Contact message query error:", error);
@@ -3909,7 +4060,7 @@ export const deleteContactMessage = (req, res) => {
   const { id } = req.params;
 
   const query = `DELETE FROM contact_messages WHERE id = ?`;
-  
+
   db1.query(query, [id], (error, results) => {
     if (error) {
       console.error("Delete contact message error:", error);
@@ -3927,10 +4078,10 @@ export const deleteContactMessage = (req, res) => {
   });
 };
 
-const JWT_SECRET=process.env.JWT_SECRET
-export const authlogin=async (req,res)=>{
- const token = req.cookies.token;
-// console.log(JWT_SECRET)
+const JWT_SECRET = process.env.JWT_SECRET
+export const authlogin = async (req, res) => {
+  const token = req.cookies.token;
+  // console.log(JWT_SECRET)
   if (!token) {
     return res.status(401).json({ message: "Unauthorized" });
   }
@@ -3938,16 +4089,16 @@ export const authlogin=async (req,res)=>{
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    req.user=decoded
-//    console.log(decoded)
+    req.user = decoded
+    //    console.log(decoded)
   } catch (err) {
     return res.status(401).json({ message: "Invalid token" });
   }
 
-  res.status(200).json({message:"success"})
-  
-  
-  
+  res.status(200).json({ message: "success" })
+
+
+
 }
 
 
@@ -3956,7 +4107,7 @@ export const authlogin=async (req,res)=>{
 // Get all topbar contents
 export const getAllTopbarContents = (req, res) => {
   const query = 'SELECT * FROM topbarcontent ORDER BY created_at DESC';
-  
+
   db1.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching topbar contents:', err);
@@ -3966,7 +4117,7 @@ export const getAllTopbarContents = (req, res) => {
         error: err.message
       });
     }
-    
+
     res.status(200).json({
       success: true,
       data: results
@@ -3978,7 +4129,7 @@ export const getAllTopbarContents = (req, res) => {
 export const getTopbarContentById = (req, res) => {
   const { id } = req.params;
   const query = 'SELECT * FROM topbarcontent WHERE id = ?';
-  
+
   db1.query(query, [id], (err, results) => {
     if (err) {
       console.error('Error fetching topbar content:', err);
@@ -3988,14 +4139,14 @@ export const getTopbarContentById = (req, res) => {
         error: err.message
       });
     }
-    
+
     if (results.length === 0) {
       return res.status(404).json({
         success: false,
         message: 'Topbar content not found'
       });
     }
-    
+
     res.status(200).json({
       success: true,
       data: results[0]
@@ -4006,16 +4157,16 @@ export const getTopbarContentById = (req, res) => {
 // Create new topbar content
 export const createTopbarContent = (req, res) => {
   const { text } = req.body;
-  
+
   if (!text) {
     return res.status(400).json({
       success: false,
       message: 'Text content is required'
     });
   }
-  
+
   const query = 'INSERT INTO topbarcontent (text) VALUES (?)';
-  
+
   db1.query(query, [text], (err, results) => {
     if (err) {
       console.error('Error creating topbar content:', err);
@@ -4025,7 +4176,7 @@ export const createTopbarContent = (req, res) => {
         error: err.message
       });
     }
-    
+
     res.status(201).json({
       success: true,
       message: 'Topbar content created successfully',
@@ -4041,16 +4192,16 @@ export const createTopbarContent = (req, res) => {
 export const updateTopbarContent = (req, res) => {
   const { id } = req.params;
   const { text } = req.body;
-  
+
   if (!text) {
     return res.status(400).json({
       success: false,
       message: 'Text content is required'
     });
   }
-  
+
   const query = 'UPDATE topbarcontent SET text = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?';
-  
+
   db1.query(query, [text, id], (err, results) => {
     if (err) {
       console.error('Error updating topbar content:', err);
@@ -4060,14 +4211,14 @@ export const updateTopbarContent = (req, res) => {
         error: err.message
       });
     }
-    
+
     if (results.affectedRows === 0) {
       return res.status(404).json({
         success: false,
         message: 'Topbar content not found'
       });
     }
-    
+
     res.status(200).json({
       success: true,
       message: 'Topbar content updated successfully',
@@ -4083,7 +4234,7 @@ export const updateTopbarContent = (req, res) => {
 export const deleteTopbarContent = (req, res) => {
   const { id } = req.params;
   const query = 'DELETE FROM topbarcontent WHERE id = ?';
-  
+
   db1.query(query, [id], (err, results) => {
     if (err) {
       console.error('Error deleting topbar content:', err);
@@ -4093,14 +4244,14 @@ export const deleteTopbarContent = (req, res) => {
         error: err.message
       });
     }
-    
+
     if (results.affectedRows === 0) {
       return res.status(404).json({
         success: false,
         message: 'Topbar content not found'
       });
     }
-    
+
     res.status(200).json({
       success: true,
       message: 'Topbar content deleted successfully'
@@ -4115,7 +4266,7 @@ export const deleteTopbarContent = (req, res) => {
 export const getAllCertifications = async (req, res) => {
   try {
     const query = 'SELECT * FROM certifications ORDER BY display_order ASC, created_at DESC';
-    
+
     db1.query(query, (err, results) => {
       if (err) {
         console.error('Error fetching certifications:', err);
@@ -4125,7 +4276,7 @@ export const getAllCertifications = async (req, res) => {
           error: err.message
         });
       }
-      
+
       res.status(200).json({
         success: true,
         data: results
@@ -4146,7 +4297,7 @@ export const getCertificationById = async (req, res) => {
   try {
     const { id } = req.params;
     const query = 'SELECT * FROM certifications WHERE id = ?';
-    
+
     db1.query(query, [id], (err, results) => {
       if (err) {
         console.error('Error fetching certification:', err);
@@ -4156,14 +4307,14 @@ export const getCertificationById = async (req, res) => {
           error: err.message
         });
       }
-      
+
       if (results.length === 0) {
         return res.status(404).json({
           success: false,
           message: 'Certification not found'
         });
       }
-      
+
       res.status(200).json({
         success: true,
         data: results[0]
@@ -4204,14 +4355,14 @@ export const createCertification = async (req, res) => {
     const ext = matches[1].split("/")[1] || "png";
     const fileName = `cert_${Date.now()}_${Math.floor(Math.random() * 1e6)}.${ext}`;
     const fileBuffer = Buffer.from(matches[2], "base64");
-    
+
     const imageUrl = await uploadToFTP(fileName, fileBuffer);
 
     const query = `
       INSERT INTO certifications (title, description, image_url, display_order) 
       VALUES (?, ?, ?, ?)
     `;
-    
+
     db1.query(query, [title, description, imageUrl, display_order || 0], (err, results) => {
       if (err) {
         console.error('Error creating certification:', err);
@@ -4223,7 +4374,7 @@ export const createCertification = async (req, res) => {
           error: err.message
         });
       }
-      
+
       res.status(201).json({
         success: true,
         message: 'Certification created successfully',
@@ -4254,7 +4405,7 @@ export const updateCertification = async (req, res) => {
 
     // First get the current certification
     const getQuery = 'SELECT * FROM certifications WHERE id = ?';
-    
+
     db1.query(getQuery, [id], async (err, results) => {
       if (err) {
         console.error('Error fetching certification for update:', err);
@@ -4264,14 +4415,14 @@ export const updateCertification = async (req, res) => {
           error: err.message
         });
       }
-      
+
       if (results.length === 0) {
         return res.status(404).json({
           success: false,
           message: 'Certification not found'
         });
       }
-      
+
       const currentCert = results[0];
       let imageUrl = currentCert.image_url;
 
@@ -4289,9 +4440,9 @@ export const updateCertification = async (req, res) => {
         const ext = matches[1].split("/")[1] || "png";
         const fileName = `cert_${Date.now()}_${Math.floor(Math.random() * 1e6)}.${ext}`;
         const fileBuffer = Buffer.from(matches[2], "base64");
-        
+
         imageUrl = await uploadToFTP(fileName, fileBuffer);
-        
+
         // Delete old file from FTP
         await deleteFromFTP(currentCert.image_url);
       }
@@ -4301,7 +4452,7 @@ export const updateCertification = async (req, res) => {
         SET title = ?, description = ?, image_url = ?, display_order = ?, updated_at = CURRENT_TIMESTAMP 
         WHERE id = ?
       `;
-      
+
       db1.query(updateQuery, [
         title || currentCert.title,
         description || currentCert.description,
@@ -4317,14 +4468,14 @@ export const updateCertification = async (req, res) => {
             error: err.message
           });
         }
-        
+
         if (results.affectedRows === 0) {
           return res.status(404).json({
             success: false,
             message: 'Certification not found'
           });
         }
-        
+
         res.status(200).json({
           success: true,
           message: 'Certification updated successfully',
@@ -4352,10 +4503,10 @@ export const updateCertification = async (req, res) => {
 export const deleteCertification = async (req, res) => {
   try {
     const { id } = req.params;
-    
+
     // First get the certification to get image URL
     const getQuery = 'SELECT * FROM certifications WHERE id = ?';
-    
+
     db1.query(getQuery, [id], async (err, results) => {
       if (err) {
         console.error('Error fetching certification for deletion:', err);
@@ -4365,22 +4516,22 @@ export const deleteCertification = async (req, res) => {
           error: err.message
         });
       }
-      
+
       if (results.length === 0) {
         return res.status(404).json({
           success: false,
           message: 'Certification not found'
         });
       }
-      
+
       const certification = results[0];
-      
+
       // Delete from FTP
       await deleteFromFTP(certification.image_url);
-      
+
       // Delete from database
       const deleteQuery = 'DELETE FROM certifications WHERE id = ?';
-      
+
       db1.query(deleteQuery, [id], (err, results) => {
         if (err) {
           console.error('Error deleting certification:', err);
@@ -4390,14 +4541,14 @@ export const deleteCertification = async (req, res) => {
             error: err.message
           });
         }
-        
+
         if (results.affectedRows === 0) {
           return res.status(404).json({
             success: false,
             message: 'Certification not found'
           });
         }
-        
+
         res.status(200).json({
           success: true,
           message: 'Certification deleted successfully'
@@ -4419,7 +4570,7 @@ export const deleteCertification = async (req, res) => {
 // Get all testimonials
 export const getAllTestimonials = (req, res) => {
   const query = 'SELECT * FROM testimonials ORDER BY created_at DESC';
-  
+
   db1.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching testimonials:', err);
@@ -4429,7 +4580,7 @@ export const getAllTestimonials = (req, res) => {
         error: err.message
       });
     }
-    
+
     res.status(200).json({
       success: true,
       data: results
@@ -4441,7 +4592,7 @@ export const getAllTestimonials = (req, res) => {
 export const getTestimonialById = (req, res) => {
   const { id } = req.params;
   const query = 'SELECT * FROM testimonials WHERE id = ?';
-  
+
   db1.query(query, [id], (err, results) => {
     if (err) {
       console.error('Error fetching testimonial:', err);
@@ -4451,14 +4602,14 @@ export const getTestimonialById = (req, res) => {
         error: err.message
       });
     }
-    
+
     if (results.length === 0) {
       return res.status(404).json({
         success: false,
         message: 'Testimonial not found'
       });
     }
-    
+
     res.status(200).json({
       success: true,
       data: results[0]
@@ -4493,7 +4644,7 @@ export const createTestimonial = async (req, res) => {
     const videoExt = videoMatches[1].split("/")[1] || "mp4";
     const videoFileName = `testimonial_video_${Date.now()}_${Math.floor(Math.random() * 1e6)}.${videoExt}`;
     const videoBuffer = Buffer.from(videoMatches[2], "base64");
-    
+
     videoUrl = await uploadVideoToFTP(videoFileName, videoBuffer);
 
     // Upload thumbnail if provided
@@ -4503,13 +4654,13 @@ export const createTestimonial = async (req, res) => {
         const thumbnailExt = thumbnailMatches[1].split("/")[1] || "png";
         const thumbnailFileName = `testimonial_thumb_${Date.now()}_${Math.floor(Math.random() * 1e6)}.${thumbnailExt}`;
         const thumbnailBuffer = Buffer.from(thumbnailMatches[2], "base64");
-        
+
         thumbnailUrl = await uploadToFTP(thumbnailFileName, thumbnailBuffer);
       }
     }
 
     const query = 'INSERT INTO testimonials (name, position, thumbnail, video_url, role) VALUES (?, ?, ?, ?, ?)';
-    
+
     db1.query(query, [name, position, thumbnailUrl, videoUrl, role], (err, results) => {
       if (err) {
         console.error('Error creating testimonial:', err);
@@ -4522,7 +4673,7 @@ export const createTestimonial = async (req, res) => {
           error: err.message
         });
       }
-      
+
       res.status(201).json({
         success: true,
         message: 'Testimonial created successfully',
@@ -4554,7 +4705,7 @@ export const updateTestimonial = async (req, res) => {
 
     // First get the current testimonial
     const getQuery = 'SELECT * FROM testimonials WHERE id = ?';
-    
+
     db1.query(getQuery, [id], async (err, results) => {
       if (err) {
         console.error('Error fetching testimonial for update:', err);
@@ -4564,14 +4715,14 @@ export const updateTestimonial = async (req, res) => {
           error: err.message
         });
       }
-      
+
       if (results.length === 0) {
         return res.status(404).json({
           success: false,
           message: 'Testimonial not found'
         });
       }
-      
+
       const currentTestimonial = results[0];
       let videoUrl = currentTestimonial.video_url;
       let thumbnailUrl = currentTestimonial.thumbnail;
@@ -4592,9 +4743,9 @@ export const updateTestimonial = async (req, res) => {
         const ext = matches[1].split("/")[1] || "mp4";
         const fileName = `testimonial_video_${Date.now()}_${Math.floor(Math.random() * 1e6)}.${ext}`;
         const fileBuffer = Buffer.from(matches[2], "base64");
-        
+
         videoUrl = await uploadVideoToFTP(fileName, fileBuffer);
-        
+
         // Delete old video from FTP
         await deleteVideoFromFTP(currentTestimonial.video_url);
       }
@@ -4606,9 +4757,9 @@ export const updateTestimonial = async (req, res) => {
           const ext = matches[1].split("/")[1] || "png";
           const fileName = `testimonial_thumb_${Date.now()}_${Math.floor(Math.random() * 1e6)}.${ext}`;
           const fileBuffer = Buffer.from(matches[2], "base64");
-          
+
           thumbnailUrl = await uploadToFTP(fileName, fileBuffer);
-          
+
           // Delete old thumbnail from FTP if it exists
           if (currentTestimonial.thumbnail) {
             await deleteFromFTP(currentTestimonial.thumbnail);
@@ -4617,7 +4768,7 @@ export const updateTestimonial = async (req, res) => {
       }
 
       const updateQuery = 'UPDATE testimonials SET name = ?, position = ?, thumbnail = ?, video_url = ?, role = ? WHERE id = ?';
-      
+
       db1.query(updateQuery, [updateName, updatePosition, thumbnailUrl, videoUrl, updateRole, id], (err, results) => {
         if (err) {
           console.error('Error updating testimonial:', err);
@@ -4627,14 +4778,14 @@ export const updateTestimonial = async (req, res) => {
             error: err.message
           });
         }
-        
+
         if (results.affectedRows === 0) {
           return res.status(404).json({
             success: false,
             message: 'Testimonial not found'
           });
         }
-        
+
         res.status(200).json({
           success: true,
           message: 'Testimonial updated successfully',
@@ -4663,10 +4814,10 @@ export const updateTestimonial = async (req, res) => {
 export const deleteTestimonial = async (req, res) => {
   try {
     const { id } = req.params;
-    
+
     // First get the testimonial to get video URL
     const getQuery = 'SELECT * FROM testimonials WHERE id = ?';
-    
+
     db1.query(getQuery, [id], async (err, results) => {
       if (err) {
         console.error('Error fetching testimonial for deletion:', err);
@@ -4676,25 +4827,25 @@ export const deleteTestimonial = async (req, res) => {
           error: err.message
         });
       }
-      
+
       if (results.length === 0) {
         return res.status(404).json({
           success: false,
           message: 'Testimonial not found'
         });
       }
-      
+
       const testimonial = results[0];
-      
+
       // Delete from FTP
       await deleteVideoFromFTP(testimonial.video_url);
       if (testimonial.thumbnail) {
         await deleteFromFTP(testimonial.thumbnail);
       }
-      
+
       // Delete from database
       const deleteQuery = 'DELETE FROM testimonials WHERE id = ?';
-      
+
       db1.query(deleteQuery, [id], (err, results) => {
         if (err) {
           console.error('Error deleting testimonial:', err);
@@ -4704,14 +4855,14 @@ export const deleteTestimonial = async (req, res) => {
             error: err.message
           });
         }
-        
+
         if (results.affectedRows === 0) {
           return res.status(404).json({
             success: false,
             message: 'Testimonial not found'
           });
         }
-        
+
         res.status(200).json({
           success: true,
           message: 'Testimonial deleted successfully'
@@ -4733,16 +4884,16 @@ export const deleteTestimonial = async (req, res) => {
 // Get all events
 export const getAllEvents = (req, res) => {
   const query = 'SELECT * FROM events ORDER BY created_at DESC';
-  
+
   db1.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching events:', err);
-      return res.status(500).json({ 
-        success: false, 
-        message: 'Error fetching events' 
+      return res.status(500).json({
+        success: false,
+        message: 'Error fetching events'
       });
     }
-    
+
     res.status(200).json({
       success: true,
       data: results
@@ -4754,23 +4905,23 @@ export const getAllEvents = (req, res) => {
 export const getEventById = (req, res) => {
   const { id } = req.params;
   const query = 'SELECT * FROM events WHERE id = ?';
-  
+
   db1.query(query, [id], (err, results) => {
     if (err) {
       console.error('Error fetching event:', err);
-      return res.status(500).json({ 
-        success: false, 
-        message: 'Error fetching event' 
+      return res.status(500).json({
+        success: false,
+        message: 'Error fetching event'
       });
     }
-    
+
     if (results.length === 0) {
-      return res.status(404).json({ 
-        success: false, 
-        message: 'Event not found' 
+      return res.status(404).json({
+        success: false,
+        message: 'Event not found'
       });
     }
-    
+
     res.status(200).json({
       success: true,
       data: results[0]
@@ -4781,25 +4932,25 @@ export const getEventById = (req, res) => {
 // Create new event
 export const createEvent = (req, res) => {
   const { title, url, videoId } = req.body;
-  
+
   if (!title || !url || !videoId) {
-    return res.status(400).json({ 
-      success: false, 
-      message: 'Title, URL, and videoId are required' 
+    return res.status(400).json({
+      success: false,
+      message: 'Title, URL, and videoId are required'
     });
   }
-  
+
   const query = 'INSERT INTO events (title, url, videoId) VALUES (?, ?, ?)';
-  
+
   db1.query(query, [title, url, videoId], (err, results) => {
     if (err) {
       console.error('Error creating event:', err);
-      return res.status(500).json({ 
-        success: false, 
-        message: 'Error creating event' 
+      return res.status(500).json({
+        success: false,
+        message: 'Error creating event'
       });
     }
-    
+
     res.status(201).json({
       success: true,
       message: 'Event created successfully',
@@ -4812,32 +4963,32 @@ export const createEvent = (req, res) => {
 export const updateEvent = (req, res) => {
   const { id } = req.params;
   const { title, url, videoId } = req.body;
-  
+
   if (!title || !url || !videoId) {
-    return res.status(400).json({ 
-      success: false, 
-      message: 'Title, URL, and videoId are required' 
+    return res.status(400).json({
+      success: false,
+      message: 'Title, URL, and videoId are required'
     });
   }
-  
+
   const query = 'UPDATE events SET title = ?, url = ?, videoId = ? WHERE id = ?';
-  
+
   db1.query(query, [title, url, videoId, id], (err, results) => {
     if (err) {
       console.error('Error updating event:', err);
-      return res.status(500).json({ 
-        success: false, 
-        message: 'Error updating event' 
+      return res.status(500).json({
+        success: false,
+        message: 'Error updating event'
       });
     }
-    
+
     if (results.affectedRows === 0) {
-      return res.status(404).json({ 
-        success: false, 
-        message: 'Event not found' 
+      return res.status(404).json({
+        success: false,
+        message: 'Event not found'
       });
     }
-    
+
     res.status(200).json({
       success: true,
       message: 'Event updated successfully'
@@ -4849,23 +5000,23 @@ export const updateEvent = (req, res) => {
 export const deleteEvent = (req, res) => {
   const { id } = req.params;
   const query = 'DELETE FROM events WHERE id = ?';
-  
+
   db1.query(query, [id], (err, results) => {
     if (err) {
       console.error('Error deleting event:', err);
-      return res.status(500).json({ 
-        success: false, 
-        message: 'Error deleting event' 
+      return res.status(500).json({
+        success: false,
+        message: 'Error deleting event'
       });
     }
-    
+
     if (results.affectedRows === 0) {
-      return res.status(404).json({ 
-        success: false, 
-        message: 'Event not found' 
+      return res.status(404).json({
+        success: false,
+        message: 'Event not found'
       });
     }
-    
+
     res.status(200).json({
       success: true,
       message: 'Event deleted successfully'
@@ -4904,7 +5055,7 @@ const updateItemsCategory = async (oldName, newName) => {
   return new Promise((resolve, reject) => {
     // Get all items that have the old category name in their category array
     const selectQuery = 'SELECT id, category FROM items WHERE JSON_CONTAINS(category, ?)';
-    
+
     db1.query(selectQuery, [JSON.stringify(oldName)], (err, results) => {
       if (err) {
         console.error('Error fetching items for category update:', err);
@@ -4926,12 +5077,12 @@ const updateItemsCategory = async (oldName, newName) => {
           try {
             // Parse the category array
             const categories = JSON.parse(item.category);
-            
+
             // Replace the old category name with new one
-            const updatedCategories = categories.map(cat => 
+            const updatedCategories = categories.map(cat =>
               cat === oldName ? newName : cat
             );
-            
+
             // Update the item
             const updateQuery = 'UPDATE items SET category = ? WHERE id = ?';
             db1.query(updateQuery, [JSON.stringify(updatedCategories), item.id], (updateErr) => {
@@ -4948,7 +5099,7 @@ const updateItemsCategory = async (oldName, newName) => {
             itemResolve(); // Continue with other items even if one fails
           }
         });
-        
+
         updatePromises.push(updatePromise);
       });
 
@@ -4963,7 +5114,7 @@ const updateItemsCategory = async (oldName, newName) => {
 // Get all sectors (including deleted for admin)
 export const getAllSectors = (req, res) => {
   const query = 'SELECT * FROM sectors ORDER BY id DESC';
-  
+
   db1.query(query, (err, results) => {
     if (err) {
       console.error('❌ Error fetching sectors:', err);
@@ -4976,7 +5127,7 @@ export const getAllSectors = (req, res) => {
 // Get active sectors only
 export const getActiveSectors = (req, res) => {
   const query = 'SELECT * FROM sectors WHERE deletestatus = 0 ORDER BY name';
-  
+
   db1.query(query, (err, results) => {
     if (err) {
       console.error('❌ Error fetching active sectors:', err);
@@ -4990,17 +5141,17 @@ export const getActiveSectors = (req, res) => {
 export const getSectorById = (req, res) => {
   const { id } = req.params;
   const query = 'SELECT * FROM sectors WHERE id = ?';
-  
+
   db1.query(query, [id], (err, results) => {
     if (err) {
       console.error('❌ Error fetching sector:', err);
       return res.status(500).json({ success: false, error: 'Database error' });
     }
-    
+
     if (results.length === 0) {
       return res.status(404).json({ success: false, error: 'Sector not found' });
     }
-    
+
     res.json({ success: true, data: results[0] });
   });
 };
@@ -5008,21 +5159,21 @@ export const getSectorById = (req, res) => {
 // Create new sector
 export const createSector = async (req, res) => {
   try {
-    const { 
-      name, 
-      slug, 
-      description, 
-      meta_title, 
-      meta_description, 
+    const {
+      name,
+      slug,
+      description,
+      meta_title,
+      meta_description,
       meta_keywords,
-      imageBase64, 
-      fileName 
+      imageBase64,
+      fileName
     } = req.body;
-    
+
     if (!name || !slug || !description) {
-      return res.status(400).json({ 
-        success: false, 
-        error: 'All fields (name, slug, description) are required' 
+      return res.status(400).json({
+        success: false,
+        error: 'All fields (name, slug, description) are required'
       });
     }
 
@@ -5045,30 +5196,30 @@ export const createSector = async (req, res) => {
       (src, name, slug, description, meta_title, meta_description, meta_keywords) 
       VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
-    
+
     db1.query(query, [
-      imageUrl, 
-      name, 
-      slug, 
-      description, 
-      meta_title || null, 
-      meta_description || null, 
+      imageUrl,
+      name,
+      slug,
+      description,
+      meta_title || null,
+      meta_description || null,
       meta_keywords || null
     ], (err, result) => {
       if (err) {
         console.error('❌ Error creating sector:', err);
         if (err.code === 'ER_DUP_ENTRY') {
-          return res.status(400).json({ 
-            success: false, 
-            error: 'Sector with this slug already exists' 
+          return res.status(400).json({
+            success: false,
+            error: 'Sector with this slug already exists'
           });
         }
         return res.status(500).json({ success: false, error: 'Database error' });
       }
-      
-      res.status(201).json({ 
-        success: true, 
-        message: 'Sector created successfully', 
+
+      res.status(201).json({
+        success: true,
+        message: 'Sector created successfully',
         data: {
           id: result.insertId,
           src: imageUrl,
@@ -5092,37 +5243,37 @@ export const createSector = async (req, res) => {
 export const updateSector = async (req, res) => {
   try {
     const { id } = req.params;
-    const { 
-      name, 
-      slug, 
-      description, 
-      meta_title, 
-      meta_description, 
+    const {
+      name,
+      slug,
+      description,
+      meta_title,
+      meta_description,
       meta_keywords,
-      imageBase64, 
-      fileName 
+      imageBase64,
+      fileName
     } = req.body;
-    
+
     if (!name || !slug || !description) {
-      return res.status(400).json({ 
-        success: false, 
-        error: 'All fields (name, slug, description) are required' 
+      return res.status(400).json({
+        success: false,
+        error: 'All fields (name, slug, description) are required'
       });
     }
 
     // First get the old sector data to check if name changed and for image handling
     const getOldDataQuery = 'SELECT name, src FROM sectors WHERE id = ?';
-    
+
     db1.query(getOldDataQuery, [id], async (err, results) => {
       if (err) {
         console.error('❌ Error fetching old sector data:', err);
         return res.status(500).json({ success: false, error: 'Database error' });
       }
-      
+
       if (results.length === 0) {
         return res.status(404).json({ success: false, error: 'Sector not found' });
       }
-      
+
       const oldSector = results[0];
       const oldName = oldSector.name;
       let newImageUrl = oldSector.src;
@@ -5151,7 +5302,7 @@ export const updateSector = async (req, res) => {
               // Continue with upload even if delete fails
             }
           }
-          
+
           // Upload new image
           newImageUrl = await uploadImageFromBase64(imageBase64, fileName);
         } catch (uploadError) {
@@ -5161,7 +5312,7 @@ export const updateSector = async (req, res) => {
           });
         }
       }
-      
+
       // Update the sector
       const updateQuery = `
         UPDATE sectors 
@@ -5169,40 +5320,40 @@ export const updateSector = async (req, res) => {
             meta_title = ?, meta_description = ?, meta_keywords = ? 
         WHERE id = ?
       `;
-      
+
       db1.query(updateQuery, [
-        newImageUrl, 
-        name, 
-        slug, 
-        description, 
-        meta_title || null, 
-        meta_description || null, 
-        meta_keywords || null, 
+        newImageUrl,
+        name,
+        slug,
+        description,
+        meta_title || null,
+        meta_description || null,
+        meta_keywords || null,
         id
       ], (err, result) => {
         if (err) {
           console.error('❌ Error updating sector:', err);
           if (err.code === 'ER_DUP_ENTRY') {
-            return res.status(400).json({ 
-              success: false, 
-              error: 'Sector with this slug already exists' 
+            return res.status(400).json({
+              success: false,
+              error: 'Sector with this slug already exists'
             });
           }
           return res.status(500).json({ success: false, error: 'Database error' });
         }
-        
+
         if (result.affectedRows === 0) {
           return res.status(404).json({ success: false, error: 'Sector not found' });
         }
-        
-        res.json({ 
-          success: true, 
+
+        res.json({
+          success: true,
           message: `Sector updated successfully${categoryUpdateResult.updated > 0 ? ` and ${categoryUpdateResult.updated} items updated` : ''}`,
-          data: { 
-            id: parseInt(id), 
-            src: newImageUrl, 
-            name, 
-            slug, 
+          data: {
+            id: parseInt(id),
+            src: newImageUrl,
+            name,
+            slug,
             description,
             meta_title,
             meta_description,
@@ -5222,17 +5373,17 @@ export const updateSector = async (req, res) => {
 export const deleteSector = (req, res) => {
   const { id } = req.params;
   const query = 'UPDATE sectors SET deletestatus = 1 WHERE id = ?';
-  
+
   db1.query(query, [id], (err, result) => {
     if (err) {
       console.error('❌ Error deleting sector:', err);
       return res.status(500).json({ success: false, error: 'Database error' });
     }
-    
+
     if (result.affectedRows === 0) {
       return res.status(404).json({ success: false, error: 'Sector not found' });
     }
-    
+
     res.json({ success: true, message: 'Sector deleted successfully' });
   });
 };
@@ -5241,17 +5392,17 @@ export const deleteSector = (req, res) => {
 export const restoreSector = (req, res) => {
   const { id } = req.params;
   const query = 'UPDATE sectors SET deletestatus = 0 WHERE id = ?';
-  
+
   db1.query(query, [id], (err, result) => {
     if (err) {
       console.error('❌ Error restoring sector:', err);
       return res.status(500).json({ success: false, error: 'Database error' });
     }
-    
+
     if (result.affectedRows === 0) {
       return res.status(404).json({ success: false, error: 'Sector not found' });
     }
-    
+
     res.json({ success: true, message: 'Sector restored successfully' });
   });
 };
@@ -5259,23 +5410,23 @@ export const restoreSector = (req, res) => {
 // Permanent delete sector
 export const permanentDeleteSector = (req, res) => {
   const { id } = req.params;
-  
+
   // First get the sector data to delete the image from FTP and get the name for category cleanup
   const getSectorQuery = 'SELECT name, src FROM sectors WHERE id = ?';
-  
+
   db1.query(getSectorQuery, [id], async (err, results) => {
     if (err) {
       console.error('❌ Error fetching sector for deletion:', err);
       return res.status(500).json({ success: false, error: 'Database error' });
     }
-    
+
     if (results.length === 0) {
       return res.status(404).json({ success: false, error: 'Sector not found' });
     }
-    
+
     const sector = results[0];
     const sectorName = sector.name;
-    
+
     // Remove this category from all items
     try {
       await removeCategoryFromItems(sectorName);
@@ -5284,7 +5435,7 @@ export const permanentDeleteSector = (req, res) => {
       console.error('❌ Error removing category from items:', categoryError);
       // Continue with deletion even if category cleanup fails
     }
-    
+
     // Delete image from FTP if it's from our server
     if (sector.src && sector.src.includes('media.khudii.com')) {
       try {
@@ -5294,20 +5445,20 @@ export const permanentDeleteSector = (req, res) => {
         // Continue with database deletion even if FTP delete fails
       }
     }
-    
+
     // Delete from database
     const deleteQuery = 'DELETE FROM sectors WHERE id = ?';
-    
+
     db1.query(deleteQuery, [id], (err, result) => {
       if (err) {
         console.error('❌ Error permanently deleting sector:', err);
         return res.status(500).json({ success: false, error: 'Database error' });
       }
-      
+
       if (result.affectedRows === 0) {
         return res.status(404).json({ success: false, error: 'Sector not found' });
       }
-      
+
       res.json({ success: true, message: 'Sector permanently deleted and removed from all items' });
     });
   });
@@ -5318,7 +5469,7 @@ const removeCategoryFromItems = async (categoryName) => {
   return new Promise((resolve, reject) => {
     // Get all items that have this category
     const selectQuery = 'SELECT id, category FROM items WHERE JSON_CONTAINS(category, ?)';
-    
+
     db1.query(selectQuery, [JSON.stringify(categoryName)], (err, results) => {
       if (err) {
         reject(err);
@@ -5339,10 +5490,10 @@ const removeCategoryFromItems = async (categoryName) => {
           try {
             // Parse the category array
             const categories = JSON.parse(item.category);
-            
+
             // Remove the category
             const updatedCategories = categories.filter(cat => cat !== categoryName);
-            
+
             // If no categories left, we might want to handle this differently
             // For now, just update with remaining categories
             const updateQuery = 'UPDATE items SET category = ? WHERE id = ?';
@@ -5359,7 +5510,7 @@ const removeCategoryFromItems = async (categoryName) => {
             itemResolve(); // Continue with other items
           }
         });
-        
+
         updatePromises.push(updatePromise);
       });
 
@@ -5397,7 +5548,7 @@ function generateUniqueFileName(base64String) {
 // Get all carousel images
 // export const getAllCarouselImages = (req, res) => {
 //   const query = "SELECT * FROM crousel_images ORDER BY created_at DESC";
-  
+
 //   db1.query(query, (err, results) => {
 //     if (err) {
 //       console.error("❌ Error fetching carousel images:", err);
@@ -5407,7 +5558,7 @@ function generateUniqueFileName(base64String) {
 //         error: err.message
 //       });
 //     }
-    
+
 //     res.json({
 //       success: true,
 //       data: results,
@@ -5420,7 +5571,7 @@ function generateUniqueFileName(base64String) {
 // export const getCarouselImageById = (req, res) => {
 //   const { id } = req.params;
 //   const query = "SELECT * FROM crousel_images WHERE id = ?";
-  
+
 //   db1.query(query, [id], (err, results) => {
 //     if (err) {
 //       console.error("❌ Error fetching carousel image:", err);
@@ -5430,14 +5581,14 @@ function generateUniqueFileName(base64String) {
 //         error: err.message
 //       });
 //     }
-    
+
 //     if (results.length === 0) {
 //       return res.status(404).json({
 //         success: false,
 //         message: "Carousel image not found"
 //       });
 //     }
-    
+
 //     res.json({
 //       success: true,
 //       data: results[0]
@@ -5460,7 +5611,7 @@ function generateUniqueFileName(base64String) {
 
 //     // Generate unique filename
 //     const fileName = generateUniqueFileName(imageBase64);
-    
+
 //     // Convert base64 to buffer
 //     const fileBuffer = base64ToBuffer(imageBase64);
 
@@ -5469,21 +5620,21 @@ function generateUniqueFileName(base64String) {
 
 //     // Insert into database
 //     const query = "INSERT INTO crousel_images (image_path, description) VALUES (?, ?)";
-    
+
 //     db1.query(query, [imageUrl, description || null], (err, results) => {
 //       if (err) {
 //         console.error("❌ Error creating carousel image:", err);
-        
+
 //         // Delete from FTP if database insert fails
 //         deleteFromFTP(imageUrl);
-        
+
 //         return res.status(500).json({
 //           success: false,
 //           message: "Failed to create carousel image",
 //           error: err.message
 //         });
 //       }
-      
+
 //       res.status(201).json({
 //         success: true,
 //         message: "Carousel image created successfully",
@@ -5494,7 +5645,7 @@ function generateUniqueFileName(base64String) {
 //         }
 //       });
 //     });
-    
+
 //   } catch (error) {
 //     console.error("❌ Error in createCarouselImage:", error);
 //     res.status(500).json({
@@ -5513,7 +5664,7 @@ function generateUniqueFileName(base64String) {
 
 //     // First, get the current image data
 //     const getQuery = "SELECT * FROM crousel_images WHERE id = ?";
-    
+
 //     db1.query(getQuery, [id], async (err, results) => {
 //       if (err) {
 //         console.error("❌ Error fetching carousel image for update:", err);
@@ -5523,7 +5674,7 @@ function generateUniqueFileName(base64String) {
 //           error: err.message
 //         });
 //       }
-      
+
 //       if (results.length === 0) {
 //         return res.status(404).json({
 //           success: false,
@@ -5539,7 +5690,7 @@ function generateUniqueFileName(base64String) {
 //         try {
 //           // Generate unique filename for new image
 //           const fileName = generateUniqueFileName(imageBase64);
-          
+
 //           // Convert base64 to buffer
 //           const fileBuffer = base64ToBuffer(imageBase64);
 
@@ -5548,7 +5699,7 @@ function generateUniqueFileName(base64String) {
 
 //           // Delete old image from FTP
 //           await deleteFromFTP(currentImage.image_path);
-          
+
 //         } catch (ftpError) {
 //           console.error("❌ FTP error during update:", ftpError);
 //           return res.status(500).json({
@@ -5576,7 +5727,7 @@ function generateUniqueFileName(base64String) {
 //             error: err.message
 //           });
 //         }
-        
+
 //         res.json({
 //           success: true,
 //           message: "Carousel image updated successfully",
@@ -5588,7 +5739,7 @@ function generateUniqueFileName(base64String) {
 //         });
 //       });
 //     });
-    
+
 //   } catch (error) {
 //     console.error("❌ Error in updateCarouselImage:", error);
 //     res.status(500).json({
@@ -5606,7 +5757,7 @@ function generateUniqueFileName(base64String) {
 
 //     // First, get the image data
 //     const getQuery = "SELECT * FROM crousel_images WHERE id = ?";
-    
+
 //     db1.query(getQuery, [id], async (err, results) => {
 //       if (err) {
 //         console.error("❌ Error fetching carousel image for deletion:", err);
@@ -5616,7 +5767,7 @@ function generateUniqueFileName(base64String) {
 //           error: err.message
 //         });
 //       }
-      
+
 //       if (results.length === 0) {
 //         return res.status(404).json({
 //           success: false,
@@ -5631,7 +5782,7 @@ function generateUniqueFileName(base64String) {
 
 //       // Delete from database
 //       const deleteQuery = "DELETE FROM crousel_images WHERE id = ?";
-      
+
 //       db1.query(deleteQuery, [id], (err, deleteResults) => {
 //         if (err) {
 //           console.error("❌ Error deleting carousel image:", err);
@@ -5641,7 +5792,7 @@ function generateUniqueFileName(base64String) {
 //             error: err.message
 //           });
 //         }
-        
+
 //         res.json({
 //           success: true,
 //           message: "Carousel image deleted successfully",
@@ -5652,7 +5803,7 @@ function generateUniqueFileName(base64String) {
 //         });
 //       });
 //     });
-    
+
 //   } catch (error) {
 //     console.error("❌ Error in deleteCarouselImage:", error);
 //     res.status(500).json({
@@ -5673,7 +5824,7 @@ function generateUniqueFileName(base64String) {
 // Get all carousel images (BOTH mobile and desktop - NO filtering)
 export const getAllCarouselImages = (req, res) => {
   const query = "SELECT * FROM crousel_images ORDER BY created_at DESC";
-  
+
   db1.query(query, (err, results) => {
     if (err) {
       console.error("❌ Error fetching carousel images:", err);
@@ -5683,7 +5834,7 @@ export const getAllCarouselImages = (req, res) => {
         error: err.message
       });
     }
-    
+
     // Return ALL images (both mobile and desktop)
     res.json({
       success: true,
@@ -5701,7 +5852,7 @@ export const getAllCarouselImages = (req, res) => {
 // Get desktop images only (separate endpoint if needed)
 export const getDesktopImages = (req, res) => {
   const query = "SELECT * FROM crousel_images WHERE isMobile = FALSE ORDER BY created_at DESC";
-  
+
   db1.query(query, (err, results) => {
     if (err) {
       console.error("❌ Error fetching desktop images:", err);
@@ -5711,7 +5862,7 @@ export const getDesktopImages = (req, res) => {
         error: err.message
       });
     }
-    
+
     res.json({
       success: true,
       data: results,
@@ -5723,7 +5874,7 @@ export const getDesktopImages = (req, res) => {
 // Get mobile images only (separate endpoint if needed)
 export const getMobileImages = (req, res) => {
   const query = "SELECT * FROM crousel_images WHERE isMobile = TRUE ORDER BY created_at DESC";
-  
+
   db1.query(query, (err, results) => {
     if (err) {
       console.error("❌ Error fetching mobile images:", err);
@@ -5733,7 +5884,7 @@ export const getMobileImages = (req, res) => {
         error: err.message
       });
     }
-    
+
     res.json({
       success: true,
       data: results,
@@ -5746,7 +5897,7 @@ export const getMobileImages = (req, res) => {
 export const getCarouselImageById = (req, res) => {
   const { id } = req.params;
   const query = "SELECT * FROM crousel_images WHERE id = ?";
-  
+
   db1.query(query, [id], (err, results) => {
     if (err) {
       console.error("❌ Error fetching carousel image:", err);
@@ -5756,14 +5907,14 @@ export const getCarouselImageById = (req, res) => {
         error: err.message
       });
     }
-    
+
     if (results.length === 0) {
       return res.status(404).json({
         success: false,
         message: "Carousel image not found"
       });
     }
-    
+
     res.json({
       success: true,
       data: results[0]
@@ -5786,7 +5937,7 @@ export const createCarouselImage = async (req, res) => {
 
     // Generate unique filename
     const fileName = generateUniqueFileName(imageBase64);
-    
+
     // Convert base64 to buffer
     const fileBuffer = base64ToBuffer(imageBase64);
 
@@ -5795,21 +5946,21 @@ export const createCarouselImage = async (req, res) => {
 
     // Insert into database
     const query = "INSERT INTO crousel_images (image_path, description, isMobile) VALUES (?, ?, ?)";
-    
+
     db1.query(query, [imageUrl, description || null, isMobile], (err, results) => {
       if (err) {
         console.error("❌ Error creating carousel image:", err);
-        
+
         // Delete from FTP if database insert fails
         deleteFromFTP(imageUrl);
-        
+
         return res.status(500).json({
           success: false,
           message: "Failed to create carousel image",
           error: err.message
         });
       }
-      
+
       res.status(201).json({
         success: true,
         message: "Carousel image created successfully",
@@ -5821,7 +5972,7 @@ export const createCarouselImage = async (req, res) => {
         }
       });
     });
-    
+
   } catch (error) {
     console.error("❌ Error in createCarouselImage:", error);
     res.status(500).json({
@@ -5840,7 +5991,7 @@ export const updateCarouselImage = async (req, res) => {
 
     // First, get the current image data
     const getQuery = "SELECT * FROM crousel_images WHERE id = ?";
-    
+
     db1.query(getQuery, [id], async (err, results) => {
       if (err) {
         console.error("❌ Error fetching carousel image for update:", err);
@@ -5850,7 +6001,7 @@ export const updateCarouselImage = async (req, res) => {
           error: err.message
         });
       }
-      
+
       if (results.length === 0) {
         return res.status(404).json({
           success: false,
@@ -5866,7 +6017,7 @@ export const updateCarouselImage = async (req, res) => {
         try {
           // Generate unique filename for new image
           const fileName = generateUniqueFileName(imageBase64);
-          
+
           // Convert base64 to buffer
           const fileBuffer = base64ToBuffer(imageBase64);
 
@@ -5875,7 +6026,7 @@ export const updateCarouselImage = async (req, res) => {
 
           // Delete old image from FTP
           await deleteFromFTP(currentImage.image_path);
-          
+
         } catch (ftpError) {
           console.error("❌ FTP error during update:", ftpError);
           return res.status(500).json({
@@ -5911,7 +6062,7 @@ export const updateCarouselImage = async (req, res) => {
             error: err.message
           });
         }
-        
+
         res.json({
           success: true,
           message: "Carousel image updated successfully",
@@ -5924,7 +6075,7 @@ export const updateCarouselImage = async (req, res) => {
         });
       });
     });
-    
+
   } catch (error) {
     console.error("❌ Error in updateCarouselImage:", error);
     res.status(500).json({
@@ -5942,7 +6093,7 @@ export const deleteCarouselImage = async (req, res) => {
 
     // First, get the image data
     const getQuery = "SELECT * FROM crousel_images WHERE id = ?";
-    
+
     db1.query(getQuery, [id], async (err, results) => {
       if (err) {
         console.error("❌ Error fetching carousel image for deletion:", err);
@@ -5952,7 +6103,7 @@ export const deleteCarouselImage = async (req, res) => {
           error: err.message
         });
       }
-      
+
       if (results.length === 0) {
         return res.status(404).json({
           success: false,
@@ -5967,7 +6118,7 @@ export const deleteCarouselImage = async (req, res) => {
 
       // Delete from database
       const deleteQuery = "DELETE FROM crousel_images WHERE id = ?";
-      
+
       db1.query(deleteQuery, [id], (err, deleteResults) => {
         if (err) {
           console.error("❌ Error deleting carousel image:", err);
@@ -5977,7 +6128,7 @@ export const deleteCarouselImage = async (req, res) => {
             error: err.message
           });
         }
-        
+
         res.json({
           success: true,
           message: "Carousel image deleted successfully",
@@ -5989,7 +6140,7 @@ export const deleteCarouselImage = async (req, res) => {
         });
       });
     });
-    
+
   } catch (error) {
     console.error("❌ Error in deleteCarouselImage:", error);
     res.status(500).json({
@@ -6010,7 +6161,7 @@ export const deleteCarouselImage = async (req, res) => {
 // Get welcome section data
 export const getWelcomeSection = (req, res) => {
   const query = "SELECT * FROM welcomesection LIMIT 1";
-  
+
   db1.query(query, (err, results) => {
     if (err) {
       console.error("❌ Error fetching welcome section:", err);
@@ -6020,7 +6171,7 @@ export const getWelcomeSection = (req, res) => {
         error: err.message
       });
     }
-    
+
     // If no data exists, return empty object
     const data = results.length > 0 ? results[0] : {
       id: null,
@@ -6030,7 +6181,7 @@ export const getWelcomeSection = (req, res) => {
       created_at: null,
       updated_at: null
     };
-    
+
     res.json({
       success: true,
       data: data
@@ -6053,7 +6204,7 @@ export const updateWelcomeSection = async (req, res) => {
 
     // First check if data exists
     const checkQuery = "SELECT id FROM welcomesection LIMIT 1";
-    
+
     db1.query(checkQuery, (err, results) => {
       if (err) {
         console.error("❌ Error checking welcome section:", err);
@@ -6071,7 +6222,7 @@ export const updateWelcomeSection = async (req, res) => {
           SET welcome_title = ?, welcome_description = ?, youtube_video_id = ? 
           WHERE id = ?
         `;
-        
+
         db1.query(updateQuery, [
           welcome_title,
           welcome_description || null,
@@ -6086,7 +6237,7 @@ export const updateWelcomeSection = async (req, res) => {
               error: err.message
             });
           }
-          
+
           res.json({
             success: true,
             message: "Welcome section updated successfully",
@@ -6104,7 +6255,7 @@ export const updateWelcomeSection = async (req, res) => {
           INSERT INTO welcomesection (welcome_title, welcome_description, youtube_video_id) 
           VALUES (?, ?, ?)
         `;
-        
+
         db1.query(insertQuery, [
           welcome_title,
           welcome_description || null,
@@ -6118,7 +6269,7 @@ export const updateWelcomeSection = async (req, res) => {
               error: err.message
             });
           }
-          
+
           res.status(201).json({
             success: true,
             message: "Welcome section created successfully",
@@ -6132,7 +6283,7 @@ export const updateWelcomeSection = async (req, res) => {
         });
       }
     });
-    
+
   } catch (error) {
     console.error("❌ Error in updateWelcomeSection:", error);
     res.status(500).json({
@@ -6151,7 +6302,7 @@ export const updateWelcomeSection = async (req, res) => {
 // Get all vision mission items
 export const getAllVisionMissionItems = (req, res) => {
   const query = "SELECT * FROM vision_mission_items ORDER BY sort_order ASC, created_at ASC";
-  
+
   db1.query(query, (err, results) => {
     if (err) {
       console.error("❌ Error fetching vision mission items:", err);
@@ -6161,7 +6312,7 @@ export const getAllVisionMissionItems = (req, res) => {
         error: err.message
       });
     }
-    
+
     res.json({
       success: true,
       data: results,
@@ -6174,7 +6325,7 @@ export const getAllVisionMissionItems = (req, res) => {
 export const getVisionMissionItemById = (req, res) => {
   const { id } = req.params;
   const query = "SELECT * FROM vision_mission_items WHERE id = ?";
-  
+
   db1.query(query, [id], (err, results) => {
     if (err) {
       console.error("❌ Error fetching vision mission item:", err);
@@ -6184,14 +6335,14 @@ export const getVisionMissionItemById = (req, res) => {
         error: err.message
       });
     }
-    
+
     if (results.length === 0) {
       return res.status(404).json({
         success: false,
         message: "Vision mission item not found"
       });
     }
-    
+
     res.json({
       success: true,
       data: results[0]
@@ -6212,7 +6363,7 @@ export const createVisionMissionItem = (req, res) => {
   }
 
   const query = "INSERT INTO vision_mission_items (icon, title, description, sort_order, is_active) VALUES (?, ?, ?, ?, ?)";
-  
+
   db1.query(query, [
     icon,
     title,
@@ -6228,7 +6379,7 @@ export const createVisionMissionItem = (req, res) => {
         error: err.message
       });
     }
-    
+
     res.status(201).json({
       success: true,
       message: "Vision mission item created successfully",
@@ -6251,7 +6402,7 @@ export const updateVisionMissionItem = (req, res) => {
 
   // First, check if item exists
   const checkQuery = "SELECT * FROM vision_mission_items WHERE id = ?";
-  
+
   db1.query(checkQuery, [id], (err, results) => {
     if (err) {
       console.error("❌ Error fetching vision mission item for update:", err);
@@ -6261,7 +6412,7 @@ export const updateVisionMissionItem = (req, res) => {
         error: err.message
       });
     }
-    
+
     if (results.length === 0) {
       return res.status(404).json({
         success: false,
@@ -6275,9 +6426,9 @@ export const updateVisionMissionItem = (req, res) => {
       SET icon = ?, title = ?, description = ?, sort_order = ?, is_active = ?
       WHERE id = ?
     `;
-    
+
     const currentItem = results[0];
-    
+
     db1.query(updateQuery, [
       icon !== undefined ? icon : currentItem.icon,
       title !== undefined ? title : currentItem.title,
@@ -6294,7 +6445,7 @@ export const updateVisionMissionItem = (req, res) => {
           error: err.message
         });
       }
-      
+
       res.json({
         success: true,
         message: "Vision mission item updated successfully",
@@ -6316,7 +6467,7 @@ export const deleteVisionMissionItem = (req, res) => {
   const { id } = req.params;
 
   const query = "DELETE FROM vision_mission_items WHERE id = ?";
-  
+
   db1.query(query, [id], (err, results) => {
     if (err) {
       console.error("❌ Error deleting vision mission item:", err);
@@ -6326,14 +6477,14 @@ export const deleteVisionMissionItem = (req, res) => {
         error: err.message
       });
     }
-    
+
     if (results.affectedRows === 0) {
       return res.status(404).json({
         success: false,
         message: "Vision mission item not found"
       });
     }
-    
+
     res.json({
       success: true,
       message: "Vision mission item deleted successfully"
@@ -6387,7 +6538,7 @@ export const updateSortOrder = (req, res) => {
 // Get stories data (single instance)
 export const getStoriesData = (req, res) => {
   const query = "SELECT * FROM stories_description LIMIT 1";
-  
+
   db1.query(query, (err, results) => {
     if (err) {
       console.error("❌ Error fetching stories data:", err);
@@ -6397,7 +6548,7 @@ export const getStoriesData = (req, res) => {
         error: err.message
       });
     }
-    
+
     // If no data exists, return empty object
     const data = results.length > 0 ? results[0] : {
       id: null,
@@ -6407,7 +6558,7 @@ export const getStoriesData = (req, res) => {
       created_at: null,
       updated_at: null
     };
-    
+
     res.json({
       success: true,
       data: data
@@ -6430,7 +6581,7 @@ export const updateStoriesData = async (req, res) => {
 
     // First check if data exists
     const checkQuery = "SELECT id, image_path FROM stories_description LIMIT 1";
-    
+
     db1.query(checkQuery, async (err, results) => {
       if (err) {
         console.error("❌ Error checking stories data:", err);
@@ -6474,7 +6625,7 @@ export const updateStoriesData = async (req, res) => {
           SET title = ?, description = ?, image_path = ? 
           WHERE id = ?
         `;
-        
+
         db1.query(updateQuery, [
           title,
           description,
@@ -6493,7 +6644,7 @@ export const updateStoriesData = async (req, res) => {
               error: err.message
             });
           }
-          
+
           res.json({
             success: true,
             message: "Stories data updated successfully",
@@ -6511,7 +6662,7 @@ export const updateStoriesData = async (req, res) => {
           INSERT INTO stories_description (title, description, image_path) 
           VALUES (?, ?, ?)
         `;
-        
+
         db1.query(insertQuery, [
           title,
           description,
@@ -6529,7 +6680,7 @@ export const updateStoriesData = async (req, res) => {
               error: err.message
             });
           }
-          
+
           res.status(201).json({
             success: true,
             message: "Stories data created successfully",
@@ -6543,7 +6694,7 @@ export const updateStoriesData = async (req, res) => {
         });
       }
     });
-    
+
   } catch (error) {
     console.error("❌ Error in updateStoriesData:", error);
     res.status(500).json({
@@ -6560,7 +6711,7 @@ export const updateStoriesData = async (req, res) => {
 // Get event data (single instance)
 export const getEventData = (req, res) => {
   const query = "SELECT * FROM event_description LIMIT 1";
-  
+
   db1.query(query, (err, results) => {
     if (err) {
       console.error("❌ Error fetching event data:", err);
@@ -6570,7 +6721,7 @@ export const getEventData = (req, res) => {
         error: err.message
       });
     }
-    
+
     // If no data exists, return empty object
     const data = results.length > 0 ? results[0] : {
       id: null,
@@ -6580,7 +6731,7 @@ export const getEventData = (req, res) => {
       created_at: null,
       updated_at: null
     };
-    
+
     res.json({
       success: true,
       data: data
@@ -6603,7 +6754,7 @@ export const updateEventData = async (req, res) => {
 
     // First check if data exists
     const checkQuery = "SELECT id, imagepath1, imagepath2 FROM event_description LIMIT 1";
-    
+
     db1.query(checkQuery, async (err, results) => {
       if (err) {
         console.error("❌ Error checking event data:", err);
@@ -6676,7 +6827,7 @@ export const updateEventData = async (req, res) => {
           SET description = ?, imagepath1 = ?, imagepath2 = ? 
           WHERE id = ?
         `;
-        
+
         db1.query(updateQuery, [
           description,
           imageUrl1,
@@ -6698,7 +6849,7 @@ export const updateEventData = async (req, res) => {
               error: err.message
             });
           }
-          
+
           res.json({
             success: true,
             message: "Event data updated successfully",
@@ -6716,7 +6867,7 @@ export const updateEventData = async (req, res) => {
           INSERT INTO event_description (description, imagepath1, imagepath2) 
           VALUES (?, ?, ?)
         `;
-        
+
         db1.query(insertQuery, [
           description,
           imageUrl1,
@@ -6737,7 +6888,7 @@ export const updateEventData = async (req, res) => {
               error: err.message
             });
           }
-          
+
           res.status(201).json({
             success: true,
             message: "Event data created successfully",
@@ -6751,7 +6902,7 @@ export const updateEventData = async (req, res) => {
         });
       }
     });
-    
+
   } catch (error) {
     console.error("❌ Error in updateEventData:", error);
     res.status(500).json({
@@ -6767,7 +6918,7 @@ export const updateEventData = async (req, res) => {
 // Get telephone data (single instance)
 export const getTelephoneData = (req, res) => {
   const query = "SELECT * FROM telephone LIMIT 1";
-  
+
   db1.query(query, (err, results) => {
     if (err) {
       console.error("❌ Error fetching telephone data:", err);
@@ -6777,7 +6928,7 @@ export const getTelephoneData = (req, res) => {
         error: err.message
       });
     }
-    
+
     // If no data exists, return empty object
     const data = results.length > 0 ? results[0] : {
       id: null,
@@ -6786,7 +6937,7 @@ export const getTelephoneData = (req, res) => {
       created_at: null,
       updated_at: null
     };
-    
+
     res.json({
       success: true,
       data: data
@@ -6808,7 +6959,7 @@ export const updateTelephoneData = (req, res) => {
 
   // First check if data exists
   const checkQuery = "SELECT id FROM telephone LIMIT 1";
-  
+
   db1.query(checkQuery, (err, results) => {
     if (err) {
       console.error("❌ Error checking telephone data:", err);
@@ -6826,7 +6977,7 @@ export const updateTelephoneData = (req, res) => {
         SET phone_number = ?, icon_name = ? 
         WHERE id = ?
       `;
-      
+
       db1.query(updateQuery, [
         phone_number,
         icon_name,
@@ -6840,7 +6991,7 @@ export const updateTelephoneData = (req, res) => {
             error: err.message
           });
         }
-        
+
         res.json({
           success: true,
           message: "Telephone data updated successfully",
@@ -6857,7 +7008,7 @@ export const updateTelephoneData = (req, res) => {
         INSERT INTO telephone (phone_number, icon_name) 
         VALUES (?, ?)
       `;
-      
+
       db1.query(insertQuery, [
         phone_number,
         icon_name
@@ -6870,7 +7021,7 @@ export const updateTelephoneData = (req, res) => {
             error: err.message
           });
         }
-        
+
         res.status(201).json({
           success: true,
           message: "Telephone data created successfully",
@@ -6967,7 +7118,7 @@ export const updateSection = async (req, res) => {
   const data = req.body;
 
   const validSections = ['who_we_are', 'dream_and_purpose', 'impact', 'ceo', 'people_behind', 'join_us'];
-  
+
   if (!validSections.includes(section)) {
     return res.status(400).json({
       success: false,
@@ -7154,7 +7305,7 @@ export const createExpertTeam = async (req, res) => {
       };
 
       const query = "INSERT INTO expert_team (image_path, image_alt, name, position, description, sort_order) VALUES (?, ?, ?, ?, ?, ?)";
-      
+
       const result = await new Promise((resolve, reject) => {
         connection.query(query, Object.values(insertData), (err, results) => {
           if (err) reject(err);
@@ -7275,7 +7426,7 @@ export const updateExpertTeam = async (req, res) => {
       };
 
       const query = "UPDATE expert_team SET image_path = ?, image_alt = ?, name = ?, position = ?, description = ?, sort_order = ? WHERE id = ?";
-      
+
       await new Promise((resolve, reject) => {
         connection.query(query, [...Object.values(updateData), id], (err, results) => {
           if (err) reject(err);
@@ -7454,7 +7605,7 @@ export const createNewSection = async (req, res) => {
       };
 
       const query = "INSERT INTO new_section (heading, paragraphs, bullets_header, bullets, image_path, youtube_video_id) VALUES (?, ?, ?, ?, ?, ?)";
-      
+
       const result = await new Promise((resolve, reject) => {
         connection.query(query, Object.values(insertData), (err, results) => {
           if (err) reject(err);
@@ -7575,7 +7726,7 @@ export const updateNewSection = async (req, res) => {
       };
 
       const query = "UPDATE new_section SET heading = ?, paragraphs = ?, bullets_header = ?, bullets = ?, image_path = ?, youtube_video_id = ? WHERE id = ?";
-      
+
       await new Promise((resolve, reject) => {
         connection.query(query, [...Object.values(updateData), id], (err, results) => {
           if (err) reject(err);
@@ -7708,7 +7859,7 @@ export const deleteNewSection = async (req, res) => {
 // Get all SEO data
 export const getSEOData = (req, res) => {
   const query = "SELECT * FROM website_seo LIMIT 1";
-  
+
   db1.getConnection((err, connection) => {
     if (err) {
       console.error("❌ Database connection failed:", err);
@@ -7721,7 +7872,7 @@ export const getSEOData = (req, res) => {
 
     connection.query(query, (err, results) => {
       connection.release();
-      
+
       if (err) {
         console.error("❌ Error fetching SEO data:", err);
         return res.status(500).json({
@@ -7778,7 +7929,7 @@ export const updateSEOData = (req, res) => {
 
     // Check if record exists
     const checkQuery = "SELECT id FROM website_seo LIMIT 1";
-    
+
     connection.query(checkQuery, (err, results) => {
       if (err) {
         connection.release();
@@ -7791,8 +7942,8 @@ export const updateSEOData = (req, res) => {
       }
 
       let query, params;
-      
-      if (results.length > 0 && results.length===1) {
+
+      if (results.length > 0 && results.length === 1) {
         // Update existing record
         query = "UPDATE website_seo SET url = ?, pages = ? WHERE id = ?";
         params = [url, JSON.stringify(pages), results[0].id];
@@ -7801,7 +7952,7 @@ export const updateSEOData = (req, res) => {
         // query = "INSERT INTO website_seo (url, pages) VALUES (?, ?)";
         // params = [url, JSON.stringify(pages)];
         res.status(404).json({
-           success: false,
+          success: false,
           message: "Not Found",
           error: "data does not exists"
         })
@@ -7809,7 +7960,7 @@ export const updateSEOData = (req, res) => {
 
       connection.query(query, params, (err, updateResults) => {
         connection.release();
-        
+
         if (err) {
           console.error("❌ Error updating SEO data:", err);
           return res.status(500).json({
@@ -7837,7 +7988,7 @@ export const updateSEOData = (req, res) => {
 // Get footer content (single instance)
 export const getFooterContent = (req, res) => {
   const query = "SELECT * FROM footercontents LIMIT 1";
-  
+
   db1.query(query, (err, results) => {
     if (err) {
       console.error("❌ Error fetching footer content:", err);
@@ -7847,7 +7998,7 @@ export const getFooterContent = (req, res) => {
         error: err.message
       });
     }
-    
+
     // If no data exists, return empty object
     const data = results.length > 0 ? results[0] : {
       id: null,
@@ -7859,7 +8010,7 @@ export const getFooterContent = (req, res) => {
       created_at: null,
       updated_at: null
     };
-    
+
     res.json({
       success: true,
       data: data
@@ -7869,7 +8020,7 @@ export const getFooterContent = (req, res) => {
 
 // Update footer content (single instance)
 export const updateFooterContent = (req, res) => {
-  const { footertext, email, location, logoimage_base64,locationinfo, pageimage_base64 } = req.body;
+  const { footertext, email, location, logoimage_base64, locationinfo, pageimage_base64 } = req.body;
 
   db1.getConnection((err, connection) => {
     if (err) {
@@ -7911,15 +8062,15 @@ export const updateFooterContent = (req, res) => {
               const ext = matches[1].split("/")[1] || "png";
               const fileName = `footer-logo-${uniqueImageName(ext)}`;
               const fileBuffer = Buffer.from(matches[2], "base64");
-              
+
               // Upload new logo
               const uploadedUrl = await uploadToFTP(fileName, fileBuffer);
-              
+
               // Delete old logo if exists
               if (currentFooter && currentFooter.logoimage) {
                 await deleteImageFile(currentFooter.logoimage);
               }
-              
+
               logoimage = uploadedUrl;
             }
             resolve(logoimage);
@@ -7943,15 +8094,15 @@ export const updateFooterContent = (req, res) => {
               const ext = matches[1].split("/")[1] || "png";
               const fileName = `footer-page-${uniqueImageName(ext)}`;
               const fileBuffer = Buffer.from(matches[2], "base64");
-              
+
               // Upload new page image
               const uploadedUrl = await uploadToFTP(fileName, fileBuffer);
-              
+
               // Delete old page image if exists
               if (currentFooter && currentFooter.pageimage) {
                 await deleteImageFile(currentFooter.pageimage);
               }
-              
+
               pageimage = uploadedUrl;
             }
             resolve(pageimage);
@@ -7971,7 +8122,7 @@ export const updateFooterContent = (req, res) => {
             footertext: footertext || null,
             email: email || null,
             location: location || null,
-            locationinfo:locationinfo ||null
+            locationinfo: locationinfo || null
           };
 
           let query, params;
@@ -7990,17 +8141,17 @@ export const updateFooterContent = (req, res) => {
             ];
           } else {
             // Insert new record (first time setup)
-          res.status(400).json({
-                success: false,
-                message: "content Not found deleted",
-                error: " content Not found or deleted"
-              });
+            res.status(400).json({
+              success: false,
+              message: "content Not found deleted",
+              error: " content Not found or deleted"
+            });
           }
 
           // Execute the query
           connection.query(query, params, (err, results) => {
             connection.release();
-            
+
             if (err) {
               console.error("❌ Error updating footer content:", err);
               return res.status(500).json({
@@ -8095,7 +8246,7 @@ export const deleteFooterImage = (req, res) => {
       // Update database
       connection.query(updateQuery, [currentFooter.id], (err, results) => {
         connection.release();
-        
+
         if (err) {
           console.error("❌ Error updating footer:", err);
           return res.status(500).json({
@@ -8126,7 +8277,7 @@ export const getAllFAQs = async (req, res) => {
     const [faqs] = await db1.promise().query(
       'SELECT * FROM faqs ORDER BY display_order, created_at DESC'
     );
-    
+
     res.status(200).json({
       success: true,
       data: faqs,
@@ -8148,7 +8299,7 @@ export const getActiveFAQs = async (req, res) => {
     const [faqs] = await db1.promise().query(
       'SELECT id, question, answer, display_order FROM faqs WHERE is_active = TRUE ORDER BY display_order'
     );
-    
+
     res.status(200).json({
       success: true,
       data: faqs,
@@ -8168,19 +8319,19 @@ export const getActiveFAQs = async (req, res) => {
 export const getFAQById = async (req, res) => {
   try {
     const { id } = req.params;
-    
+
     const [faq] = await db1.promise().query(
       'SELECT * FROM faqs WHERE id = ?',
       [id]
     );
-    
+
     if (faq.length === 0) {
       return res.status(404).json({
         success: false,
         message: 'FAQ not found'
       });
     }
-    
+
     res.status(200).json({
       success: true,
       data: faq[0]
@@ -8199,7 +8350,7 @@ export const getFAQById = async (req, res) => {
 export const createFAQ = async (req, res) => {
   try {
     const { question, answer, display_order = 0, is_active = true } = req.body;
-    
+
     // Validation
     if (!question || !answer) {
       return res.status(400).json({
@@ -8207,18 +8358,18 @@ export const createFAQ = async (req, res) => {
         message: 'Question and answer are required'
       });
     }
-    
+
     const [result] = await db1.promise().query(
       'INSERT INTO faqs (question, answer, display_order, is_active) VALUES (?, ?, ?, ?)',
       [question, answer, display_order, is_active]
     );
-    
+
     // Fetch the created FAQ
     const [newFAQ] = await db1.promise().query(
       'SELECT * FROM faqs WHERE id = ?',
       [result.insertId]
     );
-    
+
     res.status(201).json({
       success: true,
       message: 'FAQ created successfully',
@@ -8239,20 +8390,20 @@ export const updateFAQ = async (req, res) => {
   try {
     const { id } = req.params;
     const { question, answer, display_order, is_active } = req.body;
-    
+
     // Check if FAQ exists
     const [existingFAQ] = await db1.promise().query(
       'SELECT * FROM faqs WHERE id = ?',
       [id]
     );
-    
+
     if (existingFAQ.length === 0) {
       return res.status(404).json({
         success: false,
         message: 'FAQ not found'
       });
     }
-    
+
     // Update FAQ
     await db1.promise().query(
       'UPDATE faqs SET question = ?, answer = ?, display_order = ?, is_active = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
@@ -8264,13 +8415,13 @@ export const updateFAQ = async (req, res) => {
         id
       ]
     );
-    
+
     // Fetch updated FAQ
     const [updatedFAQ] = await db1.promise().query(
       'SELECT * FROM faqs WHERE id = ?',
       [id]
     );
-    
+
     res.status(200).json({
       success: true,
       message: 'FAQ updated successfully',
@@ -8290,23 +8441,23 @@ export const updateFAQ = async (req, res) => {
 export const deleteFAQ = async (req, res) => {
   try {
     const { id } = req.params;
-    
+
     // Check if FAQ exists
     const [existingFAQ] = await db1.promise().query(
       'SELECT * FROM faqs WHERE id = ?',
       [id]
     );
-    
+
     if (existingFAQ.length === 0) {
       return res.status(404).json({
         success: false,
         message: 'FAQ not found'
       });
     }
-    
+
     // Delete FAQ
     await db1.promise().query('DELETE FROM faqs WHERE id = ?', [id]);
-    
+
     res.status(200).json({
       success: true,
       message: 'FAQ deleted successfully'
@@ -8325,29 +8476,29 @@ export const deleteFAQ = async (req, res) => {
 export const updateDisplayOrder = async (req, res) => {
   try {
     const { faqs } = req.body; // Array of {id, display_order}
-    
+
     if (!Array.isArray(faqs)) {
       return res.status(400).json({
         success: false,
         message: 'FAQs array is required'
       });
     }
-    
+
     // Use transaction for multiple updates
     const connection = await db1.promise().getConnection();
-    
+
     try {
       await connection.beginTransaction();
-      
+
       for (const faq of faqs) {
         await connection.query(
           'UPDATE faqs SET display_order = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
           [faq.display_order, faq.id]
         );
       }
-      
+
       await connection.commit();
-      
+
       res.status(200).json({
         success: true,
         message: 'Display order updated successfully'
@@ -8372,27 +8523,27 @@ export const updateDisplayOrder = async (req, res) => {
 export const toggleFAQStatus = async (req, res) => {
   try {
     const { id } = req.params;
-    
+
     // Get current status
     const [faq] = await db1.promise().query(
       'SELECT is_active FROM faqs WHERE id = ?',
       [id]
     );
-    
+
     if (faq.length === 0) {
       return res.status(404).json({
         success: false,
         message: 'FAQ not found'
       });
     }
-    
+
     const newStatus = !faq[0].is_active;
-    
+
     await db1.promise().query(
       'UPDATE faqs SET is_active = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
       [newStatus, id]
     );
-    
+
     res.status(200).json({
       success: true,
       message: `FAQ ${newStatus ? 'activated' : 'deactivated'} successfully`,
@@ -8430,14 +8581,14 @@ export const getBankData = async (req, res) => {
     const [bankData] = await db1.promise().query(
       'SELECT * FROM bankdata WHERE id = 1'
     );
-    
+
     if (bankData.length === 0) {
       return res.status(404).json({
         success: false,
         message: 'Bank data not found'
       });
     }
-    
+
     res.status(200).json({
       success: true,
       data: bankData[0]
@@ -8455,15 +8606,15 @@ export const getBankData = async (req, res) => {
 // Update bank data with base64 image (FIXED VERSION)
 export const updateBankData = async (req, res) => {
   try {
-    const { 
-      name, 
-      account_title, 
-      branch, 
-      iban, 
+    const {
+      name,
+      account_title,
+      branch,
+      iban,
       accountNumber,
       image_base64  // This is the base64 string
     } = req.body;
-    
+
     // Validation
     if (!name || !account_title) {
       return res.status(400).json({
@@ -8471,26 +8622,26 @@ export const updateBankData = async (req, res) => {
         message: 'Bank name and account title are required'
       });
     }
-    
+
     // Get existing data first
     const [existingData] = await db1.promise().query(
       'SELECT * FROM bankdata WHERE id = 1'
     );
-    
+
     let imagePath = existingData.length > 0 ? existingData[0].imagepath : null;
-    
+
     // Handle image upload if NEW base64 is provided
     if (image_base64 && typeof image_base64 === 'string' && image_base64.startsWith('data:image/')) {
       try {
         // Convert base64 to buffer
         const imageBuffer = base64ToBuffer(image_base64);
-        
+
         // Generate unique filename
         const fileName = generateUniqueFilename(image_base64);
-        
+
         // Upload to FTP
         const newImagePath = await uploadToFTP(fileName, imageBuffer);
-        
+
         // Delete old image if exists (and it's different from new one)
         if (imagePath && imagePath !== newImagePath) {
           try {
@@ -8499,9 +8650,9 @@ export const updateBankData = async (req, res) => {
             console.log('Could not delete old image from FTP:', deleteError.message);
           }
         }
-        
+
         imagePath = newImagePath;
-        
+
       } catch (uploadError) {
         console.error('Error uploading image to FTP:', uploadError);
         return res.status(500).json({
@@ -8510,7 +8661,7 @@ export const updateBankData = async (req, res) => {
           error: uploadError.message
         });
       }
-    } 
+    }
     // If image_base64 is explicitly null, remove image
     else if (image_base64 === null) {
       // Delete old image if exists
@@ -8525,7 +8676,7 @@ export const updateBankData = async (req, res) => {
     }
     // If image_base64 is undefined (not sent in request), KEEP existing image
     // This is the fix: Don't overwrite image if not provided in request
-    
+
     if (existingData.length === 0) {
       // Create new record
       await db1.promise().query(
@@ -8546,17 +8697,17 @@ export const updateBankData = async (req, res) => {
         accountNumber = ?, 
         updated_at = CURRENT_TIMESTAMP 
         WHERE id = 1`,
-        image_base64 !== undefined 
+        image_base64 !== undefined
           ? [name, imagePath, account_title, branch, iban, accountNumber]
           : [name, account_title, branch, iban, accountNumber]
       );
     }
-    
+
     // Fetch updated data
     const [updatedData] = await db1.promise().query(
       'SELECT * FROM bankdata WHERE id = 1'
     );
-    
+
     res.status(200).json({
       success: true,
       message: 'Bank data updated successfully',
@@ -8579,14 +8730,14 @@ export const removeBankLogo = async (req, res) => {
     const [existingData] = await db1.promise().query(
       'SELECT imagepath FROM bankdata WHERE id = 1'
     );
-    
+
     if (existingData.length === 0) {
       return res.status(404).json({
         success: false,
         message: 'Bank data not found'
       });
     }
-    
+
     // Delete image from FTP if exists
     if (existingData[0].imagepath) {
       try {
@@ -8595,17 +8746,17 @@ export const removeBankLogo = async (req, res) => {
         console.log('Could not delete image from FTP:', deleteError.message);
       }
     }
-    
+
     // Remove image path from database
     await db1.promise().query(
       'UPDATE bankdata SET imagepath = NULL, updated_at = CURRENT_TIMESTAMP WHERE id = 1'
     );
-    
+
     // Fetch updated data
     const [updatedData] = await db1.promise().query(
       'SELECT * FROM bankdata WHERE id = 1'
     );
-    
+
     res.status(200).json({
       success: true,
       message: 'Bank logo removed successfully',
@@ -8649,27 +8800,27 @@ export const getAllSubmissions = (req, res) => {
 // Get single submission with all details
 export const getSubmissionById = (req, res) => {
   const { id } = req.params;
-  
+
   const submissionQuery = "SELECT * FROM organization_submissions WHERE id = ?";
-  
+
   db1.query(submissionQuery, [id], (err, submissionResults) => {
     if (err) {
       console.error("Error fetching submission:", err);
       return res.status(500).json({ success: false, message: "Database error" });
     }
-    
+
     if (submissionResults.length === 0) {
       return res.status(404).json({ success: false, message: "Submission not found" });
     }
-    
+
     const documentsQuery = "SELECT * FROM supporting_documents WHERE submission_id = ?";
-    
+
     db1.query(documentsQuery, [id], (err, documentsResults) => {
       if (err) {
         console.error("Error fetching documents:", err);
         return res.status(500).json({ success: false, message: "Database error" });
       }
-      
+
       res.json({
         success: true,
         data: {
@@ -8687,22 +8838,22 @@ export const getSubmissionById = (req, res) => {
 // Delete submission and associated files from FTP
 export const deleteSubmission = (req, res) => {
   const { id } = req.params;
-  
+
   db1.getConnection((err, connection) => {
     if (err) {
       console.error("Error getting connection:", err);
       return res.status(500).json({ success: false, message: "Database error" });
     }
-    
+
     connection.beginTransaction((err) => {
       if (err) {
         connection.release();
         return res.status(500).json({ success: false, message: "Transaction error" });
       }
-      
+
       // First get all file paths to delete from FTP
       const getFilesQuery = "SELECT file_path FROM supporting_documents WHERE submission_id = ?";
-      
+
       connection.query(getFilesQuery, [id], (err, fileResults) => {
         if (err) {
           return connection.rollback(() => {
@@ -8710,10 +8861,10 @@ export const deleteSubmission = (req, res) => {
             res.status(500).json({ success: false, message: "Error fetching files" });
           });
         }
-        
+
         // Get logo path
         const getLogoQuery = "SELECT organization_logo_path FROM organization_submissions WHERE id = ?";
-        
+
         connection.query(getLogoQuery, [id], (err, logoResults) => {
           if (err) {
             return connection.rollback(() => {
@@ -8721,13 +8872,13 @@ export const deleteSubmission = (req, res) => {
               res.status(500).json({ success: false, message: "Error fetching logo" });
             });
           }
-          
+
           const logoPath = logoResults[0]?.organization_logo_path;
           const documentPaths = fileResults.map(f => f.file_path);
-          
+
           // Delete supporting documents from database
           const deleteDocsQuery = "DELETE FROM supporting_documents WHERE submission_id = ?";
-          
+
           connection.query(deleteDocsQuery, [id], (err) => {
             if (err) {
               return connection.rollback(() => {
@@ -8735,10 +8886,10 @@ export const deleteSubmission = (req, res) => {
                 res.status(500).json({ success: false, message: "Error deleting documents" });
               });
             }
-            
+
             // Delete main submission
             const deleteSubmissionQuery = "DELETE FROM organization_submissions WHERE id = ?";
-            
+
             connection.query(deleteSubmissionQuery, [id], (err) => {
               if (err) {
                 return connection.rollback(() => {
@@ -8746,7 +8897,7 @@ export const deleteSubmission = (req, res) => {
                   res.status(500).json({ success: false, message: "Error deleting submission" });
                 });
               }
-              
+
               // Commit transaction first
               connection.commit(async (err) => {
                 if (err) {
@@ -8755,22 +8906,22 @@ export const deleteSubmission = (req, res) => {
                     res.status(500).json({ success: false, message: "Commit error" });
                   });
                 }
-                
+
                 connection.release();
-                
+
                 // Now delete files from FTP (after successful DB deletion)
                 const ftpDeletePromises = [];
-                
+
                 // Delete logo if exists
                 if (logoPath) {
                   ftpDeletePromises.push(deleteFromFTP(logoPath));
                 }
-                
+
                 // Delete all supporting documents
                 documentPaths.forEach(path => {
                   ftpDeletePromises.push(deleteFromFTP(path));
                 });
-                
+
                 // Wait for all FTP deletions to complete (don't wait if you don't want to)
                 try {
                   await Promise.all(ftpDeletePromises);
@@ -8779,7 +8930,7 @@ export const deleteSubmission = (req, res) => {
                   console.error("❌ Error deleting some files from FTP:", ftpError);
                   // Don't fail the request if FTP delete fails
                 }
-                
+
                 res.json({
                   success: true,
                   message: "Submission deleted successfully",

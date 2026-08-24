@@ -1,6 +1,6 @@
 import db from "../Database/db.js"
 import { DtoArr } from "../Dto/Dto.js";
-const getAllorganization = (req,res) => {
+const getAllorganization = (req, res) => {
   const sql = `
     SELECT i.id, i.name, i.deletestatus, i.description, i.youtube_video_url, i.introductory_image_path,
         i.partner_image,i.slug, i.meta_title, i.meta_description, i.meta_keywords,
@@ -25,7 +25,7 @@ const getAllorganization = (req,res) => {
       meta_keywords: row.meta_keywords || "",
     }));
 
-  res.status(200).json(items)
+    res.status(200).json(items)
   });
 };
 
@@ -34,7 +34,7 @@ export { getAllorganization };
 
 const getSpecificItem = (req, res) => {
   const { slug } = req.params;
-let id;
+  let id;
   const sql = `
     SELECT i.id, i.name, i.description, i.deletestatus, i.category, i.youtube_video_url, i.introductory_image_path,
            i.slug, i.meta_title, i.meta_description, i.meta_keywords,
@@ -51,7 +51,7 @@ let id;
     if (rows.length === 0) {
       return res.status(404).json({ message: "Item not found" });
     }
-    id=rows[0].id
+    id = rows[0].id
     if (rows[0].deletestatus === 1) {
       return res.status(404).json({ message: "Item not found" });
     }
@@ -88,25 +88,25 @@ let id;
   });
 }
 export { getSpecificItem }
-const getAllIcons=(req,res)=>{
-const {id}=req.params
-db.query('SELECT * FROM icons where item_id=?',[id],(err,rows)=>{
-  if(err){
-    return res.status(500).json({error:err.message})
-  }
-if(rows.length===0){
-  return res.status(400).json({err:"no icon found"})
+const getAllIcons = (req, res) => {
+  const { id } = req.params
+  db.query('SELECT * FROM icons where item_id=?', [id], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message })
+    }
+    if (rows.length === 0) {
+      return res.status(400).json({ err: "no icon found" })
+    }
+
+    res.status(200).json(rows)
+
+  })
 }
 
-  res.status(200).json(rows)
-
-})
-}
-
-export {getAllIcons}
+export { getAllIcons }
 
 
-export const getSocials=(req,res)=>{
+export const getSocials = (req, res) => {
   const { item_id } = req.params;
   db.query(
     "SELECT * FROM socials WHERE item_id = ?",
@@ -243,7 +243,7 @@ function uniqueImageName(extension = "png") {
 //     if (err) return res.status(500).json({ error: err.message });
 //     if (docRows.length === 0) return res.status(404).json({ message: "Not found" });
 //     if (docRows[0].deletestatus === 1) { return res.status(404).json({ message: "Not Found" }) }
-    
+
 //     const document = {
 //       Intro: docRows[0].intro,
 //       Name: docRows[0].Name,
@@ -323,7 +323,7 @@ export const getSpecificBlog = async (req, res) => {
   try {
     // 1️⃣ Fetch the main document
     const [docRows] = await db.promise().query("SELECT * FROM document WHERE slug = ?", [slug]);
-    id=docRows[0].id
+    id = docRows[0].id
     if (docRows.length === 0) return res.status(404).json({ message: "Not found" });
     if (docRows[0].deletestatus === 1) return res.status(404).json({ message: "Not Found" });
 
@@ -563,7 +563,7 @@ export const getAllBlogs = (req, res) => {
 // }
 // export const getSmilarItems = (req, res) => {
 //     const search = req.query.search || "";
-    
+
 //  db.query('SELECT * FROM items WHERE JSON_CONTAINS(category, ?)', [JSON.stringify(search)], (err, result) => {
 //     if (err) {
 //       console.error("Database Error:", err);
@@ -574,13 +574,13 @@ export const getAllBlogs = (req, res) => {
 //     if(DtoArr(result).length!==0){
 //  return res.status(200).json(DtoArr(result));
 //     }
-  
+
 //   });
 
 
 //     // Search in both name and search_tags fields
 //     const sql = "SELECT * FROM items WHERE name LIKE ? OR search_tags LIKE ?";
-    
+
 //     db.query(sql, [`%${search}%`, `%${search}%`], (err, results) => {
 //         if (err) {
 //             console.error("❌ Error fetching items:", err);
@@ -672,9 +672,9 @@ export const getSimilarItems = async (req, res) => {
 
     // Combine results from both queries
     const combinedResults = [...DtoArr(result1), ...DtoArr(result2)];
-    
+
     // Remove duplicates based on item ID (assuming each item has unique 'id')
-    const uniqueResults = combinedResults.filter((item, index, self) => 
+    const uniqueResults = combinedResults.filter((item, index, self) =>
       index === self.findIndex(i => i.id === item.id)
     );
 
@@ -693,7 +693,7 @@ export const getSimilarItems = async (req, res) => {
 };
 
 import { sendContactEmail } from "../utils/emailService.js";
-export const saveContacts=(req,res)=>{
+export const saveContacts = (req, res) => {
 
   const {
     name,
@@ -705,8 +705,8 @@ export const saveContacts=(req,res)=>{
     email,
     message,
   } = req.body;
-const obj={
-   name,
+  const obj = {
+    name,
     subject,
     phone,
     countryCode,
@@ -714,7 +714,7 @@ const obj={
     country,
     email,
     message,
-}
+  }
 
   if (!name || !subject || !phone || !email || !message) {
     return res.status(400).json({ error: "Required fields missing" });
@@ -737,12 +737,16 @@ const obj={
     message,
   ];
 
-  db.query(sql, values, (err, result) => {
+  db.query(sql, values, async (err, result) => {
     if (err) {
       console.error("❌ Error inserting contact message:", err);
       return res.status(500).json({ error: "Database error" });
     }
-    sendContactEmail(obj)
+    const emailSent = await sendContactEmail(obj);
+
+    if (!emailSent) {
+      console.error("❌ Contact saved but SMTP email failed");
+    }
 
     return res.status(200).json({ message: "Contact saved successfully" });
   });
@@ -752,37 +756,90 @@ const obj={
 
 
 import { sendVolunteerEmail } from "../utils/emailService.js";
-export const AddVolunteer=(req,res)=>{
 
+export const AddVolunteer = (req, res) => {
+  const {
+    name,
+    email,
+    phone,
+    countryCode,
+    CountryName,
+    country,
+    city,
+    contactTime,
+    message
+  } = req.body;
 
-  const { name, email, phone, countryCode, CountryName, country, contactTime, message } = req.body;
-const obj={
-  name, email, phone, countryCode, CountryName, country, contactTime, message
-}
-  if (!name || !email || !phone || !contactTime) {
-    return res.status(400).json({ error: "All required fields must be filled." });
+  const obj = {
+    name,
+    email,
+    phone,
+    countryCode,
+    CountryName,
+    country,
+    city,
+    contactTime,
+    message
+  };
+
+  if (!name || !email || !phone || !city || !contactTime) {
+    return res.status(400).json({
+      error: "All required fields must be filled."
+    });
   }
 
   const sql = `
-    INSERT INTO volunteers (name, email, phone, countryCode, CountryName, country, contactTime, message)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO volunteers (
+      name,
+      email,
+      phone,
+      countryCode,
+      CountryName,
+      country,
+      city,
+      contactTime,
+      message
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
-  db.query(sql, [name, email, phone, countryCode, CountryName, country, contactTime, message], (err, result) => {
-    if (err) {
-      console.error("❌ Error inserting volunteer:", err);
-      return res.status(500).json({ error: "Database error" });
+  db.query(
+    sql,
+    [
+      name,
+      email,
+      phone,
+      countryCode,
+      CountryName,
+      country,
+      city,
+      contactTime,
+      message
+    ],
+    async (err, result) => {
+      if (err) {
+        console.error("❌ Error inserting volunteer:", err);
+
+        return res.status(500).json({
+          error: "Database error"
+        });
+      }
+
+      const emailSent = await sendVolunteerEmail(obj);
+
+      if (!emailSent) {
+        console.error("❌ Volunteer saved but SMTP email failed");
+      }
+
+      return res.status(200).json({
+        message: "Volunteer application saved successfully!"
+      });
     }
-    sendVolunteerEmail(obj)
-    res.status(200).json({ message: "Volunteer application saved successfully!" });
-  });
-
-
-
-}
+  );
+};
 
 import { sendJobApplicationEmail } from "../utils/emailService.js";
-export const ApplyForJob=(req,res)=>{
+export const ApplyForJob = (req, res) => {
 
   const {
     name,
@@ -796,8 +853,8 @@ export const ApplyForJob=(req,res)=>{
     interestedPost,
     message,
   } = req.body;
-const obj={
-   name,
+  const obj = {
+    name,
     phone,
     email,
     countryCode,
@@ -807,7 +864,7 @@ const obj={
     qualification,
     interestedPost,
     message
-}
+  }
   if (!name || !email || !experience) {
     return res.status(400).json({ error: "Name, email, and experience are required." });
   }
@@ -821,12 +878,16 @@ const obj={
   db.query(
     sql,
     [name, phone, email, countryCode, CountryName, country, experience, qualification, interestedPost, message],
-    (err, result) => {
+    async (err, result) => {
       if (err) {
         console.error("❌ Error inserting job application:", err);
         return res.status(500).json({ error: "Database error" });
       }
-sendJobApplicationEmail(obj)
+      const emailSent = await sendJobApplicationEmail(obj);
+
+      if (!emailSent) {
+        console.error("❌ Job saved but SMTP email failed");
+      }
       res.status(200).json({ message: "Job application submitted successfully!" });
     }
   );
@@ -835,7 +896,7 @@ sendJobApplicationEmail(obj)
 }
 
 import { sendStoryEmail } from "../utils/emailService.js";
-export const ContributeStory=(req,res)=>{
+export const ContributeStory = (req, res) => {
 
 
   const {
@@ -849,7 +910,7 @@ export const ContributeStory=(req,res)=>{
     company,
     story,
   } = req.body;
-const obj={
+  const obj = {
     entityType,
     name,
     email,
@@ -859,7 +920,7 @@ const obj={
     country,
     company,
     story
-}
+  }
   if (!entityType || !name || !email || !phone || !story) {
     return res.status(400).json({ error: "Required fields are missing" });
   }
@@ -873,12 +934,16 @@ const obj={
   db.query(
     sql,
     [entityType, name, email, phone, countryCode, CountryName, country, company, story],
-    (err, result) => {
+    async (err, result) => {
       if (err) {
         console.error("❌ Error inserting story:", err);
         return res.status(500).json({ error: "Database error" });
       }
-      sendStoryEmail(obj)
+      const emailSent = await sendStoryEmail(obj);
+
+if (!emailSent) {
+  console.error("❌ Story saved but SMTP email failed");
+}
       res.status(200).json({ message: "Story submitted successfully!" });
     }
   );
@@ -888,7 +953,7 @@ const obj={
 }
 
 import { sendDonationEmail } from "../utils/emailService.js";
-export const Donation=(req,res)=>{
+export const Donation = (req, res) => {
 
   const {
     firstName,
@@ -905,8 +970,8 @@ export const Donation=(req,res)=>{
     state,
     message,
   } = req.body;
-const obj={
-      firstName,
+  const obj = {
+    firstName,
     lastName,
     email,
     phone,
@@ -919,7 +984,7 @@ const obj={
     city,
     state,
     message
-}
+  }
   if (!firstName || !lastName || !phone || !donationAmount || !donationType || !address1 || !city || !state) {
     return res.status(400).json({ error: "Required fields are missing" });
   }
@@ -933,12 +998,16 @@ const obj={
   db.query(
     sql,
     [firstName, lastName, email, phone, countryCode, CountryName, country, donationAmount, donationType, address1, city, state, message],
-    (err, result) => {
+    async (err, result) => {
       if (err) {
         console.error("❌ Error inserting donation:", err);
         return res.status(500).json({ error: "Database error" });
       }
-sendDonationEmail(obj)
+      const emailSent = await sendDonationEmail(obj);
+
+if (!emailSent) {
+  console.error("❌ Donation saved but SMTP email failed");
+}
       res.status(200).json({ message: "Donation submitted successfully!" });
     }
   );
@@ -948,7 +1017,7 @@ sendDonationEmail(obj)
 
 export const itemByCategory = (req, res) => {
   const { name } = req.params;
-  
+
   // Use JSON_CONTAINS to search within the JSON array
   db.query('SELECT * FROM items WHERE JSON_CONTAINS(category, ?)', [JSON.stringify(name)], (err, result) => {
     if (err) {
@@ -961,46 +1030,46 @@ export const itemByCategory = (req, res) => {
 };
 
 
-export const getsuccessstories=(req,res)=>{
-db.query('SELECT * FROM successstories WHERE deletestatus = 0 ORDER BY id DESC',(err,results)=>{
-if(err){
-  return res.status(500).json({message:"could not get"})
-}
-if(results.length===0){
-  return res.status(400).json({message:"Not found"})
-}
+export const getsuccessstories = (req, res) => {
+  db.query('SELECT * FROM successstories WHERE deletestatus = 0 ORDER BY id DESC', (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: "could not get" })
+    }
+    if (results.length === 0) {
+      return res.status(400).json({ message: "Not found" })
+    }
 
-res.status(200).json(results)
+    res.status(200).json(results)
 
-})
-}
-
-export const getStoryBySlug=async(req,res)=>{
-const {slug}=req.params
-db.query('SELECT * FROM successstories WHERE deletestatus = 0 AND slug = ?',[slug],(err,results)=>{
-if(err){
-  return res.status(500).json({message:"could not get"})
-}
-if(results[0].length===0){
-  return res.status(500).json({message:"could not get"})
-}
-res.status(200).json(results[0])
-
-})
+  })
 }
 
+export const getStoryBySlug = async (req, res) => {
+  const { slug } = req.params
+  db.query('SELECT * FROM successstories WHERE deletestatus = 0 AND slug = ?', [slug], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: "could not get" })
+    }
+    if (results[0].length === 0) {
+      return res.status(500).json({ message: "could not get" })
+    }
+    res.status(200).json(results[0])
 
-export const getAllVideos=(req,res)=>{
+  })
+}
 
-db.query('SELECT * FROM videos',(err,results)=>{
-  if(err){
-    res.status(500).json({message:"could not get"})
-  }
-  if(results.length===0){
-    res.status(400).json({message:"No records found"})
-  }
-  res.status(200).json(DtoArr(results))
-})
+
+export const getAllVideos = (req, res) => {
+
+  db.query('SELECT * FROM videos', (err, results) => {
+    if (err) {
+      res.status(500).json({ message: "could not get" })
+    }
+    if (results.length === 0) {
+      res.status(400).json({ message: "No records found" })
+    }
+    res.status(200).json(DtoArr(results))
+  })
 }
 
 import { sendContactInquiryEmail } from "../utils/emailService.js";
@@ -1034,15 +1103,13 @@ export const createContactInquiry = async (req, res) => {
 
   // Get owner email
   const getOwnerQuery = `SELECT * FROM owners`;
-  
+
   db.query(getOwnerQuery, async (ownerError, ownerResults) => {
     if (ownerError || ownerResults.length === 0) {
       console.error("Error fetching owner:", ownerError);
       // Still save the inquiry even if owner not found
       return saveInquiryWithoutEmail();
     }
-    const senderemail=ownerResults[0].sender_email
-    const appPassword=ownerResults[0].sender_app_password
     const ownerEmail = ownerResults[0].email;
     saveInquiryWithEmail(ownerEmail);
 
@@ -1073,7 +1140,7 @@ export const createContactInquiry = async (req, res) => {
         }
 
         const inquiryId = results.insertId;
-        
+
         // Prepare data for email
         const inquiryData = {
           name: name.trim(),
@@ -1088,7 +1155,7 @@ export const createContactInquiry = async (req, res) => {
 
         try {
           // Send email to owner
-          await sendContactInquiryEmail(senderemail,appPassword,inquiryData, ownerEmail);
+          await sendContactInquiryEmail(inquiryData);
           console.log(`✅ New contact inquiry submitted - ID: ${inquiryId}`);
         } catch (emailError) {
           console.error("Email sending failed but inquiry saved:", emailError);
@@ -1129,7 +1196,7 @@ export const createContactInquiry = async (req, res) => {
         }
 
         console.log(`✅ New contact inquiry submitted (no email) - ID: ${results.insertId}`);
-        
+
         res.status(201).json({
           message: "Thank you for your inquiry! We'll get back to you soon.",
           inquiryId: results.insertId,
@@ -1143,7 +1210,7 @@ export const createContactInquiry = async (req, res) => {
 
 export const getAllTopbarContents = (req, res) => {
   const query = 'SELECT * FROM topbarcontent ORDER BY created_at DESC';
-  
+
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching topbar contents:', err);
@@ -1153,7 +1220,7 @@ export const getAllTopbarContents = (req, res) => {
         error: err.message
       });
     }
-    
+
     res.status(200).json(results);
   });
 };
@@ -1163,7 +1230,7 @@ export const getAllTopbarContents = (req, res) => {
 export const getAllCertifications = async (req, res) => {
   try {
     const query = 'SELECT * FROM certifications ORDER BY display_order ASC, created_at DESC';
-    
+
     db.query(query, (err, results) => {
       if (err) {
         console.error('Error fetching certifications:', err);
@@ -1173,7 +1240,7 @@ export const getAllCertifications = async (req, res) => {
           error: err.message
         });
       }
-      
+
       res.status(200).json(results);
     });
   } catch (error) {
@@ -1189,7 +1256,7 @@ export const getAllCertifications = async (req, res) => {
 // Get all testimonials
 export const getAllTestimonials = (req, res) => {
   const query = 'SELECT * FROM testimonials ORDER BY created_at DESC';
-  
+
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching testimonials:', err);
@@ -1199,7 +1266,7 @@ export const getAllTestimonials = (req, res) => {
         error: err.message
       });
     }
-    
+
     res.status(200).json({
       success: true,
       data: results
@@ -1211,16 +1278,16 @@ export const getAllTestimonials = (req, res) => {
 // Get all events
 export const getAllEvents = (req, res) => {
   const query = 'SELECT * FROM events ORDER BY created_at DESC';
-  
+
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error fetching events:', err);
-      return res.status(500).json({ 
-        success: false, 
-        message: 'Error fetching events' 
+      return res.status(500).json({
+        success: false,
+        message: 'Error fetching events'
       });
     }
-    
+
     res.status(200).json({
       success: true,
       data: results
@@ -1242,19 +1309,19 @@ export const getAllSectors = (req, res) => {
 
 //find category by name
 
-export const getCBN=async(req,res)=>{
-  const {slug}=req.params
+export const getCBN = async (req, res) => {
+  const { slug } = req.params
   // console.log(name)
-  const query='SELECT * FROM sectors WHERE slug=?'
-    db.query(query,[slug], (err, results) => {
+  const query = 'SELECT * FROM sectors WHERE slug=?'
+  db.query(query, [slug], (err, results) => {
     if (err) {
       console.error('❌ Error fetching sectors:', err);
       return res.status(500).json({ success: false, error: 'Database error' });
     }
-    if(results.length===0){
+    if (results.length === 0) {
       return res.status(400).json({ success: false, error: 'Not Found' });
     }
-    
+
     res.status(200).json({ success: true, data: results[0] });
   });
 }
@@ -1263,7 +1330,7 @@ export const getCBN=async(req,res)=>{
 //get images
 export const getAllCarouselImages = (req, res) => {
   const query = "SELECT * FROM crousel_images ORDER BY created_at ASC";
-  
+
   db.query(query, (err, results) => {
     if (err) {
       console.error("❌ Error fetching carousel images:", err);
@@ -1273,7 +1340,7 @@ export const getAllCarouselImages = (req, res) => {
         error: err.message
       });
     }
-    
+
     res.status(200).json({
       success: true,
       data: results,
@@ -1285,7 +1352,7 @@ export const getAllCarouselImages = (req, res) => {
 
 export const getWelcomeSection = (req, res) => {
   const query = "SELECT * FROM welcomesection LIMIT 1";
-  
+
   db.query(query, (err, results) => {
     if (err) {
       console.error("❌ Error fetching welcome section:", err);
@@ -1295,7 +1362,7 @@ export const getWelcomeSection = (req, res) => {
         error: err.message
       });
     }
-    
+
     // If no data exists, return empty object
     const data = results.length > 0 ? results[0] : {
       id: null,
@@ -1305,7 +1372,7 @@ export const getWelcomeSection = (req, res) => {
       created_at: null,
       updated_at: null
     };
-    
+
     res.status(200).json({
       success: true,
       data: data
@@ -1318,7 +1385,7 @@ export const getWelcomeSection = (req, res) => {
 
 export const getAllVisionMissionItems = (req, res) => {
   const query = "SELECT * FROM vision_mission_items ORDER BY sort_order ASC, created_at ASC";
-  
+
   db.query(query, (err, results) => {
     if (err) {
       console.error("❌ Error fetching vision mission items:", err);
@@ -1328,7 +1395,7 @@ export const getAllVisionMissionItems = (req, res) => {
         error: err.message
       });
     }
-    
+
     res.status(200).json({
       success: true,
       data: results,
@@ -1341,7 +1408,7 @@ export const getAllVisionMissionItems = (req, res) => {
 
 export const getStoriesData = (req, res) => {
   const query = "SELECT * FROM stories_description LIMIT 1";
-  
+
   db.query(query, (err, results) => {
     if (err) {
       console.error("❌ Error fetching stories data:", err);
@@ -1351,7 +1418,7 @@ export const getStoriesData = (req, res) => {
         error: err.message
       });
     }
-    
+
     // If no data exists, return empty object
     const data = results.length > 0 ? results[0] : {
       id: null,
@@ -1361,7 +1428,7 @@ export const getStoriesData = (req, res) => {
       created_at: null,
       updated_at: null
     };
-    
+
     res.status(200).json({
       success: true,
       data: data
@@ -1373,7 +1440,7 @@ export const getStoriesData = (req, res) => {
 
 export const getEventData = (req, res) => {
   const query = "SELECT * FROM event_description LIMIT 1";
-  
+
   db.query(query, (err, results) => {
     if (err) {
       console.error("❌ Error fetching event data:", err);
@@ -1383,7 +1450,7 @@ export const getEventData = (req, res) => {
         error: err.message
       });
     }
-    
+
     // If no data exists, return empty object
     const data = results.length > 0 ? results[0] : {
       id: null,
@@ -1393,7 +1460,7 @@ export const getEventData = (req, res) => {
       created_at: null,
       updated_at: null
     };
-    
+
     res.status(200).json({
       success: true,
       data: data
@@ -1406,7 +1473,7 @@ export const getEventData = (req, res) => {
 // Get telephone data (single instance)
 export const getTelephoneData = (req, res) => {
   const query = "SELECT * FROM telephone LIMIT 1";
-  
+
   db.query(query, (err, results) => {
     if (err) {
       console.error("❌ Error fetching telephone data:", err);
@@ -1416,7 +1483,7 @@ export const getTelephoneData = (req, res) => {
         error: err.message
       });
     }
-    
+
     // If no data exists, return empty object
     const data = results.length > 0 ? results[0] : {
       id: null,
@@ -1425,7 +1492,7 @@ export const getTelephoneData = (req, res) => {
       created_at: null,
       updated_at: null
     };
-    
+
     res.status(200).json({
       success: true,
       data: data
@@ -1437,7 +1504,7 @@ export const getTelephoneData = (req, res) => {
 
 export const getFooterContent = (req, res) => {
   const query = "SELECT * FROM footercontents LIMIT 1";
-  
+
   db.query(query, (err, results) => {
     if (err) {
       console.error("❌ Error fetching footer content:", err);
@@ -1447,7 +1514,7 @@ export const getFooterContent = (req, res) => {
         error: err.message
       });
     }
-    
+
     // If no data exists, return empty object
     const data = results.length > 0 ? results[0] : {
       id: null,
@@ -1459,7 +1526,7 @@ export const getFooterContent = (req, res) => {
       created_at: null,
       updated_at: null
     };
-    
+
     res.json({
       success: true,
       data: data
@@ -1538,15 +1605,15 @@ export const getSEOData = (req, res) => {
     const data =
       results.length > 0
         ? {
-            id: results[0].id,
-            url: results[0].url,
-            pages: JSON.parse(results[0].pages || "[]"),
-          }
+          id: results[0].id,
+          url: results[0].url,
+          pages: JSON.parse(results[0].pages || "[]"),
+        }
         : {
-            id: null,
-            url: "",
-            pages: [],
-          };
+          id: null,
+          url: "",
+          pages: [],
+        };
 
     res.json({
       success: true,
@@ -1562,7 +1629,7 @@ export const getActiveFAQs = async (req, res) => {
     const [faqs] = await db.promise().query(
       'SELECT id, question, answer, display_order FROM faqs WHERE is_active = TRUE ORDER BY display_order'
     );
-    
+
     res.status(200).json({
       success: true,
       data: faqs,
@@ -1584,14 +1651,14 @@ export const getBankData = async (req, res) => {
     const [bankData] = await db.promise().query(
       'SELECT * FROM bankdata WHERE id = 1'
     );
-    
+
     if (bankData.length === 0) {
       return res.status(404).json({
         success: false,
         message: 'Bank data not found'
       });
     }
-    
+
     res.status(200).json({
       success: true,
       data: bankData[0]
@@ -1663,7 +1730,7 @@ export const DetailForAll = async (req, res) => {
         }
       }
 
-      return res.status(200).json({data:item,category:"organization"});
+      return res.status(200).json({ data: item, category: "organization" });
     }
 
     // If not found in items, try documents/blogs
@@ -1736,7 +1803,7 @@ export const DetailForAll = async (req, res) => {
         }
       }
 
-      return res.status(200).json({data:document,category:"blog"});
+      return res.status(200).json({ data: document, category: "blog" });
     }
 
     // If not found in documents, try sectors/categories
@@ -1746,25 +1813,25 @@ export const DetailForAll = async (req, res) => {
     );
 
     if (sectorRows.length > 0) {
-      return res.status(200).json({ 
-        success: true, 
+      return res.status(200).json({
+        success: true,
         data: sectorRows[0],
-        category:"sectors" 
+        category: "sectors"
       });
     }
 
- 
-   // If nothing found
-    return res.status(404).json({ 
-      success: false, 
-      message: "Not found" 
+
+    // If nothing found
+    return res.status(404).json({
+      success: false,
+      message: "Not found"
     });
 
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ 
-      success: false, 
-      error: err.message 
+    return res.status(500).json({
+      success: false,
+      error: err.message
     });
   }
 };

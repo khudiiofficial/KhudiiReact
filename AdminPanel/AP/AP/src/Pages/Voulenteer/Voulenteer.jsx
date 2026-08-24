@@ -126,6 +126,7 @@ const AdminVolunteers = () => {
                     <th>Volunteer</th>
                     <th>Contact</th>
                     <th>Country</th>
+                    <th>City</th>
                     <th>Contact Time</th>
                     <th>Message</th>
                     <th>Date</th>
@@ -147,6 +148,10 @@ const AdminVolunteers = () => {
                       <td>
                         {volunteer.CountryName}
                       </td>
+                      <td>
+                        {volunteer.city || "Not provided"}
+                      </td>
+
                       <td>
                         {volunteer.contactTime}
                       </td>
@@ -239,6 +244,13 @@ const AdminVolunteers = () => {
                 <div className="detail-group">
                   <label>Country:</label>
                   <span>{selectedVolunteer.CountryName} ({selectedVolunteer.country})</span>
+                </div>
+
+                <div className="detail-group">
+                  <label>City:</label>
+                  <span>
+                    {selectedVolunteer.city || "Not provided"}
+                  </span>
                 </div>
                 
                 <div className="detail-group">

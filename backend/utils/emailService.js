@@ -1,21 +1,117 @@
 import nodemailer from 'nodemailer';
 import db from '../Database/db.js';
-const createTransporter = (senderemail,appPassword) => {
+const createTransporter = ({
+  smtpHost,
+  smtpPort,
+  smtpSecure,
+  smtpUsername,
+  smtpPassword,
+}) => {
+  const port = Number(smtpPort);
+
   return nodemailer.createTransport({
-    service: 'gmail',
+    host: smtpHost,
+    port: port,
+
+    // Port 465 = SSL/TLS
+    // Port 587 = STARTTLS
+    secure:
+      Number(smtpSecure) === 1 ||
+      smtpSecure === true ||
+      port === 465,
+
     auth: {
-      user: senderemail,
-      pass: appPassword
-    }
+      user: smtpUsername,
+      pass: smtpPassword,
+    },
+
+    connectionTimeout: 15000,
+    greetingTimeout: 15000,
+    socketTimeout: 20000,
   });
 };
 
-export const sendContactInquiryEmail = async (senderemail,appPassword,inquiryData, ownerEmail) => {
+const getOwnerEmailConfig = () => {
+  return new Promise((resolve, reject) => {
+
+    const query = `
+      SELECT
+        email,
+        sender_email,
+        smtp_host,
+        smtp_port,
+        smtp_secure,
+        smtp_username,
+        smtp_password
+      FROM owners
+      LIMIT 1
+    `;
+
+    db.query(query, (error, results) => {
+
+      if (error) {
+        console.error(
+          '❌ Error fetching SMTP configuration:',
+          error
+        );
+
+        return reject(error);
+      }
+
+      if (!results || results.length === 0) {
+        return reject(
+          new Error('Owner SMTP configuration not found')
+        );
+      }
+
+      const owner = results[0];
+
+      if (
+        !owner.email ||
+        !owner.sender_email ||
+        !owner.smtp_host ||
+        !owner.smtp_port ||
+        !owner.smtp_username ||
+        !owner.smtp_password
+      ) {
+        return reject(
+          new Error('SMTP configuration is incomplete')
+        );
+      }
+
+      resolve({
+        ownerEmail: owner.email,
+        senderEmail: owner.sender_email,
+
+        smtpHost: owner.smtp_host,
+        smtpPort: owner.smtp_port,
+        smtpSecure: owner.smtp_secure,
+        smtpUsername: owner.smtp_username,
+        smtpPassword: owner.smtp_password,
+      });
+
+    });
+
+  });
+};
+
+export const sendContactInquiryEmail = async (inquiryData) => {
   try {
-    const transporter = createTransporter(senderemail,appPassword);
-    
+    const config = await getOwnerEmailConfig();
+
+    const transporter = createTransporter(config);
+
+    await transporter.verify();
+
+    console.log('✅ SMTP connection verified');
+
+    const {
+      senderEmail,
+      ownerEmail
+    } = config;
+
     const mailOptions = {
-      from: senderemail,
+      from: `"Khudii" <${senderEmail}>`,
       to: ownerEmail,
       subject: `New Contact Inquiry - ${inquiryData.org_id || 'General'}`,
       html: `
@@ -44,37 +140,50 @@ export const sendContactInquiryEmail = async (senderemail,appPassword,inquiryDat
       `
     };
 
-    await transporter.sendMail(mailOptions);
-    console.log('✅ Contact inquiry email sent successfully!');
+    const info = await transporter.sendMail(mailOptions);
+
+    console.log(
+      '✅ Contact inquiry email sent successfully!'
+    );
+
+    console.log('Message ID:', info.messageId);
+
     return true;
+
   } catch (error) {
-    console.error('❌ Error sending email:', error);
-    return res.status(500).json({ error });
+
+    console.error(
+      '❌ Error sending contact inquiry email:',
+      error
+    );
+
+    return false;
   }
 };
 
 
-export const sendContactEmail=async(obj)=>{
- const getOwnerQuery = `SELECT * FROM owners`;
-   db.query(getOwnerQuery, async (ownerError, ownerResults) => {
-    if (ownerError || ownerResults.length === 0) {
-      console.error("Error fetching owner:", ownerError);
-      // Still save the inquiry even if owner not found
-        return res.status(500).json({ error: "Database error" });
-    }
-    const senderemail=ownerResults[0].sender_email
-    const appPassword=ownerResults[0].sender_app_password
-    const ownerEmail = ownerResults[0].email;
+export const sendContactEmail = async (obj) => {
 
+  try {
 
-   try {
-  const transporter = createTransporter(senderemail, appPassword);
+    const config = await getOwnerEmailConfig();
 
-  const mailOptions = {
-    from: senderemail,
-    to: ownerEmail,
-    subject: `New Contact Form Submission - ${obj.subject || 'General Inquiry'}`,
-    html: `
+    const transporter = createTransporter(config);
+
+    await transporter.verify();
+
+    console.log('✅ SMTP connection verified');
+
+    const {
+      senderEmail,
+      ownerEmail
+    } = config;
+
+    const mailOptions = {
+      from: `"Khudii" <${senderEmail}>`,
+      to: ownerEmail,
+      subject: `New Contact Form Submission - ${obj.subject || 'General Inquiry'}`,
+      html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <!-- Header with full-width image -->
         <div style="text-align: center; background: #fff;">
@@ -99,45 +208,55 @@ export const sendContactEmail=async(obj)=>{
         </div>
       </div>
     `
-  };
+    };
 
-  await transporter.sendMail(mailOptions);
-  console.log('✅ Contact form email sent successfully!');
-  return true;
-} catch (error) {
-  console.error('❌ Error sending email:', error);
-   return res.status(500).json({ error });
-}
+    const info = await transporter.sendMail(mailOptions);
 
+    console.log(
+      '✅ Contact form email sent successfully!'
+    );
 
+    console.log('Message ID:', info.messageId);
+
+    return true;
+
+  } catch (error) {
+
+    console.error(
+      '❌ Error sending contact form email:',
+      error
+    );
+
+    return false;
   }
-)
 
-}
+};
 
 
 
 
 export const sendVolunteerEmail = async (obj) => {
-  const getOwnerQuery = `SELECT * FROM owners`;
-  db.query(getOwnerQuery, async (ownerError, ownerResults) => {
-    if (ownerError || ownerResults.length === 0) {
-      console.error("Error fetching owner:", ownerError);
-      return false;
-    }
-    
-    const senderemail = ownerResults[0].sender_email;
-    const appPassword = ownerResults[0].sender_app_password;
-    const ownerEmail = ownerResults[0].email;
 
-    try {
-      const transporter = createTransporter(senderemail, appPassword);
+  try {
 
-      const mailOptions = {
-        from: senderemail,
-        to: ownerEmail,
-        subject: `New Volunteer Application - ${obj.name}`,
-        html: `
+    const config = await getOwnerEmailConfig();
+
+    const transporter = createTransporter(config);
+
+    await transporter.verify();
+
+    console.log('✅ SMTP connection verified');
+
+    const {
+      senderEmail,
+      ownerEmail
+    } = config;
+
+    const mailOptions = {
+      from: `"Khudii" <${senderEmail}>`,
+      to: ownerEmail,
+      subject: `New Volunteer Application - ${obj.name}`,
+      html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
             <!-- Header with full-width image -->
             <div style="text-align: center; background: #fff;">
@@ -174,9 +293,19 @@ export const sendVolunteerEmail = async (obj) => {
                     <td style="padding: 8px 0; border-bottom: 1px solid #eee;">${obj.CountryName}</td>
                   </tr>
                   ` : ''}
+                  ${obj.city ? `
+                  <tr>
+                    <td style="padding: 8px 0; border-bottom: 1px solid #eee;">
+                      <strong>City:</strong>
+                    </td>
+                    <td style="padding: 8px 0; border-bottom: 1px solid #eee;">
+                      ${obj.city}
+                    </td>
+                  </tr>
+                  ` : ''}
                  
                   <tr>
-                    <td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Preferred Contact Time:</strong></td>
+                    <td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Preferred Contact Date:</strong></td>
                     <td style="padding: 8px 0; border-bottom: 1px solid #eee;">${obj.contactTime}</td>
                   </tr>
                   ${obj.message ? `
@@ -200,40 +329,54 @@ export const sendVolunteerEmail = async (obj) => {
             </div>
           </div>
         `
-      };
+    };
 
-      await transporter.sendMail(mailOptions);
-      console.log('✅ Volunteer application email sent successfully!');
-      return true;
-    } catch (error) {
-      console.error('❌ Error sending volunteer email:', error);
-      return false;
-    }
-  });
+    const info = await transporter.sendMail(mailOptions);
+
+    console.log(
+      '✅ Volunteer application email sent successfully!'
+    );
+
+    console.log('Message ID:', info.messageId);
+
+    return true;
+
+  } catch (error) {
+
+    console.error(
+      '❌ Error sending volunteer email:',
+      error
+    );
+
+    return false;
+  }
+
 };
 
 
 
 export const sendJobApplicationEmail = async (obj) => {
-  const getOwnerQuery = `SELECT * FROM owners`;
-  db.query(getOwnerQuery, async (ownerError, ownerResults) => {
-    if (ownerError || ownerResults.length === 0) {
-      console.error("Error fetching owner:", ownerError);
-      return false;
-    }
-    
-    const senderemail = ownerResults[0].sender_email;
-    const appPassword = ownerResults[0].sender_app_password;
-    const ownerEmail = ownerResults[0].email;
 
-    try {
-      const transporter = createTransporter(senderemail, appPassword);
+  try {
 
-      const mailOptions = {
-        from: senderemail,
-        to: ownerEmail,
-        subject: `New Job Application - ${obj.interestedPost || 'General Position'}`,
-        html: `
+    const config = await getOwnerEmailConfig();
+
+    const transporter = createTransporter(config);
+
+    await transporter.verify();
+
+    console.log('✅ SMTP connection verified');
+
+    const {
+      senderEmail,
+      ownerEmail
+    } = config;
+
+    const mailOptions = {
+      from: `"Khudii" <${senderEmail}>`,
+      to: ownerEmail,
+      subject: `New Job Application - ${obj.interestedPost || 'General Position'}`,
+      html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
             <!-- Header with full-width image -->
             <div style="text-align: center; background: #fff;">
@@ -310,41 +453,53 @@ export const sendJobApplicationEmail = async (obj) => {
             </div>
           </div>
         `
-      };
+    };
 
-      await transporter.sendMail(mailOptions);
-      console.log('✅ Job application email sent successfully!');
-      return true;
-    } catch (error) {
-      console.error('❌ Error sending job application email:', error);
-      return false;
-    }
-  });
+    const info = await transporter.sendMail(mailOptions);
+
+    console.log(
+      '✅ Job application email sent successfully!'
+    );
+
+    console.log('Message ID:', info.messageId);
+
+    return true;
+
+  } catch (error) {
+
+    console.error(
+      '❌ Error sending job application email:',
+      error
+    );
+
+    return false;
+  }
+
 };
 
 
 
 
 export const sendStoryEmail = async (obj) => {
-  const getOwnerQuery = `SELECT * FROM owners`;
-  db.query(getOwnerQuery, async (ownerError, ownerResults) => {
-    if (ownerError || ownerResults.length === 0) {
-      console.error("Error fetching owner:", ownerError);
-      return false;
-    }
-    
-    const senderemail = ownerResults[0].sender_email;
-    const appPassword = ownerResults[0].sender_app_password;
-    const ownerEmail = ownerResults[0].email;
 
-    try {
-      const transporter = createTransporter(senderemail, appPassword);
+  try {
 
-      const mailOptions = {
-        from: senderemail,
-        to: ownerEmail,
-        subject: `New Story Contribution - ${obj.entityType}`,
-        html: `
+    const config = await getOwnerEmailConfig();
+
+    const transporter = createTransporter(config);
+
+    await transporter.verify();
+
+    const {
+      senderEmail,
+      ownerEmail
+    } = config;
+
+    const mailOptions = {
+      from: `"Khudii" <${senderEmail}>`,
+      to: ownerEmail,
+      subject: `New Story Contribution - ${obj.entityType}`,
+      html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
             <!-- Header with full-width image -->
             <div style="text-align: center; background: #fff;">
@@ -413,39 +568,51 @@ export const sendStoryEmail = async (obj) => {
             </div>
           </div>
         `
-      };
+    };
 
-      await transporter.sendMail(mailOptions);
-      console.log('✅ Story contribution email sent successfully!');
-      return true;
-    } catch (error) {
-      console.error('❌ Error sending story contribution email:', error);
-      return false;
-    }
-  });
+    const info = await transporter.sendMail(mailOptions);
+
+    console.log(
+      '✅ Story contribution email sent successfully!'
+    );
+
+    console.log('Message ID:', info.messageId);
+
+    return true;
+
+  } catch (error) {
+
+    console.error(
+      '❌ Error sending story contribution email:',
+      error
+    );
+
+    return false;
+  }
+
 };
 
 
 export const sendDonationEmail = async (obj) => {
-  const getOwnerQuery = `SELECT * FROM owners`;
-  db.query(getOwnerQuery, async (ownerError, ownerResults) => {
-    if (ownerError || ownerResults.length === 0) {
-      console.error("Error fetching owner:", ownerError);
-      return false;
-    }
-    
-    const senderemail = ownerResults[0].sender_email;
-    const appPassword = ownerResults[0].sender_app_password;
-    const ownerEmail = ownerResults[0].email;
 
-    try {
-      const transporter = createTransporter(senderemail, appPassword);
+  try {
 
-      const mailOptions = {
-        from: senderemail,
-        to: ownerEmail,
-        subject: `New Donation Request - ${obj.donationType}`,
-        html: `
+    const config = await getOwnerEmailConfig();
+
+    const transporter = createTransporter(config);
+
+    await transporter.verify();
+
+    const {
+      senderEmail,
+      ownerEmail
+    } = config;
+
+    const mailOptions = {
+      from: `"Khudii" <${senderEmail}>`,
+      to: ownerEmail,
+      subject: `New Donation Request - ${obj.donationType}`,
+      html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
             <!-- Header with full-width image -->
             <div style="text-align: center; background: #fff;">
@@ -525,43 +692,54 @@ export const sendDonationEmail = async (obj) => {
             </div>
           </div>
         `
-      };
+    };
 
-      await transporter.sendMail(mailOptions);
-      console.log('✅ Donation email sent successfully!');
-      return true;
-    } catch (error) {
-      console.error('❌ Error sending donation email:', error);
-      return false;
-    }
-  });
+    const info = await transporter.sendMail(mailOptions);
+
+    console.log(
+      '✅ Donation email sent successfully!'
+    );
+
+    console.log('Message ID:', info.messageId);
+
+    return true;
+
+  } catch (error) {
+
+    console.error(
+      '❌ Error sending donation email:',
+      error
+    );
+
+    return false;
+  }
+
 };
 
 
 // Add this to your existing emailService.js file
-export const sendOrganizationSubmissionEmail = async (submissionData) => {
-  return new Promise((resolve, reject) => {
-    const getOwnerQuery = `SELECT * FROM owners LIMIT 1`;
-    
-    db.query(getOwnerQuery, async (ownerError, ownerResults) => {
-      if (ownerError || ownerResults.length === 0) {
-        console.error("Error fetching owner:", ownerError);
-        reject(new Error("Owner configuration not found"));
-        return;
-      }
-      
-      const senderemail = ownerResults[0].sender_email;
-      const appPassword = ownerResults[0].sender_app_password;
-      const ownerEmail = ownerResults[0].email;
+export const sendOrganizationSubmissionEmail = async (
+  submissionData
+) => {
 
-      try {
-        const transporter = createTransporter(senderemail, appPassword);
+  try {
 
-        const mailOptions = {
-          from: senderemail,
-          to: ownerEmail,
-          subject: `New Organization Registration - ${submissionData.organizationName}`,
-          html: `
+    const config = await getOwnerEmailConfig();
+
+    const transporter = createTransporter(config);
+
+    await transporter.verify();
+
+    const {
+      senderEmail,
+      ownerEmail
+    } = config;
+
+    const mailOptions = {
+      from: `"Khudii" <${senderEmail}>`,
+      to: ownerEmail,
+      subject: `New Organization Registration - ${submissionData.organizationName}`,
+      html: `
             <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto;">
               <div style="text-align: center; background: #02246e; padding: 30px; border-radius: 10px 10px 0 0;">
                 <h1 style="color: white; margin: 0;">New Organization Registration</h1>
@@ -618,21 +796,26 @@ export const sendOrganizationSubmissionEmail = async (submissionData) => {
               </div>
             </div>
           `
-        };
+    };
 
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            console.error('❌ Error sending email:', error);
-            reject(error);
-          } else {
-            console.log('✅ Organization submission email sent successfully!');
-            resolve(info);
-          }
-        });
-      } catch (error) {
-        console.error('❌ Error in email service:', error);
-        reject(error);
-      }
-    });
-  });
+    const info = await transporter.sendMail(mailOptions);
+
+    console.log(
+      '✅ Organization submission email sent successfully!'
+    );
+
+    console.log('Message ID:', info.messageId);
+
+    return info;
+
+  } catch (error) {
+
+    console.error(
+      '❌ Error sending organization submission email:',
+      error
+    );
+
+    throw error;
+  }
+
 };
